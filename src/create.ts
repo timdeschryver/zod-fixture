@@ -1,18 +1,20 @@
 import type { ZodTypeAny, z } from 'zod';
 import {
-	booleanGenerator,
-	randomNumberGenerator,
-	stringGenerator,
-} from './primitives-generator';
+	generateRandomDate,
+	generateRandomNumber,
+	generateSequenceBoolean,
+	generateString,
+} from './generators';
 
 export function create<ZSchema extends ZodTypeAny>(
 	schema: ZSchema,
 ): z.infer<typeof schema> {
 	const typeName = schema._def.typeName.toString();
 	const zodTypeToGenerator = {
-		ZodString: stringGenerator,
-		ZodNumber: randomNumberGenerator,
-		ZodBoolean: booleanGenerator,
+		ZodString: generateString,
+		ZodNumber: generateRandomNumber,
+		ZodBoolean: generateSequenceBoolean,
+		ZodDate: generateRandomDate,
 		ZodNullable: () => create(schema._def.innerType),
 		ZodOptional: () => create(schema._def.innerType),
 	};
