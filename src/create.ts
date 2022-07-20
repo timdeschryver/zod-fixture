@@ -13,6 +13,8 @@ export function create<ZSchema extends ZodTypeAny>(
 		ZodString: stringGenerator,
 		ZodNumber: randomNumberGenerator,
 		ZodBoolean: booleanGenerator,
+		ZodNullable: () => create(schema._def.innerType),
+		ZodOptional: () => create(schema._def.innerType),
 	};
 
 	const generator = zodTypeToGenerator[typeName];
