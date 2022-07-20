@@ -26,7 +26,7 @@ export function create<ZSchema extends ZodTypeAny>(
 		ZodAny: generateNull,
 		ZodUnknown: generateNull,
 		ZodNever: generateNull,
-		ZodObject: () => {
+		ZodObject: (): Record<string, ZodTypeAny> => {
 			const shape = schema._def.shape();
 			return Object.entries(shape).reduce(
 				(carry, [key, value]: [string, ZodTypeAny]) => ({
@@ -36,7 +36,7 @@ export function create<ZSchema extends ZodTypeAny>(
 				{} as Record<string, ZodTypeAny>,
 			);
 		},
-		ZodArray: () => {
+		ZodArray: (): ZodTypeAny[] => {
 			return Array.from({ length: 3 }, () => create(schema._def.type));
 		},
 		ZodNullable: () => create(schema._def.innerType),

@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-const noop = () => {};
-export function generateNoop() {
+const noop: () => void = () => {};
+
+export function generateNoop(): () => void {
 	return noop;
 }

@@ -57,6 +57,17 @@ describe('create booleans', () => {
 		expect(create(z.boolean())).toBeTypeOf('boolean');
 	});
 
+	test('alternates between boolean values', () => {
+		const one = create(z.boolean());
+		const two = create(z.boolean());
+		const three = create(z.boolean());
+		const four = create(z.boolean());
+
+		expect(one).not.toBe(two);
+		expect(one).toBe(three);
+		expect(two).toBe(four);
+	});
+
 	test('creates a nullable boolean', () => {
 		expect(create(z.boolean().nullable())).toBeTypeOf('boolean');
 		expect(create(z.boolean().nullish())).toBeTypeOf('boolean');

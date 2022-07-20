@@ -12,3 +12,4 @@ extends:
 rules:
         sort-imports: 'error'
         '@typescript-eslint/consistent-type-imports': [ 'error', { prefer: 'type-imports' } ]
+        '@typescript-eslint/explicit-function-return-type': 'error'
