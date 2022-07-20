@@ -13,7 +13,7 @@ import {
 export function create<ZSchema extends ZodTypeAny>(
 	schema: ZSchema,
 ): z.infer<typeof schema> {
-	const typeName = schema._def.typeName.toString();
+	const typeName = schema._def.typeName;
 	const zodTypeToGenerator = {
 		ZodString: generateString,
 		ZodNumber: generateRandomNumber,
@@ -35,6 +35,9 @@ export function create<ZSchema extends ZodTypeAny>(
 				}),
 				{} as Record<string, ZodTypeAny>,
 			);
+		},
+		ZodArray: () => {
+			return Array.from({ length: 3 }, () => create(schema._def.type));
 		},
 		ZodNullable: () => create(schema._def.innerType),
 		ZodOptional: () => create(schema._def.innerType),

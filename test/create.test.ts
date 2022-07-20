@@ -142,3 +142,10 @@ describe('create objects', () => {
 		expect(result.nested.date).toBeInstanceOf(Date);
 	});
 });
+
+describe('create arrays', () => {
+	test('creates an array with the length of 3', () => {
+		expect(create(z.array(z.string()))).toHaveLength(3);
+		expect(create(z.number().array())).toHaveLength(3);
+	});
+});
