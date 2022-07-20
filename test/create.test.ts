@@ -14,13 +14,13 @@ test('throws on invalid schema type', () => {
 
 describe('create strings', () => {
 	test('creates a string', () => {
-		expect(typeof create(z.string())).toBe('string');
+		expect(create(z.string())).toBeTypeOf('string');
 	});
 
 	test('creates a nullable string', () => {
-		expect(typeof create(z.string().nullable())).toBe('string');
-		expect(typeof create(z.string().nullish())).toBe('string');
-		expect(typeof create(z.string().optional())).toBe('string');
+		expect(create(z.string().nullable())).toBeTypeOf('string');
+		expect(create(z.string().nullish())).toBeTypeOf('string');
+		expect(create(z.string().optional())).toBeTypeOf('string');
 	});
 });
 
@@ -28,7 +28,7 @@ describe('create numbers', () => {
 	test('creates a number between 1 and Number.MAX_SAFE_INTEGER', () => {
 		const result = create(z.number());
 
-		expect(typeof result).toBe('number');
+		expect(result).toBeTypeOf('number');
 		expect(result).toBeGreaterThanOrEqual(1);
 		expect(result).toBeLessThanOrEqual(Number.MAX_SAFE_INTEGER);
 
@@ -38,7 +38,7 @@ describe('create numbers', () => {
 	test('creates a bigint', () => {
 		const result = create(z.bigint());
 
-		expect(typeof result).toBe('bigint');
+		expect(result).toBeTypeOf('bigint');
 		expect(result).toBeGreaterThanOrEqual(1);
 		expect(result).toBeLessThanOrEqual(Number.MAX_SAFE_INTEGER);
 
@@ -46,21 +46,21 @@ describe('create numbers', () => {
 	});
 
 	test('creates a nullable number', () => {
-		expect(typeof create(z.number().nullable())).toBe('number');
-		expect(typeof create(z.number().nullish())).toBe('number');
-		expect(typeof create(z.number().optional())).toBe('number');
+		expect(create(z.number().nullable())).toBeTypeOf('number');
+		expect(create(z.number().nullish())).toBeTypeOf('number');
+		expect(create(z.number().optional())).toBeTypeOf('number');
 	});
 });
 
 describe('create booleans', () => {
 	test('creates a boolean', () => {
-		expect(typeof create(z.boolean())).toBe('boolean');
+		expect(create(z.boolean())).toBeTypeOf('boolean');
 	});
 
 	test('creates a nullable boolean', () => {
-		expect(typeof create(z.boolean().nullable())).toBe('boolean');
-		expect(typeof create(z.boolean().nullish())).toBe('boolean');
-		expect(typeof create(z.boolean().optional())).toBe('boolean');
+		expect(create(z.boolean().nullable())).toBeTypeOf('boolean');
+		expect(create(z.boolean().nullish())).toBeTypeOf('boolean');
+		expect(create(z.boolean().optional())).toBeTypeOf('boolean');
 	});
 });
 
@@ -96,7 +96,7 @@ describe('create empty types', () => {
 
 	test('creates a void', () => {
 		const result = create(z.void());
-		expect(typeof result).toBe('function');
+		expect(result).toBeTypeOf('function');
 		expect((result as unknown as () => void)()).toBeUndefined();
 	});
 });
@@ -112,5 +112,33 @@ describe('create catch-all types', () => {
 
 	test('creates never as null', () => {
 		expect(create(z.never())).toBeNull();
+	});
+});
+
+describe('create objects', () => {
+	test('creates an empty object', () => {
+		expect(create(z.object({}))).toBeTypeOf('object');
+	});
+
+	test('creates a nullable empty object', () => {
+		expect(create(z.object({}).nullable())).toBeTypeOf('object');
+		expect(create(z.object({}).optional())).toBeTypeOf('object');
+		expect(create(z.object({}).nullish())).toBeTypeOf('object');
+	});
+
+	test('creates a nested object', () => {
+		const result = create(
+			z.object({
+				str: z.string(),
+				nested: z.object({
+					num: z.number(),
+					date: z.date(),
+				}),
+			}),
+		);
+		expect(result).toBeTypeOf('object');
+		expect(result.str).toBeTypeOf('string');
+		expect(result.nested.num).toBeTypeOf('number');
+		expect(result.nested.date).toBeInstanceOf(Date);
 	});
 });

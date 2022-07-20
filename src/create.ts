@@ -26,6 +26,16 @@ export function create<ZSchema extends ZodTypeAny>(
 		ZodAny: generateNull,
 		ZodUnknown: generateNull,
 		ZodNever: generateNull,
+		ZodObject: () => {
+			const shape = schema._def.shape();
+			return Object.entries(shape).reduce(
+				(carry, [key, value]: [string, ZodTypeAny]) => ({
+					...carry,
+					[key]: create(value),
+				}),
+				{} as Record<string, ZodTypeAny>,
+			);
+		},
 		ZodNullable: () => create(schema._def.innerType),
 		ZodOptional: () => create(schema._def.innerType),
 	};
