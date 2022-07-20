@@ -1,0 +1,14 @@
+root: true
+parser: '@typescript-eslint/parser'
+plugins:
+        - '@typescript-eslint'
+        - 'jest'
+extends:
+        - 'eslint:recommended'
+        - 'plugin:@typescript-eslint/recommended'
+        - 'prettier'
+        - plugin:import/recommended
+        - plugin:import/typescript
+rules:
+        sort-imports: 'error'
+        '@typescript-eslint/consistent-type-imports': [ 'error', { prefer: 'type-imports' } ]

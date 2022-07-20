@@ -1,0 +1,19 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request: {}
+
+steps:
+  - name: 📖 Checkout
+    uses: actions/checkout@v3
+  - name: ⚙️ Setup Node
+    uses: actions/setup-node@v3
+  - name: 🔎 Install
+    run: npm ci
+  - name: 👀 Lint
+    run: npm run lint
+  - name: 🧪 Test
+    run: npm run test:coverage
