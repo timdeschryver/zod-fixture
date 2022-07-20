@@ -84,3 +84,33 @@ describe('create dates', () => {
 		expect(create(z.date().optional())).toBeInstanceOf(Date);
 	});
 });
+
+describe('create empty types', () => {
+	test('creates an undefined', () => {
+		expect(create(z.undefined())).toBeUndefined();
+	});
+
+	test('creates a null', () => {
+		expect(create(z.null())).toBeNull();
+	});
+
+	test('creates a void', () => {
+		const result = create(z.void());
+		expect(typeof result).toBe('function');
+		expect((result as unknown as () => void)()).toBeUndefined();
+	});
+});
+
+describe('create catch-all types', () => {
+	test('creates an any as null', () => {
+		expect(create(z.any())).toBeNull();
+	});
+
+	test('creates an unknown as null', () => {
+		expect(create(z.unknown())).toBeNull();
+	});
+
+	test('creates never as null', () => {
+		expect(create(z.never())).toBeNull();
+	});
+});

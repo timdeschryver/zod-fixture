@@ -1,9 +1,13 @@
 import type { ZodTypeAny, z } from 'zod';
 import {
+	generateNoop,
+	generateNull,
+	generateRandomBigInt,
 	generateRandomDate,
 	generateRandomNumber,
 	generateSequenceBoolean,
 	generateString,
+	generateUndefined,
 } from './generators';
 
 export function create<ZSchema extends ZodTypeAny>(
@@ -13,9 +17,15 @@ export function create<ZSchema extends ZodTypeAny>(
 	const zodTypeToGenerator = {
 		ZodString: generateString,
 		ZodNumber: generateRandomNumber,
-		ZodBigInt: () => BigInt(generateRandomNumber()),
+		ZodBigInt: generateRandomBigInt,
 		ZodBoolean: generateSequenceBoolean,
 		ZodDate: generateRandomDate,
+		ZodNull: generateNull,
+		ZodUndefined: generateUndefined,
+		ZodVoid: generateNoop,
+		ZodAny: generateNull,
+		ZodUnknown: generateNull,
+		ZodNever: generateNull,
 		ZodNullable: () => create(schema._def.innerType),
 		ZodOptional: () => create(schema._def.innerType),
 	};
