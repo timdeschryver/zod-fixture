@@ -13,6 +13,7 @@ export function create<ZSchema extends ZodTypeAny>(
 	const zodTypeToGenerator = {
 		ZodString: generateString,
 		ZodNumber: generateRandomNumber,
+		ZodBigInt: () => BigInt(generateRandomNumber()),
 		ZodBoolean: generateSequenceBoolean,
 		ZodDate: generateRandomDate,
 		ZodNullable: () => create(schema._def.innerType),

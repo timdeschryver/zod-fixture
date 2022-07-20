@@ -35,6 +35,16 @@ describe('create numbers', () => {
 		Number.MAX_SAFE_INTEGER;
 	});
 
+	test('creates a bigint', () => {
+		const result = create(z.bigint());
+
+		expect(typeof result).toBe('bigint');
+		expect(result).toBeGreaterThanOrEqual(1);
+		expect(result).toBeLessThanOrEqual(Number.MAX_SAFE_INTEGER);
+
+		Number.MAX_SAFE_INTEGER;
+	});
+
 	test('creates a nullable number', () => {
 		expect(typeof create(z.number().nullable())).toBe('number');
 		expect(typeof create(z.number().nullish())).toBe('number');
