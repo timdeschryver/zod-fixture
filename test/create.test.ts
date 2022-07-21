@@ -157,3 +157,56 @@ describe('create arrays', () => {
 		expect(create(z.number().array())).toHaveLength(3);
 	});
 });
+
+describe('create literals', () => {
+	test('creates a string literal and returns its value', () => {
+		expect(create(z.literal('tuna'))).toBe('tuna');
+	});
+	test('creates a number literal and returns its value', () => {
+		expect(create(z.literal(12))).toBe(12);
+	});
+	test('creates a boolean literal and returns its value', () => {
+		expect(create(z.literal(true))).toBe(true);
+	});
+});
+
+describe('create enums', () => {
+	test('using zod enums creates an enum and returns a random value', () => {
+		expect(create(z.enum(['Salmon', 'Tuna', 'Trout']))).toMatch(
+			/^Salmon|Tuna|Trout$/,
+		);
+	});
+
+	test('using numeric native enums creates an enum and returns a random value', () => {
+		enum Fruits {
+			Apple,
+			Banana,
+		}
+
+		expect(create(z.nativeEnum(Fruits))).toMatch(/^0|1|Apple|Banana$/);
+	});
+
+	test('using string native enums creates an enum and returns a random value', () => {
+		enum Fruits {
+			Apple = 'apple',
+			Banana = 'banana',
+			Cantaloupe = 3, // you can mix numerical and string enums
+		}
+
+		expect(create(z.nativeEnum(Fruits))).toMatch(
+			/^apple|banana|Apple|Banana|Cantaloupe|3$/,
+		);
+	});
+
+	test('using const native enums creates an enum and returns a random value', () => {
+		const Fruits = {
+			Apple: 'apple',
+			Banana: 'banana',
+			Cantaloupe: 3,
+		} as const;
+
+		expect(create(z.nativeEnum(Fruits))).toMatch(
+			/^apple|banana|Apple|Banana|Cantaloupe|3$/,
+		);
+	});
+});

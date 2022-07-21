@@ -6,3 +6,4 @@ export * from './random-bigint-generator';
 export * from './null-generator';
 export * from './undefined-generator';
 export * from './noop-generator';
+export * from './random-enum-value-generator';

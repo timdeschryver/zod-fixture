@@ -8,6 +8,7 @@ import {
 	generateSequenceBoolean,
 	generateString,
 	generateUndefined,
+	randomEnumValueGenerator,
 } from './generators';
 import type { Context } from './context';
 
@@ -47,6 +48,10 @@ export function generate<ZSchema extends ZodTypeAny>(
 				generate(schema._def.type, context),
 			);
 		},
+		ZodLiteral: () => schema._def.value,
+		ZodEnum: () => randomEnumValueGenerator(schema._def.values),
+		ZodNativeEnum: () =>
+			randomEnumValueGenerator(Object.keys(schema._def.values)),
 		ZodNullable: () => generate(schema._def.innerType, context),
 		ZodOptional: () => generate(schema._def.innerType, context),
 	};
