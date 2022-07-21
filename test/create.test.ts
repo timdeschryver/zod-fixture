@@ -158,15 +158,45 @@ describe('create arrays', () => {
 	});
 });
 
-describe('create literals', () => {
-	test('creates a string literal and returns its value', () => {
-		expect(create(z.literal('tuna'))).toBe('tuna');
+describe('create tuples', () => {
+	test('creates a tuple and preserves types', () => {
+		const result = create(
+			z.tuple([
+				z.string(), // name
+				z.number(), // jersey number
+				z.object({
+					pointsScored: z.number(),
+				}), // statistics
+			]),
+		);
+		expect(result).toHaveLength(3);
+		expect(result[0]).toBeTypeOf('string');
+		expect(result[1]).toBeTypeOf('number');
+		expect(result[2]).toBeTypeOf('object');
+		expect(result[2].pointsScored).toBeTypeOf('number');
 	});
-	test('creates a number literal and returns its value', () => {
-		expect(create(z.literal(12))).toBe(12);
+});
+
+describe('create unions', () => {
+	test('creates a union value', () => {
+		expect(typeof create(z.union([z.string(), z.number()]))).toMatch(
+			/^string|number$/,
+		);
 	});
-	test('creates a boolean literal and returns its value', () => {
-		expect(create(z.literal(true))).toBe(true);
+
+	test('creates a union value with the or syntax', () => {
+		expect(typeof create(z.string().or(z.number()))).toMatch(/^string|number$/);
+	});
+
+	test('creates a discriminated union', () => {
+		const result = create(
+			z.discriminatedUnion('type', [
+				z.object({ type: z.literal('a'), a: z.string() }),
+				z.object({ type: z.literal('b'), b: z.string() }),
+			]),
+		);
+		expect(result.type).toBeTypeOf('string');
+		expect(result.type).toMatch(/^a|b$/);
 	});
 });
 
@@ -208,5 +238,17 @@ describe('create enums', () => {
 		expect(create(z.nativeEnum(Fruits))).toMatch(
 			/^apple|banana|Apple|Banana|Cantaloupe|3$/,
 		);
+	});
+});
+
+describe('create literals', () => {
+	test('creates a string literal and returns its value', () => {
+		expect(create(z.literal('tuna'))).toBe('tuna');
+	});
+	test('creates a number literal and returns its value', () => {
+		expect(create(z.literal(12))).toBe(12);
+	});
+	test('creates a boolean literal and returns its value', () => {
+		expect(create(z.literal(true))).toBe(true);
 	});
 });

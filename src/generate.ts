@@ -48,10 +48,28 @@ export function generate<ZSchema extends ZodTypeAny>(
 				generate(schema._def.type, context),
 			);
 		},
+		ZodTuple: () => {
+			return schema._def.items.map((item: ZodTypeAny) =>
+				generate(item, context),
+			);
+		},
 		ZodLiteral: () => schema._def.value,
 		ZodEnum: () => randomEnumValueGenerator(schema._def.values),
 		ZodNativeEnum: () =>
 			randomEnumValueGenerator(Object.keys(schema._def.values)),
+		ZodUnion: () =>
+			generate(
+				randomEnumValueGenerator(schema._def.options) as ZodTypeAny,
+				context,
+			),
+		ZodDiscriminatedUnion: () => {
+			const options = schema._def.options as Map<string, ZodTypeAny>;
+			return generate(
+				randomEnumValueGenerator([...options.values()]) as ZodTypeAny,
+				context,
+			);
+		},
+
 		ZodNullable: () => generate(schema._def.innerType, context),
 		ZodOptional: () => generate(schema._def.innerType, context),
 	};
