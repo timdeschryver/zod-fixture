@@ -1,19 +1,28 @@
 name: ci
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - 'main'
   pull_request: {}
 
-steps:
-  - name: 📖 Checkout
-    uses: actions/checkout@v3
-  - name: ⚙️ Setup Node
-    uses: actions/setup-node@v3
-  - name: 🔎 Install
-    run: npm ci
-  - name: 👀 Lint
-    run: npm run lint
-  - name: 🧪 Test
-    run: npm run test:coverage
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  test:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📖 Check out repo
+        uses: actions/checkout@v3
+      - name: ⚙️ Set up Node
+        uses: actions/setup-node@v3
+      - name: 🔎 Install dependencies
+        run: npm ci
+      - name: 👀 Lint
+        run: npm run lint
+      - name: 🧪 Test
+        run: npm run test:coverage
