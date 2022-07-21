@@ -102,8 +102,10 @@ export function generate<ZSchema extends ZodTypeAny>(
 				context,
 			);
 		},
+		ZodFunction: generateNoop,
 		ZodNullable: (): unknown => generate(schema._def.innerType, context),
 		ZodOptional: (): unknown => generate(schema._def.innerType, context),
+		ZodNaN: () => NaN,
 	};
 
 	const generator = zodTypeToGenerator[typeName];

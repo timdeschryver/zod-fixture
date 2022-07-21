@@ -290,10 +290,24 @@ describe('create literals', () => {
 	test('creates a string literal and returns its value', () => {
 		expect(create(z.literal('tuna'))).toBe('tuna');
 	});
+
 	test('creates a number literal and returns its value', () => {
 		expect(create(z.literal(12))).toBe(12);
 	});
+
 	test('creates a boolean literal and returns its value', () => {
 		expect(create(z.literal(true))).toBe(true);
+	});
+});
+
+describe('create NaNs', () => {
+	test('creates a NaN', () => {
+		expect(Number.isNaN(create(z.nan()))).toBeTruthy();
+	});
+});
+
+describe('create Functions', () => {
+	test('creates a function', () => {
+		expect(create(z.function())).toBeTypeOf('function');
 	});
 });
