@@ -14,7 +14,7 @@ export function create<ZSchema extends ZodTypeAny>(
 	schema: ZSchema,
 ): z.infer<typeof schema> {
 	const typeName = schema._def.typeName;
-	const zodTypeToGenerator = {
+	const zodTypeToGenerator: { [zodTypeName: string]: () => unknown } = {
 		ZodString: generateString,
 		ZodNumber: generateRandomNumber,
 		ZodBigInt: generateRandomBigInt,
@@ -26,17 +26,17 @@ export function create<ZSchema extends ZodTypeAny>(
 		ZodAny: generateNull,
 		ZodUnknown: generateNull,
 		ZodNever: generateNull,
-		ZodObject: (): Record<string, ZodTypeAny> => {
+		ZodObject: (): Record<string, unknown> => {
 			const shape = schema._def.shape();
-			return Object.entries(shape).reduce(
-				(carry, [key, value]: [string, ZodTypeAny]) => ({
+			return Object.entries<ZodTypeAny>(shape).reduce(
+				(carry, [key, value]) => ({
 					...carry,
 					[key]: create(value),
 				}),
-				{} as Record<string, ZodTypeAny>,
+				{} as Record<string, unknown>,
 			);
 		},
-		ZodArray: (): ZodTypeAny[] => {
+		ZodArray: (): unknown[] => {
 			return Array.from({ length: 3 }, () => create(schema._def.type));
 		},
 		ZodNullable: () => create(schema._def.innerType),
