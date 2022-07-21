@@ -25,24 +25,20 @@ describe('create strings', () => {
 });
 
 describe('create numbers', () => {
-	test('creates a number between 1 and Number.MAX_SAFE_INTEGER', () => {
+	test('creates a number between 1 and 500', () => {
 		const result = create(z.number());
 
 		expect(result).toBeTypeOf('number');
 		expect(result).toBeGreaterThanOrEqual(1);
-		expect(result).toBeLessThanOrEqual(Number.MAX_SAFE_INTEGER);
-
-		Number.MAX_SAFE_INTEGER;
+		expect(result).toBeLessThanOrEqual(500);
 	});
 
-	test('creates a bigint', () => {
+	test('creates a bigint between 1 and MAX_SAFE_INTEGER', () => {
 		const result = create(z.bigint());
 
 		expect(result).toBeTypeOf('bigint');
 		expect(result).toBeGreaterThanOrEqual(1);
 		expect(result).toBeLessThanOrEqual(Number.MAX_SAFE_INTEGER);
-
-		Number.MAX_SAFE_INTEGER;
 	});
 
 	test('creates a nullable number', () => {
@@ -149,6 +145,7 @@ describe('create objects', () => {
 		);
 		expect(result).toBeTypeOf('object');
 		expect(result.str).toBeTypeOf('string');
+		expect(result.str).toContain('str');
 		expect(result.nested.num).toBeTypeOf('number');
 		expect(result.nested.date).toBeInstanceOf(Date);
 	});
