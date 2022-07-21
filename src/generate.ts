@@ -33,45 +33,77 @@ export function generate<ZSchema extends ZodTypeAny>(
 		ZodNever: generateNull,
 		ZodObject: (): Record<string, unknown> => {
 			const shape = schema._def.shape();
-			return Object.entries<ZodTypeAny>(shape).reduce((carry, [key, value]) => {
+			return Object.entries<ZodTypeAny>(shape).reduce(
+				(aggregate, [key, value]) => {
+					return {
+						...aggregate,
+						[key]: generate(value, {
+							...context,
+							path: [key, ...context.path],
+						}),
+					};
+				},
+				{} as Record<string, unknown>,
+			);
+		},
+		ZodRecord: (): Record<string | number | symbol, unknown> => {
+			return Array.from({ length: 3 }).reduce<
+				Record<string | number | symbol, unknown>
+			>(aggregate => {
 				return {
-					...carry,
-					[key]: generate(value, {
-						...context,
-						path: [key, ...context.path],
-					}),
+					...aggregate,
+					[generate(schema._def.keyType, context)]: generate(
+						schema._def.valueType,
+						context,
+					),
 				};
-			}, {} as Record<string, unknown>);
+			}, {} as Record<string | number | symbol, unknown>);
+		},
+		ZodMap: (): Map<unknown, unknown> => {
+			const map = new Map<unknown, unknown>();
+			while (map.size < 3) {
+				map.set(
+					generate(schema._def.keyType, context),
+					generate(schema._def.valueType, context),
+				);
+			}
+			return map;
+		},
+		ZodSet: (): Set<unknown> => {
+			const set = new Set<unknown>();
+			while (set.size < 3) {
+				set.add(generate(schema._def.valueType, context));
+			}
+			return set;
 		},
 		ZodArray: (): unknown[] => {
 			return Array.from({ length: 3 }, () =>
 				generate(schema._def.type, context),
 			);
 		},
-		ZodTuple: () => {
+		ZodTuple: (): unknown[] => {
 			return schema._def.items.map((item: ZodTypeAny) =>
 				generate(item, context),
 			);
 		},
 		ZodLiteral: () => schema._def.value,
-		ZodEnum: () => randomEnumValueGenerator(schema._def.values),
-		ZodNativeEnum: () =>
+		ZodEnum: (): unknown => randomEnumValueGenerator(schema._def.values),
+		ZodNativeEnum: (): unknown =>
 			randomEnumValueGenerator(Object.keys(schema._def.values)),
-		ZodUnion: () =>
+		ZodUnion: (): unknown =>
 			generate(
 				randomEnumValueGenerator(schema._def.options) as ZodTypeAny,
 				context,
 			),
-		ZodDiscriminatedUnion: () => {
+		ZodDiscriminatedUnion: (): unknown => {
 			const options = schema._def.options as Map<string, ZodTypeAny>;
 			return generate(
 				randomEnumValueGenerator([...options.values()]) as ZodTypeAny,
 				context,
 			);
 		},
-
-		ZodNullable: () => generate(schema._def.innerType, context),
-		ZodOptional: () => generate(schema._def.innerType, context),
+		ZodNullable: (): unknown => generate(schema._def.innerType, context),
+		ZodOptional: (): unknown => generate(schema._def.innerType, context),
 	};
 
 	const generator = zodTypeToGenerator[typeName];

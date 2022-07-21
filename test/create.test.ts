@@ -149,6 +149,51 @@ describe('create objects', () => {
 		expect(result.nested.num).toBeTypeOf('number');
 		expect(result.nested.date).toBeInstanceOf(Date);
 	});
+
+	test("creates an object with zod's api", () => {
+		const BaseTeacher = z.object({ students: z.array(z.string()) });
+		const HasID = z.object({ id: z.string() });
+		const Teacher = BaseTeacher.merge(HasID);
+
+		const result = create(Teacher);
+		expect(result).toBeTypeOf('object');
+		expect(result.id).toBeTypeOf('string');
+		expect(result.id).toContain('id');
+		expect(result.students).toHaveLength(3);
+	});
+});
+
+describe('create records', () => {
+	test('creates a record with 3 entries', () => {
+		const result = create(z.record(z.number()));
+		expect(Object.keys(result)).toHaveLength(3);
+		expect(Object.keys(result)[0]).toBeTypeOf('string');
+		expect(Object.values(result)[0]).toBeTypeOf('number');
+	});
+
+	test('creates a record with a defined key type', () => {
+		const result = create(z.record(z.number(), z.string()));
+		expect(Number(Object.keys(result)[0])).toBeTypeOf('number');
+		expect(Object.values(result)[0]).toBeTypeOf('string');
+	});
+});
+
+describe('create Maps', () => {
+	test('creates a Map with 3 entries', () => {
+		const result = create(z.map(z.string(), z.number()));
+		expect(result.size).toBe(3);
+		expect([...result.keys()][0]).toBeTypeOf('string');
+		expect([...result.values()][0]).toBeTypeOf('number');
+	});
+});
+
+describe('create Sets', () => {
+	test('creates a Set with 3 entries', () => {
+		const result = create(z.set(z.number()));
+		expect(result.size).toBe(3);
+		expect([...result.keys()][0]).toBeTypeOf('number');
+		expect([...result.values()][0]).toBeTypeOf('number');
+	});
 });
 
 describe('create arrays', () => {
