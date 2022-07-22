@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import type { ZodTypeAny } from 'zod';
 import { create } from '../src';
 import { z } from 'zod';
@@ -408,10 +408,32 @@ describe('create Functions', () => {
 	});
 });
 
-describe('create effects', () => {
-	test('invokes transforms', () => {
-		const result = create(z.number().transform(num => num.toString()));
+describe('usage with effects', () => {
+	test('does not invoke transform', () => {
+		const spy = vi.fn(() => 0);
+		const result = create(z.string().transform(spy));
+		expect(spy).not.toBeCalled();
 		expect(result).toBeTypeOf('string');
-		expect(isNaN(parseInt(result, 10))).toBeFalsy();
+	});
+
+	test('does not invoke preprocess', () => {
+		const spy = vi.fn(() => 0);
+		const result = create(z.preprocess(spy, z.string()));
+		expect(spy).not.toBeCalled();
+		expect(result).toBeTypeOf('string');
+	});
+
+	test('does not invoke refine', () => {
+		const spy = vi.fn(() => 0);
+		const result = create(z.string().refine(spy));
+		expect(spy).not.toBeCalled();
+		expect(result).toBeTypeOf('string');
+	});
+
+	test('does not invoke superRefine', () => {
+		const spy = vi.fn(() => 0);
+		const result = create(z.string().superRefine(spy));
+		expect(spy).not.toBeCalled();
+		expect(result).toBeTypeOf('string');
 	});
 });

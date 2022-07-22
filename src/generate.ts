@@ -115,9 +115,7 @@ export function generate<ZSchema extends ZodTypeAny>(
 		},
 		ZodFunction: generateNoop,
 		ZodEffects: () => {
-			return schema._def.effect.transform(
-				generate(schema._def.schema, context),
-			);
+			return generate(schema._def.schema, context);
 		},
 		ZodNullable: (): unknown => generate(schema._def.innerType, context),
 		ZodOptional: (): unknown => generate(schema._def.innerType, context),
