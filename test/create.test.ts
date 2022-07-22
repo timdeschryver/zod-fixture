@@ -22,6 +22,26 @@ describe('create strings', () => {
 		expect(create(z.string().nullish())).toBeTypeOf('string');
 		expect(create(z.string().optional())).toBeTypeOf('string');
 	});
+
+	test('creates a string with a fixed length', () => {
+		expect(create(z.string().length(5))).toHaveLength(5);
+	});
+
+	test('creates a string with a min length', () => {
+		expect(create(z.string().min(100)).length).toBeGreaterThanOrEqual(100);
+	});
+
+	test('creates a string with a max length', () => {
+		expect(create(z.string().max(2))).toHaveLength(2);
+	});
+
+	test('throws when min is greater than max', () => {
+		expect(() => create(z.string().min(50).max(40))).toThrowError();
+	});
+
+	test('throws when min is negative', () => {
+		expect(() => create(z.string().min(-1))).toThrowError();
+	});
 });
 
 describe('create numbers', () => {
@@ -31,6 +51,32 @@ describe('create numbers', () => {
 		expect(result).toBeTypeOf('number');
 		expect(result).toBeGreaterThanOrEqual(1);
 		expect(result).toBeLessThanOrEqual(500);
+	});
+
+	test('creates a number with a min value', () => {
+		expect(create(z.number().min(10_000))).toBeGreaterThanOrEqual(10_000);
+	});
+
+	test('creates a number with a negative min value', () => {
+		expect(create(z.number().min(-10))).toBeGreaterThanOrEqual(-10);
+	});
+
+	test('creates a number with a max value', () => {
+		expect(create(z.number().max(5))).toBeLessThanOrEqual(5);
+	});
+
+	test('creates a number with a negative max value', () => {
+		expect(create(z.number().max(-5))).toBeLessThanOrEqual(-5);
+	});
+
+	test('creates a number with a negative max value', () => {
+		const result = create(z.number().min(-10).max(-5));
+		expect(result).toBeGreaterThanOrEqual(-10);
+		expect(result).toBeLessThanOrEqual(-5);
+	});
+
+	test('throws when min is greater than max', () => {
+		expect(() => create(z.number().min(100).max(10))).toThrowError();
 	});
 
 	test('creates a bigint between 1 and MAX_SAFE_INTEGER', () => {
@@ -83,6 +129,26 @@ describe('create dates', () => {
 		expect(result.getTime()).toBeLessThanOrEqual(
 			new Date().getTime() + two_years,
 		);
+	});
+
+	test('creates a date with a min value', () => {
+		const result = create(z.date().min(new Date(2050, 5, 16)));
+		expect(result.getTime()).toBeGreaterThanOrEqual(
+			new Date(2050, 5, 16).getTime(),
+		);
+	});
+
+	test('creates a date with a max value', () => {
+		const result = create(z.date().max(new Date(1991, 10, 20)));
+		expect(result.getTime()).toBeLessThanOrEqual(
+			new Date(1991, 10, 20).getTime(),
+		);
+	});
+
+	test('throws when min is greater then max', () => {
+		expect(() =>
+			create(z.date().min(new Date(2025, 1, 1)).max(new Date(1991, 10, 20))),
+		).toThrow();
 	});
 
 	test('creates a nullable date', () => {

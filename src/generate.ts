@@ -1,3 +1,4 @@
+import type { Condition, ConditionBasedGenerator, Context } from './context';
 import type { ZodTypeAny, z } from 'zod';
 import {
 	generateNoop,
@@ -10,15 +11,16 @@ import {
 	generateUndefined,
 	randomEnumValueGenerator,
 } from './generators';
-import type { Context } from './context';
 
 export function generate<ZSchema extends ZodTypeAny>(
 	schema: ZSchema,
 	context: Context,
 ): z.infer<typeof schema> {
 	const typeName = schema._def.typeName;
+	const conditions = extractConditions(schema);
+
 	const zodTypeToGenerator: {
-		[zodTypeName: string]: () => unknown;
+		[zodTypeName: string]: ConditionBasedGenerator;
 	} = {
 		ZodString: generateString(context.path[0]),
 		ZodNumber: generateRandomNumber,
@@ -118,5 +120,40 @@ export function generate<ZSchema extends ZodTypeAny>(
 		throw new Error(`Missing generator for ZodType "${typeName}"`);
 	}
 
-	return generator();
+	return generator(conditions);
+}
+
+function extractConditions<ZSchema extends ZodTypeAny>(
+	schema: ZSchema,
+): Condition {
+	if (!schema._def.checks) {
+		return {};
+	}
+
+	const conditions = schema._def.checks.reduce(
+		(aggregate: Condition, check: Record<string, unknown>): Condition => {
+			switch (check.kind) {
+				case 'min':
+				case 'max':
+					return {
+						...aggregate,
+						[check.kind]: check.value,
+					} as Condition;
+				default:
+					return aggregate;
+			}
+		},
+		{},
+	);
+
+	if (
+		conditions.min !== undefined &&
+		conditions.max !== undefined &&
+		conditions.min > conditions.max
+	) {
+		throw new Error(
+			`min (${conditions.min}) can't be greater than max (${conditions.max})`,
+		);
+	}
+	return conditions;
 }
