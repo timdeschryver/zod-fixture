@@ -267,6 +267,24 @@ describe('create arrays', () => {
 		expect(create(z.array(z.string()))).toHaveLength(3);
 		expect(create(z.number().array())).toHaveLength(3);
 	});
+
+	test('creates an array with a min length', () => {
+		expect(create(z.array(z.string()).min(10))).toHaveLength(10);
+	});
+
+	test('creates an array with a max length', () => {
+		expect(create(z.array(z.string()).max(10)).length).toBeLessThanOrEqual(10);
+	});
+
+	test('creates an array between two lengths', () => {
+		const result = create(z.array(z.string()).min(6).max(10));
+		expect(result.length).toBeGreaterThanOrEqual(6);
+		expect(result.length).toBeLessThanOrEqual(10);
+	});
+
+	test('throws when min is greater than max', () => {
+		expect(() => create(z.array(z.string()).min(10).max(5))).toThrowError();
+	});
 });
 
 describe('create tuples', () => {

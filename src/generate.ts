@@ -12,6 +12,8 @@ import {
 	randomEnumValueGenerator,
 } from './generators';
 
+const default_length = 3;
+
 export function generate<ZSchema extends ZodTypeAny>(
 	schema: ZSchema,
 	context: Context,
@@ -49,7 +51,7 @@ export function generate<ZSchema extends ZodTypeAny>(
 			);
 		},
 		ZodRecord: (): Record<string | number | symbol, unknown> => {
-			return Array.from({ length: 3 }).reduce<
+			return Array.from({ length: default_length }).reduce<
 				Record<string | number | symbol, unknown>
 			>(aggregate => {
 				return {
@@ -63,7 +65,7 @@ export function generate<ZSchema extends ZodTypeAny>(
 		},
 		ZodMap: (): Map<unknown, unknown> => {
 			const map = new Map<unknown, unknown>();
-			while (map.size < 3) {
+			while (map.size < default_length) {
 				map.set(
 					generate(schema._def.keyType, context),
 					generate(schema._def.valueType, context),
@@ -73,15 +75,24 @@ export function generate<ZSchema extends ZodTypeAny>(
 		},
 		ZodSet: (): Set<unknown> => {
 			const set = new Set<unknown>();
-			while (set.size < 3) {
+			while (set.size < default_length) {
 				set.add(generate(schema._def.valueType, context));
 			}
 			return set;
 		},
-		ZodArray: (): unknown[] => {
-			return Array.from({ length: 3 }, () =>
-				generate(schema._def.type, context),
-			);
+		ZodArray: ({ min, max }: Condition): unknown[] => {
+			let length = default_length;
+			console.log({ min, max });
+			if (min !== undefined && max !== undefined) {
+				length = generateRandomNumber({ min, max });
+			} else if (min !== undefined) {
+				console.log(min);
+				length = min;
+			} else if (max !== undefined) {
+				length = max;
+			}
+
+			return Array.from({ length }, () => generate(schema._def.type, context));
 		},
 		ZodTuple: (): unknown[] => {
 			return schema._def.items.map((item: ZodTypeAny) =>
@@ -126,11 +137,15 @@ export function generate<ZSchema extends ZodTypeAny>(
 function extractConditions<ZSchema extends ZodTypeAny>(
 	schema: ZSchema,
 ): Condition {
-	if (!schema._def.checks) {
-		return {};
+	const checks = [...(schema._def.checks || [])];
+	if (schema._def.minLength) {
+		checks.push({ kind: 'min', value: schema._def.minLength.value });
+	}
+	if (schema._def.maxLength) {
+		checks.push({ kind: 'max', value: schema._def.maxLength.value });
 	}
 
-	const conditions = schema._def.checks.reduce(
+	const conditions = checks.reduce(
 		(aggregate: Condition, check: Record<string, unknown>): Condition => {
 			switch (check.kind) {
 				case 'min':
