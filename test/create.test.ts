@@ -311,3 +311,11 @@ describe('create Functions', () => {
 		expect(create(z.function())).toBeTypeOf('function');
 	});
 });
+
+describe('create effects', () => {
+	test('invokes transforms', () => {
+		const result = create(z.number().transform(num => num.toString()));
+		expect(result).toBeTypeOf('string');
+		expect(isNaN(parseInt(result, 10))).toBeFalsy();
+	});
+});
