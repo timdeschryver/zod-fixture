@@ -82,11 +82,9 @@ export function generate<ZSchema extends ZodTypeAny>(
 		},
 		ZodArray: ({ min, max }: Condition): unknown[] => {
 			let length = default_length;
-			console.log({ min, max });
 			if (min !== undefined && max !== undefined) {
 				length = generateRandomNumber({ min, max });
 			} else if (min !== undefined) {
-				console.log(min);
 				length = min;
 			} else if (max !== undefined) {
 				length = max;
@@ -149,10 +147,16 @@ function extractConditions<ZSchema extends ZodTypeAny>(
 		(aggregate: Condition, check: Record<string, unknown>): Condition => {
 			switch (check.kind) {
 				case 'min':
+					return {
+						...aggregate,
+						[check.kind]:
+							(check.value as number) + (check.inclusive === false ? 1 : 0),
+					} as Condition;
 				case 'max':
 					return {
 						...aggregate,
-						[check.kind]: check.value,
+						[check.kind]:
+							(check.value as number) + (check.inclusive === false ? -1 : 0),
 					} as Condition;
 				default:
 					return aggregate;

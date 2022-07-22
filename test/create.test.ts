@@ -55,6 +55,7 @@ describe('create numbers', () => {
 
 	test('creates a number with a min value', () => {
 		expect(create(z.number().min(10_000))).toBeGreaterThanOrEqual(10_000);
+		expect(create(z.number().gte(10_000))).toBeGreaterThanOrEqual(10_000);
 	});
 
 	test('creates a number with a negative min value', () => {
@@ -63,6 +64,7 @@ describe('create numbers', () => {
 
 	test('creates a number with a max value', () => {
 		expect(create(z.number().max(5))).toBeLessThanOrEqual(5);
+		expect(create(z.number().lte(5))).toBeLessThanOrEqual(5);
 	});
 
 	test('creates a number with a negative max value', () => {
@@ -73,6 +75,16 @@ describe('create numbers', () => {
 		const result = create(z.number().min(-10).max(-5));
 		expect(result).toBeGreaterThanOrEqual(-10);
 		expect(result).toBeLessThanOrEqual(-5);
+	});
+
+	test('creates a positive number', () => {
+		expect(create(z.number().positive())).toBeGreaterThan(0);
+		expect(create(z.number().nonnegative())).toBeGreaterThanOrEqual(0);
+	});
+
+	test('creates a negative number', () => {
+		expect(create(z.number().negative())).toBeLessThan(0);
+		expect(create(z.number().nonpositive())).toBeLessThanOrEqual(0);
 	});
 
 	test('throws when min is greater than max', () => {
