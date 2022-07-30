@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 import type { Customization } from '../src';
-import { create } from '../src';
+import { createNew } from '../src';
 import { z } from 'zod';
 
 test('creates a customization', () => {
@@ -14,20 +14,20 @@ test('creates a customization', () => {
 });
 
 test('customization sets the value based on the type', () => {
-	const result = create(z.string(), {
+	const result = createNew(z.string(), {
 		customizations: [
 			{
-				condition: (ctx): boolean => ctx.type === 'ZodString',
+				condition: (ctx): boolean => ctx.type === 'string',
 				generator: (ctx): string => `MY_CUSTOMIZATION_${ctx.type}`,
 			},
 		],
 	});
 
-	expect(result).toBe('MY_CUSTOMIZATION_ZodString');
+	expect(result).toBe('MY_CUSTOMIZATION_string');
 });
 
 test('customization sets the value based on the property name', () => {
-	const result = create(
+	const result = createNew(
 		z.object({
 			name: z.string(),
 			other: z.string(),
@@ -47,7 +47,7 @@ test('customization sets the value based on the property name', () => {
 });
 
 test('the first matching customization sets the value', () => {
-	const result = create(
+	const result = createNew(
 		z.object({
 			name: z.string(),
 			other: z.string(),

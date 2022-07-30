@@ -1,139 +1,229 @@
-import type { Condition, ConditionBasedGenerator, Context } from './context';
+import type { Condition, Context } from './context';
 import type { ZodTypeAny, z } from 'zod';
-import {
-	generateNoop,
-	generateNull,
-	generateRandomBigInt,
-	generateRandomDate,
-	generateRandomNumber,
-	generateSequenceBoolean,
-	generateString,
-	generateUndefined,
-	randomEnumValueGenerator,
-} from './generators';
-
-const default_length = 3;
+import type { CustomizationRequest } from './customizations';
+import { numberRandomizer } from './customizations';
 
 export function generate<ZSchema extends ZodTypeAny>(
 	schema: ZSchema,
 	context: Context,
 ): z.infer<typeof schema> {
-	const typeName = schema._def.typeName;
-
-	const customization = context.customizations.find(c => c.condition({propertName: context.path[0], type: typeName}))
-	if(customization) {
-		return customization.generator({propertName: context.path[0], type: typeName})
+	if (schema._def.innerType) {
+		return generate(schema._def.innerType, context);
 	}
 
-	const conditions = context.ignoreChecks ? {} : extractConditions(schema);
+	const requestFactory = extractFromZodSchema(schema);
+	const request = requestFactory.createValue(context);
+	const customization = context.customizations.find(c => c.condition(request));
+	if (customization) {
+		return customization.generator(request);
+	}
 
-	const zodTypeToGenerator: {
-		[zodTypeName: string]: ConditionBasedGenerator;
-	} = {
-		ZodString: generateString(context.path[0]),
-		ZodNumber: generateRandomNumber,
-		ZodBigInt: generateRandomBigInt,
-		ZodBoolean: generateSequenceBoolean,
-		ZodDate: generateRandomDate,
-		ZodNull: generateNull,
-		ZodUndefined: generateUndefined,
-		ZodVoid: generateNoop,
-		ZodAny: generateNull,
-		ZodUnknown: generateNull,
-		ZodNever: generateNull,
-		ZodObject: (): Record<string, unknown> => {
-			const shape = schema._def.shape();
-			return Object.entries<ZodTypeAny>(shape).reduce(
-				(aggregate, [key, value]) => {
-					return {
-						...aggregate,
-						[key]: generate(value, {
-							...context,
-							path: [key, ...context.path],
-						}),
-					};
-				},
-				{} as Record<string, unknown>,
-			);
-		},
-		ZodRecord: (): Record<string | number | symbol, unknown> => {
-			return Array.from({ length: default_length }).reduce<
-				Record<string | number | symbol, unknown>
-			>(aggregate => {
+	return null;
+}
+
+function extractFromZodSchema<ZSchema extends ZodTypeAny>(
+	schema: ZSchema,
+): { type: string; createValue: (context: Context) => CustomizationRequest } {
+	const request = (
+		type: string,
+		requestProperties?: (context: Context) => Record<string, unknown>,
+	): [string, (context: Context) => CustomizationRequest] => {
+		return [
+			type,
+			(context): CustomizationRequest => {
+				const checks = context.ignoreChecks ? {} : extractConditions(schema);
+				const properties = requestProperties?.(context) ?? {};
 				return {
-					...aggregate,
-					[generate(schema._def.keyType, context)]: generate(
-						schema._def.valueType,
-						context,
-					),
+					propertName: context.path[0],
+					type,
+					checks,
+					...properties,
 				};
-			}, {} as Record<string | number | symbol, unknown>);
-		},
-		ZodMap: (): Map<unknown, unknown> => {
-			const map = new Map<unknown, unknown>();
-			while (map.size < default_length) {
-				map.set(
-					generate(schema._def.keyType, context),
-					generate(schema._def.valueType, context),
-				);
-			}
-			return map;
-		},
-		ZodSet: (): Set<unknown> => {
-			const set = new Set<unknown>();
-			while (set.size < default_length) {
-				set.add(generate(schema._def.valueType, context));
-			}
-			return set;
-		},
-		ZodArray: ({ min, max }: Condition): unknown[] => {
-			let length = default_length;
-			if (min !== undefined && max !== undefined) {
-				length = generateRandomNumber({ min, max });
-			} else if (min !== undefined) {
-				length = min;
-			} else if (max !== undefined) {
-				length = max;
-			}
-
-			return Array.from({ length }, () => generate(schema._def.type, context));
-		},
-		ZodTuple: (): unknown[] => {
-			return schema._def.items.map((item: ZodTypeAny) =>
-				generate(item, context),
-			);
-		},
-		ZodLiteral: () => schema._def.value,
-		ZodEnum: (): unknown => randomEnumValueGenerator(schema._def.values),
-		ZodNativeEnum: (): unknown =>
-			randomEnumValueGenerator(Object.keys(schema._def.values)),
-		ZodUnion: (): unknown =>
-			generate(
-				randomEnumValueGenerator(schema._def.options) as ZodTypeAny,
-				context,
-			),
-		ZodDiscriminatedUnion: (): unknown => {
-			const options = schema._def.options as Map<string, ZodTypeAny>;
-			return generate(
-				randomEnumValueGenerator([...options.values()]) as ZodTypeAny,
-				context,
-			);
-		},
-		ZodFunction: generateNoop,
-		ZodEffects: () => {
-			return generate(schema._def.schema, context);
-		},
-		ZodNullable: (): unknown => generate(schema._def.innerType, context),
-		ZodOptional: (): unknown => generate(schema._def.innerType, context),
-		ZodNaN: () => NaN,
+			},
+		];
 	};
 
-	const generator = zodTypeToGenerator[typeName];
-	if (!generator) {
-		throw new Error(`Missing generator for ZodType "${typeName}"`);
+	const mapper: {
+		[zodType: string]: () => [
+			string,
+			(context: Context) => CustomizationRequest,
+		];
+	} = {
+		ZodString: () => request('string'),
+		ZodNumber: () => request('number'),
+		ZodBigInt: () => request('bigint'),
+		ZodBoolean: () => request('boolean'),
+		ZodObject: () =>
+			request('object', (context): Record<string, unknown> => {
+				const shape = Object.entries<ZodTypeAny>(schema._def.shape()).reduce(
+					(aggregate, [key, value]) => {
+						const map = extractFromZodSchema(value);
+						return {
+							...aggregate,
+							[key]: {
+								type: map.type,
+								create: () =>
+									generate(value, {
+										...context,
+										path: [key, ...context.path],
+									}),
+							},
+						};
+					},
+					{} as Record<string, unknown>,
+				);
+				return {
+					shape,
+				};
+			}),
+		ZodDate: () => request('date'),
+		ZodArray: () =>
+			request('array', (context): Record<string, unknown> => {
+				const { minLength, maxLength } = schema._def;
+				let length = context.defaultLength;
+
+				if (minLength !== null && maxLength !== null) {
+					if (minLength.value > maxLength.value) {
+						throw new Error(
+							`min ${minLength} can't be greater max ${maxLength}`,
+						);
+					}
+					length = numberRandomizer(minLength.value, maxLength.value);
+				} else if (minLength !== null) {
+					length = minLength.value;
+				} else if (maxLength !== null) {
+					length = maxLength.value;
+				}
+
+				return {
+					length,
+					create: () => generate(schema._def.type, context),
+				};
+			}),
+		ZodSet: () =>
+			request('set', context => {
+				return {
+					length: context.defaultLength,
+					create: () => generate(schema._def.valueType, context),
+				};
+			}),
+		ZodMap: () =>
+			request('map', context => {
+				const keyMap = extractFromZodSchema(schema._def.keyType);
+				const valueMap = extractFromZodSchema(schema._def.valueType);
+
+				return {
+					length: context.defaultLength,
+					keyType: keyMap.type,
+					keyCreate: () => generate(schema._def.keyType, context),
+					valueType: valueMap.type,
+					valueCreate: () => generate(schema._def.valueType, context),
+				};
+			}),
+		ZodRecord: () =>
+			request('record', (context): Record<string, unknown> => {
+				const keyMap = extractFromZodSchema(schema._def.keyType);
+				const valueMap = extractFromZodSchema(schema._def.valueType);
+
+				return {
+					length: context.defaultLength,
+					keyType: keyMap.type,
+					keyCreate: () => generate(schema._def.keyType, context),
+					valueType: valueMap.type,
+					valueCreate: () => generate(schema._def.valueType, context),
+				};
+			}),
+		ZodTuple: () =>
+			request('tuple', context => {
+				return {
+					items: () =>
+						schema._def.items.map(
+							(item: ZodTypeAny) => extractFromZodSchema(item).type,
+						),
+					create: () =>
+						schema._def.items.map((item: ZodTypeAny) =>
+							generate(item, context),
+						),
+				};
+			}),
+		ZodEnum: () =>
+			request(
+				'enum',
+				(): Record<string, unknown> => ({
+					possibleValues: schema._def.values ?? [],
+				}),
+			),
+		ZodNativeEnum: () =>
+			request(
+				'enum',
+				(): Record<string, unknown> => ({
+					possibleValues: Object.keys(schema._def.values ?? {}),
+				}),
+			),
+		ZodUnion: () =>
+			request('union', (context): Record<string, unknown> => {
+				return {
+					possibleTypes: schema._def.options.map(
+						(option: ZodTypeAny) => extractFromZodSchema(option).type,
+					),
+					create: (type: string): unknown => {
+						const option = schema._def.options.find(
+							(option: ZodTypeAny) =>
+								extractFromZodSchema(option).type === type,
+						);
+						if (!option) {
+							throw new Error(`Option with type ${type} does not exist`);
+						}
+						return generate(option, context);
+					},
+				};
+			}),
+		ZodDiscriminatedUnion: () =>
+			request('union', (context): Record<string, unknown> => {
+				const optionsMap = schema._def.options as Map<string, ZodTypeAny>;
+				const options = [...optionsMap.values()];
+				return {
+					possibleTypes: options.map(
+						(option: ZodTypeAny) => extractFromZodSchema(option).type,
+					),
+					create: (type: string): unknown => {
+						const option = options.find(
+							(option: ZodTypeAny) =>
+								extractFromZodSchema(option).type === type,
+						);
+						if (!option) {
+							throw new Error(`Option with type ${type} does not exist`);
+						}
+						return generate(option, context);
+					},
+				};
+			}),
+		ZodLiteral: () =>
+			request(
+				'literal',
+				(): Record<string, unknown> => ({ value: schema._def.value }),
+			),
+		ZodNaN: () => request('NaN'),
+		ZodNull: () => request('null'),
+		ZodUndefined: () => request('undefined'),
+		ZodVoid: () => request('void'),
+		ZodFunction: () => request('function'),
+		ZodAny: () => request('any'),
+		ZodUnknown: () => request('unknown'),
+		ZodNever: () => request('never'),
+		ZodEffects: () => request(extractFromZodSchema(schema._def.schema).type),
+	};
+
+	const zodToRequest = mapper[schema._def.typeName];
+	if (!zodToRequest) {
+		throw new Error(`Missing type for ZodType "${schema._def.typeName}"`);
 	}
 
-	return generator(conditions);
+	const [type, createValue] = zodToRequest();
+	return {
+		type,
+		createValue,
+	};
 }
 
 function extractConditions<ZSchema extends ZodTypeAny>(

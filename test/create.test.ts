@@ -1,6 +1,6 @@
+import { create, createNew } from '../src';
 import { describe, expect, test, vi } from 'vitest';
 import type { ZodTypeAny } from 'zod';
-import { create } from '../src';
 import { z } from 'zod';
 
 test('throws on invalid schema type', () => {
@@ -9,11 +9,11 @@ test('throws on invalid schema type', () => {
 			typeName: 'I_DONT_EXIST',
 		},
 	} as ZodTypeAny;
-	expect(() => create(zodType)).toThrowError(zodType._def.typeName);
+	expect(() => createNew(zodType)).toThrowError(zodType._def.typeName);
 });
 
 test('disables checks added by zod', () => {
-	const result = create(
+	const result = createNew(
 		z.object({
 			number: z.number().min(9000),
 			string: z.string().min(9000),
@@ -27,39 +27,39 @@ test('disables checks added by zod', () => {
 
 describe('create strings', () => {
 	test('creates a string', () => {
-		expect(create(z.string())).toBeTypeOf('string');
+		expect(createNew(z.string())).toBeTypeOf('string');
 	});
 
 	test('creates a nullable string', () => {
-		expect(create(z.string().nullable())).toBeTypeOf('string');
-		expect(create(z.string().nullish())).toBeTypeOf('string');
-		expect(create(z.string().optional())).toBeTypeOf('string');
+		expect(createNew(z.string().nullable())).toBeTypeOf('string');
+		expect(createNew(z.string().nullish())).toBeTypeOf('string');
+		expect(createNew(z.string().optional())).toBeTypeOf('string');
 	});
 
 	test('creates a string with a fixed length', () => {
-		expect(create(z.string().length(5))).toHaveLength(5);
+		expect(createNew(z.string().length(5))).toHaveLength(5);
 	});
 
 	test('creates a string with a min length', () => {
-		expect(create(z.string().min(100)).length).toBeGreaterThanOrEqual(100);
+		expect(createNew(z.string().min(100)).length).toBeGreaterThanOrEqual(100);
 	});
 
 	test('creates a string with a max length', () => {
-		expect(create(z.string().max(2))).toHaveLength(2);
+		expect(createNew(z.string().max(2))).toHaveLength(2);
 	});
 
 	test('throws when min is greater than max', () => {
-		expect(() => create(z.string().min(50).max(40))).toThrowError();
+		expect(() => createNew(z.string().min(50).max(40))).toThrowError();
 	});
 
 	test('throws when min is negative', () => {
-		expect(() => create(z.string().min(-1))).toThrowError();
+		expect(() => createNew(z.string().min(-1))).toThrowError();
 	});
 });
 
 describe('create numbers', () => {
 	test('creates a number between 1 and 500', () => {
-		const result = create(z.number());
+		const result = createNew(z.number());
 
 		expect(result).toBeTypeOf('number');
 		expect(result).toBeGreaterThanOrEqual(1);
@@ -121,14 +121,14 @@ describe('create numbers', () => {
 
 describe('create booleans', () => {
 	test('creates a boolean', () => {
-		expect(create(z.boolean())).toBeTypeOf('boolean');
+		expect(createNew(z.boolean())).toBeTypeOf('boolean');
 	});
 
 	test('alternates between boolean values', () => {
-		const one = create(z.boolean());
-		const two = create(z.boolean());
-		const three = create(z.boolean());
-		const four = create(z.boolean());
+		const one = createNew(z.boolean());
+		const two = createNew(z.boolean());
+		const three = createNew(z.boolean());
+		const four = createNew(z.boolean());
 
 		expect(one).not.toBe(two);
 		expect(one).toBe(three);
@@ -136,16 +136,16 @@ describe('create booleans', () => {
 	});
 
 	test('creates a nullable boolean', () => {
-		expect(create(z.boolean().nullable())).toBeTypeOf('boolean');
-		expect(create(z.boolean().nullish())).toBeTypeOf('boolean');
-		expect(create(z.boolean().optional())).toBeTypeOf('boolean');
+		expect(createNew(z.boolean().nullable())).toBeTypeOf('boolean');
+		expect(createNew(z.boolean().nullish())).toBeTypeOf('boolean');
+		expect(createNew(z.boolean().optional())).toBeTypeOf('boolean');
 	});
 });
 
 describe('create dates', () => {
 	const two_years = 31536000000 * 2;
 	test('creates a date within a range of min plus 2 years from today', () => {
-		const result = create(z.date());
+		const result = createNew(z.date());
 
 		expect(result).toBeInstanceOf(Date);
 		expect(result.getTime()).toBeGreaterThanOrEqual(
@@ -157,14 +157,14 @@ describe('create dates', () => {
 	});
 
 	test('creates a date with a min value', () => {
-		const result = create(z.date().min(new Date(2050, 5, 16)));
+		const result = createNew(z.date().min(new Date(2050, 5, 16)));
 		expect(result.getTime()).toBeGreaterThanOrEqual(
 			new Date(2050, 5, 16).getTime(),
 		);
 	});
 
 	test('creates a date with a max value', () => {
-		const result = create(z.date().max(new Date(1991, 10, 20)));
+		const result = createNew(z.date().max(new Date(1991, 10, 20)));
 		expect(result.getTime()).toBeLessThanOrEqual(
 			new Date(1991, 10, 20).getTime(),
 		);
@@ -172,28 +172,28 @@ describe('create dates', () => {
 
 	test('throws when min is greater then max', () => {
 		expect(() =>
-			create(z.date().min(new Date(2025, 1, 1)).max(new Date(1991, 10, 20))),
+			createNew(z.date().min(new Date(2025, 1, 1)).max(new Date(1991, 10, 20))),
 		).toThrow();
 	});
 
 	test('creates a nullable date', () => {
-		expect(create(z.date().nullable())).toBeInstanceOf(Date);
-		expect(create(z.date().nullish())).toBeInstanceOf(Date);
-		expect(create(z.date().optional())).toBeInstanceOf(Date);
+		expect(createNew(z.date().nullable())).toBeInstanceOf(Date);
+		expect(createNew(z.date().nullish())).toBeInstanceOf(Date);
+		expect(createNew(z.date().optional())).toBeInstanceOf(Date);
 	});
 });
 
 describe('create empty types', () => {
 	test('creates an undefined', () => {
-		expect(create(z.undefined())).toBeUndefined();
+		expect(createNew(z.undefined())).toBeUndefined();
 	});
 
 	test('creates a null', () => {
-		expect(create(z.null())).toBeNull();
+		expect(createNew(z.null())).toBeNull();
 	});
 
 	test('creates a void', () => {
-		const result = create(z.void());
+		const result = createNew(z.void());
 		expect(result).toBeTypeOf('function');
 		expect((result as unknown as () => void)()).toBeUndefined();
 	});
@@ -201,31 +201,46 @@ describe('create empty types', () => {
 
 describe('create catch-all types', () => {
 	test('creates an any as null', () => {
-		expect(create(z.any())).toBeNull();
+		expect(createNew(z.any())).toBeNull();
 	});
 
 	test('creates an unknown as null', () => {
-		expect(create(z.unknown())).toBeNull();
+		expect(createNew(z.unknown())).toBeNull();
 	});
 
 	test('creates never as null', () => {
-		expect(create(z.never())).toBeNull();
+		expect(createNew(z.never())).toBeNull();
 	});
 });
 
 describe('create objects', () => {
 	test('creates an empty object', () => {
-		expect(create(z.object({}))).toBeTypeOf('object');
+		expect(createNew(z.object({}))).toBeTypeOf('object');
 	});
 
 	test('creates a nullable empty object', () => {
-		expect(create(z.object({}).nullable())).toBeTypeOf('object');
-		expect(create(z.object({}).optional())).toBeTypeOf('object');
-		expect(create(z.object({}).nullish())).toBeTypeOf('object');
+		expect(createNew(z.object({}).nullable())).toBeTypeOf('object');
+		expect(createNew(z.object({}).optional())).toBeTypeOf('object');
+		expect(createNew(z.object({}).nullish())).toBeTypeOf('object');
+	});
+
+	test('creates an object', () => {
+		const result = createNew(
+			z.object({
+				str: z.string(),
+				num: z.number(),
+				date: z.date(),
+			}),
+		);
+		expect(result).toBeTypeOf('object');
+		expect(result.str).toBeTypeOf('string');
+		expect(result.str).toContain('str');
+		expect(result.num).toBeTypeOf('number');
+		expect(result.date).toBeInstanceOf(Date);
 	});
 
 	test('creates a nested object', () => {
-		const result = create(
+		const result = createNew(
 			z.object({
 				str: z.string(),
 				nested: z.object({
@@ -246,7 +261,7 @@ describe('create objects', () => {
 		const HasID = z.object({ id: z.string() });
 		const Teacher = BaseTeacher.merge(HasID);
 
-		const result = create(Teacher);
+		const result = createNew(Teacher);
 		expect(result).toBeTypeOf('object');
 		expect(result.id).toBeTypeOf('string');
 		expect(result.id).toContain('id');
@@ -254,16 +269,21 @@ describe('create objects', () => {
 	});
 });
 
-describe('create records', () => {
+describe('create Records', () => {
 	test('creates a record with 3 entries', () => {
-		const result = create(z.record(z.number()));
+		const result = createNew(z.record(z.number()));
 		expect(Object.keys(result)).toHaveLength(3);
 		expect(Object.keys(result)[0]).toBeTypeOf('string');
 		expect(Object.values(result)[0]).toBeTypeOf('number');
 	});
 
+	test('creates a record with a default length', () => {
+		const result = createNew(z.record(z.number()), { defaultLength: 8 });
+		expect(Object.keys(result)).toHaveLength(8);
+	});
+
 	test('creates a record with a defined key type', () => {
-		const result = create(z.record(z.number(), z.string()));
+		const result = createNew(z.record(z.number(), z.string()));
 		expect(Number(Object.keys(result)[0])).toBeTypeOf('number');
 		expect(Object.values(result)[0]).toBeTypeOf('string');
 	});
@@ -271,50 +291,73 @@ describe('create records', () => {
 
 describe('create Maps', () => {
 	test('creates a Map with 3 entries', () => {
-		const result = create(z.map(z.string(), z.number()));
+		const result = createNew(z.map(z.string(), z.number()));
 		expect(result.size).toBe(3);
 		expect([...result.keys()][0]).toBeTypeOf('string');
 		expect([...result.values()][0]).toBeTypeOf('number');
+	});
+
+	test('creates a Map with a default length', () => {
+		const result = createNew(z.map(z.string(), z.number()), {
+			defaultLength: 2,
+		});
+		expect(result.size).toBe(2);
 	});
 });
 
 describe('create Sets', () => {
 	test('creates a Set with 3 entries', () => {
-		const result = create(z.set(z.number()));
+		const result = createNew(z.set(z.number()));
 		expect(result.size).toBe(3);
 		expect([...result.keys()][0]).toBeTypeOf('number');
 		expect([...result.values()][0]).toBeTypeOf('number');
 	});
+
+	test('creates a Set with a default length', () => {
+		const result = createNew(z.set(z.number()), { defaultLength: 6 });
+		expect(result.size).toBe(6);
+	});
 });
 
-describe('create arrays', () => {
+describe('create Arrays', () => {
 	test('creates an array with the length of 3', () => {
-		expect(create(z.array(z.string()))).toHaveLength(3);
-		expect(create(z.number().array())).toHaveLength(3);
+		expect(createNew(z.array(z.string()))).toHaveLength(3);
+		expect(createNew(z.number().array())).toHaveLength(3);
+	});
+
+	test('creates an array with a default length', () => {
+		expect(createNew(z.array(z.string()), { defaultLength: 7 })).toHaveLength(
+			7,
+		);
 	});
 
 	test('creates an array with a min length', () => {
-		expect(create(z.array(z.string()).min(10))).toHaveLength(10);
+		const result = createNew(z.array(z.string()).min(10), { defaultLength: 7 });
+		expect(result).toHaveLength(10);
 	});
 
 	test('creates an array with a max length', () => {
-		expect(create(z.array(z.string()).max(10)).length).toBeLessThanOrEqual(10);
+		expect(
+			createNew(z.array(z.string()).max(10), { defaultLength: 7 }).length,
+		).toBeLessThanOrEqual(10);
 	});
 
 	test('creates an array between two lengths', () => {
-		const result = create(z.array(z.string()).min(6).max(10));
+		const result = createNew(z.array(z.string()).min(6).max(10), {
+			defaultLength: 20,
+		});
 		expect(result.length).toBeGreaterThanOrEqual(6);
 		expect(result.length).toBeLessThanOrEqual(10);
 	});
 
 	test('throws when min is greater than max', () => {
-		expect(() => create(z.array(z.string()).min(10).max(5))).toThrowError();
+		expect(() => createNew(z.array(z.string()).min(10).max(5))).toThrowError();
 	});
 });
 
-describe('create tuples', () => {
+describe('create Tuples', () => {
 	test('creates a tuple and preserves types', () => {
-		const result = create(
+		const result = createNew(
 			z.tuple([
 				z.string(), // name
 				z.number(), // jersey number
@@ -331,32 +374,9 @@ describe('create tuples', () => {
 	});
 });
 
-describe('create unions', () => {
-	test('creates a union value', () => {
-		expect(typeof create(z.union([z.string(), z.number()]))).toMatch(
-			/^string|number$/,
-		);
-	});
-
-	test('creates a union value with the or syntax', () => {
-		expect(typeof create(z.string().or(z.number()))).toMatch(/^string|number$/);
-	});
-
-	test('creates a discriminated union', () => {
-		const result = create(
-			z.discriminatedUnion('type', [
-				z.object({ type: z.literal('a'), a: z.string() }),
-				z.object({ type: z.literal('b'), b: z.string() }),
-			]),
-		);
-		expect(result.type).toBeTypeOf('string');
-		expect(result.type).toMatch(/^a|b$/);
-	});
-});
-
 describe('create enums', () => {
 	test('using zod enums creates an enum and returns a random value', () => {
-		expect(create(z.enum(['Salmon', 'Tuna', 'Trout']))).toMatch(
+		expect(createNew(z.enum(['Salmon', 'Tuna', 'Trout']))).toMatch(
 			/^Salmon|Tuna|Trout$/,
 		);
 	});
@@ -367,7 +387,7 @@ describe('create enums', () => {
 			Banana,
 		}
 
-		expect(create(z.nativeEnum(Fruits))).toMatch(/^0|1|Apple|Banana$/);
+		expect(createNew(z.nativeEnum(Fruits))).toMatch(/^0|1|Apple|Banana$/);
 	});
 
 	test('using string native enums creates an enum and returns a random value', () => {
@@ -377,7 +397,7 @@ describe('create enums', () => {
 			Cantaloupe = 3, // you can mix numerical and string enums
 		}
 
-		expect(create(z.nativeEnum(Fruits))).toMatch(
+		expect(createNew(z.nativeEnum(Fruits))).toMatch(
 			/^apple|banana|Apple|Banana|Cantaloupe|3$/,
 		);
 	});
@@ -389,63 +409,88 @@ describe('create enums', () => {
 			Cantaloupe: 3,
 		} as const;
 
-		expect(create(z.nativeEnum(Fruits))).toMatch(
+		expect(createNew(z.nativeEnum(Fruits))).toMatch(
 			/^apple|banana|Apple|Banana|Cantaloupe|3$/,
 		);
 	});
 });
 
+describe('create unions', () => {
+	test('creates a union value', () => {
+		expect(typeof createNew(z.union([z.string(), z.number()]))).toMatch(
+			/^string|number$/,
+		);
+	});
+
+	test('creates a union value with the or syntax', () => {
+		expect(typeof createNew(z.string().or(z.number()))).toMatch(
+			/^string|number$/,
+		);
+	});
+
+	test('creates a discriminated union', () => {
+		const result = createNew(
+			z.discriminatedUnion('type', [
+				z.object({ type: z.literal('a'), a: z.string() }),
+				z.object({ type: z.literal('b'), b: z.string() }),
+			]),
+		);
+		expect(result.type).toBeTypeOf('string');
+		expect(result.type).toMatch(/^a|b$/);
+	});
+});
+
 describe('create literals', () => {
 	test('creates a string literal and returns its value', () => {
-		expect(create(z.literal('tuna'))).toBe('tuna');
+		expect(createNew(z.literal('tuna'))).toBe('tuna');
 	});
 
 	test('creates a number literal and returns its value', () => {
-		expect(create(z.literal(12))).toBe(12);
+		expect(createNew(z.literal(12))).toBe(12);
 	});
 
 	test('creates a boolean literal and returns its value', () => {
-		expect(create(z.literal(true))).toBe(true);
+		expect(createNew(z.literal(true))).toBe(true);
 	});
 });
 
 describe('create NaNs', () => {
 	test('creates a NaN', () => {
-		expect(Number.isNaN(create(z.nan()))).toBeTruthy();
+		expect(Number.isNaN(createNew(z.nan()))).toBeTruthy();
 	});
 });
 
 describe('create Functions', () => {
 	test('creates a function', () => {
-		expect(create(z.function())).toBeTypeOf('function');
+		expect(createNew(z.function())).toBeTypeOf('function');
 	});
 });
 
 describe('usage with effects', () => {
 	test('does not invoke transform', () => {
 		const spy = vi.fn(() => 0);
-		const result = create(z.string().transform(spy));
+		const result = createNew(z.string().transform(spy));
 		expect(spy).not.toBeCalled();
 		expect(result).toBeTypeOf('string');
 	});
 
 	test('does not invoke preprocess', () => {
 		const spy = vi.fn(() => 0);
-		const result = create(z.preprocess(spy, z.string()));
+		const result = createNew(z.preprocess(spy, z.string()));
 		expect(spy).not.toBeCalled();
 		expect(result).toBeTypeOf('string');
 	});
 
 	test('does not invoke refine', () => {
 		const spy = vi.fn(() => 0);
-		const result = create(z.string().refine(spy));
+		const result = createNew(z.string().refine(spy));
 		expect(spy).not.toBeCalled();
 		expect(result).toBeTypeOf('string');
 	});
 
 	test('does not invoke superRefine', () => {
 		const spy = vi.fn(() => 0);
-		const result = create(z.string().superRefine(spy));
+		const result = createNew(z.string().superRefine(spy));
 		expect(spy).not.toBeCalled();
 		expect(result).toBeTypeOf('string');
 	});
