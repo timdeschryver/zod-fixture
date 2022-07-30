@@ -19,6 +19,12 @@ export function generate<ZSchema extends ZodTypeAny>(
 	context: Context,
 ): z.infer<typeof schema> {
 	const typeName = schema._def.typeName;
+
+	const customization = context.customizations.find(c => c.condition({propertName: context.path[0], type: typeName}))
+	if(customization) {
+		return customization.generator({propertName: context.path[0], type: typeName})
+	}
+
 	const conditions = context.ignoreChecks ? {} : extractConditions(schema);
 
 	const zodTypeToGenerator: {
