@@ -12,6 +12,19 @@ test('throws on invalid schema type', () => {
 	expect(() => create(zodType)).toThrowError(zodType._def.typeName);
 });
 
+test('disables checks added by zod', () => {
+	const result = create(
+		z.object({
+			number: z.number().min(9000),
+			string: z.string().min(9000),
+		}),
+		{ ignoreChecks: true },
+	);
+
+	expect(result.number).toBeLessThan(9000);
+	expect(result.string.length).toBeLessThan(9000);
+});
+
 describe('create strings', () => {
 	test('creates a string', () => {
 		expect(create(z.string())).toBeTypeOf('string');

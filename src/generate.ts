@@ -19,7 +19,7 @@ export function generate<ZSchema extends ZodTypeAny>(
 	context: Context,
 ): z.infer<typeof schema> {
 	const typeName = schema._def.typeName;
-	const conditions = extractConditions(schema);
+	const conditions = context.ignoreChecks ? {} : extractConditions(schema);
 
 	const zodTypeToGenerator: {
 		[zodTypeName: string]: ConditionBasedGenerator;
