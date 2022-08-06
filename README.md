@@ -1,14 +1,15 @@
 # zod-fixture
 
-Create test fixtures based on a [zod](https://github.com/colinhacks/zod) schema.
+Creating test fixtures should be easy.
+`zod-fixture` helps with the arrange phase of your tests by creating test fixtures based on a [zod](https://github.com/colinhacks/zod) schema.
 
 ## Example
 
-Pass a zod schema to the `create` method.
+Pass a zod schema to the `createFixture` method.
 
 ```ts
 import { z } from 'zod';
-import { create } from 'zod-fixture';
+import { createFixture } from 'zod-fixture';
 
 const PersonSchema = z.object({
 	name: z.string(),
@@ -22,7 +23,7 @@ const PersonSchema = z.object({
 	totalVisits: z.number(),
 });
 
-const person = create(PersonSchema);
+const person = createFixture(PersonSchema);
 ```
 
 Gives you the following value for `person`:
@@ -56,11 +57,11 @@ Gives you the following value for `person`:
 
 ## Customizations
 
-To change it's behavior you can create customizations.
+To change it's behavior you can create your own customizations.
 
 ```ts
 import { z } from 'zod';
-import { create, numberRandomizeCustomization } from 'zod-fixture';
+import { createFixture, numberRandomizeCustomization } from 'zod-fixture';
 import type { Customization } from 'zod-fixture';
 
 const numberCustomization = numberRandomizeCustomization(0, 5);
@@ -88,7 +89,7 @@ const PersonSchema = z.object({
 	totalVisits: z.number(),
 });
 
-const person = create(PersonSchema, {
+const person = createFixture(PersonSchema, {
 	defaultLength: 1,
 	customizations: [numberCustomization, addressCustomization],
 });
@@ -110,3 +111,7 @@ Gives us the following person:
 	"totalVisits": 3
 }
 ```
+
+## Credits
+
+This package is inspired on [AutoFixture](https://github.com/AutoFixture/AutoFixture).

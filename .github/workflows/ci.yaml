@@ -45,14 +45,9 @@ jobs:
         uses: cycjimmy/semantic-release-action@v3
         with:
           semantic_version: 16
-          dry_run: true
           branches: |
             [
-              'placeholder-branch',
-              {
-                name: 'main',
-                prerelease: true
-              }
+              'main'
             ]
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

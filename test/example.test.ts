@@ -1,4 +1,4 @@
-import { create, numberRandomizeCustomization } from '../src';
+import { createFixture, numberRandomizeCustomization } from '../src';
 import { expect, test } from 'vitest';
 import type { Customization } from '../src';
 import { z } from 'zod';
@@ -16,7 +16,7 @@ test('creates a fixture', () => {
 		totalVisits: z.number(),
 	});
 
-	expect(() => create(PersonSchema)).not.toThrow();
+	expect(() => createFixture(PersonSchema)).not.toThrow();
 });
 
 test('creates a fixture with customizations', () => {
@@ -46,7 +46,7 @@ test('creates a fixture with customizations', () => {
 	});
 
 	expect(() =>
-		create(PersonSchema, {
+		createFixture(PersonSchema, {
 			defaultLength: 1,
 			customizations: [numberCustomization, addressCustomization],
 		}),

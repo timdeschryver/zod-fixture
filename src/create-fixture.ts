@@ -51,7 +51,7 @@ const defaultCustomizations = [
 	unionRandomizeCustomization() as Customization<Record<string, unknown>>,
 ];
 
-export function create<ZSchema extends ZodTypeAny>(
+export function createFixture<ZSchema extends ZodTypeAny>(
 	schema: ZSchema,
 	{
 		ignoreChecks = false,

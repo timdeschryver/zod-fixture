@@ -1,2 +1,2 @@
-export { create, create as createNew } from './create';
+export { createFixture } from './create-fixture';
 export * from './customizations';
