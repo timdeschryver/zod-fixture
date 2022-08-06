@@ -1,31 +1,49 @@
 {
-  "name": "zod-fixture",
-  "version": "0.0.0",
-  "description": "Creating fixtures based on zod schemas",
-  "scripts": {
-    "test": "vitest",
-    "test:coverage": "vitest run --coverage",
-    "lint": "eslint . --max-warnings 0",
-    "pre-commit": "npm run lint && npm run test:coverage",
-    "prepare": "git config core.hookspath .githooks"
-  },
-  "type": "module",
-  "keywords": [
-    "zod",
-    "fixtures"
-  ],
-  "author": "Tim Deschryver",
-  "license": "MIT",
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.30.7",
-    "@typescript-eslint/parser": "^5.30.7",
-    "c8": "^7.12.0",
-    "eslint": "^8.20.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-import": "^2.26.0",
-    "prettier": "^2.7.1",
-    "typescript": "^4.7.4",
-    "vitest": "^0.18.0",
-    "zod": "^3.17.10"
-  }
+	"name": "zod-fixture",
+	"version": "0.0.0",
+	"description": "Creating fixtures based on zod schemas",
+	"scripts": {
+		"test": "vitest",
+		"test:coverage": "vitest run --coverage",
+		"build": "vite build",
+		"lint": "eslint . --max-warnings 0",
+		"pre-commit": "npm run lint && npm run test:coverage",
+		"prepare": "git config core.hookspath .githooks"
+	},
+	"files": [
+		"dist"
+	],
+	"main": "./dist/zod-fixture.umd.js",
+	"module": "./dist/zod-fixture.es.js",
+	"exports": {
+		".": {
+			"import": "./dist/zod-fixture.es.js",
+			"require": "./dist/zod-fixture.umd.js"
+		}
+	},
+	"types": "./dist/index.d.ts",
+	"type": "module",
+	"keywords": [
+		"zod",
+		"fixtures"
+	],
+	"author": "Tim Deschryver",
+	"license": "MIT",
+	"peerDependencies": {
+		"zod": ">=3.0.0"
+	},
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^5.30.7",
+		"@typescript-eslint/parser": "^5.30.7",
+		"c8": "^7.12.0",
+		"eslint": "^8.20.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-import": "^2.26.0",
+		"prettier": "^2.7.1",
+		"typescript": "^4.7.4",
+		"vite": "^3.0.4",
+		"vite-plugin-dts": "^1.4.1",
+		"vitest": "^0.18.0",
+		"zod": "^3.17.10"
+	}
 }
