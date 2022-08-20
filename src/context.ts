@@ -8,6 +8,3 @@ export interface Context {
 }
 
 export type Condition = Record<string, number>;
-export type ConditionBasedGenerator<Result = unknown> = (
-	conditions: Condition,
-) => Result;

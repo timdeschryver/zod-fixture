@@ -3,6 +3,8 @@
 Creating test fixtures should be easy.
 `zod-fixture` helps with the arrange phase of your tests by creating test fixtures based on a [zod](https://github.com/colinhacks/zod) schema.
 
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/vitejs-vite-4nsv9h?file=src/preview.ts)
+
 ## Example
 
 Pass a zod schema to the `createFixture` method.
