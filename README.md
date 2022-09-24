@@ -114,6 +114,12 @@ Gives us the following person:
 }
 ```
 
+## Blog posts
+
+- [Why we should verify HTTP response bodies, and why we should use zod for this](https://timdeschryver.dev/blog/why-we-should-verify-http-response-bodies-and-why-we-should-use-zod-for-this)
+- [How zod-fixture can help with your test setups](https://timdeschryver.dev/blog/how-zod-fixture-can-help-with-your-test-setups)
+- [Using zod-fixture with MSW to generate mocked API responses](https://timdeschryver.dev/blog/using-zod-fixture-with-msw-to-generate-mocked-api-responses)
+
 ## Credits
 
 This package is inspired on [AutoFixture](https://github.com/AutoFixture/AutoFixture).
