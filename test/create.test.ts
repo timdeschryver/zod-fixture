@@ -275,6 +275,16 @@ describe('create objects', () => {
 		expect(result.id).toContain('id');
 		expect(result.students).toHaveLength(3);
 	});
+
+	test('creates object with optional value ', () => {
+		const SampleWithOptionalValueSchema = z.object({
+			name: z.string().optional(),
+			modify: z.boolean().optional(),
+		});
+		expect(() => {
+			createFixture(SampleWithOptionalValueSchema);
+		}).not.toThrow();
+	});
 });
 
 describe('create Records', () => {

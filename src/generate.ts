@@ -7,10 +7,6 @@ export function generate<ZSchema extends ZodTypeAny>(
 	schema: ZSchema,
 	context: Context,
 ): z.infer<typeof schema> {
-	if (schema._def.innerType) {
-		return generate(schema._def.innerType, context);
-	}
-
 	const requestFactory = extractFromZodSchema(schema);
 	const request = requestFactory.createValue(context);
 	const customization = context.customizations.find(c => c.condition(request));
@@ -24,6 +20,10 @@ export function generate<ZSchema extends ZodTypeAny>(
 function extractFromZodSchema<ZSchema extends ZodTypeAny>(
 	schema: ZSchema,
 ): { type: string; createValue: (context: Context) => CustomizationRequest } {
+	if (schema._def.innerType) {
+		return extractFromZodSchema(schema._def.innerType);
+	}
+
 	const request = (
 		type: string,
 		requestProperties?: (context: Context) => Record<string, unknown>,
