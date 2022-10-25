@@ -154,12 +154,15 @@ function extractFromZodSchema<ZSchema extends ZodTypeAny>(
 				}),
 			),
 		ZodNativeEnum: () =>
-			request(
-				'enum',
-				(): Record<string, unknown> => ({
-					possibleValues: Object.keys(schema._def.values ?? {}),
-				}),
-			),
+			request('enum', (): Record<string, unknown> => {
+				/** See https://blog.oyam.dev/typescript-enum-values/ */
+				const enumObject = schema._def.values;
+				return {
+					possibleValues: Object.keys(enumObject ?? {})
+						.filter(key => Number.isNaN(Number(key)))
+						.map(key => enumObject[key]),
+				};
+			}),
 		ZodUnion: () =>
 			request('union', (context): Record<string, unknown> => {
 				return {
