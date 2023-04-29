@@ -17,7 +17,6 @@ import {
 	recordCustomization,
 	setCustomization,
 	stringCustomization,
-	stringZodSchemaCustomization,
 	undefinedCustomization,
 	unionRandomizeCustomization,
 } from './customizations';
@@ -27,7 +26,6 @@ import { tupleCustomization } from './customizations/tuple-customization';
 
 const defaultCustomizations = [
 	stringCustomization(),
-	stringZodSchemaCustomization(),
 	bigIntRandomizeCustomization(),
 	numberRandomizeCustomization(),
 	numberRandomizeZodSchemaCustomization(),

@@ -262,6 +262,11 @@ function extractConditions<ZSchema extends ZodTypeAny>(
 						['min']: check.value,
 						['max']: check.value,
 					} as Condition;
+				case 'uuid':
+					return {
+						...aggregate,
+						['uuid']: true,
+					} as Condition;
 				default:
 					return aggregate;
 			}
@@ -278,5 +283,6 @@ function extractConditions<ZSchema extends ZodTypeAny>(
 			`min (${conditions.min}) can't be greater than max (${conditions.max})`,
 		);
 	}
+
 	return conditions;
 }

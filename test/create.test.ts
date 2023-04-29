@@ -57,6 +57,10 @@ describe('create strings', () => {
 	test('throws when min is negative', () => {
 		expect(() => createFixture(z.string().min(-1))).toThrowError();
 	});
+
+	test('creates a string that is a uuid', () => {
+		expect(createFixture(z.string().uuid())).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+	});
 });
 
 describe('create numbers', () => {
