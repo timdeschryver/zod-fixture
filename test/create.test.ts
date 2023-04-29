@@ -59,7 +59,9 @@ describe('create strings', () => {
 	});
 
 	test('creates a string that is a uuid', () => {
-		expect(createFixture(z.string().uuid())).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+		expect(createFixture(z.string().uuid())).toMatch(
+			/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+		);
 	});
 });
 
@@ -287,6 +289,18 @@ describe('create objects', () => {
 		});
 		expect(() => {
 			createFixture(SampleWithOptionalValueSchema);
+		}).not.toThrow();
+	});
+
+	test('creates object with transform', () => {
+		const schema = z
+			.object({
+				v: z.string(),
+			})
+			.transform(v => v);
+
+		expect(() => {
+			createFixture(schema);
 		}).not.toThrow();
 	});
 });

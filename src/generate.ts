@@ -214,7 +214,11 @@ function extractFromZodSchema<ZSchema extends ZodTypeAny>(
 		ZodAny: () => request('any'),
 		ZodUnknown: () => request('unknown'),
 		ZodNever: () => request('never'),
-		ZodEffects: () => request(extractFromZodSchema(schema._def.schema).type),
+		ZodEffects: () => {
+			const { type, createValue } = extractFromZodSchema(schema._def.schema);
+
+			return [type, createValue];
+		},
 	};
 
 	const zodToRequest = mapper[schema._def.typeName];
@@ -233,7 +237,7 @@ function extractConditions<ZSchema extends ZodTypeAny>(
 	schema: ZSchema,
 ): Condition {
 	const checks = [...(schema._def.checks || [])];
-	
+
 	if (schema._def.minLength) {
 		checks.push({ kind: 'min', value: schema._def.minLength.value });
 	}
