@@ -233,6 +233,7 @@ function extractConditions<ZSchema extends ZodTypeAny>(
 	schema: ZSchema,
 ): Condition {
 	const checks = [...(schema._def.checks || [])];
+	
 	if (schema._def.minLength) {
 		checks.push({ kind: 'min', value: schema._def.minLength.value });
 	}
@@ -254,6 +255,12 @@ function extractConditions<ZSchema extends ZodTypeAny>(
 						...aggregate,
 						[check.kind]:
 							(check.value as number) + (check.inclusive === false ? -1 : 0),
+					} as Condition;
+				case 'length':
+					return {
+						...aggregate,
+						['min']: check.value,
+						['max']: check.value,
 					} as Condition;
 				default:
 					return aggregate;
