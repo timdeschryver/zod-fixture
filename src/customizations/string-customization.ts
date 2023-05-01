@@ -1,4 +1,6 @@
 import type { Customization } from './customization';
+import { createId } from '@paralleldrive/cuid2';
+import cuid from 'cuid';
 
 export const stringCustomization = (): Customization => {
 	return {
@@ -6,6 +8,14 @@ export const stringCustomization = (): Customization => {
 		generator: ({ propertName, checks = {} }): string => {
 			if(checks['uuid']) {
 				return uuid();
+			}
+
+			if(checks['cuid']) {
+				return cuid();
+			}
+
+			if(checks['cuid2']) {
+				return createId();
 			}
 
 			if(checks['min'] !== undefined || checks['max'] !== undefined) {

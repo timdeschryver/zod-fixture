@@ -45,5 +45,9 @@
 		"vite-plugin-dts": "^2.3.0",
 		"vitest": "^0.30.1",
 		"zod": "^3.21.4"
+	},
+	"dependencies": {
+		"@paralleldrive/cuid2": "^2.2.0",
+		"cuid": "^3.0.0"
 	}
 }

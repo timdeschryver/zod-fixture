@@ -1,6 +1,8 @@
 import { describe, expect, test, vi } from 'vitest';
 import type { ZodTypeAny } from 'zod';
 import { createFixture } from '../src';
+import { isCuid } from 'cuid';
+import { isCuid as isCuid2 } from '@paralleldrive/cuid2';
 import { z } from 'zod';
 
 test('throws on invalid schema type', () => {
@@ -60,6 +62,14 @@ describe('create strings', () => {
 
 	test('creates a string that is a uuid', () => {
 		expect(createFixture(z.string().uuid())).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+	});
+
+	test('creates a string that is a cuid', () => {
+		expect(isCuid(createFixture(z.string().cuid()))).toBeTruthy()
+	});
+
+	test('creates a string that is a cuid2', () => {
+		expect(isCuid2(createFixture(z.string().cuid2()))).toBeTruthy()
 	});
 });
 
