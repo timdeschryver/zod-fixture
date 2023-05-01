@@ -263,24 +263,18 @@ function extractConditions<ZSchema extends ZodTypeAny>(
 						['max']: check.value,
 					} as Condition;
 				case 'uuid':
-					return {
-						...aggregate,
-						['uuid']: true,
-					} as Condition;
 				case 'cuid':
-					return {
-						...aggregate,
-						['cuid']: true,
-					} as Condition;
 				case 'cuid2':
-					return {
-						...aggregate,
-						['cuid2']: true,
-					} as Condition;
 				case 'email':
 					return {
 						...aggregate,
-						['email']: true,
+						[check.kind]: true,
+					} as Condition;
+				case 'startsWith':
+				case 'endsWith':
+					return {
+						...aggregate,
+						[check.kind]: check.value,
 					} as Condition;
 				default:
 					return aggregate;

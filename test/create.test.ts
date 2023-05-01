@@ -77,6 +77,22 @@ describe('create strings', () => {
 		expect(email).include('@');
 		expect(email).include('.');
 	});
+
+	test('creates a string that startsWith', () => {
+		const value = createFixture(z.string().startsWith('start_'));
+		expect(value.startsWith('start_')).toBeTruthy();
+	});
+
+	test('creates a string that endsWith', () => {
+		const value = createFixture(z.string().endsWith('_end'));
+		expect(value.endsWith('_end')).toBeTruthy();
+	});
+	
+	test('creates a string that startsWith and endsWith', () => {
+		const value = createFixture(z.string().startsWith('start_').endsWith('_end'));
+		expect(value.startsWith('start_')).toBeTruthy();
+		expect(value.endsWith('_end')).toBeTruthy();
+	});
 });
 
 describe('create numbers', () => {
