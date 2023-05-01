@@ -71,6 +71,12 @@ describe('create strings', () => {
 	test('creates a string that is a cuid2', () => {
 		expect(isCuid2(createFixture(z.string().cuid2()))).toBeTruthy()
 	});
+
+	test('creates a string that is an email', () => {
+		const email = createFixture(z.string().email());
+		expect(email).include('@');
+		expect(email).include('.');
+	});
 });
 
 describe('create numbers', () => {

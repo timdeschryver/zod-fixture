@@ -277,6 +277,11 @@ function extractConditions<ZSchema extends ZodTypeAny>(
 						...aggregate,
 						['cuid2']: true,
 					} as Condition;
+				case 'email':
+					return {
+						...aggregate,
+						['email']: true,
+					} as Condition;
 				default:
 					return aggregate;
 			}

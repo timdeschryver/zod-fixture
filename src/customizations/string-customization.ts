@@ -18,6 +18,11 @@ export const stringCustomization = (): Customization => {
 				return createId();
 			}
 
+			
+			if(checks['email']) {
+				return `${generateString(propertName).slice(0, 8)}@fixture.com`;
+			}
+
 			if(checks['min'] !== undefined || checks['max'] !== undefined) {
 				return generateStringWithLength(propertName, checks['min'], checks['max']);
 			}
