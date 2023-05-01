@@ -1,5 +1,5 @@
+import type { RefinementCtx, ZodTypeAny } from 'zod';
 import { describe, expect, test, vi } from 'vitest';
-import type { ZodTypeAny } from 'zod';
 import { createFixture } from '../src';
 import { z } from 'zod';
 
@@ -503,11 +503,37 @@ describe('create Functions', () => {
 });
 
 describe('usage with effects', () => {
-	test('does not invoke transform', () => {
-		const spy = vi.fn(() => 0);
-		const result = createFixture(z.string().transform(spy));
-		expect(spy).not.toBeCalled();
-		expect(result).toBeTypeOf('string');
+	test('invokes transform', () => {
+		const mockTransform = vi.fn(() => 0);
+		const result = createFixture(z.string().transform(mockTransform));
+		expect(mockTransform).toBeCalled();
+		expect(result).toBe(0);
+	});
+
+	test('invokes nested transforms', () => {
+		const mockStringTransform = vi.fn<[string, RefinementCtx], number>(() => 0);
+		const mockObjectTransform = vi.fn<
+			[Record<string, unknown>, RefinementCtx],
+			unknown
+		>((input: Record<string, unknown>) => input.someValue);
+		const result = createFixture(
+			z
+				.object({
+					someValue: z.string().transform(mockStringTransform),
+				})
+				.transform(mockObjectTransform),
+		);
+		expect(mockStringTransform).toBeCalled();
+		expect(mockStringTransform.mock.calls[0][1]).toStrictEqual({
+			addIssue: expect.any(Function),
+			path: ['someValue'],
+		});
+		expect(mockObjectTransform).toBeCalled();
+		expect(mockObjectTransform.mock.calls[0][1]).toStrictEqual({
+			addIssue: expect.any(Function),
+			path: [],
+		});
+		expect(result).toBe(0);
 	});
 
 	test('does not invoke preprocess', () => {

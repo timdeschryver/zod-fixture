@@ -214,11 +214,19 @@ function extractFromZodSchema<ZSchema extends ZodTypeAny>(
 		ZodAny: () => request('any'),
 		ZodUnknown: () => request('unknown'),
 		ZodNever: () => request('never'),
-		ZodEffects: () => {
-			const { type, createValue } = extractFromZodSchema(schema._def.schema);
+		ZodEffects: () =>
+			request('effect', (context): Record<string, unknown> => {
+				const innerType = extractFromZodSchema(schema._def.schema).type;
 
-			return [type, createValue];
-		},
+				return {
+					effect: schema._def.effect,
+					inner: {
+						path: context.path,
+						type: innerType,
+						create: () => generate(schema._def.schema, context),
+					},
+				};
+			}),
 	};
 
 	const zodToRequest = mapper[schema._def.typeName];

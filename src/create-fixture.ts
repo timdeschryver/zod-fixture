@@ -21,6 +21,7 @@ import {
 	unionRandomizeCustomization,
 } from './customizations';
 import type { Customization } from './customizations';
+import { effectCustomization } from './customizations/effect-customization';
 import { generate } from './generate';
 import { tupleCustomization } from './customizations/tuple-customization';
 
@@ -47,6 +48,7 @@ const defaultCustomizations = [
 	setCustomization() as Customization<Record<string, unknown>>,
 	tupleCustomization() as Customization<Record<string, unknown>>,
 	unionRandomizeCustomization() as Customization<Record<string, unknown>>,
+	effectCustomization() as Customization<Record<string, unknown>>,
 ];
 
 export function createFixture<ZSchema extends ZodTypeAny>(
