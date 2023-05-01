@@ -1,5 +1,5 @@
+import type { RefinementCtx, ZodTypeAny } from 'zod';
 import { describe, expect, test, vi } from 'vitest';
-import type { ZodTypeAny } from 'zod';
 import { createFixture } from '../src';
 import { isCuid } from 'cuid';
 import { isCuid as isCuid2 } from '@paralleldrive/cuid2';
@@ -61,7 +61,9 @@ describe('create strings', () => {
 	});
 
 	test('creates a string that is a uuid', () => {
-		expect(createFixture(z.string().uuid())).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+		expect(createFixture(z.string().uuid())).toMatch(
+			/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+		);
 	});
 
 	test('creates a string that is a cuid', () => {
@@ -321,6 +323,18 @@ describe('create objects', () => {
 			createFixture(SampleWithOptionalValueSchema);
 		}).not.toThrow();
 	});
+
+	test('creates object with transform', () => {
+		const schema = z
+			.object({
+				v: z.string(),
+			})
+			.transform(v => v);
+
+		expect(() => {
+			createFixture(schema);
+		}).not.toThrow();
+	});
 });
 
 describe('create Records', () => {
@@ -521,11 +535,37 @@ describe('create Functions', () => {
 });
 
 describe('usage with effects', () => {
-	test('does not invoke transform', () => {
-		const spy = vi.fn(() => 0);
-		const result = createFixture(z.string().transform(spy));
-		expect(spy).not.toBeCalled();
-		expect(result).toBeTypeOf('string');
+	test('invokes transform', () => {
+		const mockTransform = vi.fn(() => 0);
+		const result = createFixture(z.string().transform(mockTransform));
+		expect(mockTransform).toBeCalled();
+		expect(result).toBe(0);
+	});
+
+	test('invokes nested transforms', () => {
+		const mockStringTransform = vi.fn<[string, RefinementCtx], number>(() => 0);
+		const mockObjectTransform = vi.fn<
+			[Record<string, unknown>, RefinementCtx],
+			unknown
+		>((input: Record<string, unknown>) => input.someValue);
+		const result = createFixture(
+			z
+				.object({
+					someValue: z.string().transform(mockStringTransform),
+				})
+				.transform(mockObjectTransform),
+		);
+		expect(mockStringTransform).toBeCalled();
+		expect(mockStringTransform.mock.calls[0][1]).toStrictEqual({
+			addIssue: expect.any(Function),
+			path: ['someValue'],
+		});
+		expect(mockObjectTransform).toBeCalled();
+		expect(mockObjectTransform.mock.calls[0][1]).toStrictEqual({
+			addIssue: expect.any(Function),
+			path: [],
+		});
+		expect(result).toBe(0);
 	});
 
 	test('does not invoke preprocess', () => {

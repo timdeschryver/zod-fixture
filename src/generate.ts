@@ -214,7 +214,19 @@ function extractFromZodSchema<ZSchema extends ZodTypeAny>(
 		ZodAny: () => request('any'),
 		ZodUnknown: () => request('unknown'),
 		ZodNever: () => request('never'),
-		ZodEffects: () => request(extractFromZodSchema(schema._def.schema).type),
+		ZodEffects: () =>
+			request('effect', (context): Record<string, unknown> => {
+				const innerType = extractFromZodSchema(schema._def.schema).type;
+
+				return {
+					effect: schema._def.effect,
+					inner: {
+						path: context.path,
+						type: innerType,
+						create: () => generate(schema._def.schema, context),
+					},
+				};
+			}),
 	};
 
 	const zodToRequest = mapper[schema._def.typeName];
@@ -233,7 +245,7 @@ function extractConditions<ZSchema extends ZodTypeAny>(
 	schema: ZSchema,
 ): Condition {
 	const checks = [...(schema._def.checks || [])];
-	
+
 	if (schema._def.minLength) {
 		checks.push({ kind: 'min', value: schema._def.minLength.value });
 	}
