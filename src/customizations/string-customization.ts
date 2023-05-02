@@ -6,28 +6,38 @@ export const stringCustomization = (): Customization => {
 	return {
 		condition: ({ type }) => type === 'string',
 		generator: ({ propertName, checks = {} }): string => {
-			if(checks['uuid']) {
+			if (checks['uuid']) {
 				return uuid();
 			}
 
-			if(checks['cuid']) {
+			if (checks['cuid']) {
 				return cuid();
 			}
 
-			if(checks['cuid2']) {
+			if (checks['cuid2']) {
 				return createId();
 			}
 
-			if(checks['email']) {
+			if (checks['email']) {
 				return `${generateString(propertName).slice(0, 8)}@fixture.com`;
 			}
 
-			if(checks['startsWith'] || checks['endsWith']) {
-				return [checks['startsWith'], generateString(propertName), checks['endsWith']].filter(Boolean).join('')
+			if (checks['startsWith'] || checks['endsWith']) {
+				return [
+					checks['startsWith'],
+					generateString(propertName),
+					checks['endsWith'],
+				]
+					.filter(Boolean)
+					.join('');
 			}
 
-			if(checks['min'] !== undefined || checks['max'] !== undefined) {
-				return generateStringWithLength(propertName, checks['min'], checks['max']);
+			if (checks['min'] !== undefined || checks['max'] !== undefined) {
+				return generateStringWithLength(
+					propertName,
+					checks['min'],
+					checks['max'],
+				);
 			}
 
 			return generateString(propertName);
@@ -35,8 +45,11 @@ export const stringCustomization = (): Customization => {
 	};
 };
 
-
-function generateStringWithLength(propertName?: string, minLength?: number, maxLength?: number): string {
+function generateStringWithLength(
+	propertName?: string,
+	minLength?: number,
+	maxLength?: number,
+): string {
 	if (minLength !== undefined && minLength < 0) {
 		throw new Error(`minLength ${minLength} can't be less than 0`);
 	}

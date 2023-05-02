@@ -16,7 +16,7 @@ export const numberRandomizeCustomization = (
 			type === 'number' &&
 			checks['min'] === undefined &&
 			checks['max'] === undefined,
-		generator: (): number => numberRandomizer(min , max),
+		generator: (): number => numberRandomizer(min, max),
 	};
 };
 
@@ -33,14 +33,13 @@ export const numberRandomizeZodSchemaCustomization = (): Customization => {
 				throw new Error(`min ${min} can't be greater max ${max}`);
 			}
 
-
 			const correctedMax = max ?? min + default_max;
 			const correctedMin = min ?? correctedMax - default_max;
-			return numberRandomizer(correctedMin, correctedMax)
+			return numberRandomizer(correctedMin, correctedMax);
 		},
 	};
 };
 
-export function numberRandomizer(min: number, max:number): number {
-		return Math.floor(Math.random() * (max - min + 1) + min);
+export function numberRandomizer(min: number, max: number): number {
+	return Math.floor(Math.random() * (max - min + 1) + min);
 }

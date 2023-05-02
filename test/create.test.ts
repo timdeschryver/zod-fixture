@@ -67,11 +67,11 @@ describe('create strings', () => {
 	});
 
 	test('creates a string that is a cuid', () => {
-		expect(isCuid(createFixture(z.string().cuid()))).toBeTruthy()
+		expect(isCuid(createFixture(z.string().cuid()))).toBeTruthy();
 	});
 
 	test('creates a string that is a cuid2', () => {
-		expect(isCuid2(createFixture(z.string().cuid2()))).toBeTruthy()
+		expect(isCuid2(createFixture(z.string().cuid2()))).toBeTruthy();
 	});
 
 	test('creates a string that is an email', () => {
@@ -89,9 +89,11 @@ describe('create strings', () => {
 		const value = createFixture(z.string().endsWith('_end'));
 		expect(value.endsWith('_end')).toBeTruthy();
 	});
-	
+
 	test('creates a string that startsWith and endsWith', () => {
-		const value = createFixture(z.string().startsWith('start_').endsWith('_end'));
+		const value = createFixture(
+			z.string().startsWith('start_').endsWith('_end'),
+		);
 		expect(value.startsWith('start_')).toBeTruthy();
 		expect(value.endsWith('_end')).toBeTruthy();
 	});
