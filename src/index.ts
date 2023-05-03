@@ -1,2 +1,2 @@
 export { createFixture } from './create-fixture';
-export * from './customizations';
+export * from './generators/default/implementation';

@@ -20,10 +20,10 @@ import {
 	stringZodSchemaCustomization,
 	undefinedCustomization,
 	unionRandomizeCustomization,
-} from './customizations';
-import type { Customization } from './customizations';
+} from './generators/default/implementation';
+import type { Customization } from './generators/default/implementation';
 import { generate } from './generate';
-import { tupleCustomization } from './customizations/tuple-customization';
+import { tupleCustomization } from './generators/default/implementation/tuple-customization';
 
 const defaultCustomizations = [
 	stringCustomization(),

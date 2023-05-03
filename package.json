@@ -3,6 +3,7 @@
 	"version": "0.0.0",
 	"description": "Creating fixtures based on zod schemas",
 	"scripts": {
+		"start": "vite",
 		"test": "vitest",
 		"test:coverage": "vitest run --coverage",
 		"build": "vite build",
@@ -29,9 +30,6 @@
 	],
 	"author": "Tim Deschryver",
 	"license": "MIT",
-	"peerDependencies": {
-		"zod": ">=3.0.0"
-	},
 	"devDependencies": {
 		"@typescript-eslint/eslint-plugin": "^5.30.7",
 		"@typescript-eslint/parser": "^5.30.7",
@@ -43,7 +41,9 @@
 		"typescript": "^4.7.4",
 		"vite": "^3.0.4",
 		"vite-plugin-dts": "^1.4.1",
-		"vitest": "^0.18.0",
-		"zod": "^3.17.10"
+		"vitest": "^0.18.0"
+	},
+	"dependencies": {
+		"zod": "^3.21.4"
 	}
 }

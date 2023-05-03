@@ -1,24 +1,33 @@
+import { ZodBigInt, ZodNumber, ZodNumberDef } from 'zod';
+import { Generator } from '../../../core/generator';
+
+const DEFAULT_MIN = 1;
+const DEFAULT_MAX = 500;
+
 import type { Customization } from './customization';
 
-const default_min = 1;
-const default_max = 500;
+export const BigIntGenerator = Generator({
+	schema: ZodBigInt,
+	test: () => true,
+	output: ({ def }) => bigIntRandomizer(DEFAULT_MIN, DEFAULT_MAX),
+});
 
-export const bigIntRandomizeCustomization = (
-	min = default_min,
-	max = default_max,
-): Customization => {
-	if (min > max) {
-		throw new Error(`min ${min} can't be greater max ${max}`);
-	}
+// (
+// 	min = default_min,
+// 	max = default_max,
+// ): Customization => {
+// 	if (min > max) {
+// 		throw new Error(`min ${min} can't be greater max ${max}`);
+// 	}
 
-	return {
-		condition: ({ type, checks = {} }) =>
-			type === 'bigint' &&
-			checks['min'] === undefined &&
-			checks['max'] === undefined,
-		generator: (): bigint => bigIntRandomizer(min, max),
-	};
-};
+// 	return {
+// 		condition: ({ type, checks = {} }) =>
+// 			type === 'bigint' &&
+// 			checks['min'] === undefined &&
+// 			checks['max'] === undefined,
+// 		generator: (): bigint => bigIntRandomizer(min, max),
+// 	};
+// };
 
 export const bigintRandomizeZodSchemaCustomization = (): Customization => {
 	return {

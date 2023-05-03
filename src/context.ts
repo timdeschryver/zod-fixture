@@ -1,4 +1,4 @@
-import type { Customization } from './customizations';
+import type { Customization } from './generators/default/implementation';
 
 export interface Context {
 	path: string[];

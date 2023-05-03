@@ -12,4 +12,5 @@
     "declaration": true,
     "inlineSourceMap": true,
   },
+  "include": ["src"]
 }

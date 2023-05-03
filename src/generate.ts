@@ -1,7 +1,7 @@
 import type { Condition, Context } from './context';
 import type { ZodTypeAny, z } from 'zod';
-import type { CustomizationRequest } from './customizations';
-import { numberRandomizer } from './customizations';
+import type { CustomizationRequest } from './generators/default/implementation';
+import { numberRandomizer } from './generators/default/implementation';
 
 export function generate<ZSchema extends ZodTypeAny>(
 	schema: ZSchema,
