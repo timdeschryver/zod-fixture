@@ -1,20 +1,40 @@
-export * from './implementation/customization';
+import { ArrayGenerator } from './array';
+import { BigIntGenerator, BigIntMultipleOfGenerator } from './bigint';
+import { BooleanGenerator } from './boolean';
+import { DateGenerator } from './date';
+import { EnumGenerator } from './enum';
+import { FunctionGenerator } from './function';
+import { LiteralGenerator } from './literal';
+import { MapGenerator } from './map';
+import { NanGenerator } from './nan';
+import { NullGenerator } from './null';
+import { NumberGenerator } from './number';
+import { ObjectGenerator, RecordGenerator } from './object';
+import { SetGenerator } from './set';
+import { StringGenerator, UrlGenerator } from './string';
+import { TupleGenerator } from './tuple';
+import { UndefinedGenerator } from './undefined';
+import { UnionGenerator } from './union';
 
-export * from './implementation/array-with-length-customization';
-export * from './implementation/bigint-randomize-customization';
-export * from './implementation/boolean-sequence-customization';
-export * from './implementation/date-randomize-customization';
-export * from './implementation/number-randomize-customization';
-export * from './implementation/object-customization';
-export * from './implementation/null-customization';
-export * from './implementation/string-customization';
-export * from './implementation/undefined-customization';
-export * from './implementation/noop-customization';
-export * from './implementation/random-value-of-possibles-customication';
-export * from './implementation/literal-value-customization';
-export * from './implementation/nan-customization';
-export * from './implementation/map-customization';
-export * from './implementation/set-customization';
-export * from './implementation/tuple-customization';
-export * from './implementation/record-customization';
-export * from './implementation/union-randomize-customization';
+export default [
+	ArrayGenerator,
+	BigIntGenerator,
+	BigIntMultipleOfGenerator,
+	BooleanGenerator,
+	DateGenerator,
+	EnumGenerator,
+	FunctionGenerator,
+	LiteralGenerator,
+	MapGenerator,
+	NanGenerator,
+	NullGenerator,
+	NumberGenerator,
+	ObjectGenerator,
+	RecordGenerator,
+	SetGenerator,
+	StringGenerator,
+	UrlGenerator,
+	TupleGenerator,
+	UndefinedGenerator,
+	UnionGenerator,
+];

@@ -6,11 +6,16 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "strict": true,
+    "noUncheckedIndexedAccess": true,
     "strictNullChecks": true,
     "resolveJsonModule": true,
     "outDir": "./dist",
     "declaration": true,
     "inlineSourceMap": true,
+    "baseUrl": "./src",
+    "paths": {
+        "@/*": ["*"],
+    }
   },
   "include": ["src"]
 }

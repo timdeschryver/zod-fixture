@@ -1,3 +1,7 @@
-import {z} from 'zod'
+import { z } from 'zod';
+import { generate } from '.';
 
-(window as any).zod = z
+const win = window as any
+
+win.z = z;
+win.generate = generate;
