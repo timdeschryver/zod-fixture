@@ -12,7 +12,7 @@ export default defineConfig({
 			entry: './src/index.ts',
 			name: 'zod-fixture',
 			formats: ['es', 'umd'],
-			fileName: format => `zod-fixture.${format}.js`,
+			fileName: format => `zod-fixture.${format}.${format === 'umd' ? 'cjs' : 'js'}`,
 		},
 		rollupOptions: {
 			external: ['cuid', '@paralleldrive/cuid2'],

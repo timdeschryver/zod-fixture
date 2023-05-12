@@ -13,12 +13,12 @@
 	"files": [
 		"dist"
 	],
-	"main": "./dist/zod-fixture.umd.js",
+	"main": "./dist/zod-fixture.umd.cjs",
 	"module": "./dist/zod-fixture.es.js",
 	"exports": {
 		".": {
 			"import": "./dist/zod-fixture.es.js",
-			"require": "./dist/zod-fixture.umd.js"
+			"require": "./dist/zod-fixture.umd.cjs"
 		}
 	},
 	"types": "./dist/index.d.ts",
