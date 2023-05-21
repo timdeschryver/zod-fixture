@@ -26,6 +26,7 @@ export type Condition<TSchema extends Zod.ZodTypeAny> = (obj: {
 	def: TSchema['_def'];
 	schema: TSchema;
 	core: Core;
+	ctx?: Context;
 }) => boolean;
 
 export type Generator<TSchema extends Zod.ZodTypeAny> = (obj: {
