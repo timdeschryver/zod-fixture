@@ -7,11 +7,11 @@ Creating test fixtures should be easy.
 
 ## Example
 
-Pass a zod schema to the `createFixture` method.
+Pass a zod schema to the `generate` method.
 
 ```ts
 import { z } from 'zod';
-import { createFixture } from 'zod-fixture';
+import { generate } from 'zod-fixture';
 
 const PersonSchema = z.object({
 	name: z.string(),
@@ -25,7 +25,7 @@ const PersonSchema = z.object({
 	totalVisits: z.number(),
 });
 
-const person = createFixture(PersonSchema);
+const person = generate(PersonSchema);
 ```
 
 Gives you the following value for `person`:
@@ -57,27 +57,23 @@ Gives you the following value for `person`:
 }
 ```
 
-## Customizations
+## Generators
 
-To change it's behavior you can create your own customizations.
+To change it's behavior you can create your own generators.
 
 ```ts
-import { z } from 'zod';
-import { createFixture, numberRandomizeCustomization } from 'zod-fixture';
-import type { Customization } from 'zod-fixture';
+import { z, ZodObject } from 'zod';
+import { generate, Generator } from 'zod-fixture';
 
-const numberCustomization = numberRandomizeCustomization(0, 5);
-const addressCustomization: Customization = {
-	condition: ({ type, propertName }) =>
-		type === 'object' && propertName === 'address',
-	generator: () => {
-		return {
-			street: 'My Street',
-			city: 'My City',
-			state: 'My State',
-		};
-	},
-};
+const AddressGenerator = Generator({
+	schema: ZodObject,
+	matches: ({ ctx }) => ctx?.key === 'address',
+	output: () => ({
+		street: 'My Street',
+		city: 'My City',
+		state: 'My State',
+	})
+})
 
 const PersonSchema = z.object({
 	name: z.string(),
@@ -91,10 +87,9 @@ const PersonSchema = z.object({
 	totalVisits: z.number(),
 });
 
-const person = createFixture(PersonSchema, {
-	defaultLength: 1,
-	customizations: [numberCustomization, addressCustomization],
-});
+const person = generate(PersonSchema, {
+	extend: [AddressGenerator]
+})
 ```
 
 Gives us the following person:
@@ -123,3 +118,8 @@ Gives us the following person:
 ## Credits
 
 This package is inspired on [AutoFixture](https://github.com/AutoFixture/AutoFixture).
+
+## Notes
+
+Generators now require a Zod instance or constructor. Not only does this provide detailed type information for the `matches` and `output` functions, but it also allows us to add a Symbol that we later use to identify instances of things like `zod.custom` (a ZodEffects type) that would otherwise be indistinguishable.
+
