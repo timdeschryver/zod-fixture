@@ -3,6 +3,6 @@ import { ZodDate } from 'zod';
 
 export const DateGenerator = Generator({
 	schema: ZodDate,
-	test: () => true,
+	matches: () => true,
 	output: () => new Date(),
 });

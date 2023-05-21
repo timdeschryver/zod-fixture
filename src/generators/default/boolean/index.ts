@@ -5,6 +5,6 @@ import { ZodBoolean } from 'zod';
 let toggle = false;
 export const BooleanGenerator = Generator({
 	schema: ZodBoolean,
-	test: () => true,
+	matches: () => true,
 	output: () => toggle = !toggle,
 });

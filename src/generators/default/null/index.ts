@@ -3,6 +3,6 @@ import { ZodNull } from 'zod';
 
 export const NullGenerator = Generator({
 	schema: ZodNull,
-	test: () => true,
+	matches: () => true,
 	output: () => null,
 });

@@ -3,7 +3,7 @@ import { ZodDiscriminatedUnion, ZodUnion } from 'zod';
 
 export const UnionGenerator = Generator({
 	schema: ZodUnion,
-	test: () => true,
+	matches: () => true,
 	output: ({ def, core }) => {
 		const type = core.utils.randomFrom(def.options)
 
@@ -13,7 +13,7 @@ export const UnionGenerator = Generator({
 
 export const DiscriminatedUnionGenerator = Generator({
 	schema: ZodDiscriminatedUnion,
-	test: () => true,
+	matches: () => true,
 	output: ({ def, core }) => {
 		const type = core.utils.randomFrom(def.options)
 

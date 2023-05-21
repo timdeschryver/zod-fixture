@@ -6,6 +6,6 @@ const noop: () => void = () => {};
 
 export const FunctionGenerator = Generator({
 	schema: ZodFunction,
-	test: () => true,
+	matches: () => true,
 	output: () => noop,
 });

@@ -3,7 +3,7 @@ import { ZodNumber } from 'zod';
 
 export const NumberGenerator = Generator({
 	schema: ZodNumber,
-	test: () => true,
+	matches: () => true,
 	output: ({ def, core }) => {
 		const { filterChecks } = core.utils;
 

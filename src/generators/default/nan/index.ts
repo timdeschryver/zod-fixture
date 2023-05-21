@@ -3,6 +3,6 @@ import { ZodNaN } from 'zod';
 
 export const NanGenerator = Generator({
 	schema: ZodNaN,
-	test: () => true,
+	matches: () => true,
 	output: () => NaN,
 });

@@ -37,7 +37,7 @@ export type Generator<TSchema extends Zod.ZodTypeAny> = (obj: {
 
 export interface Definition<TSchema extends Zod.ZodTypeAny> {
 	schema: ZodConstructorOrSchema<TSchema>;
-	test: Condition<TSchema>;
+	matches: Condition<TSchema>;
 	output: Generator<TSchema>;
 }
 

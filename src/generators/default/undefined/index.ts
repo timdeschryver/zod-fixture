@@ -3,6 +3,6 @@ import { ZodUndefined } from 'zod';
 
 export const UndefinedGenerator = Generator({
 	schema: ZodUndefined,
-	test: () => true,
+	matches: () => true,
 	output: () => undefined,
 });

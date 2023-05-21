@@ -3,6 +3,6 @@ import { ZodLiteral } from 'zod';
 
 export const LiteralGenerator = Generator({
 	schema: ZodLiteral,
-	test: () => true,
+	matches: () => true,
 	output: ({ def }) => def.value,
 });

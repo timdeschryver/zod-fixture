@@ -6,7 +6,7 @@ const LOWERCASE_Z = 122;
 
 export const StringGenerator = Generator({
 	schema: ZodString,
-	test: () => true,
+	matches: () => true,
 	output: ({ def, core }) => {
 		const min = core.utils.filterChecks(def.checks, 'min')?.value ?? 0;
 		const max = core.utils.filterChecks(def.checks, 'max')?.value ?? min + 25;
@@ -48,7 +48,7 @@ export const StringGenerator = Generator({
 
 export const UrlGenerator = Generator({
 	schema: ZodString,
-	test: ({ def, core }) =>
+	matches: ({ def, core }) =>
 		core.utils.filterChecks(def.checks, 'url') !== undefined,
 	output: ({ core }) => {
 		return `https://${core.utils.lorem(1)}.com`;

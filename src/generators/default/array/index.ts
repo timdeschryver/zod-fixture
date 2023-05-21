@@ -3,7 +3,7 @@ import { ZodArray } from 'zod';
 
 export const ArrayGenerator = Generator({
 	schema: ZodArray,
-	test: () => true,
+	matches: () => true,
 	output: ({ def, core }) => {
 		const min = def.minLength?.value ?? core.defaults.array.min
 		const max = def.maxLength?.value ?? core.defaults.array.max

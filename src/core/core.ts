@@ -45,7 +45,7 @@ export class Core {
 			)
 				return false;
 
-			if (!generator.test({ schema, def, core })) return false;
+			if (!generator.matches({ schema, def, core })) return false;
 
 			return true;
 		});

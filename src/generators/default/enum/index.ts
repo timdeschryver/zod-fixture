@@ -3,13 +3,13 @@ import { ZodEnum, ZodNativeEnum } from 'zod';
 
 export const EnumGenerator = Generator({
 	schema: ZodEnum,
-	test: () => true,
+	matches: () => true,
 	output: ({ def, core }) => core.utils.randomFrom(def.values),
 });
 
 export const NativeEnumGenerator = Generator({
 	schema: ZodNativeEnum,
-	test: () => true,
+	matches: () => true,
 	output: ({ def, core }) => {
 		const enumerable = def.values ?? {};
 
