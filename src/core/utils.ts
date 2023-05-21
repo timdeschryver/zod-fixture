@@ -89,6 +89,6 @@ export class Utils {
 		checks: TChecks,
 		kind: TKind,
 	): Utils.FilterChecks<TChecks[number], TKind> | undefined {
-		return checks.find(check => check.kind === kind) as any;
+		return checks.find(check => check.kind === kind) as Utils.FilterChecks<TChecks[number], TKind> | undefined;
 	}
 }
