@@ -5,14 +5,15 @@ export const NumberGenerator = Generator({
 	schema: ZodNumber,
 	matches: () => true,
 	output: ({ def, core }) => {
+		const { checks } = def;
 		const { filterChecks } = core.utils;
 
-		let min = filterChecks(def.checks, 'min')?.value ?? core.defaults.number.min;
-		let max = filterChecks(def.checks, 'max')?.value ?? core.defaults.number.max;
+		let min = filterChecks(checks, 'min')?.value ?? core.defaults.float.min;
+		let max = filterChecks(checks, 'max')?.value ?? core.defaults.float.max;
 
-		const multipleOf = filterChecks(def.checks, 'multipleOf')?.value;
-		const isInt = filterChecks(def.checks, 'int') !== undefined;
-		const isFinite = filterChecks(def.checks, 'finite') !== undefined;
+		const multipleOf = filterChecks(checks, 'multipleOf')?.value;
+		const isInt = filterChecks(checks, 'int') !== undefined;
+		const isFinite = filterChecks(checks, 'finite') !== undefined;
 
 		if (multipleOf !== undefined) {
 			min = min / multipleOf;
@@ -21,7 +22,7 @@ export const NumberGenerator = Generator({
 
 		let result = isInt
 			? core.utils.randomInt({ min, max })
-			: random({ min, max });
+			: core.utils.randomFloat({ min, max });
 
 		if (multipleOf !== undefined) {
 			result = result * multipleOf;
@@ -38,14 +39,3 @@ export const NumberGenerator = Generator({
 		return result;
 	},
 });
-
-export function random(config?: { min?: number; max?: number }): number {
-	const min = config?.min ?? Number.MIN_SAFE_INTEGER;
-	const max = config?.max ?? Number.MAX_SAFE_INTEGER;
-
-	if (min > max) {
-		throw new Error(`min ${min} can't be greater than max ${max}`);
-	}
-
-	return Math.random() * (max - min + 1) + min;
-}
