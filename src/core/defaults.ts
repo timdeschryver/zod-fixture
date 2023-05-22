@@ -1,26 +1,28 @@
+const DEFAULT_LIST_SIZE = 3
+
 export default {
 	array: {
-		min: 3,
-		max: 3,
+		min: DEFAULT_LIST_SIZE,
+		max: DEFAULT_LIST_SIZE,
 	},
 	map: {
-		min: 3,
-		max: 3,
+		min: DEFAULT_LIST_SIZE,
+		max: DEFAULT_LIST_SIZE,
 	},
 	set: {
-		min: 3,
-		max: 3
-	},
-	bigint: {
-		min: BigInt(Number.MIN_SAFE_INTEGER),
-		max: BigInt(Number.MAX_SAFE_INTEGER),
+		min: DEFAULT_LIST_SIZE,
+		max: DEFAULT_LIST_SIZE
 	},
 	int: {
 		min: Number.MIN_SAFE_INTEGER,
 		max: Number.MAX_SAFE_INTEGER,
 	},
-	number: {
+	float: {
 		min: Number.MIN_SAFE_INTEGER,
 		max: Number.MAX_SAFE_INTEGER,
+	},
+	bigint: {
+		min: BigInt(Number.MIN_SAFE_INTEGER),
+		max: BigInt(Number.MAX_SAFE_INTEGER),
 	},
 };
