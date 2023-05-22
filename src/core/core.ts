@@ -12,16 +12,13 @@ export interface Config {
 }
 
 export class Core {
-	readonly utils = new Utils(this);
-	#defaults = defaults;
 	#generators: Definition<any>[] = [];
-
-	get defaults() {
-		return this.#defaults;
-	}
+	
+	readonly utils = new Utils(this);
+	readonly defaults = defaults;
 
 	constructor(config?: Config) {
-		this.#defaults = { ...this.#defaults, ...config?.defaults };
+		this.defaults = { ...this.defaults, ...config?.defaults };
 	}
 
 	register(generators: Definition<any>[]) {
@@ -52,7 +49,7 @@ export class Core {
 
 		if (!generator)
 			throw new Error(`No generator found for ${schema.constructor.name}`);
-			
+
 		return generator.output({ schema, def, core, ctx });
 	}
 }
