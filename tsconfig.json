@@ -5,6 +5,7 @@
     "lib": ["esnext", "dom"],
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "strictNullChecks": true,
