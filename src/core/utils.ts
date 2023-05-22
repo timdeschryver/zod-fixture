@@ -2,6 +2,7 @@ import type { Core } from './core';
 
 const LOREM =
 	'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+const PARAGRAPHS = [LOREM];
 const SENTENCES = LOREM.replace(/\. /g, '.\n').split('\n');
 const WORDS = LOREM.toLowerCase().replace(/[,.]/, '').split(' ');
 
@@ -32,11 +33,24 @@ export class Utils {
 		return Array.from({ length }, (_, i) => factory(i));
 	}
 
-	randomFrom<T extends unknown>(list: T[] | readonly T[], config?: { min?: number; max?: number }): T {
-		const min = config?.min ?? 0;
-		const max = config?.max ?? Math.max(0, list.length - 1);
+	randomFrom<T extends unknown>(list: T[] | readonly T[] | Set<T>): T {
+		const options = Array.from(list);
 
-		return list[this.randomInt({ min, max })] as T;
+		const min = 0;
+		const max = Math.max(min, options.length - 1);
+
+		return options[this.randomInt({ min, max })] as T;
+	}
+
+	randomFloat(config?: { min?: number; max?: number }): number {
+		const min = config?.min ?? this.core.defaults.float.min;
+		const max = config?.max ?? this.core.defaults.float.max;
+
+		if (min > max) {
+			throw new Error(`min ${min} can't be greater than max ${max}`);
+		}
+
+		return Math.random() * (max - min) + min;
 	}
 
 	randomInt(config?: { min?: number; max?: number }): number {
@@ -75,13 +89,10 @@ export class Utils {
 
 	lorem(length: number, type: 'word' | 'sentence' | 'paragraph' = 'word') {
 		const target =
-			type === 'word' ? WORDS : type === 'sentence' ? SENTENCES : LOREM;
+			type === 'word' ? WORDS : type === 'sentence' ? SENTENCES : PARAGRAPHS;
 
 		return this.core.utils
-			.n(() => {
-				const randomIndex = this.randomInt({ min: 0, max: target.length - 1 });
-				return target[randomIndex];
-			}, length)
+			.n(() => this.core.utils.randomFrom(target), length)
 			.join(' ');
 	}
 
@@ -89,6 +100,8 @@ export class Utils {
 		checks: TChecks,
 		kind: TKind,
 	): Utils.FilterChecks<TChecks[number], TKind> | undefined {
-		return checks.find(check => check.kind === kind) as Utils.FilterChecks<TChecks[number], TKind> | undefined;
+		return checks.find(check => check.kind === kind) as
+			| Utils.FilterChecks<TChecks[number], TKind>
+			| undefined;
 	}
 }
