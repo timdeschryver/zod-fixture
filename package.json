@@ -2,6 +2,7 @@
 	"name": "zod-fixture",
 	"version": "0.0.0",
 	"description": "Creating fixtures based on zod schemas",
+	"packageManager": "npm@9.5.0",
 	"scripts": {
 		"start": "vite",
 		"test": "vitest --ui",
