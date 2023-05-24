@@ -15,6 +15,7 @@ import { NanGenerator } from './nan';
 import { NullGenerator } from './null';
 import { NumberGenerator } from './number';
 import { ObjectGenerator, RecordGenerator } from './object';
+import { PromiseGenerator } from './promise';
 import { SetGenerator } from './set';
 import {
 	EmailGenerator,
@@ -22,19 +23,10 @@ import {
 	UrlGenerator,
 	UuidGenerator,
 } from './string';
+import { SymbolGenerator } from './symbol';
 import { TupleGenerator } from './tuple';
 import { UndefinedGenerator } from './undefined';
 import { UnionGenerator } from './union';
-
-export { ArrayGenerator } from './array';
-export { LiteralGenerator } from './literal';
-export { MapGenerator } from './map';
-export { NullableGenerator } from './nullable';
-export { ObjectGenerator, RecordGenerator } from './object';
-export { OptionalGenerator } from './optional';
-export { SetGenerator } from './set';
-export { TupleGenerator } from './tuple';
-export { UnionGenerator } from './union';
 
 export default [
 	ArrayGenerator,
@@ -62,4 +54,6 @@ export default [
 	TransformGenerator,
 	PreprocessGenerator,
 	RefinementGenerator,
+	PromiseGenerator,
+	SymbolGenerator,
 ];
