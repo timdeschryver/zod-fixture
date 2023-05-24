@@ -27,7 +27,7 @@ import {
 } from './string';
 import { SymbolGenerator } from './symbol';
 import { TupleGenerator } from './tuple';
-import { UndefinedGenerator } from './undefined';
+import { UndefinedGenerator, VoidGenerator } from './undefined';
 import { UnionGenerator } from './union';
 
 export default [
@@ -60,4 +60,5 @@ export default [
 	SymbolGenerator,
 	LazyGenerator,
 	BrandedGenerator,
+	VoidGenerator,
 ];
