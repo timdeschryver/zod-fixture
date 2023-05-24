@@ -2,6 +2,11 @@ import { ArrayGenerator } from './array';
 import { BigIntGenerator, BigIntMultipleOfGenerator } from './bigint';
 import { BooleanGenerator } from './boolean';
 import { DateGenerator } from './date';
+import {
+	PreprocessGenerator,
+	RefinementGenerator,
+	TransformGenerator,
+} from './effects';
 import { EnumGenerator } from './enum';
 import { FunctionGenerator } from './function';
 import { LiteralGenerator } from './literal';
@@ -37,4 +42,7 @@ export default [
 	TupleGenerator,
 	UndefinedGenerator,
 	UnionGenerator,
+	TransformGenerator,
+	PreprocessGenerator,
+	RefinementGenerator,
 ];
