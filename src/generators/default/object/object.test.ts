@@ -3,8 +3,19 @@ import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { ObjectGenerator, RecordGenerator } from '.';
 import { AnyGenerator } from '../any';
+import { ArrayGenerator } from '../array';
+import { BigIntGenerator } from '../bigint';
+import { BooleanGenerator } from '../boolean';
+import { DateGenerator } from '../date';
+import { MapGenerator } from '../map';
+import { NanGenerator } from '../nan';
+import { NullGenerator } from '../null';
 import { NumberGenerator } from '../number';
+import { PromiseGenerator } from '../promise';
+import { SetGenerator } from '../set';
 import { StringGenerator } from '../string';
+import { SymbolGenerator } from '../symbol';
+import { UndefinedGenerator } from '../undefined';
 
 describe('create objects', () => {
 	const core = new Core().register([
@@ -12,6 +23,17 @@ describe('create objects', () => {
 		StringGenerator,
 		NumberGenerator,
 		AnyGenerator,
+		UndefinedGenerator,
+		NullGenerator,
+		BooleanGenerator,
+		BigIntGenerator,
+		DateGenerator,
+		SymbolGenerator,
+		NanGenerator,
+		ArrayGenerator,
+		MapGenerator,
+		SetGenerator,
+		PromiseGenerator,
 	]);
 
 	test('creates an empty object', () => {
