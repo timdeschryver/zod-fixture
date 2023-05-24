@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { LazyGenerator } from '.';
 import { NumberGenerator } from '../number';
 
-describe('create empty types', () => {
+describe('create a lazy type', () => {
 	const core = new Core().register([LazyGenerator, NumberGenerator]);
 
 	test('creates a promise with the correct type', () => {

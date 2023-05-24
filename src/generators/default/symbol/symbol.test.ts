@@ -3,7 +3,7 @@ import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { SymbolGenerator } from '.';
 
-describe('create empty types', () => {
+describe('create a symbol type', () => {
 	const core = new Core().register([SymbolGenerator]);
 
 	test('creates a symbol', () => {
