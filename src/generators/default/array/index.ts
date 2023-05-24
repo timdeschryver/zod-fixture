@@ -5,9 +5,11 @@ export const ArrayGenerator = Generator({
 	schema: ZodArray,
 	matches: () => true,
 	output: ({ def, core }) => {
-		const min = def.minLength?.value ?? core.defaults.array.min
-		const max = def.maxLength?.value ?? core.defaults.array.max
+		let min =
+			def.minLength?.value ?? def.exactLength?.value ?? core.defaults.array.min;
+		let max =
+			def.maxLength?.value ?? def.exactLength?.value ?? core.defaults.array.max;
 
-		return core.utils.n(key => core.generate(def.type, { key }), { min, max})
-	}
+		return core.utils.n(key => core.generate(def.type, { key }), { min, max });
+	},
 });
