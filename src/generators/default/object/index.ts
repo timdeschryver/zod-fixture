@@ -6,11 +6,17 @@ export const ObjectGenerator = Generator({
 	matches: () => true,
 	output: ({ def, core, ctx }) => {
 		const shape = def.shape();
+		const passthrough = def.unknownKeys === 'passthrough';
 		const result: Record<string, unknown> = {};
 
 		for (const key in shape) {
 			const type = shape[key];
 			if (type) result[key] = core.generate(type, { path: [...ctx.path, key] });
+		}
+
+		if (passthrough) {
+			const key = core.utils.lorem(1, 'word');
+			result[key] = core.generate(z.any(), { path: [...ctx.path, key] });
 		}
 
 		return result;

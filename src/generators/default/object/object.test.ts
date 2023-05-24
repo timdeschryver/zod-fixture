@@ -57,6 +57,22 @@ describe('create objects', () => {
 		expect((result as HasID).id).toBeTypeOf('string');
 		expect((result as BaseTeacher).name).toBeTypeOf('string');
 	});
+
+	test('creates an object with additional keys for passthrough', () => {
+		const input = z.object({
+			str: z.string(),
+			num: z.number(),
+		}).passthrough();
+
+		type I = z.infer<typeof input>;
+
+		const result = core.generate(input, { path: [] });
+
+		expect(result).toBeTypeOf('object');
+		expect((result as I).str).toBeTypeOf('string');
+		expect((result as I).num).toBeTypeOf('number');
+		expect(Object.keys((result as I)).length).toBeGreaterThan(2);
+	})
 });
 
 describe('create Records', () => {
