@@ -104,4 +104,6 @@ export class Utils {
 			| Utils.FilterChecks<TChecks[number], TKind>
 			| undefined;
 	}
+
+	noop() {}
 }

@@ -7,5 +7,5 @@ const noop: () => void = () => {};
 export const FunctionGenerator = Generator({
 	schema: ZodFunction,
 	matches: () => true,
-	output: () => noop,
+	output: ({ core }) => core.utils.noop,
 });

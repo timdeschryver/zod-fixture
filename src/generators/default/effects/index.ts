@@ -10,7 +10,7 @@ export const TransformGenerator = Generator({
 
 		const initialValue = core.generate(def.schema);
 		return def.effect.transform(initialValue, {
-			addIssue: () => {},
+			addIssue: core.utils.noop,
 			// @TODO: Verify that path is not needed here.
 			path: [],
 		});
