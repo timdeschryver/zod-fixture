@@ -10,7 +10,6 @@ const POTENTIAL_SCHEMAS = [
 	z.bigint(),
 	z.date(),
 	z.symbol(),
-	z.unknown(),
 	z.nan(),
 	z.record(z.string()), //`z.object` is just a subset of this - no need for a separate case.
 	z.array(z.string()), //Tuples are just a subset of this - no need for a separate case.
