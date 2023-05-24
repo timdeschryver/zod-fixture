@@ -9,6 +9,7 @@ import {
 } from './effects';
 import { EnumGenerator } from './enum';
 import { FunctionGenerator } from './function';
+import { LazyGenerator } from './lazy';
 import { LiteralGenerator } from './literal';
 import { MapGenerator } from './map';
 import { NanGenerator } from './nan';
@@ -56,4 +57,5 @@ export default [
 	RefinementGenerator,
 	PromiseGenerator,
 	SymbolGenerator,
+	LazyGenerator
 ];
