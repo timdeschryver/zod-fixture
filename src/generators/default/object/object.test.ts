@@ -2,11 +2,17 @@ import { Core } from '@/core/core';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { ObjectGenerator, RecordGenerator } from '.';
+import { AnyGenerator } from '../any';
 import { NumberGenerator } from '../number';
 import { StringGenerator } from '../string';
 
 describe('create objects', () => {
-	const core = new Core().register([ObjectGenerator, StringGenerator, NumberGenerator]);
+	const core = new Core().register([
+		ObjectGenerator,
+		StringGenerator,
+		NumberGenerator,
+		AnyGenerator,
+	]);
 
 	test('creates an empty object', () => {
 		expect(core.generate(z.object({}), { path: [] })).toBeTypeOf('object');
@@ -59,10 +65,12 @@ describe('create objects', () => {
 	});
 
 	test('creates an object with additional keys for passthrough', () => {
-		const input = z.object({
-			str: z.string(),
-			num: z.number(),
-		}).passthrough();
+		const input = z
+			.object({
+				str: z.string(),
+				num: z.number(),
+			})
+			.passthrough();
 
 		type I = z.infer<typeof input>;
 
@@ -71,12 +79,16 @@ describe('create objects', () => {
 		expect(result).toBeTypeOf('object');
 		expect((result as I).str).toBeTypeOf('string');
 		expect((result as I).num).toBeTypeOf('number');
-		expect(Object.keys((result as I)).length).toBeGreaterThan(2);
-	})
+		expect(Object.keys(result as I).length).toBeGreaterThan(2);
+	});
 });
 
 describe('create Records', () => {
-	const core = new Core().register([RecordGenerator, StringGenerator, NumberGenerator]);
+	const core = new Core().register([
+		RecordGenerator,
+		StringGenerator,
+		NumberGenerator,
+	]);
 
 	test('creates a record with 3 entries', () => {
 		const input = z.record(z.number());
