@@ -26,6 +26,16 @@ import { TupleGenerator } from './tuple';
 import { UndefinedGenerator } from './undefined';
 import { UnionGenerator } from './union';
 
+export { ArrayGenerator } from './array';
+export { LiteralGenerator } from './literal';
+export { MapGenerator } from './map';
+export { NullableGenerator } from './nullable';
+export { ObjectGenerator, RecordGenerator } from './object';
+export { OptionalGenerator } from './optional';
+export { SetGenerator } from './set';
+export { TupleGenerator } from './tuple';
+export { UnionGenerator } from './union';
+
 export default [
 	ArrayGenerator,
 	BigIntGenerator,
