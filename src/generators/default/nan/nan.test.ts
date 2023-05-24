@@ -7,6 +7,6 @@ describe('create NaNs', () => {
 	const core = new Core().register([NanGenerator]);
 
 	test('creates a NaN', () => {
-		expect(Number.isNaN(core.generate(z.nan()))).toBeTruthy();
+		expect(Number.isNaN(core.generate(z.nan(), { path: [] }))).toBeTruthy();
 	});
 });

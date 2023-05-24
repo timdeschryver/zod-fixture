@@ -18,7 +18,7 @@ describe('create Tuples', () => {
             }), // statistics
         ])
 		const result = core.generate(
-			input
+			input, { path: [] }
 		);
 
         type I = z.infer<typeof input>;

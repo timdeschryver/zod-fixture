@@ -11,7 +11,7 @@ declare module 'zod' {
 }
 
 export interface Context {
-	key?: string | number;
+	path: (string | number)[];
 }
 
 export type ZodConstructor<TSchema extends Zod.ZodTypeAny> = new (
@@ -26,14 +26,14 @@ export type Condition<TSchema extends Zod.ZodTypeAny> = (obj: {
 	def: TSchema['_def'];
 	schema: TSchema;
 	core: Core;
-	ctx?: Context;
+	ctx: Context;
 }) => boolean;
 
 export type Generator<TSchema extends Zod.ZodTypeAny> = (obj: {
 	def: TSchema['_def'];
 	schema: TSchema;
 	core: Core;
-	ctx?: Context;
+	ctx: Context;
 }) => unknown;
 
 export interface Definition<TSchema extends Zod.ZodTypeAny> {

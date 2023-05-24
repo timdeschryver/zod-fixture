@@ -13,7 +13,7 @@ export interface Config {
 
 export class Core {
 	#generators: Definition<any>[] = [];
-	
+
 	readonly utils = new Utils(this);
 	readonly defaults = defaults;
 
@@ -26,7 +26,7 @@ export class Core {
 		return this;
 	}
 
-	generate(schema: Zod.ZodTypeAny, ctx: Context = {}): unknown {
+	generate(schema: Zod.ZodTypeAny, ctx: Context): unknown {
 		const core = this;
 		const def = schema._def;
 		const generator = this.#generators.find(generator => {

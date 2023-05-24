@@ -7,6 +7,6 @@ describe('create Functions', () => {
 	const core = new Core().register([FunctionGenerator]);
 
 	test('creates a function', () => {
-		expect(core.generate(z.function())).toBeTypeOf('function');
+		expect(core.generate(z.function(), { path: [] })).toBeTypeOf('function');
 	});
 });

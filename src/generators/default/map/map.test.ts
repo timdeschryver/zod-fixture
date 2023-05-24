@@ -10,7 +10,7 @@ describe('create Maps', () => {
 
 	test('creates a Map with 3 entries', () => {
 		const input = z.map(z.string(), z.number());
-		const result = core.generate(input);
+		const result = core.generate(input, { path: [] });
 
 		type I = z.infer<typeof input>;
 

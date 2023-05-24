@@ -7,14 +7,14 @@ describe('create literals', () => {
     const core = new Core().register([LiteralGenerator]);
 
 	test('creates a string literal and returns its value', () => {
-		expect(core.generate(z.literal('tuna'))).toBe('tuna');
+		expect(core.generate(z.literal('tuna'), { path: [] })).toBe('tuna');
 	});
 
 	test('creates a number literal and returns its value', () => {
-		expect(core.generate(z.literal(12))).toBe(12);
+		expect(core.generate(z.literal(12), { path: [] })).toBe(12);
 	});
 
 	test('creates a boolean literal and returns its value', () => {
-		expect(core.generate(z.literal(true))).toBe(true);
+		expect(core.generate(z.literal(true), { path: [] })).toBe(true);
 	});
 });

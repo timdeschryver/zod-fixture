@@ -4,5 +4,5 @@ import { ZodOptional } from 'zod';
 export const OptionalGenerator = Generator({
 	schema: ZodOptional,
 	matches: () => true,
-	output: ({ def, core }) => core.generate(def.innerType)
+	output: ({ def, core, ctx }) => core.generate(def.innerType, ctx)
 });

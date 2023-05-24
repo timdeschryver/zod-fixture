@@ -9,7 +9,7 @@ describe('create Sets', () => {
 
 	test('creates a Set with 3 entries', () => {
 		const input = z.set(z.number());
-		const result = core.generate(input);
+		const result = core.generate(input, { path: [] });
 
 		type I = z.infer<typeof input>;
 

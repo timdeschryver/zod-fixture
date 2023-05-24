@@ -13,5 +13,5 @@ export function generate<TSchema extends Zod.ZodTypeAny>(
 	return new Core(config)
 		.register(defaultGenerators)
 		.register(config.extend ?? [])
-		.generate(schema);
+		.generate(schema, { path: [] });
 }

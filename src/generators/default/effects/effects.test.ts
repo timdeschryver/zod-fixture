@@ -19,28 +19,28 @@ describe('usage with effects', () => {
 	test('does invoke transform', () => {
 		const value = 0
 		const spy = vi.fn(() => value);
-		const result = core.generate(z.string().transform(spy));
+		const result = core.generate(z.string().transform(spy), { path: [] });
 		expect(spy).toBeCalled();
 		expect(result).toBeTypeOf(typeof value);
 	});
 
 	test('does not invoke preprocess', () => {
 		const spy = vi.fn(() => 0);
-		const result = core.generate(z.preprocess(spy, z.string()));
+		const result = core.generate(z.preprocess(spy, z.string()), { path: [] });
 		expect(spy).not.toBeCalled();
 		expect(result).toBeTypeOf('string');
 	});
 
 	test('does not invoke refine', () => {
 		const spy = vi.fn(() => 0);
-		const result = core.generate(z.string().refine(spy));
+		const result = core.generate(z.string().refine(spy), { path: [] });
 		expect(spy).not.toBeCalled();
 		expect(result).toBeTypeOf('string');
 	});
 
 	test('does not invoke superRefine', () => {
 		const spy = vi.fn(() => 0);
-		const result = core.generate(z.string().superRefine(spy));
+		const result = core.generate(z.string().superRefine(spy), { path: [] });
 		expect(spy).not.toBeCalled();
 		expect(result).toBeTypeOf('string');
 	});

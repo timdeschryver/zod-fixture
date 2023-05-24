@@ -8,6 +8,6 @@ describe('create empty types', () => {
 	const core = new Core().register([NullableGenerator, StringGenerator]);
 
 	test('creates a nullable string', () => {
-		expect(core.generate(z.string().nullable())).toBeTypeOf('string');
+		expect(core.generate(z.string().nullable(), { path: [] })).toBeTypeOf('string');
 	});
 });

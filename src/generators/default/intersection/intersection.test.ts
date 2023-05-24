@@ -19,7 +19,7 @@ describe('create intersections', () => {
 		});
 
 		const intersection = z.intersection(left, right);
-		const result = core.generate(intersection);
+		const result = core.generate(intersection, { path: [] });
 
 		expect(result).toHaveProperty('left');
 		expect(result).toHaveProperty('right');
@@ -39,7 +39,7 @@ describe('create intersections', () => {
 		}).array();
 
 		const intersection = z.intersection(left, right);
-		const result = core.generate(intersection) as any[];
+		const result = core.generate(intersection, { path: [] }) as any[];
 
 		expect(result[0]).toHaveProperty('left');
 		expect(result[0]).toHaveProperty('right');
