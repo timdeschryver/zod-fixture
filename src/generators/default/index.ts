@@ -1,6 +1,7 @@
 import { ArrayGenerator } from './array';
 import { BigIntGenerator, BigIntMultipleOfGenerator } from './bigint';
 import { BooleanGenerator } from './boolean';
+import { BrandedGenerator } from './branded';
 import { DateGenerator } from './date';
 import {
 	PreprocessGenerator,
@@ -57,5 +58,6 @@ export default [
 	RefinementGenerator,
 	PromiseGenerator,
 	SymbolGenerator,
-	LazyGenerator
+	LazyGenerator,
+	BrandedGenerator,
 ];
