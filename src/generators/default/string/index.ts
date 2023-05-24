@@ -54,3 +54,17 @@ export const UrlGenerator = Generator({
 		return `https://${core.utils.lorem(1)}.com`;
 	},
 });
+
+export const UuidGenerator = Generator({
+	schema: ZodString,
+	matches: ({ def, core }) =>
+		core.utils.filterChecks(def.checks, 'uuid') !== undefined,
+	output: ({ core }) => core.utils.uuid(),
+});
+
+export const EmailGenerator = Generator({
+	schema: ZodString,
+	matches: ({ def, core }) =>
+		core.utils.filterChecks(def.checks, 'email') !== undefined,
+	output: () => 'rando@email.com',
+});

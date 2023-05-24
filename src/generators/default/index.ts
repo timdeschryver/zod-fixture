@@ -16,7 +16,12 @@ import { NullGenerator } from './null';
 import { NumberGenerator } from './number';
 import { ObjectGenerator, RecordGenerator } from './object';
 import { SetGenerator } from './set';
-import { StringGenerator, UrlGenerator } from './string';
+import {
+	EmailGenerator,
+	StringGenerator,
+	UrlGenerator,
+	UuidGenerator,
+} from './string';
 import { TupleGenerator } from './tuple';
 import { UndefinedGenerator } from './undefined';
 import { UnionGenerator } from './union';
@@ -37,8 +42,10 @@ export default [
 	ObjectGenerator,
 	RecordGenerator,
 	SetGenerator,
-	StringGenerator,
+	UuidGenerator,
+	EmailGenerator,
 	UrlGenerator,
+	StringGenerator,
 	TupleGenerator,
 	UndefinedGenerator,
 	UnionGenerator,
