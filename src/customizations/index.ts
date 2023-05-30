@@ -18,3 +18,4 @@ export * from './set-customization';
 export * from './tuple-customization';
 export * from './record-customization';
 export * from './union-randomize-customization';
+export * from './intersection-customization';

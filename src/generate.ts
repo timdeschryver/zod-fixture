@@ -227,6 +227,16 @@ function extractFromZodSchema<ZSchema extends ZodTypeAny>(
 					},
 				};
 			}),
+		ZodIntersection: () =>
+			request('intersection', (context): Record<string, unknown> => {
+				if (schema._def.left._def.typeName !== 'ZodObject'
+					|| schema._def.right._def.typeName !== 'ZodObject') {
+					throw new Error('Intersection is only supported for objects');
+				}
+				return {
+					create: () => ({ ...generate(schema._def.left, context), ...generate(schema._def.right, context) }),
+				};
+			}),
 	};
 
 	const zodToRequest = mapper[schema._def.typeName];
