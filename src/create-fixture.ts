@@ -5,6 +5,7 @@ import {
 	booleanSequenceCustomization,
 	dateRandomizeCustomization,
 	dateRandomizeZodSchemaCustomization,
+	intersectionCustomization,
 	literalValueCustomization,
 	mapCustomization,
 	nanCustomization,
@@ -49,6 +50,7 @@ const defaultCustomizations = [
 	tupleCustomization() as Customization<Record<string, unknown>>,
 	unionRandomizeCustomization() as Customization<Record<string, unknown>>,
 	effectCustomization() as Customization<Record<string, unknown>>,
+	intersectionCustomization() as Customization<Record<string, unknown>>,
 ];
 
 export function createFixture<ZSchema extends ZodTypeAny>(
