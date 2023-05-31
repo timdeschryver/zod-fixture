@@ -605,6 +605,24 @@ describe('create Intersection', () => {
 		expect(result).toHaveProperty('b');
 	});
 
+	test('creates with multiple intersections', () => {
+		const result = createFixture(
+			z.object({
+				a: z.number(),
+			}).and(z.object({
+				b: z.number(),
+			})).and(z.object({
+				c: z.number(),
+			})).and(z.object({
+				d: z.number(),
+			}))
+		);
+		expect(result).toHaveProperty('a');
+		expect(result).toHaveProperty('b');
+		expect(result).toHaveProperty('c');
+		expect(result).toHaveProperty('d');
+	});
+
 	test('creates a nested intersection', () => {
 		const result = createFixture(
 			z.object({
@@ -630,6 +648,26 @@ describe('create Intersection', () => {
 		expect(result.str2).toContain('str');
 		expect(result.nested2.num).toBeTypeOf('number');
 		expect(result.nested2.date).toBeInstanceOf(Date);
+	});
+
+	test('creates with embedded intersections', () => {
+		const result = createFixture(
+			z.object({
+				a: z.string(),
+			}).and(z.object({
+				b: z.object({
+					c: z.number(),
+				}).and(z.object({
+					d: z.number(),
+				}))
+			}))
+		);
+
+		expect(result).toHaveProperty('a');
+		expect(result).toHaveProperty('b');
+		expect(result.b).toBeTypeOf('object');
+		expect(result.b).toHaveProperty('c');
+		expect(result.b).toHaveProperty('d');
 	});
 
 	test("creates an intersection with zod's api", () => {

@@ -229,9 +229,11 @@ function extractFromZodSchema<ZSchema extends ZodTypeAny>(
 			}),
 		ZodIntersection: () =>
 			request('intersection', (context): Record<string, unknown> => {
-				if (schema._def.left._def.typeName !== 'ZodObject'
-					|| schema._def.right._def.typeName !== 'ZodObject') {
-					throw new Error('Intersection is only supported for objects');
+				const leftTypeName = schema._def.left._def.typeName;
+				const rightTypeName = schema._def.right._def.typeName;
+				if ((leftTypeName !== 'ZodObject' && leftTypeName !== 'ZodIntersection')
+					|| (rightTypeName !== 'ZodObject' && rightTypeName !== 'ZodIntersection')) {
+					throw new Error('Intersection is only supported for objects or other intersections');
 				}
 				return {
 					create: () => ({ ...generate(schema._def.left, context), ...generate(schema._def.right, context) }),
