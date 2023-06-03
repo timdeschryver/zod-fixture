@@ -34,6 +34,44 @@ describe('create strings', () => {
 		expect(() => core.generate(z.string().min(-1), { path: [] })).toThrowError();
 	});
 
+	test('creates a string that is a uuid', () => {
+		expect(createFixture(z.string().uuid())).toMatch(
+			/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+		);
+	});
+
+	// test('creates a string that is a cuid', () => {
+	// 	expect(isCuid(createFixture(z.string().cuid()))).toBeTruthy();
+	// });
+
+	// test('creates a string that is a cuid2', () => {
+	// 	expect(isCuid2(createFixture(z.string().cuid2()))).toBeTruthy();
+	// });
+
+	// test('creates a string that is an email', () => {
+	// 	const email = createFixture(z.string().email());
+	// 	expect(email).include('@');
+	// 	expect(email).include('.');
+	// });
+
+	// test('creates a string that startsWith', () => {
+	// 	const value = createFixture(z.string().startsWith('start_'));
+	// 	expect(value.startsWith('start_')).toBeTruthy();
+	// });
+
+	// test('creates a string that endsWith', () => {
+	// 	const value = createFixture(z.string().endsWith('_end'));
+	// 	expect(value.endsWith('_end')).toBeTruthy();
+	// });
+
+	// test('creates a string that startsWith and endsWith', () => {
+	// 	const value = createFixture(
+	// 		z.string().startsWith('start_').endsWith('_end'),
+	// 	);
+	// 	expect(value.startsWith('start_')).toBeTruthy();
+	// 	expect(value.endsWith('_end')).toBeTruthy();
+	// });
+
 
 	test('creates a nullable string', () => {
 		expect(core.generate(z.string().nullable(), { path: [] })).toBeTypeOf('string');
