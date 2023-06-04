@@ -10,7 +10,7 @@ export const TupleGenerator = Generator({
 		);
 		const rest = def.rest
 			? core.utils.n(
-					idx => core.generate(def.rest!, { path: [...ctx.path, idx] }),
+					idx => core.generate(def.rest!, { path: [...ctx.path, known.length + idx] }),
 					1,
 			  )
 			: [];
