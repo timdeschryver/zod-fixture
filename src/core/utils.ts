@@ -1,5 +1,7 @@
-import type { Core } from './core';
+import { init as Cuid2 } from '@paralleldrive/cuid2';
+import cuid from 'cuid';
 import MersenneTwister from './MersenneTwister';
+import type { Core } from './core';
 
 const LOREM =
 	'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
@@ -12,9 +14,13 @@ const CHAR_CODE_LOWERCASE_Z = 122;
 
 export class Utils {
 	mt: MersenneTwister;
+	cuid: () => string;
+	cuid2: () => string;
 
 	constructor(private core: Core) {
 		this.mt = new MersenneTwister(core.seed);
+		this.cuid2 = Cuid2({ random: this.random.bind(this) });
+		this.cuid = cuid;
 	}
 
 	uuid() {

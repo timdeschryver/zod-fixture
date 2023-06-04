@@ -1,7 +1,5 @@
 import { Core } from '@/core/core';
 import { Generator } from '@/core/generator';
-import { createId } from '@paralleldrive/cuid2';
-import cuid from 'cuid';
 import { ZodString, ZodStringDef } from 'zod';
 
 function formatString(core: Core, def: ZodStringDef, value: string) {
@@ -90,12 +88,12 @@ export const CuidGenerator = Generator({
 	schema: ZodString,
 	matches: ({ def, core }) =>
 		core.utils.filterChecks(def.checks, 'cuid') !== undefined,
-	output: ({ def, core }) => formatString(core, def, cuid()),
+	output: ({ def, core }) => formatString(core, def, core.utils.cuid()),
 });
 
 export const Cuid2Generator = Generator({
 	schema: ZodString,
 	matches: ({ def, core }) =>
 		core.utils.filterChecks(def.checks, 'cuid2') !== undefined,
-	output: ({ def, core }) => formatString(core, def, createId()),
+	output: ({ def, core }) => formatString(core, def, core.utils.cuid2()),
 });
