@@ -8,17 +8,20 @@ import {
 import { Utils } from './utils';
 
 export interface Config {
+	seed?: number;
 	defaults?: Partial<typeof defaults>;
 }
 
 export class Core {
 	#generators: Definition<any>[] = [];
 
-	readonly utils = new Utils(this);
+	readonly seed: number = 0;
 	readonly defaults = defaults;
+	readonly utils = new Utils(this);
 
 	constructor(config?: Config) {
 		this.defaults = { ...this.defaults, ...config?.defaults };
+		if (config?.seed) this.seed = config.seed;
 	}
 
 	register(generators: Definition<any>[]) {

@@ -1,4 +1,5 @@
 import type { Core } from './core';
+import MersenneTwister from './MersenneTwister';
 
 const LOREM =
 	'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
@@ -10,19 +11,23 @@ const CHAR_CODE_0 = 48;
 const CHAR_CODE_LOWERCASE_Z = 122;
 
 export class Utils {
-	constructor(private core: Core) {}
+	mt: MersenneTwister;
+
+	constructor(private core: Core) {
+		this.mt = new MersenneTwister(core.seed);
+	}
 
 	uuid() {
 		let u = '',
 			m = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx',
 			i = 0,
-			rb = (Math.random() * 0xffffffff) | 0;
+			rb = (this.random() * 0xffffffff) | 0;
 		while (i++ < 36) {
 			let c = m[i - 1],
 				r = rb & 0xf,
 				v = c == 'x' ? r : (r & 0x3) | 0x8;
 			u += c == '-' || c == '4' ? c : v.toString(16);
-			rb = i % 8 == 0 ? (Math.random() * 0xffffffff) | 0 : rb >> 4;
+			rb = i % 8 == 0 ? (this.random() * 0xffffffff) | 0 : rb >> 4;
 		}
 		return u;
 	}
@@ -34,6 +39,10 @@ export class Utils {
 		const length = typeof config === 'number' ? config : this.randomInt(config);
 
 		return Array.from({ length }, (_, i) => factory(i));
+	}
+
+	random() {
+		return this.mt.random();
 	}
 
 	randomFrom<T extends unknown>(list: T[] | readonly T[] | Set<T>): T {
@@ -66,7 +75,7 @@ export class Utils {
 			throw new Error(`min ${min} can't be greater than max ${max}`);
 		}
 
-		return Math.random() * (max - min) + min;
+		return this.random() * (max - min) + min;
 	}
 
 	randomInt(config?: { min?: number; max?: number }): number {
@@ -77,7 +86,7 @@ export class Utils {
 			throw new Error(`min ${min} can't be greater than max ${max}`);
 		}
 
-		return Math.floor(Math.random() * (max - min + 1)) + min;
+		return Math.floor(this.random() * (max - min + 1)) + min;
 	}
 
 	randomBigInt(config?: { min?: bigint; max?: bigint }): bigint {
@@ -92,7 +101,7 @@ export class Utils {
 		const differenceLength = difference.toString().length;
 		let multiplier = '';
 		while (multiplier.length < differenceLength) {
-			multiplier += Math.random().toString().split('.')[1];
+			multiplier += this.random().toString().split('.')[1];
 		}
 		multiplier = multiplier.slice(0, differenceLength);
 		const divisor = '1' + '0'.repeat(differenceLength);
