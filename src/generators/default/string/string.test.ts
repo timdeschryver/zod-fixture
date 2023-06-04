@@ -5,7 +5,6 @@ import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import {
 	Cuid2Generator,
-	CuidGenerator,
 	EmailGenerator,
 	StringGenerator,
 	UrlGenerator,
@@ -18,7 +17,6 @@ import { OptionalGenerator } from '../optional';
 describe('create strings', () => {
 	const core = new Core().register([
 		UuidGenerator,
-		CuidGenerator,
 		Cuid2Generator,
 		UrlGenerator,
 		EmailGenerator,

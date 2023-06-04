@@ -1,5 +1,4 @@
 import { init as Cuid2 } from '@paralleldrive/cuid2';
-import cuid from 'cuid';
 import MersenneTwister from './MersenneTwister';
 import type { Core } from './core';
 
@@ -14,13 +13,11 @@ const CHAR_CODE_LOWERCASE_Z = 122;
 
 export class Utils {
 	mt: MersenneTwister;
-	cuid: () => string;
 	cuid2: () => string;
 
 	constructor(private core: Core) {
 		this.mt = new MersenneTwister(core.seed);
 		this.cuid2 = Cuid2({ random: this.random.bind(this) });
-		this.cuid = cuid;
 	}
 
 	uuid() {

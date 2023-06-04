@@ -84,16 +84,10 @@ export const EmailGenerator = Generator({
 	output: ({ def, core }) => formatString(core, def, 'rando@email.com'),
 });
 
-export const CuidGenerator = Generator({
-	schema: ZodString,
-	matches: ({ def, core }) =>
-		core.utils.filterChecks(def.checks, 'cuid') !== undefined,
-	output: ({ def, core }) => formatString(core, def, core.utils.cuid()),
-});
-
 export const Cuid2Generator = Generator({
 	schema: ZodString,
 	matches: ({ def, core }) =>
+		core.utils.filterChecks(def.checks, 'cuid') !== undefined ||
 		core.utils.filterChecks(def.checks, 'cuid2') !== undefined,
 	output: ({ def, core }) => formatString(core, def, core.utils.cuid2()),
 });
