@@ -6,8 +6,8 @@ const PARAGRAPHS = [LOREM];
 const SENTENCES = LOREM.replace(/\. /g, '.\n').split('\n');
 const WORDS = LOREM.toLowerCase().replace(/[,.]/, '').split(' ');
 
-const LOWERCASE_A = 97;
-const LOWERCASE_Z = 122;
+const CHAR_CODE_0 = 48;
+const CHAR_CODE_LOWERCASE_Z = 122;
 
 export class Utils {
 	constructor(private core: Core) {}
@@ -51,7 +51,7 @@ export class Utils {
 		let result = '';
 		for (var i = 0; i < length; i++) {
 			result += String.fromCharCode(
-				this.randomInt({ min: LOWERCASE_A, max: LOWERCASE_Z }),
+				this.randomInt({ min: CHAR_CODE_0, max: CHAR_CODE_LOWERCASE_Z }),
 			);
 		}
 
