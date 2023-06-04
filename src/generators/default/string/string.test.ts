@@ -1,6 +1,5 @@
 import { Core } from '@/core/core';
 import { isCuid as isCuid2 } from '@paralleldrive/cuid2';
-import { isCuid } from 'cuid';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import {
@@ -72,12 +71,6 @@ describe('create strings', () => {
 			typeof schema
 		>;
 		expect(fixture.lastFour).toHaveLength(4);
-	});
-
-	test('creates a string that is a cuid', () => {
-		const schema = z.string().cuid();
-		const value = core.generate(schema, { path: [] }) as string;
-		expect(isCuid(value)).toBeTruthy();
 	});
 
 	test('creates a string that is a cuid2', () => {

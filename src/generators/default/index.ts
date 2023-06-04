@@ -21,6 +21,7 @@ import { PromiseGenerator } from './promise';
 import { SetGenerator } from './set';
 import {
 	Cuid2Generator,
+	CuidGenerator,
 	EmailGenerator,
 	StringGenerator,
 	UrlGenerator,
@@ -48,6 +49,7 @@ export default [
 	RecordGenerator,
 	SetGenerator,
 	UuidGenerator,
+	CuidGenerator,
 	Cuid2Generator,
 	EmailGenerator,
 	UrlGenerator,

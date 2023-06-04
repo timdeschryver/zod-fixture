@@ -25,7 +25,7 @@ export default defineConfig({
 				`zod-fixture.${format}.${format === 'umd' ? 'cjs' : 'js'}`,
 		},
 		rollupOptions: {
-			external: ['cuid', '@paralleldrive/cuid2'],
+			external: ['@paralleldrive/cuid2'],
 		},
 	},
 	optimizeDeps: {
