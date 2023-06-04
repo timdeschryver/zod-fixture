@@ -12,6 +12,7 @@ import {
     ZodNull,
     ZodNumber,
     ZodString,
+    ZodTuple,
     ZodUndefined,
     ZodUnion,
 } from 'zod';
@@ -114,6 +115,21 @@ export const UnionGenerator = Generator({
 	}),
 });
 
+export const TupleGenerator = Generator({
+	schema: ZodTuple,
+	matches: () => true,
+	output: ({ def, core, ctx }) => {
+		const known = def.items.map((type, idx) =>
+			core.generate(type, { path: [...ctx.path, idx] }),
+		);
+		const rest = def.rest
+			? [core.generate(def.rest, { path: [...ctx.path, known.length] })]
+			: [];
+
+		return [...known, ...rest];
+	},
+});
+
 export default [
 	BigIntGenerator,
 	NumberGenerator,
@@ -128,4 +144,5 @@ export default [
 	UndefinedGenerator,
 	ArrayGenerator,
 	UnionGenerator,
+    TupleGenerator
 ];
