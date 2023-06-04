@@ -6,6 +6,9 @@ const PARAGRAPHS = [LOREM];
 const SENTENCES = LOREM.replace(/\. /g, '.\n').split('\n');
 const WORDS = LOREM.toLowerCase().replace(/[,.]/, '').split(' ');
 
+const LOWERCASE_A = 97;
+const LOWERCASE_Z = 122;
+
 export class Utils {
 	constructor(private core: Core) {}
 
@@ -40,6 +43,19 @@ export class Utils {
 		const max = Math.max(min, options.length - 1);
 
 		return options[this.randomInt({ min, max })] as T;
+	}
+
+	randomString({ min, max }: { min: number; max: number }) {
+		const length = this.randomInt({ min, max });
+
+		let result = '';
+		for (var i = 0; i < length; i++) {
+			result += String.fromCharCode(
+				this.randomInt({ min: LOWERCASE_A, max: LOWERCASE_Z }),
+			);
+		}
+
+		return result;
 	}
 
 	randomFloat(config?: { min?: number; max?: number }): number {
