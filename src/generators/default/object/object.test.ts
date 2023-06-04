@@ -34,6 +34,7 @@ describe('create objects', () => {
 		MapGenerator,
 		SetGenerator,
 		PromiseGenerator,
+		RecordGenerator
 	]);
 
 	test('creates an empty object', () => {
