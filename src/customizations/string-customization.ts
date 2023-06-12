@@ -1,6 +1,7 @@
 import type { Customization } from './customization';
 import { createId } from '@paralleldrive/cuid2';
 import cuid from 'cuid';
+import { numberRandomizer } from './number-randomize-customization';
 
 export const stringCustomization = (): Customization => {
 	return {
@@ -40,6 +41,10 @@ export const stringCustomization = (): Customization => {
 				);
 			}
 
+			if (checks['datetime']) {
+				return generateDateTimeString();
+			}
+
 			return generateString(propertName);
 		},
 	};
@@ -63,6 +68,21 @@ function generateStringWithLength(
 		result = result.substring(0, maxLength);
 	}
 	return result;
+}
+
+function generateDateTimeString(): string {
+	const now = new Date();
+	const min = new Date(
+		now.getUTCFullYear() - 2,
+		now.getUTCMonth(),
+		now.getUTCDate(),
+	).getTime();
+	const max = new Date(
+		now.getUTCFullYear() + 2,
+		now.getUTCMonth(),
+		now.getUTCDate(),
+	).getTime();
+	return new Date(numberRandomizer(min, max)).toISOString();
 }
 
 function generateString(prefix?: string): string {

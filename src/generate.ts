@@ -289,6 +289,7 @@ function extractConditions<ZSchema extends ZodTypeAny>(
 				case 'uuid':
 				case 'cuid':
 				case 'cuid2':
+				case 'datetime':
 				case 'email':
 					return {
 						...aggregate,
