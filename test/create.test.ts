@@ -98,7 +98,7 @@ describe('create strings', () => {
 		expect(value.endsWith('_end')).toBeTruthy();
 	});
 
-	test('creates a date within a range of min plus 2 years from today', () => {
+  test('creates a date within a range of min plus 2 years from today', () => {
 		const two_years = 31536000000 * 2;
 		const isoDateTimeString = createFixture(z.string().datetime());
 		const result = new Date(isoDateTimeString);
@@ -615,15 +615,11 @@ describe('usage with effects', () => {
 describe('create Intersection', () => {
 	test('creates an Intersection', () => {
 		const result = createFixture(
-			z
-				.object({
-					a: z.string(),
-				})
-				.and(
-					z.object({
-						b: z.number(),
-					}),
-				),
+			z.object({
+				a: z.string(),
+			}).and(z.object({
+				b: z.number(),
+			}))
 		);
 		expect(result).toHaveProperty('a');
 		expect(result).toHaveProperty('b');
@@ -631,25 +627,15 @@ describe('create Intersection', () => {
 
 	test('creates with multiple intersections', () => {
 		const result = createFixture(
-			z
-				.object({
-					a: z.number(),
-				})
-				.and(
-					z.object({
-						b: z.number(),
-					}),
-				)
-				.and(
-					z.object({
-						c: z.number(),
-					}),
-				)
-				.and(
-					z.object({
-						d: z.number(),
-					}),
-				),
+			z.object({
+				a: z.number(),
+			}).and(z.object({
+				b: z.number(),
+			})).and(z.object({
+				c: z.number(),
+			})).and(z.object({
+				d: z.number(),
+			}))
 		);
 		expect(result).toHaveProperty('a');
 		expect(result).toHaveProperty('b');
@@ -659,24 +645,20 @@ describe('create Intersection', () => {
 
 	test('creates a nested intersection', () => {
 		const result = createFixture(
-			z
-				.object({
-					str: z.string(),
-					nested: z.object({
+			z.object({
+				str: z.string(),
+				nested: z.object({
+					num: z.number(),
+					date: z.date(),
+				}),
+			}).and(z.object({
+					str2: z.string(),
+					nested2: z.object({
 						num: z.number(),
 						date: z.date(),
 					}),
-				})
-				.and(
-					z.object({
-						str2: z.string(),
-						nested2: z.object({
-							num: z.number(),
-							date: z.date(),
-						}),
-					}),
-				),
-		);
+				}),
+			));
 		expect(result).toBeTypeOf('object');
 		expect(result.str).toBeTypeOf('string');
 		expect(result.str).toContain('str');
@@ -690,23 +672,15 @@ describe('create Intersection', () => {
 
 	test('creates with embedded intersections', () => {
 		const result = createFixture(
-			z
-				.object({
-					a: z.string(),
-				})
-				.and(
-					z.object({
-						b: z
-							.object({
-								c: z.number(),
-							})
-							.and(
-								z.object({
-									d: z.number(),
-								}),
-							),
-					}),
-				),
+			z.object({
+				a: z.string(),
+			}).and(z.object({
+				b: z.object({
+					c: z.number(),
+				}).and(z.object({
+					d: z.number(),
+				}))
+			}))
 		);
 
 		expect(result).toHaveProperty('a');
@@ -729,15 +703,11 @@ describe('create Intersection', () => {
 	});
 
 	test('creates intersection with optional value ', () => {
-		const SampleWithOptionalValueSchema = z
-			.object({
-				name: z.string().optional(),
-			})
-			.and(
-				z.object({
-					modify: z.boolean().optional(),
-				}),
-			);
+		const SampleWithOptionalValueSchema = z.object({
+			name: z.string().optional(),
+		}).and(z.object({
+			modify: z.boolean().optional(),
+		}));
 		expect(() => {
 			createFixture(SampleWithOptionalValueSchema);
 		}).not.toThrow();
