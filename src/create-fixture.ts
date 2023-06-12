@@ -21,6 +21,7 @@ import {
 	undefinedCustomization,
 	unionRandomizeCustomization,
 } from './customizations';
+
 import type { Customization } from './customizations';
 import { effectCustomization } from './customizations/effect-customization';
 import { generate } from './generate';

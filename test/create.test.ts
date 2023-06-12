@@ -97,6 +97,26 @@ describe('create strings', () => {
 		expect(value.startsWith('start_')).toBeTruthy();
 		expect(value.endsWith('_end')).toBeTruthy();
 	});
+
+  test('creates a date within a range of min plus 2 years from today', () => {
+		const two_years = 31536000000 * 2;
+		const isoDateTimeString = createFixture(z.string().datetime());
+		const result = new Date(isoDateTimeString);
+		expect(result).toBeInstanceOf(Date);
+		expect(result.getTime()).toBeGreaterThanOrEqual(
+			new Date().getTime() - two_years,
+		);
+		expect(result.getTime()).toBeLessThanOrEqual(
+			new Date().getTime() + two_years,
+		);
+	});
+
+	test('creates a string that is an ISO date time', () => {
+		const schema = z.string().datetime();
+
+		const isoDateTimeString = createFixture(schema);
+		schema.parse(isoDateTimeString);
+	});
 });
 
 describe('create numbers', () => {
