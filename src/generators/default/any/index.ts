@@ -21,6 +21,6 @@ const POTENTIAL_SCHEMAS = [
 export const AnyGenerator = Generator({
 	schema: ZodAny,
 	matches: () => true,
-	output: ({ core, ctx }) =>
-		core.generate(core.utils.randomFrom(POTENTIAL_SCHEMAS), ctx),
+	output: ({ core, context }) =>
+		core.generate(core.utils.randomFrom(POTENTIAL_SCHEMAS), context),
 });

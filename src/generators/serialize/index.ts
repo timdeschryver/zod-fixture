@@ -100,30 +100,30 @@ export const UndefinedGenerator = Generator({
 export const ArrayGenerator = Generator({
 	schema: ZodArray,
 	matches: () => true,
-	output: ({ def, core, ctx }) => ({
+	output: ({ def, core, context }) => ({
 		type: 'array',
-		value: core.generate(def.type, ctx),
+		value: core.generate(def.type, context),
 	}),
 });
 
 export const UnionGenerator = Generator({
 	schema: ZodUnion,
 	matches: () => true,
-	output: ({ def, core, ctx }) => ({
+	output: ({ def, core, context }) => ({
 		type: 'union',
-		value: def.options.map(type => core.generate(type, ctx)),
+		value: def.options.map(type => core.generate(type, context)),
 	}),
 });
 
 export const TupleGenerator = Generator({
 	schema: ZodTuple,
 	matches: () => true,
-	output: ({ def, core, ctx }) => {
+	output: ({ def, core, context }) => {
 		const known = def.items.map((type, idx) =>
-			core.generate(type, { path: [...ctx.path, idx] }),
+			core.generate(type, { path: [...context.path, idx] }),
 		);
 		const rest = def.rest
-			? [core.generate(def.rest, { path: [...ctx.path, known.length] })]
+			? [core.generate(def.rest, { path: [...context.path, known.length] })]
 			: [];
 
 		return [...known, ...rest];

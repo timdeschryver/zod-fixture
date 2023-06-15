@@ -4,13 +4,13 @@ import { ZodTuple } from 'zod';
 export const TupleGenerator = Generator({
 	schema: ZodTuple,
 	matches: () => true,
-	output: ({ def, core, ctx }) => {
+	output: ({ def, core, context }) => {
 		const known = def.items.map((type, idx) =>
-			core.generate(type, { path: [...ctx.path, idx] }),
+			core.generate(type, { path: [...context.path, idx] }),
 		);
 		const rest = def.rest
 			? core.utils.n(
-					idx => core.generate(def.rest!, { path: [...ctx.path, known.length + idx] }),
+					idx => core.generate(def.rest!, { path: [...context.path, known.length + idx] }),
 					1,
 			  )
 			: [];

@@ -4,5 +4,5 @@ import { ZodBranded } from 'zod';
 export const BrandedGenerator = Generator({
 	schema: ZodBranded,
 	matches: () => true,
-	output: ({ def, core, ctx }) => core.generate(def.type, ctx),
+	output: ({ def, core, context }) => core.generate(def.type, context),
 });

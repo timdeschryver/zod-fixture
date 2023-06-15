@@ -29,7 +29,7 @@ export class Core {
 		return this;
 	}
 
-	generate(schema: Zod.ZodTypeAny, ctx: Context = { path: [] }): unknown {
+	generate(schema: Zod.ZodTypeAny, context: Context = { path: [] }): unknown {
 		const core = this;
 		const def = schema._def;
 		const generator = this.#generators.find(generator => {
@@ -45,7 +45,7 @@ export class Core {
 			)
 				return false;
 
-			if (!generator.matches({ schema, def, core, ctx })) return false;
+			if (!generator.matches({ schema, def, core, context })) return false;
 
 			return true;
 		});
@@ -53,6 +53,6 @@ export class Core {
 		if (!generator)
 			throw new Error(`No generator found for ${schema.constructor.name}`);
 
-		return generator.output({ schema, def, core, ctx });
+		return generator.output({ schema, def, core, context });
 	}
 }

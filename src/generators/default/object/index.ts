@@ -4,13 +4,13 @@ import { ZodObject, ZodRecord, z } from 'zod';
 export const ObjectGenerator = Generator({
 	schema: ZodObject,
 	matches: () => true,
-	output: ({ def, core, ctx }) => {
+	output: ({ def, core, context }) => {
 		const shape = def.shape();
 		const result: Record<string, unknown> = {};
 
 		for (const key in shape) {
 			const type = shape[key];
-			if (type) result[key] = core.generate(type, { path: [...ctx.path, key] });
+			if (type) result[key] = core.generate(type, { path: [...context.path, key] });
 		}
 
 		const passthrough =
@@ -21,7 +21,7 @@ export const ObjectGenerator = Generator({
 			const key = core.utils.lorem(1, 'word');
 			const type =
 				def.catchall._def.typeName === 'ZodNever' ? z.any() : def.catchall;
-			result[key] = core.generate(type, { path: [...ctx.path, key] });
+			result[key] = core.generate(type, { path: [...context.path, key] });
 		}
 
 		return result;
@@ -31,15 +31,15 @@ export const ObjectGenerator = Generator({
 export const RecordGenerator = Generator({
 	schema: ZodRecord,
 	matches: () => true,
-	output: ({ def, core, ctx }) => {
+	output: ({ def, core, context }) => {
 		const result: Record<
 			z.infer<typeof def.keyType>,
 			z.infer<typeof def.valueType>
 		> = {};
 
 		core.utils.n(() => {
-			const key = core.generate(def.keyType, ctx) as string | number;
-			const value = core.generate(def.valueType, { path: [...ctx.path, key] });
+			const key = core.generate(def.keyType, context) as string | number;
+			const value = core.generate(def.valueType, { path: [...context.path, key] });
 
 			result[key] = value;
 		});

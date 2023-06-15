@@ -26,14 +26,14 @@ export type Condition<TSchema extends Zod.ZodTypeAny> = (obj: {
 	def: TSchema['_def'];
 	schema: TSchema;
 	core: Core;
-	ctx: Context;
+	context: Context;
 }) => boolean;
 
 export type Generator<TSchema extends Zod.ZodTypeAny> = (obj: {
 	def: TSchema['_def'];
 	schema: TSchema;
 	core: Core;
-	ctx: Context;
+	context: Context;
 }) => unknown;
 
 export interface Definition<TSchema extends Zod.ZodTypeAny> {

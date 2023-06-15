@@ -68,7 +68,7 @@ import { generate, Generator } from 'zod-fixture';
 
 const AddressGenerator = Generator({
 	schema: ZodObject,
-	matches: ({ ctx }) => ctx.path.at(-1) === 'address',
+	matches: ({ context }) => context.path.at(-1) === 'address',
 	output: () => ({
 		street: 'My Street',
 		city: 'My City',

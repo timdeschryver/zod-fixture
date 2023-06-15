@@ -4,5 +4,5 @@ import { ZodNullable } from 'zod';
 export const NullableGenerator = Generator({
 	schema: ZodNullable,
 	matches: () => true,
-	output: ({ def, core, ctx }) => core.generate(def.innerType, ctx)
+	output: ({ def, core, context }) => core.generate(def.innerType, context)
 });
