@@ -18,13 +18,13 @@ describe('create unions', () => {
 	]);
 
 	test('creates a union value', () => {
-		expect(typeof core.generate(z.union([z.string(), z.number()]), { path: [] })).toMatch(
+		expect(typeof core.generate(z.union([z.string(), z.number()]))).toMatch(
 			/^string|number$/,
 		);
 	});
 
 	test('creates a union value with the or syntax', () => {
-		expect(typeof core.generate(z.string().or(z.number()), { path: [] })).toMatch(
+		expect(typeof core.generate(z.string().or(z.number()))).toMatch(
 			/^string|number$/,
 		);
 	});
@@ -34,7 +34,7 @@ describe('create unions', () => {
 			z.object({ type: z.literal('a'), a: z.string() }),
 			z.object({ type: z.literal('b'), b: z.string() }),
 		]);
-		const result = core.generate(input, { path: [] });
+		const result = core.generate(input);
 
 		type I = z.infer<typeof input>;
 

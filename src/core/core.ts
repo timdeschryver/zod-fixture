@@ -29,7 +29,7 @@ export class Core {
 		return this;
 	}
 
-	generate(schema: Zod.ZodTypeAny, ctx: Context): unknown {
+	generate(schema: Zod.ZodTypeAny, ctx: Context = { path: [] }): unknown {
 		const core = this;
 		const def = schema._def;
 		const generator = this.#generators.find(generator => {

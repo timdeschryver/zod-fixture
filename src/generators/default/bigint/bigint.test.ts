@@ -10,7 +10,7 @@ describe('create bigint', () => {
 	]);
     
 	test('creates a bigint between Number.MIN_SAFE_INTEGER and Number.MAX_SAFE_INTEGER', () => {
-		const result = core.generate(z.bigint(), {path: []});
+		const result = core.generate(z.bigint());
 
 		expect(result).toBeTypeOf('bigint');
 		expect(result).toBeGreaterThanOrEqual(Number.MIN_SAFE_INTEGER);

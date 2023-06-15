@@ -38,7 +38,7 @@ describe('create objects', () => {
 	]);
 
 	test('creates an empty object', () => {
-		expect(core.generate(z.object({}), { path: [] })).toBeTypeOf('object');
+		expect(core.generate(z.object({}))).toBeTypeOf('object');
 	});
 
 	test('creates an object', () => {
@@ -49,7 +49,7 @@ describe('create objects', () => {
 
 		type I = z.infer<typeof input>;
 
-		const result = core.generate(input, { path: [] });
+		const result = core.generate(input);
 
 		expect(result).toBeTypeOf('object');
 		expect((result as I).str).toBeTypeOf('string');
@@ -67,7 +67,7 @@ describe('create objects', () => {
 
 		type I = z.infer<typeof input>;
 
-		const result = core.generate(input, { path: [] });
+		const result = core.generate(input);
 		expect(result).toBeTypeOf('object');
 		expect((result as I).str).toBeTypeOf('string');
 		expect((result as I).nested.num).toBeTypeOf('number');
@@ -81,7 +81,7 @@ describe('create objects', () => {
 		type BaseTeacher = z.infer<typeof BaseTeacher>;
 		type HasID = z.infer<typeof HasID>;
 
-		const result = core.generate(Teacher, { path: [] });
+		const result = core.generate(Teacher);
 		expect(result).toBeTypeOf('object');
 		expect((result as HasID).id).toBeTypeOf('string');
 		expect((result as BaseTeacher).name).toBeTypeOf('string');
@@ -97,7 +97,7 @@ describe('create objects', () => {
 
 		type I = z.infer<typeof input>;
 
-		const result = core.generate(input, { path: [] });
+		const result = core.generate(input);
 
 		expect(result).toBeTypeOf('object');
 		expect((result as I).str).toBeTypeOf('string');
@@ -115,7 +115,7 @@ describe('create Records', () => {
 
 	test('creates a record with 3 entries', () => {
 		const input = z.record(z.number());
-		const result = core.generate(input, { path: [] });
+		const result = core.generate(input);
 
 		type I = z.infer<typeof input>;
 
@@ -126,7 +126,7 @@ describe('create Records', () => {
 
 	test('creates a record with a defined key type', () => {
 		const input = z.record(z.string(), z.string());
-		const result = core.generate(input, { path: [] });
+		const result = core.generate(input);
 
 		type I = z.infer<typeof input>;
 

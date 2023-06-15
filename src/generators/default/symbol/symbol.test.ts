@@ -7,6 +7,6 @@ describe('create a symbol type', () => {
 	const core = new Core().register([SymbolGenerator]);
 
 	test('creates a symbol', () => {
-		expect(core.generate(z.symbol(), { path: [] })).toBeTypeOf('symbol');
+		expect(core.generate(z.symbol())).toBeTypeOf('symbol');
 	});
 });

@@ -21,23 +21,23 @@ describe('create empty types', () => {
 	]);
 
 	test('creates a nullable string', () => {
-		expect(core.generate(z.string().nullish(), { path: [] })).toBeTypeOf('string');
-		expect(core.generate(z.string().optional(), { path: [] })).toBeTypeOf('string');
+		expect(core.generate(z.string().nullish())).toBeTypeOf('string');
+		expect(core.generate(z.string().optional())).toBeTypeOf('string');
 	});
 
 	test('creates a nullable boolean', () => {
-		expect(core.generate(z.boolean().nullish(), { path: [] })).toBeTypeOf('boolean');
-		expect(core.generate(z.boolean().optional(), { path: [] })).toBeTypeOf('boolean');
+		expect(core.generate(z.boolean().nullish())).toBeTypeOf('boolean');
+		expect(core.generate(z.boolean().optional())).toBeTypeOf('boolean');
 	});
 
 	test('creates a nullable number', () => {
-		expect(core.generate(z.number().nullish(), { path: [] })).toBeTypeOf('number');
-		expect(core.generate(z.number().optional(), { path: [] })).toBeTypeOf('number');
+		expect(core.generate(z.number().nullish())).toBeTypeOf('number');
+		expect(core.generate(z.number().optional())).toBeTypeOf('number');
 	});
 
 	test('creates a nullable empty object', () => {
-		expect(core.generate(z.object({}).optional(), { path: [] })).toBeTypeOf('object');
-		expect(core.generate(z.object({}).nullish(), { path: [] })).toBeTypeOf('object');
+		expect(core.generate(z.object({}).optional())).toBeTypeOf('object');
+		expect(core.generate(z.object({}).nullish())).toBeTypeOf('object');
 	});
 
 	test('creates object with optional value ', () => {
@@ -46,12 +46,12 @@ describe('create empty types', () => {
 			modify: z.number().optional(),
 		});
 		expect(() => {
-			core.generate(SampleWithOptionalValueSchema, { path: [] });
+			core.generate(SampleWithOptionalValueSchema);
 		}).not.toThrow();
 	});
 
 	test('creates a nullable date', () => {
-		expect(core.generate(z.date().nullish(), { path: [] })).toBeInstanceOf(Date);
-		expect(core.generate(z.date().optional(), { path: [] })).toBeInstanceOf(Date);
+		expect(core.generate(z.date().nullish())).toBeInstanceOf(Date);
+		expect(core.generate(z.date().optional())).toBeInstanceOf(Date);
 	});
 });

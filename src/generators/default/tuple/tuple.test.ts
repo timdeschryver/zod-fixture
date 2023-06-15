@@ -7,21 +7,24 @@ import { ObjectGenerator } from '../object';
 import { StringGenerator } from '../string';
 
 describe('create Tuples', () => {
-    const core = new Core().register([TupleGenerator, ObjectGenerator, StringGenerator, NumberGenerator]);
+	const core = new Core().register([
+		TupleGenerator,
+		ObjectGenerator,
+		StringGenerator,
+		NumberGenerator,
+	]);
 
 	test('creates a tuple and preserves types', () => {
-        const input = z.tuple([
-            z.string(), // name
-            z.number(), // jersey number
-            z.object({
-                pointsScored: z.number(),
-            }), // statistics
-        ])
-		const result = core.generate(
-			input, { path: [] }
-		);
+		const input = z.tuple([
+			z.string(), // name
+			z.number(), // jersey number
+			z.object({
+				pointsScored: z.number(),
+			}), // statistics
+		]);
+		const result = core.generate(input);
 
-        type I = z.infer<typeof input>;
+		type I = z.infer<typeof input>;
 
 		expect(result).toHaveLength(3);
 		expect((result as I)[0]).toBeTypeOf('string');

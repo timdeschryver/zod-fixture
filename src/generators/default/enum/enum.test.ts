@@ -7,7 +7,7 @@ describe('create enums', () => {
     const core = new Core().register([EnumGenerator, NativeEnumGenerator]);
 
 	test('using zod enums creates an enum and returns a random value', () => {
-		expect(core.generate(z.enum(['Salmon', 'Tuna', 'Trout']), { path: [] })).toMatch(
+		expect(core.generate(z.enum(['Salmon', 'Tuna', 'Trout']))).toMatch(
 			/^Salmon|Tuna|Trout$/,
 		);
 	});
@@ -18,7 +18,7 @@ describe('create enums', () => {
 			Banana,
 		}
 
-		expect(core.generate(z.nativeEnum(Fruits), { path: [] })).toMatch(/^0|1/);
+		expect(core.generate(z.nativeEnum(Fruits))).toMatch(/^0|1/);
 	});
 
 	test('using string native enums creates an enum and returns a random value', () => {
@@ -28,7 +28,7 @@ describe('create enums', () => {
 			Cantaloupe = 3, // you can mix numerical and string enums
 		}
 
-		expect(core.generate(z.nativeEnum(Fruits), { path: [] })).toMatch(/^apple|banana|3$/);
+		expect(core.generate(z.nativeEnum(Fruits))).toMatch(/^apple|banana|3$/);
 	});
 
 	test('using const native enums creates an enum and returns a random value', () => {
@@ -38,6 +38,6 @@ describe('create enums', () => {
 			Cantaloupe: 3,
 		} as const;
 
-		expect(core.generate(z.nativeEnum(Fruits), { path: [] })).toMatch(/^apple|banana|3$/);
+		expect(core.generate(z.nativeEnum(Fruits))).toMatch(/^apple|banana|3$/);
 	});
 });
