@@ -1,17 +1,19 @@
 import { Definition } from '@/core/generator';
+import { z, ZodTypeAny } from 'zod';
 import { Config, Core } from './core/core';
 import defaultGenerators from './generators/default';
 
+export { Core } from '@/core/core';
 export { Generator } from '@/core/generator';
 
-export function generate<TSchema extends Zod.ZodTypeAny>(
+export function createFixture<TSchema extends ZodTypeAny>(
 	schema: TSchema,
 	config: Config & {
 		extend?: Definition<any>[];
 	} = {},
-): unknown {
+): z.infer<TSchema> {
 	return new Core(config)
 		.register(defaultGenerators)
 		.register(config.extend ?? [])
-		.generate(schema, { path: [] });
+		.generate(schema);
 }
