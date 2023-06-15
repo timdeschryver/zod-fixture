@@ -68,13 +68,13 @@ import { generate, Generator } from 'zod-fixture';
 
 const AddressGenerator = Generator({
 	schema: ZodObject,
-	matches: ({ ctx }) => ctx?.key === 'address',
+	matches: ({ ctx }) => ctx.path.at(-1) === 'address',
 	output: () => ({
 		street: 'My Street',
 		city: 'My City',
 		state: 'My State',
-	})
-})
+	}),
+});
 
 const PersonSchema = z.object({
 	name: z.string(),
@@ -89,8 +89,8 @@ const PersonSchema = z.object({
 });
 
 const person = generate(PersonSchema, {
-	extend: [AddressGenerator]
-})
+	extend: [AddressGenerator],
+});
 ```
 
 Gives us the following person:
