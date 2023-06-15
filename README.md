@@ -129,8 +129,3 @@ A codespace will open in a web-based version of Visual Studio Code. The [dev con
 ## Credits
 
 This package is inspired on [AutoFixture](https://github.com/AutoFixture/AutoFixture).
-
-## Notes
-
-Generators now require a Zod instance or constructor. Not only does this provide detailed type information for the `matches` and `output` functions, but it also allows us to add a Symbol that we later use to identify instances of things like `zod.custom` (a ZodEffects type) that would otherwise be indistinguishable.
-
