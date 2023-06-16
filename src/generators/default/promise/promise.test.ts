@@ -1,4 +1,4 @@
-import { Core } from '@/core/core';
+import {Core} from "@/core/core";
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { PromiseGenerator } from '.';

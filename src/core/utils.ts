@@ -21,12 +21,12 @@ export class Utils {
 	}
 
 	uuid() {
-		let u = '',
-			m = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx',
-			i = 0,
-			rb = (this.random() * 0xffffffff) | 0;
+		let u = '';
+		const	m = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
+		let	i = 0;
+		let rb = (this.random() * 0xffffffff) | 0;
 		while (i++ < 36) {
-			let c = m[i - 1],
+			const c = m[i - 1],
 				r = rb & 0xf,
 				v = c == 'x' ? r : (r & 0x3) | 0x8;
 			u += c == '-' || c == '4' ? c : v.toString(16);
@@ -48,7 +48,7 @@ export class Utils {
 		return this.mt.random();
 	}
 
-	randomFrom<T extends unknown>(list: T[] | readonly T[] | Set<T>): T {
+	randomFrom<T>(list: T[] | readonly T[] | Set<T>): T {
 		const options = Array.from(list);
 
 		const min = 0;
@@ -61,7 +61,7 @@ export class Utils {
 		const length = this.randomInt({ min, max });
 
 		let result = '';
-		for (var i = 0; i < length; i++) {
+		for (let i = 0; i < length; i++) {
 			result += String.fromCharCode(
 				this.randomInt({ min: CHAR_CODE_0, max: CHAR_CODE_LOWERCASE_Z }),
 			);
@@ -133,5 +133,6 @@ export class Utils {
 			| undefined;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	noop() {}
 }

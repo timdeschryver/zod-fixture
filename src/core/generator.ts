@@ -15,6 +15,7 @@ export interface Context {
 }
 
 export type ZodConstructor<TSchema extends Zod.ZodTypeAny> = new (
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	def: any,
 ) => TSchema;
 

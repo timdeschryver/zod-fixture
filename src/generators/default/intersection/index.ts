@@ -1,6 +1,7 @@
 import { Generator } from '@/core/generator';
 import { ZodIntersection, ZodParsedType, getParsedType, util } from 'zod';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const IntersectionGenerator = Generator({
 	schema: ZodIntersection,
 	matches: () => true,

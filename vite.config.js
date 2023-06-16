@@ -1,12 +1,13 @@
 /// <reference types="vitest" />
-import path from 'path';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
+import path from 'path';
 
 export default defineConfig({
 	test: ['./src/*'],
 	resolve: {
 		alias: {
+			// eslint-disable-next-line no-undef
 			'@': path.resolve(__dirname, './src'),
 		},
 	},

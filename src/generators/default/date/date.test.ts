@@ -6,7 +6,6 @@ import { DateGenerator } from '.';
 describe('create dates', () => {
 	const core = new Core().register([DateGenerator]);
 
-	const two_years = 31536000000 * 2;
 	test('creates a date', () => {
 		const result = core.generate(z.date());
 

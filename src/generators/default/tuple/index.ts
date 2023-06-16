@@ -10,6 +10,7 @@ export const TupleGenerator = Generator({
 		);
 		const rest = def.rest
 			? core.utils.n(
+				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 					idx => core.generate(def.rest!, { path: [...context.path, known.length + idx] }),
 					1,
 			  )

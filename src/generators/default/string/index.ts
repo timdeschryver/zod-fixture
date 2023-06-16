@@ -1,6 +1,7 @@
-import { Core } from '@/core/core';
+import type { Core } from '@/core/core';
 import { Generator } from '@/core/generator';
-import { ZodString, ZodStringDef } from 'zod';
+import type { ZodStringDef } from 'zod';
+import { ZodString } from 'zod';
 
 function formatString(core: Core, def: ZodStringDef, value: string) {
 	let min = core.utils.filterChecks(def.checks, 'min')?.value;

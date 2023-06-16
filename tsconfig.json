@@ -12,6 +12,7 @@
     "resolveJsonModule": true,
     "outDir": "./dist",
     "declaration": true,
+    "importHelpers": true,
     "inlineSourceMap": true,
     "baseUrl": "./src",
     "paths": {
