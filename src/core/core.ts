@@ -1,11 +1,6 @@
 import defaults from './defaults';
-import type {
-	Context,
-	Definition} from './generator';
-import {
-	ZOD_INSTANCE_IDENTIFIER,
-	ZOD_TYPE_IDENTIFIER,
-} from './generator';
+import type { Context, Definition } from './generator';
+import { ZOD_INSTANCE_IDENTIFIER, ZOD_TYPE_IDENTIFIER } from './generator';
 import { Utils } from './utils';
 
 export interface Config {
@@ -36,7 +31,7 @@ export class Core {
 		// eslint-disable-next-line @typescript-eslint/no-this-alias
 		const core = this;
 		const def = schema._def;
-		const generator = this.#generators.find(generator => {
+		const generator = this.#generators.find((generator) => {
 			if (
 				schema[ZOD_TYPE_IDENTIFIER] !==
 				generator.schema.prototype[ZOD_TYPE_IDENTIFIER]

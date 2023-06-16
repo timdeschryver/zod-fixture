@@ -1,4 +1,4 @@
-import {Core} from "@/core/core";
+import { Core } from '@/core/core';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { PromiseGenerator } from '.';
@@ -8,8 +8,6 @@ describe('create a promise type', () => {
 	const core = new Core().register([PromiseGenerator, NumberGenerator]);
 
 	test('creates a promise with the correct type', () => {
-		expect(
-			core.generate(z.promise(z.number())),
-		).resolves.toBeTypeOf('number');
+		expect(core.generate(z.promise(z.number()))).resolves.toBeTypeOf('number');
 	});
 });

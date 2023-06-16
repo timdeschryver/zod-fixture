@@ -22,7 +22,7 @@ export default defineConfig({
 			entry: './src/index.ts',
 			name: 'zod-fixture',
 			formats: ['es', 'umd'],
-			fileName: format =>
+			fileName: (format) =>
 				`zod-fixture.${format}.${format === 'umd' ? 'cjs' : 'js'}`,
 		},
 		rollupOptions: {

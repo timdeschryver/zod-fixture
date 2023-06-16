@@ -41,7 +41,7 @@ export const RefinementGenerator = Generator({
 		const { schema } = def;
 
 		console.warn(
-			`Because refinements use custom validations, we have no way to accurately manufacture acceptable values. Using the parent type (${schema._def.typeName}) to approximate the result.`,
+			`Because refinements use custom validations, we have no way to accurately manufacture acceptable values. Using the parent type (${schema._def.typeName}) to approximate the result.`
 		);
 		return core.generate(schema, context);
 	},

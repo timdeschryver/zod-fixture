@@ -17,7 +17,7 @@ describe('create empty types', () => {
 		BooleanGenerator,
 		NumberGenerator,
 		ObjectGenerator,
-        DateGenerator
+		DateGenerator,
 	]);
 
 	test('creates a nullable string', () => {

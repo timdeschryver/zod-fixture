@@ -55,7 +55,7 @@ export const StringGenerator = Generator({
 
 		if (min < 0)
 			throw new Error(
-				`Minimum length of a string can't be less than 0: ${min}`,
+				`Minimum length of a string can't be less than 0: ${min}`
 			);
 
 		return formatString(core, def, core.utils.randomString({ min, max }));

@@ -11,8 +11,8 @@ describe('create a lazy type', () => {
 		expect(
 			core.generate(
 				z.lazy(() => z.number()),
-				{ path: [] },
-			),
+				{ path: [] }
+			)
 		).toBeTypeOf('number');
 	});
 });

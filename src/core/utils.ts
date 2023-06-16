@@ -22,8 +22,8 @@ export class Utils {
 
 	uuid() {
 		let u = '';
-		const	m = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
-		let	i = 0;
+		const m = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
+		let i = 0;
 		let rb = (this.random() * 0xffffffff) | 0;
 		while (i++ < 36) {
 			const c = m[i - 1],
@@ -37,7 +37,7 @@ export class Utils {
 
 	n<T>(
 		factory: (index: number) => T,
-		config: number | { min: number; max: number } = this.core.defaults.array,
+		config: number | { min: number; max: number } = this.core.defaults.array
 	): Array<T> {
 		const length = typeof config === 'number' ? config : this.randomInt(config);
 
@@ -63,7 +63,7 @@ export class Utils {
 		let result = '';
 		for (let i = 0; i < length; i++) {
 			result += String.fromCharCode(
-				this.randomInt({ min: CHAR_CODE_0, max: CHAR_CODE_LOWERCASE_Z }),
+				this.randomInt({ min: CHAR_CODE_0, max: CHAR_CODE_LOWERCASE_Z })
 			);
 		}
 
@@ -126,9 +126,9 @@ export class Utils {
 
 	filterChecks<TChecks extends { kind: string }[], TKind extends string>(
 		checks: TChecks,
-		kind: TKind,
+		kind: TKind
 	): Utils.FilterChecks<TChecks[number], TKind> | undefined {
-		return checks.find(check => check.kind === kind) as
+		return checks.find((check) => check.kind === kind) as
 			| Utils.FilterChecks<TChecks[number], TKind>
 			| undefined;
 	}

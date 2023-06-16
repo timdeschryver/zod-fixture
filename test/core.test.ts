@@ -29,7 +29,9 @@ describe('core', () => {
 	});
 
 	test('throws when schema missing', () => {
-        const generators = [...defaultGenerators].filter((g) => g !== StringGenerator);
+		const generators = [...defaultGenerators].filter(
+			(g) => g !== StringGenerator
+		);
 		const core = new Core().register(generators);
 		const PersonSchema = z.object({
 			name: z.string(),
@@ -43,6 +45,8 @@ describe('core', () => {
 			totalVisits: z.number(),
 		});
 
-		expect(() => core.generate(PersonSchema)).toThrow(/No generator found for ZodString/i);
+		expect(() => core.generate(PersonSchema)).toThrow(
+			/No generator found for ZodString/i
+		);
 	});
 });

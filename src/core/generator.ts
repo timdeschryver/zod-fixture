@@ -16,7 +16,7 @@ export interface Context {
 
 export type ZodConstructor<TSchema extends Zod.ZodTypeAny> = new (
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	def: any,
+	def: any
 ) => TSchema;
 
 export type ZodConstructorOrSchema<TSchema extends Zod.ZodTypeAny> =
@@ -45,7 +45,7 @@ export interface Definition<TSchema extends Zod.ZodTypeAny> {
 
 let vuid = 0;
 export function Generator<TSchema extends Zod.ZodTypeAny>(
-	definition: Definition<TSchema>,
+	definition: Definition<TSchema>
 ): Definition<TSchema> {
 	if (typeof definition.schema === 'function') {
 		// if this is a Zod constructor and it doesn't already have a type identifier, add one to the prototype so that it will be available on all instances.

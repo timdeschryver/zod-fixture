@@ -20,7 +20,7 @@ export const IntersectionGenerator = Generator({
  */
 function mergeValues(
 	a: any,
-	b: any,
+	b: any
 ): { valid: true; data: any } | { valid: false } {
 	const aType = getParsedType(a);
 	const bType = getParsedType(b);
@@ -31,7 +31,7 @@ function mergeValues(
 		const bKeys = util.objectKeys(b);
 		const sharedKeys = util
 			.objectKeys(a)
-			.filter(key => bKeys.indexOf(key) !== -1);
+			.filter((key) => bKeys.indexOf(key) !== -1);
 
 		const newObj: any = { ...a, ...b };
 		for (const key of sharedKeys) {

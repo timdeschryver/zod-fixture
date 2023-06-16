@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { LiteralGenerator } from '.';
 
 describe('create literals', () => {
-    const core = new Core().register([LiteralGenerator]);
+	const core = new Core().register([LiteralGenerator]);
 
 	test('creates a string literal and returns its value', () => {
 		expect(core.generate(z.literal('tuna'))).toBe('tuna');
