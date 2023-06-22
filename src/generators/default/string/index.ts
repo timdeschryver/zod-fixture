@@ -4,7 +4,6 @@ import type { ZodStringDef } from 'zod';
 import { ZodString } from 'zod';
 
 function formatString(core: Core, def: ZodStringDef, value: string) {
-	let min = core.utils.filter.checks(def.checks, 'min')?.value;
 	let max = core.utils.filter.checks(def.checks, 'max')?.value;
 	const length = core.utils.filter.checks(def.checks, 'length')?.value;
 	const isUpperCase =
@@ -14,21 +13,27 @@ function formatString(core: Core, def: ZodStringDef, value: string) {
 	const startsWith = core.utils.filter.checks(def.checks, 'startsWith')?.value;
 	const endsWith = core.utils.filter.checks(def.checks, 'endsWith')?.value;
 
+	if (length) {
+		max = length;
+	}
+
+	if (max && (startsWith || endsWith)) {
+		if (
+			max &&
+			value.length < max + (startsWith?.length ?? 0) + (endsWith?.length ?? 0)
+		) {
+			value = value.slice(
+				0,
+				max - (startsWith?.length ?? 0) - (endsWith?.length ?? 0)
+			);
+		}
+	}
+
 	if (startsWith) {
 		value = startsWith + value;
 	}
 	if (endsWith) {
 		value = value + endsWith;
-	}
-
-	if (length) {
-		min = length;
-		max = length;
-	}
-
-	if (min) {
-		const diff = min - value.length;
-		if (diff > 0) value += core.utils.random.string({ min: diff, max: diff });
 	}
 
 	if (isUpperCase) {

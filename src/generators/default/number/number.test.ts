@@ -14,6 +14,10 @@ describe('create numbers', () => {
 		expect(result).toBeLessThanOrEqual(Number.MAX_SAFE_INTEGER);
 	});
 
+	test("creates a number that's an int", () => {
+		expect(core.generate(z.number().int())).toBeTypeOf('number');
+	});
+
 	test('creates a number with a min value', () => {
 		expect(core.generate(z.number().min(10_000))).toBeGreaterThanOrEqual(
 			10_000
@@ -50,6 +54,20 @@ describe('create numbers', () => {
 	test('creates a negative number', () => {
 		expect(core.generate(z.number().negative())).toBeLessThan(0);
 		expect(core.generate(z.number().nonpositive())).toBeLessThanOrEqual(0);
+	});
+
+	test("creates a number that's a multiple", () => {
+		expect(core.generate(z.number().multipleOf(3).min(16).max(20))).toBe(19);
+	});
+
+	test("creates a number that's a multiple of a decimal", () => {
+		expect(
+			core.generate(z.number().multipleOf(3.3).min(16).max(20))
+		).toBeCloseTo(19, 0);
+	});
+
+	test('creates a finite number', () => {
+		expect(isFinite(core.generate(z.number().finite()))).toBeTruthy();
 	});
 
 	test('throws when min is greater than max', () => {

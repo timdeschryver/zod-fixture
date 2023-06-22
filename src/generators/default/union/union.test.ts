@@ -36,9 +36,7 @@ describe('create unions', () => {
 		]);
 		const result = core.generate(input);
 
-		type I = z.infer<typeof input>;
-
-		expect((result as I).type).toBeTypeOf('string');
-		expect((result as I).type).toMatch(/^a|b$/);
+		expect(result.type).toBeTypeOf('string');
+		expect(result.type).toMatch(/^a|b$/);
 	});
 });

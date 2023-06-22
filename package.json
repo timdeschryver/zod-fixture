@@ -30,6 +30,9 @@
 	],
 	"author": "Tim Deschryver",
 	"license": "MIT",
+	"peerDependencies": {
+		"zod": ">=3.0.0"
+	},
 	"dependencies": {
 		"@paralleldrive/cuid2": "^2.2.0",
 		"zod": "^3.21.4"
