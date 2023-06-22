@@ -1,4 +1,4 @@
-const DEFAULT_LIST_SIZE = 3
+const DEFAULT_LIST_SIZE = 3;
 
 export default {
 	array: {
@@ -11,7 +11,7 @@ export default {
 	},
 	set: {
 		min: DEFAULT_LIST_SIZE,
-		max: DEFAULT_LIST_SIZE
+		max: DEFAULT_LIST_SIZE,
 	},
 	int: {
 		min: Number.MIN_SAFE_INTEGER,

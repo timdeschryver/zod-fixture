@@ -1,6 +1,7 @@
 import { Generator } from '@/core/generator';
 import { ZodIntersection, ZodParsedType, getParsedType, util } from 'zod';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const IntersectionGenerator = Generator({
 	schema: ZodIntersection,
 	matches: () => true,
@@ -19,7 +20,7 @@ export const IntersectionGenerator = Generator({
  */
 function mergeValues(
 	a: any,
-	b: any,
+	b: any
 ): { valid: true; data: any } | { valid: false } {
 	const aType = getParsedType(a);
 	const bType = getParsedType(b);
@@ -30,7 +31,7 @@ function mergeValues(
 		const bKeys = util.objectKeys(b);
 		const sharedKeys = util
 			.objectKeys(a)
-			.filter(key => bKeys.indexOf(key) !== -1);
+			.filter((key) => bKeys.indexOf(key) !== -1);
 
 		const newObj: any = { ...a, ...b };
 		for (const key of sharedKeys) {

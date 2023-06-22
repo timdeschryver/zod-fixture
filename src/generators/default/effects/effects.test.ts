@@ -13,11 +13,11 @@ describe('usage with effects', () => {
 		PreprocessGenerator,
 		RefinementGenerator,
 		TransformGenerator,
-		StringGenerator
+		StringGenerator,
 	]);
 
 	test('does invoke transform', () => {
-		const value = 0
+		const value = 0;
 		const spy = vi.fn(() => value);
 		const result = core.generate(z.string().transform(spy));
 		expect(spy).toBeCalled();

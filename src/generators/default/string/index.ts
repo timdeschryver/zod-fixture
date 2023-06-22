@@ -1,6 +1,7 @@
-import { Core } from '@/core/core';
+import type { Core } from '@/core/core';
 import { Generator } from '@/core/generator';
-import { ZodString, ZodStringDef } from 'zod';
+import type { ZodStringDef } from 'zod';
+import { ZodString } from 'zod';
 
 function formatString(core: Core, def: ZodStringDef, value: string) {
 	let min = core.utils.filterChecks(def.checks, 'min')?.value;
@@ -54,7 +55,7 @@ export const StringGenerator = Generator({
 
 		if (min < 0)
 			throw new Error(
-				`Minimum length of a string can't be less than 0: ${min}`,
+				`Minimum length of a string can't be less than 0: ${min}`
 			);
 
 		return formatString(core, def, core.utils.randomString({ min, max }));

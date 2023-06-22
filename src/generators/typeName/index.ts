@@ -59,12 +59,12 @@ export const EnumGenerator = Generator({
 export const NativeEnumGenerator = Generator({
 	schema: ZodNativeEnum,
 	matches: () => true,
-	output: ({ def, core }) => {
+	output: ({ def }) => {
 		const enumerable = def.values ?? {};
 
 		const values = Object.keys(enumerable)
-			.filter(key => Number.isNaN(Number(key)))
-			.map(key => enumerable[key]);
+			.filter((key) => Number.isNaN(Number(key)))
+			.map((key) => enumerable[key]);
 
 		return `enum(${values})`;
 	},

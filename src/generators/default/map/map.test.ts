@@ -6,7 +6,11 @@ import { NumberGenerator } from '../number';
 import { StringGenerator } from '../string';
 
 describe('create Maps', () => {
-	const core = new Core().register([MapGenerator, StringGenerator, NumberGenerator]);
+	const core = new Core().register([
+		MapGenerator,
+		StringGenerator,
+		NumberGenerator,
+	]);
 
 	test('creates a Map with 3 entries', () => {
 		const input = z.map(z.string(), z.number());
