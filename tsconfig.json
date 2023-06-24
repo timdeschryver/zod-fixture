@@ -10,10 +10,13 @@
 		"noUncheckedIndexedAccess": true,
 		"strictNullChecks": true,
 		"resolveJsonModule": true,
-		"outDir": "./dist",
 		"declaration": true,
 		"importHelpers": true,
 		"inlineSourceMap": true,
+		"noEmit": true,
+		"isolatedModules": true, // https://vitejs.dev/guide/features.html#isolatedmodules
+		"useDefineForClassFields": true, // https://vitejs.dev/guide/features.html#usedefineforclassfields
+		"types": ["vite/client"], // https://vitejs.dev/guide/features.html#client-types
 		"baseUrl": "./src",
 		"paths": {
 			"@/*": ["*"]
