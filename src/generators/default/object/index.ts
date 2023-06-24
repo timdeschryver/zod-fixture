@@ -9,7 +9,8 @@ export const ObjectGenerator = Generator({
 
 		for (const key in shape) {
 			const type = shape[key];
-			if (type) result[key] = core.generate(type, { path: [...context.path, key] });
+			if (type)
+				result[key] = core.generate(type, { path: [...context.path, key] });
 		}
 
 		const passthrough =
@@ -37,7 +38,9 @@ export const RecordGenerator = Generator({
 
 		core.utils.n(() => {
 			const key = core.generate(def.keyType, context) as string | number;
-			const value = core.generate(def.valueType, { path: [...context.path, key] });
+			const value = core.generate(def.valueType, {
+				path: [...context.path, key],
+			});
 
 			result[key] = value;
 		});

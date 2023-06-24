@@ -13,10 +13,10 @@ export const SetGenerator = Generator({
 		core.utils.n(
 			() => {
 				result.add(
-					core.generate(def.valueType, { path: [...context.path, result.size] }),
+					core.generate(def.valueType, { path: [...context.path, result.size] })
 				);
 			},
-			{ min, max },
+			{ min, max }
 		);
 
 		return result;

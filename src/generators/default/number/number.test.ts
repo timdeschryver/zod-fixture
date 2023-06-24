@@ -15,8 +15,12 @@ describe('create numbers', () => {
 	});
 
 	test('creates a number with a min value', () => {
-		expect(core.generate(z.number().min(10_000))).toBeGreaterThanOrEqual(10_000);
-		expect(core.generate(z.number().gte(10_000))).toBeGreaterThanOrEqual(10_000);
+		expect(core.generate(z.number().min(10_000))).toBeGreaterThanOrEqual(
+			10_000
+		);
+		expect(core.generate(z.number().gte(10_000))).toBeGreaterThanOrEqual(
+			10_000
+		);
 	});
 
 	test('creates a number with a negative min value', () => {

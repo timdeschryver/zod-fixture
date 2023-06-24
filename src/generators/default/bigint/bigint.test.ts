@@ -8,7 +8,7 @@ describe('create bigint', () => {
 		BigIntGenerator,
 		BigIntMultipleOfGenerator,
 	]);
-    
+
 	test('creates a bigint between Number.MIN_SAFE_INTEGER and Number.MAX_SAFE_INTEGER', () => {
 		const result = core.generate(z.bigint());
 

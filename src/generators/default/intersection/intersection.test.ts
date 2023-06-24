@@ -7,7 +7,12 @@ import { BooleanGenerator } from '../boolean';
 import { ObjectGenerator } from '../object';
 
 describe('create intersections', () => {
-	const core = new Core().register([IntersectionGenerator, ObjectGenerator, BooleanGenerator, ArrayGenerator]);
+	const core = new Core().register([
+		IntersectionGenerator,
+		ObjectGenerator,
+		BooleanGenerator,
+		ArrayGenerator,
+	]);
 
 	test('creates an intersection of objects', () => {
 		const left = z.object({
@@ -23,25 +28,30 @@ describe('create intersections', () => {
 
 		expect(result).toHaveProperty('left');
 		expect(result).toHaveProperty('right');
-        expect(result).toMatchObject({
-            left: expect.any(Boolean),
-            right: expect.any(Boolean)
-        })
+		expect(result).toMatchObject({
+			left: expect.any(Boolean),
+			right: expect.any(Boolean),
+		});
 	});
 
-    test('creates an intersection of arrays', () => {
-        const left = z.object({
-			left: z.boolean(),
-		}).array();
+	test('creates an intersection of arrays', () => {
+		const left = z
+			.object({
+				left: z.boolean(),
+			})
+			.array();
 
-		const right = z.object({
-			right: z.boolean(),
-		}).array();
+		const right = z
+			.object({
+				right: z.boolean(),
+			})
+			.array();
 
 		const intersection = z.intersection(left, right);
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const result = core.generate(intersection) as any[];
 
 		expect(result[0]).toHaveProperty('left');
 		expect(result[0]).toHaveProperty('right');
-    })
+	});
 });

@@ -8,8 +8,6 @@ describe('create a promise type', () => {
 	const core = new Core().register([PromiseGenerator, NumberGenerator]);
 
 	test('creates a promise with the correct type', () => {
-		expect(
-			core.generate(z.promise(z.number())),
-		).resolves.toBeTypeOf('number');
+		expect(core.generate(z.promise(z.number()))).resolves.toBeTypeOf('number');
 	});
 });

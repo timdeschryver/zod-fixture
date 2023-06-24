@@ -55,8 +55,8 @@ export const NativeEnumGenerator = Generator({
 		const enumerable = def.values ?? {};
 
 		const values = Object.keys(enumerable)
-			.filter(key => Number.isNaN(Number(key)))
-			.map(key => enumerable[key]);
+			.filter((key) => Number.isNaN(Number(key)))
+			.map((key) => enumerable[key]);
 
 		return `enum(${values})`;
 	},

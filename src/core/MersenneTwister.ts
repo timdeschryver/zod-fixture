@@ -85,7 +85,7 @@ export default class MersenneTwister {
 	/* key_length is its length */
 	/* slight change for C++, 2004/2/26 */
 	init_by_array(init_key: number[], key_length: number) {
-		var i = 1,
+		let i = 1,
 			j = 0,
 			k,
 			s;
@@ -97,6 +97,7 @@ export default class MersenneTwister {
 				(this.mt[i] ^
 					(((((s & 0xffff0000) >>> 16) * 1664525) << 16) +
 						(s & 0x0000ffff) * 1664525)) +
+				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 				init_key[j]! +
 				j; /* non linear */
 			this.mt[i] >>>= 0; /* for WORDSIZE > 32 machines */
@@ -130,13 +131,13 @@ export default class MersenneTwister {
 
 	/* generates a random number on [0,0xffffffff]-interval */
 	genrand_int32() {
-		var y;
-		var mag01 = new Array(0x0, this.MATRIX_A);
+		let y;
+		const mag01 = [0x0, this.MATRIX_A];
 		/* mag01[x] = x * MATRIX_A  for x=0,1 */
 
 		if (this.mti >= this.N) {
 			/* generate N words at one time */
-			var kk;
+			let kk;
 
 			if (this.mti === this.N + 1) {
 				/* if init_genrand() has not been called, */
@@ -145,17 +146,20 @@ export default class MersenneTwister {
 			for (kk = 0; kk < this.N - this.M; kk++) {
 				y =
 					(this.mt[kk] & this.UPPER_MASK) | (this.mt[kk + 1] & this.LOWER_MASK);
+				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 				this.mt[kk] = this.mt[kk + this.M] ^ (y >>> 1) ^ mag01[y & 0x1]!;
 			}
 			for (; kk < this.N - 1; kk++) {
 				y =
 					(this.mt[kk] & this.UPPER_MASK) | (this.mt[kk + 1] & this.LOWER_MASK);
 				this.mt[kk] =
+					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 					this.mt[kk + (this.M - this.N)] ^ (y >>> 1) ^ mag01[y & 0x1]!;
 			}
 			y =
 				(this.mt[this.N - 1] & this.UPPER_MASK) |
 				(this.mt[0] & this.LOWER_MASK);
+			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			this.mt[this.N - 1] = this.mt[this.M - 1] ^ (y >>> 1) ^ mag01[y & 0x1]!;
 
 			this.mti = 0;
@@ -197,7 +201,7 @@ export default class MersenneTwister {
 
 	/* generates a random number on [0,1) with 53-bit resolution*/
 	genrand_res53() {
-		var a = this.genrand_int32() >>> 5,
+		const a = this.genrand_int32() >>> 5,
 			b = this.genrand_int32() >>> 6;
 		return (a * 67108864.0 + b) * (1.0 / 9007199254740992.0);
 	}

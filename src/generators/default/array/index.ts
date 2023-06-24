@@ -4,14 +4,14 @@ import { ZodArray } from 'zod';
 export const ArrayGenerator = Generator({
 	schema: ZodArray,
 	output: ({ def, core, context }) => {
-		let min =
+		const min =
 			def.minLength?.value ?? def.exactLength?.value ?? core.defaults.array.min;
-		let max =
+		const max =
 			def.maxLength?.value ?? def.exactLength?.value ?? core.defaults.array.max;
 
 		return core.utils.n(
-			key => core.generate(def.type, { path: [...context.path, key] }),
-			{ min, max },
+			(key) => core.generate(def.type, { path: [...context.path, key] }),
+			{ min, max }
 		);
 	},
 });

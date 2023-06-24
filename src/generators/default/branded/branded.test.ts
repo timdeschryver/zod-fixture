@@ -8,8 +8,6 @@ describe('create a branded type', () => {
 	const core = new Core().register([BrandedGenerator, NumberGenerator]);
 
 	test('creates a brand with the correct type', () => {
-		expect(core.generate(z.number().brand('test'))).toBeTypeOf(
-			'number',
-		);
+		expect(core.generate(z.number().brand('test'))).toBeTypeOf('number');
 	});
 });

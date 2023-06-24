@@ -14,18 +14,18 @@ describe('create unions', () => {
 		ObjectGenerator,
 		NumberGenerator,
 		StringGenerator,
-		LiteralGenerator
+		LiteralGenerator,
 	]);
 
 	test('creates a union value', () => {
 		expect(typeof core.generate(z.union([z.string(), z.number()]))).toMatch(
-			/^string|number$/,
+			/^string|number$/
 		);
 	});
 
 	test('creates a union value with the or syntax', () => {
 		expect(typeof core.generate(z.string().or(z.number()))).toMatch(
-			/^string|number$/,
+			/^string|number$/
 		);
 	});
 

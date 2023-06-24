@@ -1,4 +1,4 @@
-import { Generator } from '@/core/generator';
+import { Generator } from '@/core/genrator';
 import { ZodUndefined, ZodVoid } from 'zod';
 
 export const UndefinedGenerator = Generator({

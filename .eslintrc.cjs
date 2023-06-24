@@ -1,17 +1,18 @@
+/* eslint-env node */
 module.exports = {
-	root: true,
-	parser: '@typescript-eslint/parser',
-	ignorePatterns: ['dist'],
-	plugins: ['@typescript-eslint'],
 	extends: [
 		'eslint:recommended',
 		'plugin:@typescript-eslint/recommended',
 		'prettier',
-		'plugin:import/recommended',
-		'plugin:import/typescript',
 	],
+	parser: '@typescript-eslint/parser',
+	plugins: ['@typescript-eslint'],
+	root: true,
+	parserOptions: {
+		project: ['tsconfig.json'],
+		createDefaultProgram: true,
+	},
 	rules: {
-		'sort-imports': 'error',
 		'@typescript-eslint/consistent-type-imports': [
 			'error',
 			{ prefer: 'type-imports' },

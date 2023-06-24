@@ -58,8 +58,8 @@ export const NativeEnumGenerator = Generator({
 		const enumerable = def.values ?? {};
 
 		const value = Object.keys(enumerable)
-			.filter(key => Number.isNaN(Number(key)))
-			.map(key => enumerable[key]);
+			.filter((key) => Number.isNaN(Number(key)))
+			.map((key) => enumerable[key]);
 
 		return { type: 'enum', value };
 	},
@@ -97,7 +97,7 @@ export const UnionGenerator = Generator({
 	schema: ZodUnion,
 	output: ({ def, core, context }) => ({
 		type: 'union',
-		value: def.options.map(type => core.generate(type, context)),
+		value: def.options.map((type) => core.generate(type, context)),
 	}),
 });
 
@@ -105,7 +105,7 @@ export const TupleGenerator = Generator({
 	schema: ZodTuple,
 	output: ({ def, core, context }) => {
 		const known = def.items.map((type, idx) =>
-			core.generate(type, { path: [...context.path, idx] }),
+			core.generate(type, { path: [...context.path, idx] })
 		);
 		const rest = def.rest
 			? [core.generate(def.rest, { path: [...context.path, known.length] })]
@@ -129,5 +129,5 @@ export default [
 	UndefinedGenerator,
 	ArrayGenerator,
 	UnionGenerator,
-    TupleGenerator
+	TupleGenerator,
 ];
