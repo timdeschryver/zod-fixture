@@ -1,9 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { ZodNumber, z } from 'zod';
-import { Core, Generator } from '../src';
+import createFixture, { Core, Generator } from '../src';
 import defaultGenerators from '../src/generators/default';
-import { NumberGenerator } from '../src/generators/default/number';
-import { ObjectGenerator } from '../src/generators/default/object';
 import { StringGenerator } from '../src/generators/default/string';
 
 describe('core', () => {
@@ -11,23 +9,6 @@ describe('core', () => {
 		const core = new Core();
 		const input = z.string();
 		expect(() => core.generate(input)).toThrowError(input._def.typeName);
-	});
-
-	test('creates a fixture', () => {
-		const core = new Core().register(defaultGenerators);
-		const PersonSchema = z.object({
-			name: z.string(),
-			birthday: z.date(),
-			address: z.object({
-				street: z.string(),
-				city: z.string(),
-				state: z.string(),
-			}),
-			pets: z.array(z.object({ name: z.string(), breed: z.string() })),
-			totalVisits: z.number(),
-		});
-
-		expect(() => core.generate(PersonSchema)).not.toThrow();
 	});
 
 	test('throws when schema missing', () => {
@@ -51,48 +32,44 @@ describe('core', () => {
 			/No generator found for ZodString/i
 		);
 	});
+});
+
+describe('createFixture', () => {
+	test('creates a fixture', () => {
+		const PersonSchema = z.object({
+			name: z.string(),
+			birthday: z.date(),
+			address: z.object({
+				street: z.string(),
+				city: z.string(),
+				state: z.string(),
+			}),
+			pets: z.array(z.object({ name: z.string(), breed: z.string() })),
+			totalVisits: z.number(),
+		});
+
+		expect(() => createFixture(PersonSchema)).not.toThrow();
+	});
 
 	describe('order of generators', () => {
-		const FooNumberGenerator = Generator({
-			schema: ZodNumber,
-			matches: (x) => x.context?.path?.includes('foo'),
-			output: () => {
-				return 4;
-			},
-		});
+		const CustomGenerators = [
+			Generator({
+				schema: ZodNumber,
+				matches: ({ context }) => context?.path?.includes('foo'),
+				output: () => 'A string cannot collide with a number',
+			}),
+		];
 
 		test(`test one`, () => {
-			const core = new Core().register([
-				ObjectGenerator,
-				FooNumberGenerator,
-				NumberGenerator,
-			]);
-
-			const result = core.generate(
+			const result = createFixture(
 				z.object({
 					foo: z.number(),
 					other: z.number(),
-				})
+				}),
+				{ extend: CustomGenerators }
 			);
 
-			expect(result.foo).toBe(4);
-		});
-
-		test.fails(`test two`, () => {
-			const core = new Core().register([
-				ObjectGenerator,
-				NumberGenerator,
-				FooNumberGenerator,
-			]);
-
-			const result = core.generate(
-				z.object({
-					foo: z.number(),
-					other: z.number(),
-				})
-			);
-
-			expect(result.foo).toBe(4);
+			expect(result.foo).toBe('A string cannot collide with a number');
 		});
 	});
 });

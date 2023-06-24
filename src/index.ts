@@ -19,3 +19,5 @@ export function createFixture<TSchema extends ZodTypeAny>(
 		.register(config.extend ?? [])
 		.generate(schema);
 }
+
+export default createFixture;
