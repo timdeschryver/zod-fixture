@@ -22,7 +22,7 @@ export type ZodConstructorOrSchema<TSchema extends Zod.ZodTypeAny> =
 	| TSchema
 	| ZodConstructor<TSchema>;
 
-export type Condition<TSchema extends Zod.ZodTypeAny> = (obj: {
+export type Filter<TSchema extends Zod.ZodTypeAny> = (obj: {
 	def: TSchema['_def'];
 	schema: TSchema;
 	core: Core;
@@ -38,7 +38,7 @@ export type Generator<TSchema extends Zod.ZodTypeAny> = (obj: {
 
 export interface Definition<TSchema extends Zod.ZodTypeAny> {
 	schema: ZodConstructorOrSchema<TSchema>;
-	matches: Condition<TSchema>;
+	filter?: Filter<TSchema>;
 	output: Generator<TSchema>;
 }
 

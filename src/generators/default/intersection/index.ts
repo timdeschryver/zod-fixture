@@ -3,7 +3,6 @@ import { ZodIntersection, ZodParsedType, getParsedType, util } from 'zod';
 
 export const IntersectionGenerator = Generator({
 	schema: ZodIntersection,
-	matches: () => true,
 	output: ({ def, core, context }) => {
 		const left = core.generate(def.left, context);
 		const right = core.generate(def.right, context);

@@ -41,7 +41,6 @@ function formatString(core: Core, def: ZodStringDef, value: string) {
 
 export const StringGenerator = Generator({
 	schema: ZodString,
-	matches: () => true,
 	output: ({ def, core }) => {
 		let min = core.utils.filterChecks(def.checks, 'min')?.value ?? 1;
 		let max = core.utils.filterChecks(def.checks, 'max')?.value ?? min + 25;
@@ -63,7 +62,7 @@ export const StringGenerator = Generator({
 
 export const UrlGenerator = Generator({
 	schema: ZodString,
-	matches: ({ def, core }) =>
+	filter: ({ def, core }) =>
 		core.utils.filterChecks(def.checks, 'url') !== undefined,
 	output: ({ def, core }) => {
 		return formatString(core, def, `https://${core.utils.lorem(1)}.com`);
@@ -72,21 +71,21 @@ export const UrlGenerator = Generator({
 
 export const UuidGenerator = Generator({
 	schema: ZodString,
-	matches: ({ def, core }) =>
+	filter: ({ def, core }) =>
 		core.utils.filterChecks(def.checks, 'uuid') !== undefined,
 	output: ({ def, core }) => formatString(core, def, core.utils.uuid()),
 });
 
 export const EmailGenerator = Generator({
 	schema: ZodString,
-	matches: ({ def, core }) =>
+	filter: ({ def, core }) =>
 		core.utils.filterChecks(def.checks, 'email') !== undefined,
 	output: ({ def, core }) => formatString(core, def, 'rando@email.com'),
 });
 
 export const CuidGenerator = Generator({
 	schema: ZodString,
-	matches: ({ def, core }) =>
+	filter: ({ def, core }) =>
 		core.utils.filterChecks(def.checks, 'cuid') !== undefined,
 	output: () => {
 		throw new Error(`cuid has been deprecated in favor of cuid2`);
@@ -95,7 +94,7 @@ export const CuidGenerator = Generator({
 
 export const Cuid2Generator = Generator({
 	schema: ZodString,
-	matches: ({ def, core }) =>
+	filter: ({ def, core }) =>
 		core.utils.filterChecks(def.checks, 'cuid2') !== undefined,
 	output: ({ def, core }) => formatString(core, def, core.utils.cuid2()),
 });

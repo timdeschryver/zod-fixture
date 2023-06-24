@@ -4,7 +4,6 @@ import { ZodSet } from 'zod';
 
 export const SetGenerator = Generator({
 	schema: ZodSet,
-	matches: () => true,
 	output: ({ def, core, context }) => {
 		const min = def.minSize?.value ?? core.defaults.set.min;
 		const max = def.maxSize?.value ?? core.defaults.set.max;
