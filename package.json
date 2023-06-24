@@ -1,13 +1,13 @@
 {
 	"name": "zod-fixture",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"description": "Creating fixtures based on zod schemas",
 	"packageManager": "npm@9.5.0",
 	"scripts": {
 		"start": "vite",
 		"test": "vitest --ui",
 		"test:coverage": "vitest run --coverage",
-		"build": "vite build",
+		"build": "tsc --noEmit && vite build",
 		"lint": "tsc --noEmit && eslint . --max-warnings 0",
 		"prepare": "husky install"
 	},
@@ -29,6 +29,9 @@
 		"fixtures"
 	],
 	"author": "Tim Deschryver",
+	"contributors": [
+		"Chad Elliott"
+	],
 	"license": "MIT",
 	"dependencies": {
 		"@paralleldrive/cuid2": "^2.2.0",
