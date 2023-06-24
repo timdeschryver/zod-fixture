@@ -51,7 +51,7 @@ export const EnumGenerator = Generator({
 
 export const NativeEnumGenerator = Generator({
 	schema: ZodNativeEnum,
-	output: ({ def, core }) => {
+	output: ({ def }) => {
 		const enumerable = def.values ?? {};
 
 		const values = Object.keys(enumerable)
