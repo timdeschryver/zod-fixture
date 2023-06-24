@@ -15,10 +15,7 @@ export class Randomization {
 	mt: MersenneTwister;
 	cuid2: () => string;
 
-	constructor(
-		private defaults: typeof Defaults,
-		private seed: number = Math.random()
-	) {
+	constructor(private defaults: typeof Defaults, private seed: number) {
 		this.mt = new MersenneTwister(this.seed);
 		this.cuid2 = Cuid2({ random: this.unitInterval.bind(this) });
 	}
