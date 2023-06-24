@@ -1,17 +1,32 @@
 import { expect } from 'vitest';
 
+const ITERATIONS = 100;
+
 expect.extend({
-	toBeZodType(actual, { schema, core }) {
-		const { success: pass, error } = schema.safeParse(actual);
+	toProduce(core, schema) {
+		for (let i = 0; i < ITERATIONS; i++) {
+			const fixture = core.generate(schema);
+			const { success: pass, error } = schema.safeParse(fixture);
+
+			if (!pass)
+				return {
+					pass,
+					message: () =>
+						JSON.stringify(
+							{
+								fixture,
+								seed: core.seed,
+								error,
+							},
+							null,
+							2
+						),
+				};
+		}
 
 		return {
-			pass,
-			message: () =>
-				JSON.stringify({
-					fixture: actual,
-					seed: core.seed,
-					error,
-				}, null, 2),
+			pass: true,
+			message: () => `Successfully ran ${ITERATIONS} iterations.`,
 		};
 	},
 });

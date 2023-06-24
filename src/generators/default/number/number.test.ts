@@ -58,7 +58,6 @@ describe('create numbers', () => {
 
 	test("creates a number that's a multiple", () => {
 		const schema = z.number().multipleOf(4);
-		const result = core.generate(schema);
-		expect(result).toBeZodType({ schema, core });
+		expect(core).toProduce(schema);
 	});
 });
