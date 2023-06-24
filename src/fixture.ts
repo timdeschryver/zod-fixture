@@ -8,7 +8,7 @@ export function createFixture<TSchema extends ZodTypeAny>(
 	schema: TSchema,
 	config: Config & {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		extend?: Definition<any>[];
+		extend?: Definition<any> | Definition<any>[];
 	} = {}
 ): z.infer<TSchema> {
 	return new Core(config)
