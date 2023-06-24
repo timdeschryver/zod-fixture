@@ -6,14 +6,14 @@ export const NumberGenerator = Generator({
 	matches: () => true,
 	output: ({ def, core }) => {
 		const { checks } = def;
-		const { filterChecks } = core.utils;
+		const { filter } = core.utils;
 
-		let min = filterChecks(checks, 'min')?.value ?? core.defaults.float.min;
-		let max = filterChecks(checks, 'max')?.value ?? core.defaults.float.max;
+		let min = filter.checks(checks, 'min')?.value ?? core.defaults.float.min;
+		let max = filter.checks(checks, 'max')?.value ?? core.defaults.float.max;
 
-		const multipleOf = filterChecks(checks, 'multipleOf')?.value;
-		const isInt = filterChecks(checks, 'int') !== undefined;
-		const isFinite = filterChecks(checks, 'finite') !== undefined;
+		const multipleOf = filter.checks(checks, 'multipleOf')?.value;
+		const isInt = filter.checks(checks, 'int') !== undefined;
+		const isFinite = filter.checks(checks, 'finite') !== undefined;
 
 		if (multipleOf !== undefined) {
 			min = min / multipleOf;
@@ -21,8 +21,8 @@ export const NumberGenerator = Generator({
 		}
 
 		let result = isInt
-			? core.utils.randomInt({ min, max })
-			: core.utils.randomFloat({ min, max });
+			? core.utils.random.int({ min, max })
+			: core.utils.random.float({ min, max });
 
 		if (multipleOf !== undefined) {
 			result = result * multipleOf;
