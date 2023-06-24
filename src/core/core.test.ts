@@ -1,10 +1,11 @@
 import { describe, expect, test } from 'vitest';
 import { ZodNumber, z } from 'zod';
-import { Core, Generator } from '../src';
-import defaultGenerators from '../src/generators/default';
-import { NumberGenerator } from '../src/generators/default/number';
-import { ObjectGenerator } from '../src/generators/default/object';
-import { StringGenerator } from '../src/generators/default/string';
+import defaultGenerators from '../generators/default';
+import { NumberGenerator } from '../generators/default/number';
+import { ObjectGenerator } from '../generators/default/object';
+import { StringGenerator } from '../generators/default/string';
+import { Core } from './core';
+import { Generator } from './generator';
 
 describe('core', () => {
 	test('throws on invalid schema type', () => {
@@ -53,46 +54,54 @@ describe('core', () => {
 	});
 
 	describe('order of generators', () => {
-		const FooNumberGenerator = Generator({
-			schema: ZodNumber,
-			matches: (x) => x.context?.path?.includes('foo'),
-			output: () => {
-				return 4;
-			},
-		});
+		test(`picks up the first matching generator`, () => {
+			const FooNumberGenerator = Generator({
+				schema: ZodNumber,
+				matches: (x) => x.context?.path?.includes('foo'),
+				output: () => {
+					return 4;
+				},
+			});
 
-		test(`test one`, () => {
 			const core = new Core().register([
 				ObjectGenerator,
 				FooNumberGenerator,
 				NumberGenerator,
 			]);
 
-			const result = core.generate(
-				z.object({
-					foo: z.number(),
-					other: z.number(),
-				})
-			);
+			const schema = z.object({
+				foo: z.number(),
+				other: z.number(),
+			});
+			const result = core.generate(schema);
+			type schemaType = z.infer<typeof schema>;
 
-			expect(result.foo).toBe(4);
+			expect((result as schemaType).foo).toBe(4);
+			expect((result as schemaType).other).toBeTypeOf('number');
 		});
 
-		test.fails(`test two`, () => {
-			const core = new Core().register([
-				ObjectGenerator,
-				NumberGenerator,
-				FooNumberGenerator,
-			]);
+		test(`picks up the first matching generator using register`, () => {
+			const FooNumberGenerator = Generator({
+				schema: ZodNumber,
+				matches: (x) => x.context?.path?.includes('foo'),
+				output: () => {
+					return 4;
+				},
+			});
 
-			const result = core.generate(
-				z.object({
-					foo: z.number(),
-					other: z.number(),
-				})
-			);
+			const core = new Core().register([ObjectGenerator]);
+			core.register(FooNumberGenerator);
+			core.register(NumberGenerator);
 
-			expect(result.foo).toBe(4);
+			const schema = z.object({
+				foo: z.number(),
+				other: z.number(),
+			});
+			const result = core.generate(schema);
+			type schemaType = z.infer<typeof schema>;
+
+			expect((result as schemaType).foo).toBe(4);
+			expect((result as schemaType).other).toBeTypeOf('number');
 		});
 	});
 });

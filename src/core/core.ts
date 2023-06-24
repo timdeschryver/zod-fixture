@@ -22,8 +22,8 @@ export class Core {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	register(generators: Definition<any>[]) {
-		this.#generators = generators.concat(this.#generators);
+	register(generators: Definition<any> | Definition<any>[]): this {
+		this.#generators = this.#generators.concat(generators);
 		return this;
 	}
 
