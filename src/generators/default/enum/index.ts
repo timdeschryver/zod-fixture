@@ -3,7 +3,7 @@ import { ZodEnum, ZodNativeEnum } from 'zod';
 
 export const EnumGenerator = Generator({
 	schema: ZodEnum,
-	output: ({ def, core }) => core.utils.randomFrom(def.values),
+	output: ({ def, core }) => core.utils.random.from(def.values),
 });
 
 export const NativeEnumGenerator = Generator({
@@ -15,6 +15,6 @@ export const NativeEnumGenerator = Generator({
 			.filter((key) => Number.isNaN(Number(key)))
 			.map((key) => enumerable[key]);
 
-		return core.utils.randomFrom(values);
+		return core.utils.random.from(values);
 	},
 });

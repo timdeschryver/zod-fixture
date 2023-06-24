@@ -4,9 +4,9 @@ import { ZodDate } from 'zod';
 export const DateGenerator = Generator({
 	schema: ZodDate,
 	output: ({ def, core }) => {
-		const min = core.utils.filterChecks(def.checks, 'min')?.value;
-		const max = core.utils.filterChecks(def.checks, 'max')?.value;
+		const min = core.utils.filter.checks(def.checks, 'min')?.value;
+		const max = core.utils.filter.checks(def.checks, 'max')?.value;
 
-		return new Date(core.utils.randomInt({ min, max }));
+		return new Date(core.utils.random.int({ min, max }));
 	},
 });

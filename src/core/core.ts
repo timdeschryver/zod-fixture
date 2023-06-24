@@ -1,7 +1,7 @@
-import defaults from './defaults';
 import type { Context, Definition } from './generator';
 import { ZOD_INSTANCE_IDENTIFIER, ZOD_TYPE_IDENTIFIER } from './generator';
 import { Utils } from './utils';
+import defaults from './utils/defaults';
 
 export interface Config {
 	seed?: number;
@@ -12,13 +12,16 @@ export class Core {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	#generators: Definition<any>[] = [];
 
-	readonly seed: number = 0;
+	readonly seed: number;
 	readonly defaults = defaults;
 	readonly utils = new Utils(this);
 
 	constructor(config?: Config) {
 		this.defaults = { ...this.defaults, ...config?.defaults };
-		if (config?.seed) this.seed = config.seed;
+		// Copied from defaults in MersenneTwister.
+		// We could allow MersenneTwister to do this for us but then we
+		// wouldn't have a reference to know what number was chosen.
+		this.seed = config?.seed ?? Math.floor(Math.random() * Math.pow(10, 13));
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

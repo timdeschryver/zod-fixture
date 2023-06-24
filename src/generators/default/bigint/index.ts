@@ -4,35 +4,35 @@ import { ZodBigInt } from 'zod';
 export const BigIntGenerator = Generator({
 	schema: ZodBigInt,
 	filter: ({ def, core }) =>
-		core.utils.filterChecks(def.checks, 'multipleOf') === undefined,
+		core.utils.filter.checks(def.checks, 'multipleOf') === undefined,
 	output: ({ def, core }) => {
-		const { filterChecks } = core.utils;
+		const { filter } = core.utils;
 
-		const min = filterChecks(def.checks, 'min')?.value;
-		const max = filterChecks(def.checks, 'max')?.value;
+		const min = filter.checks(def.checks, 'min')?.value;
+		const max = filter.checks(def.checks, 'max')?.value;
 
-		return core.utils.randomBigInt({ min, max });
+		return core.utils.random.bigInt({ min, max });
 	},
 });
 
 export const BigIntMultipleOfGenerator = Generator({
 	schema: ZodBigInt,
 	filter: ({ def, core }) =>
-		core.utils.filterChecks(def.checks, 'multipleOf') !== undefined,
+		core.utils.filter.checks(def.checks, 'multipleOf') !== undefined,
 	output: ({ def, core }) => {
-		const { filterChecks } = core.utils;
+		const { filter } = core.utils;
 
 		const minRaw =
-			filterChecks(def.checks, 'min')?.value ?? core.defaults.bigint.min;
+			filter.checks(def.checks, 'min')?.value ?? core.defaults.bigint.min;
 		const maxRaw =
-			filterChecks(def.checks, 'max')?.value ?? core.defaults.bigint.max;
+			filter.checks(def.checks, 'max')?.value ?? core.defaults.bigint.max;
 
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		const multipleOf = filterChecks(def.checks, 'multipleOf')!.value ?? 1;
+		const multipleOf = filter.checks(def.checks, 'multipleOf')!.value ?? 1;
 
 		const min = minRaw / multipleOf;
 		const max = maxRaw / multipleOf;
 
-		return core.utils.randomBigInt({ min, max }) * multipleOf;
+		return core.utils.random.bigInt({ min, max }) * multipleOf;
 	},
 });
