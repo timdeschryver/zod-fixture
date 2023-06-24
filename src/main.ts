@@ -1,4 +1,4 @@
-import MersenneTwister from '@/core/MersenneTwister';
+import MersenneTwister from '@/core/utils/MersenneTwister';
 import { z } from 'zod';
 import { createFixture } from '.';
 import { ZOD_INSTANCE_IDENTIFIER, ZOD_TYPE_IDENTIFIER } from './core/generator';

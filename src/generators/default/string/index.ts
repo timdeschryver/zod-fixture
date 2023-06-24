@@ -4,15 +4,15 @@ import type { ZodStringDef } from 'zod';
 import { ZodString } from 'zod';
 
 function formatString(core: Core, def: ZodStringDef, value: string) {
-	let min = core.utils.filterChecks(def.checks, 'min')?.value;
-	let max = core.utils.filterChecks(def.checks, 'max')?.value;
-	const length = core.utils.filterChecks(def.checks, 'length')?.value;
+	let min = core.utils.filter.checks(def.checks, 'min')?.value;
+	let max = core.utils.filter.checks(def.checks, 'max')?.value;
+	const length = core.utils.filter.checks(def.checks, 'length')?.value;
 	const isUpperCase =
-		core.utils.filterChecks(def.checks, 'toUpperCase') !== undefined;
+		core.utils.filter.checks(def.checks, 'toUpperCase') !== undefined;
 	const isLowerCase =
-		core.utils.filterChecks(def.checks, 'toLowerCase') !== undefined;
-	const startsWith = core.utils.filterChecks(def.checks, 'startsWith')?.value;
-	const endsWith = core.utils.filterChecks(def.checks, 'endsWith')?.value;
+		core.utils.filter.checks(def.checks, 'toLowerCase') !== undefined;
+	const startsWith = core.utils.filter.checks(def.checks, 'startsWith')?.value;
+	const endsWith = core.utils.filter.checks(def.checks, 'endsWith')?.value;
 
 	if (startsWith) {
 		value = startsWith + value;
@@ -28,7 +28,7 @@ function formatString(core: Core, def: ZodStringDef, value: string) {
 
 	if (min) {
 		const diff = min - value.length;
-		if (diff > 0) value += core.utils.randomString({ min: diff, max: diff });
+		if (diff > 0) value += core.utils.random.string({ min: diff, max: diff });
 	}
 
 	if (isUpperCase) {
@@ -44,9 +44,9 @@ export const StringGenerator = Generator({
 	schema: ZodString,
 	matches: () => true,
 	output: ({ def, core }) => {
-		let min = core.utils.filterChecks(def.checks, 'min')?.value ?? 1;
-		let max = core.utils.filterChecks(def.checks, 'max')?.value ?? min + 25;
-		const length = core.utils.filterChecks(def.checks, 'length');
+		let min = core.utils.filter.checks(def.checks, 'min')?.value ?? 1;
+		let max = core.utils.filter.checks(def.checks, 'max')?.value ?? min + 25;
+		const length = core.utils.filter.checks(def.checks, 'length');
 
 		if (length) {
 			min = length.value;
@@ -58,37 +58,37 @@ export const StringGenerator = Generator({
 				`Minimum length of a string can't be less than 0: ${min}`
 			);
 
-		return formatString(core, def, core.utils.randomString({ min, max }));
+		return formatString(core, def, core.utils.random.string({ min, max }));
 	},
 });
 
 export const UrlGenerator = Generator({
 	schema: ZodString,
 	matches: ({ def, core }) =>
-		core.utils.filterChecks(def.checks, 'url') !== undefined,
+		core.utils.filter.checks(def.checks, 'url') !== undefined,
 	output: ({ def, core }) => {
-		return formatString(core, def, `https://${core.utils.lorem(1)}.com`);
+		return formatString(core, def, `https://${core.utils.random.lorem(1)}.com`);
 	},
 });
 
 export const UuidGenerator = Generator({
 	schema: ZodString,
 	matches: ({ def, core }) =>
-		core.utils.filterChecks(def.checks, 'uuid') !== undefined,
-	output: ({ def, core }) => formatString(core, def, core.utils.uuid()),
+		core.utils.filter.checks(def.checks, 'uuid') !== undefined,
+	output: ({ def, core }) => formatString(core, def, core.utils.random.uuid()),
 });
 
 export const EmailGenerator = Generator({
 	schema: ZodString,
 	matches: ({ def, core }) =>
-		core.utils.filterChecks(def.checks, 'email') !== undefined,
+		core.utils.filter.checks(def.checks, 'email') !== undefined,
 	output: ({ def, core }) => formatString(core, def, 'rando@email.com'),
 });
 
 export const CuidGenerator = Generator({
 	schema: ZodString,
 	matches: ({ def, core }) =>
-		core.utils.filterChecks(def.checks, 'cuid') !== undefined,
+		core.utils.filter.checks(def.checks, 'cuid') !== undefined,
 	output: () => {
 		throw new Error(`cuid has been deprecated in favor of cuid2`);
 	},
@@ -97,6 +97,6 @@ export const CuidGenerator = Generator({
 export const Cuid2Generator = Generator({
 	schema: ZodString,
 	matches: ({ def, core }) =>
-		core.utils.filterChecks(def.checks, 'cuid2') !== undefined,
-	output: ({ def, core }) => formatString(core, def, core.utils.cuid2()),
+		core.utils.filter.checks(def.checks, 'cuid2') !== undefined,
+	output: ({ def, core }) => formatString(core, def, core.utils.random.cuid2()),
 });

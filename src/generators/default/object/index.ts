@@ -19,7 +19,7 @@ export const ObjectGenerator = Generator({
 			def.catchall._def.typeName !== 'ZodNever';
 
 		if (passthrough) {
-			const key = core.utils.lorem(1, 'word');
+			const key = core.utils.random.lorem(1, 'word');
 			const type =
 				def.catchall._def.typeName === 'ZodNever' ? z.any() : def.catchall;
 			result[key] = core.generate(type, { path: [...context.path, key] });
