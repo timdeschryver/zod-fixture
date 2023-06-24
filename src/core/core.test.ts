@@ -57,10 +57,8 @@ describe('core', () => {
 		test(`picks up the first matching generator`, () => {
 			const FooNumberGenerator = Generator({
 				schema: ZodNumber,
-				matches: (x) => x.context?.path?.includes('foo'),
-				output: () => {
-					return 4;
-				},
+				filter: ({ context }) => context?.path?.includes('foo'),
+				output: () => 4,
 			});
 
 			const core = new Core().register([
@@ -83,10 +81,8 @@ describe('core', () => {
 		test(`picks up the first matching generator using register`, () => {
 			const FooNumberGenerator = Generator({
 				schema: ZodNumber,
-				matches: (x) => x.context?.path?.includes('foo'),
-				output: () => {
-					return 4;
-				},
+				filter: ({ context }) => context?.path?.includes('foo'),
+				output: () => 4,
 			});
 
 			const core = new Core().register([ObjectGenerator]);

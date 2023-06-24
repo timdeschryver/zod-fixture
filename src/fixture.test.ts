@@ -33,10 +33,8 @@ test('creates a fixture', () => {
 test(`priotizes generators via extend`, () => {
 	const FooNumberGenerator = Generator({
 		schema: ZodNumber,
-		matches: (x) => x.context?.path?.includes('foo'),
-		output: () => {
-			return 4;
-		},
+		filter: ({ context }) => context?.path?.includes('foo'),
+		output: () => 4,
 	});
 
 	const result = createFixture(
