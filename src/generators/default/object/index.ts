@@ -3,7 +3,6 @@ import { ZodObject, ZodRecord, z } from 'zod';
 
 export const ObjectGenerator = Generator({
 	schema: ZodObject,
-	matches: () => true,
 	output: ({ def, core, context }) => {
 		const shape = def.shape();
 		const result: Record<string, unknown> = {};
@@ -31,7 +30,6 @@ export const ObjectGenerator = Generator({
 
 export const RecordGenerator = Generator({
 	schema: ZodRecord,
-	matches: () => true,
 	output: ({ def, core, context }) => {
 		const result: Record<
 			z.infer<typeof def.keyType>,

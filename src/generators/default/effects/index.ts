@@ -3,7 +3,7 @@ import { ZodEffects } from 'zod';
 
 export const TransformGenerator = Generator({
 	schema: ZodEffects,
-	matches: ({ def }) => def.effect.type === 'transform',
+	filter: ({ def }) => def.effect.type === 'transform',
 	output: ({ def, core, context }) => {
 		if (def.effect.type !== 'transform')
 			throw new Error('Must be a transform effect.');
@@ -19,7 +19,7 @@ export const TransformGenerator = Generator({
 
 export const PreprocessGenerator = Generator({
 	schema: ZodEffects,
-	matches: ({ def }) => def.effect.type === 'preprocess',
+	filter: ({ def }) => def.effect.type === 'preprocess',
 	output: ({ def, core, context }) => {
 		if (def.effect.type !== 'preprocess')
 			throw new Error('Must be a preprocess effect.');
@@ -33,7 +33,7 @@ export const PreprocessGenerator = Generator({
 
 export const RefinementGenerator = Generator({
 	schema: ZodEffects,
-	matches: ({ def }) => def.effect.type === 'refinement',
+	filter: ({ def }) => def.effect.type === 'refinement',
 	output: ({ def, core, context }) => {
 		if (def.effect.type !== 'refinement')
 			throw new Error('Must be a refinement effect.');

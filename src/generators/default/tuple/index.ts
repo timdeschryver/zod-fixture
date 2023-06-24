@@ -3,7 +3,6 @@ import { ZodTuple } from 'zod';
 
 export const TupleGenerator = Generator({
 	schema: ZodTuple,
-	matches: () => true,
 	output: ({ def, core, context }) => {
 		const known = def.items.map((type, idx) =>
 			core.generate(type, { path: [...context.path, idx] })

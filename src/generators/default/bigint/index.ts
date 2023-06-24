@@ -3,7 +3,7 @@ import { ZodBigInt } from 'zod';
 
 export const BigIntGenerator = Generator({
 	schema: ZodBigInt,
-	matches: ({ def, core }) =>
+	filter: ({ def, core }) =>
 		core.utils.filter.checks(def.checks, 'multipleOf') === undefined,
 	output: ({ def, core }) => {
 		const { filter } = core.utils;
@@ -17,7 +17,7 @@ export const BigIntGenerator = Generator({
 
 export const BigIntMultipleOfGenerator = Generator({
 	schema: ZodBigInt,
-	matches: ({ def, core }) =>
+	filter: ({ def, core }) =>
 		core.utils.filter.checks(def.checks, 'multipleOf') !== undefined,
 	output: ({ def, core }) => {
 		const { filter } = core.utils;

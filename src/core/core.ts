@@ -47,7 +47,8 @@ export class Core {
 			)
 				return false;
 
-			if (!generator.matches({ schema, def, core, context })) return false;
+			if (generator.filter && !generator.filter({ schema, def, core, context }))
+				return false;
 
 			return true;
 		});

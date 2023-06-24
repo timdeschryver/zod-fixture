@@ -4,7 +4,6 @@ import { ZodMap } from 'zod';
 
 export const MapGenerator = Generator({
 	schema: ZodMap,
-	matches: () => true,
 	output: ({ def, core, context }) => {
 		const key = def.keyType;
 		const value = def.valueType;

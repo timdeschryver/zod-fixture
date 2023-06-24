@@ -3,7 +3,6 @@ import { ZodDate } from 'zod';
 
 export const DateGenerator = Generator({
 	schema: ZodDate,
-	matches: () => true,
 	output: ({ def, core }) => {
 		const min = core.utils.filter.checks(def.checks, 'min')?.value;
 		const max = core.utils.filter.checks(def.checks, 'max')?.value;
