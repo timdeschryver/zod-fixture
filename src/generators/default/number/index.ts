@@ -24,10 +24,10 @@ export const NumberGenerator = Generator({
 			: core.utils.random.float({ min, max });
 
 		if (multipleOf !== undefined) {
+			result = result * multipleOf;
+
 			if (multipleOf % 1 === 0) {
-				result = Math.round(result * multipleOf);
-			} else {
-				result = result * multipleOf;
+				result = Math.round(result);
 			}
 		}
 

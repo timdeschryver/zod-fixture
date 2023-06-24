@@ -24,19 +24,22 @@ describe('create Tuples', () => {
 		]);
 		const result = core.generate(input);
 
+		type I = z.infer<typeof input>;
+
 		expect(result).toHaveLength(3);
-		expect(result[0]).toBeTypeOf('string');
-		expect(result[1]).toBeTypeOf('number');
-		expect(result[2]).toBeTypeOf('object');
-		expect(result[2].pointsScored).toBeTypeOf('number');
+		expect((result as I)[0]).toBeTypeOf('string');
+		expect((result as I)[1]).toBeTypeOf('number');
+		expect((result as I)[2]).toBeTypeOf('object');
+		expect((result as I)[2].pointsScored).toBeTypeOf('number');
 	});
 
 	test('creates a tuple with variadic rest argument', () => {
 		const input = z.tuple([z.string()]).rest(z.number());
 		const result = core.generate(input);
+		type I = z.infer<typeof input>;
 
-		expect(result).toHaveLength(2);
-		expect(result[0]).toBeTypeOf('string');
-		expect(result[1]).toBeTypeOf('number');
+		expect(result as I).toHaveLength(2);
+		expect((result as I)[0]).toBeTypeOf('string');
+		expect((result as I)[1]).toBeTypeOf('number');
 	});
 });

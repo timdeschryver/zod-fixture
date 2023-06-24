@@ -11,8 +11,10 @@ describe('create Sets', () => {
 		const input = z.set(z.number());
 		const result = core.generate(input);
 
-		expect(result.size).toBe(3);
-		expect([...result.keys()][0]).toBeTypeOf('number');
-		expect([...result.values()][0]).toBeTypeOf('number');
+		type I = z.infer<typeof input>;
+
+		expect((result as I).size).toBe(3);
+		expect([...(result as I).keys()][0]).toBeTypeOf('number');
+		expect([...(result as I).values()][0]).toBeTypeOf('number');
 	});
 });

@@ -116,7 +116,17 @@ describe('create strings', () => {
 		);
 	});
 
+	test('creates a small string using length', () => {
+		const value = core.generate(z.string().length(2));
+		expect(value).toHaveLength(2);
+	});
+
 	test('creates a large string using length', () => {
+		const value = core.generate(z.string().length(6000));
+		expect(value).toHaveLength(6000);
+	});
+
+	test('creates a large string using length with startsWith and EndsWith', () => {
 		const value = core.generate(
 			z.string().length(6000).startsWith('start_').endsWith('_end')
 		);

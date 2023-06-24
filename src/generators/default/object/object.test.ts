@@ -47,11 +47,13 @@ describe('create objects', () => {
 			num: z.number(),
 		});
 
+		type I = z.infer<typeof input>;
+
 		const result = core.generate(input);
 
 		expect(result).toBeTypeOf('object');
-		expect(result.str).toBeTypeOf('string');
-		expect(result.num).toBeTypeOf('number');
+		expect((result as I).str).toBeTypeOf('string');
+		expect((result as I).num).toBeTypeOf('number');
 	});
 
 	test('creates a nested object', () => {
@@ -63,10 +65,12 @@ describe('create objects', () => {
 			}),
 		});
 
+		type I = z.infer<typeof input>;
+
 		const result = core.generate(input);
 		expect(result).toBeTypeOf('object');
-		expect(result.str).toBeTypeOf('string');
-		expect(result.nested.num).toBeTypeOf('number');
+		expect((result as I).str).toBeTypeOf('string');
+		expect((result as I).nested.num).toBeTypeOf('number');
 	});
 
 	test("creates an object with zod's api", () => {
@@ -74,10 +78,13 @@ describe('create objects', () => {
 		const HasID = z.object({ id: z.string() });
 		const Teacher = BaseTeacher.merge(HasID);
 
+		type BaseTeacher = z.infer<typeof BaseTeacher>;
+		type HasID = z.infer<typeof HasID>;
+
 		const result = core.generate(Teacher);
 		expect(result).toBeTypeOf('object');
-		expect(result.id).toBeTypeOf('string');
-		expect(result.name).toBeTypeOf('string');
+		expect((result as HasID).id).toBeTypeOf('string');
+		expect((result as BaseTeacher).name).toBeTypeOf('string');
 	});
 
 	test('creates an object with additional keys for passthrough', () => {
@@ -88,12 +95,14 @@ describe('create objects', () => {
 			})
 			.passthrough();
 
+		type I = z.infer<typeof input>;
+
 		const result = core.generate(input);
 
 		expect(result).toBeTypeOf('object');
-		expect(result.str).toBeTypeOf('string');
-		expect(result.num).toBeTypeOf('number');
-		expect(Object.keys(result).length).toBeGreaterThan(2);
+		expect((result as I).str).toBeTypeOf('string');
+		expect((result as I).num).toBeTypeOf('number');
+		expect(Object.keys(result as I).length).toBeGreaterThan(2);
 	});
 });
 
@@ -108,16 +117,20 @@ describe('create Records', () => {
 		const input = z.record(z.number());
 		const result = core.generate(input);
 
-		expect(Object.keys(result)).toHaveLength(3);
-		expect(Object.keys(result)[0]).toBeTypeOf('string');
-		expect(Object.values(result)[0]).toBeTypeOf('number');
+		type I = z.infer<typeof input>;
+
+		expect(Object.keys(result as I)).toHaveLength(3);
+		expect(Object.keys(result as I)[0]).toBeTypeOf('string');
+		expect(Object.values(result as I)[0]).toBeTypeOf('number');
 	});
 
 	test('creates a record with a defined key type', () => {
 		const input = z.record(z.string(), z.string());
 		const result = core.generate(input);
 
-		expect(Object.keys(result)[0]).toBeTypeOf('string');
-		expect(Object.values(result)[0]).toBeTypeOf('string');
+		type I = z.infer<typeof input>;
+
+		expect(Object.keys(result as I)[0]).toBeTypeOf('string');
+		expect(Object.values(result as I)[0]).toBeTypeOf('string');
 	});
 });

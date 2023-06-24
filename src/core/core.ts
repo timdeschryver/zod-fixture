@@ -1,4 +1,4 @@
-import type { z, ZodTypeAny } from 'zod';
+import type { ZodTypeAny } from 'zod';
 import type { Context, Definition } from './generator';
 import { ZOD_INSTANCE_IDENTIFIER, ZOD_TYPE_IDENTIFIER } from './generator';
 import { Utils } from './utils';
@@ -34,7 +34,7 @@ export class Core {
 	generate<ZSchema extends ZodTypeAny>(
 		schema: ZSchema,
 		context: Context = { path: [] }
-	): z.infer<typeof schema> {
+	): unknown {
 		// eslint-disable-next-line @typescript-eslint/no-this-alias
 		const core = this;
 		const def = schema._def;
