@@ -1,7 +1,7 @@
 import type { ZodTypeAny } from 'zod';
 
 interface CustomMatchers<R = unknown> {
-	toProduce(schema: ZodTypeAny): R;
+	toProduce(schema: ZodTypeAny, result?: unknown): R;
 }
 
 declare module 'vitest' {

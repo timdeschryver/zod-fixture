@@ -3,7 +3,7 @@ import { expect } from 'vitest';
 const ITERATIONS = 100;
 
 expect.extend({
-	toProduce(core, schema) {
+	toProduce(core, schema, result) {
 		for (let i = 0; i < ITERATIONS; i++) {
 			const fixture = core.generate(schema);
 			const { success: pass, error } = schema.safeParse(fixture);
@@ -22,6 +22,10 @@ expect.extend({
 							2
 						),
 				};
+
+			if (result !== undefined) {
+				expect(fixture).toBe(result);
+			}
 		}
 
 		return {

@@ -6,6 +6,10 @@ import { NumberGenerator } from '.';
 describe('create numbers', () => {
 	const core = new Core().register([NumberGenerator]);
 
+	test('produces a valid number', () => {
+		expect(core).toProduce(z.number());
+	});
+
 	test(`creates a number between Number.MIN_SAFE_INTEGER and Number.MAX_SAFE_INTEGER`, () => {
 		const result = core.generate(z.number());
 
@@ -19,6 +23,10 @@ describe('create numbers', () => {
 	});
 
 	describe('min and max', () => {
+		test('produces a valid number', () => {
+			expect(core).toProduce(z.number().min(10).max(20));
+		});
+
 		test('creates a number with a min value', () => {
 			expect(core.generate(z.number().min(10_000))).toBeGreaterThanOrEqual(
 				10_000
@@ -53,9 +61,17 @@ describe('create numbers', () => {
 	});
 
 	describe('positive and negative', () => {
+		test('produces a valid positive number', () => {
+			expect(core).toProduce(z.number().positive());
+		});
+
 		test('creates a positive number', () => {
 			expect(core.generate(z.number().positive())).toBeGreaterThan(0);
 			expect(core.generate(z.number().nonnegative())).toBeGreaterThanOrEqual(0);
+		});
+
+		test('produces a valid negative number', () => {
+			expect(core).toProduce(z.number().positive());
 		});
 
 		test('creates a negative number', () => {
@@ -65,29 +81,22 @@ describe('create numbers', () => {
 	});
 
 	describe('multipleOf', () => {
-		test("creates a number that's a multiple", () => {
-			const schema = z.number().multipleOf(4);
-			const result = core.generate(schema);
-			expect(() => schema.parse(result)).not.toThrow();
+		test('produces a valid multipleOf number', () => {
+			expect(core).toProduce(z.number().multipleOf(33));
 		});
 
 		test("creates a number that's a multiple with min and max", () => {
-			expect(core.generate(z.number().multipleOf(3).min(16).max(20))).toBe(18);
+			const schema = z.number().multipleOf(3).min(16).max(20);
+			expect(core).toProduce(schema, 18);
 		});
 
 		test("creates a number that's a multiple of a decimal", () => {
-			expect(core.generate(z.number().multipleOf(3.3).min(16).max(19))).toBe(
-				16.5
-			);
+			const schema = z.number().multipleOf(3.3).min(16).max(19);
+			expect(core).toProduce(schema, 16.5);
 		});
 	});
 
 	test('creates a finite number', () => {
 		expect(isFinite(core.generate(z.number().finite()) as number)).toBeTruthy();
-	});
-
-	test("creates a number that's a multiple", () => {
-		const schema = z.number().multipleOf(4);
-		expect(core).toProduce(schema);
 	});
 });
