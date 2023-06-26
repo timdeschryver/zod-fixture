@@ -17,5 +17,6 @@ module.exports = {
 			'error',
 			{ prefer: 'type-imports' },
 		],
+		'@typescript-eslint/no-empty-interface': 'off',
 	},
 };

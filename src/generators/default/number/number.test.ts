@@ -55,4 +55,9 @@ describe('create numbers', () => {
 	test('throws when min is greater than max', () => {
 		expect(() => core.generate(z.number().min(100).max(10))).toThrowError();
 	});
+
+	test("creates a number that's a multiple", () => {
+		const schema = z.number().multipleOf(4);
+		expect(core).toProduce(schema);
+	});
 });

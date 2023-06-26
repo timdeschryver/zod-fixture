@@ -1,10 +1,8 @@
-/// <reference types="vitest" />
-import { defineConfig } from 'vite';
-import dts from 'vite-plugin-dts';
 import path from 'path';
+import dts from 'vite-plugin-dts';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-	test: ['./src/*'],
 	resolve: {
 		alias: {
 			// eslint-disable-next-line no-undef
@@ -33,5 +31,8 @@ export default defineConfig({
 		esbuildOptions: {
 			target: 'esnext',
 		},
+	},
+	test: {
+		setupFiles: ['./.vitest/extend.ts'],
 	},
 });
