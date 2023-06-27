@@ -7,12 +7,11 @@ import { NumberGenerator } from '../number';
 describe('create a lazy type', () => {
 	const core = new Core().register([LazyGenerator, NumberGenerator]);
 
+	test('produces a valid lazy', () => {
+		expect(core).toProduce(z.lazy(() => z.number()));
+	});
+
 	test('creates a promise with the correct type', () => {
-		expect(
-			core.generate(
-				z.lazy(() => z.number()),
-				{ path: [] }
-			)
-		).toBeTypeOf('number');
+		expect(core.generate(z.lazy(() => z.number()))).toBeTypeOf('number');
 	});
 });

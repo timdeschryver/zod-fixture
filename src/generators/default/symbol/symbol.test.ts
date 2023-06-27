@@ -6,6 +6,10 @@ import { SymbolGenerator } from '.';
 describe('create a symbol type', () => {
 	const core = new Core().register([SymbolGenerator]);
 
+	test('produces a valid symbol', () => {
+		expect(core).toProduce(z.symbol());
+	});
+
 	test('creates a symbol', () => {
 		expect(core.generate(z.symbol())).toBeTypeOf('symbol');
 	});

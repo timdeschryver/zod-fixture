@@ -12,6 +12,10 @@ describe('create Maps', () => {
 		NumberGenerator,
 	]);
 
+	test('produces a valid map', () => {
+		expect(core).toProduce(z.map(z.string(), z.number()));
+	});
+
 	test('creates a Map with 3 entries', () => {
 		const input = z.map(z.string(), z.number());
 		const result = core.generate(input);

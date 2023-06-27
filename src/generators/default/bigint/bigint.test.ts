@@ -9,6 +9,10 @@ describe('create bigint', () => {
 		BigIntMultipleOfGenerator,
 	]);
 
+	test('produces a valid bigint', () => {
+		expect(core).toProduce(z.bigint());
+	});
+
 	test('creates a bigint between Number.MIN_SAFE_INTEGER and Number.MAX_SAFE_INTEGER', () => {
 		const result = core.generate(z.bigint());
 

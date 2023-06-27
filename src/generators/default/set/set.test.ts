@@ -7,6 +7,10 @@ import { NumberGenerator } from '../number';
 describe('create Sets', () => {
 	const core = new Core().register([SetGenerator, NumberGenerator]);
 
+	test('produces a valid set', () => {
+		expect(core).toProduce(z.set(z.number()));
+	});
+
 	test('creates a Set with 3 entries', () => {
 		const input = z.set(z.number());
 		const result = core.generate(input);

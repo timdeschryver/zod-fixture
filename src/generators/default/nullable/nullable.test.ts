@@ -7,6 +7,10 @@ import { StringGenerator } from '../string';
 describe('create empty types', () => {
 	const core = new Core().register([NullableGenerator, StringGenerator]);
 
+	test('produces a valid nullable', () => {
+		expect(core).toProduce(z.string().nullable());
+	});
+
 	test('creates a nullable string', () => {
 		expect(core.generate(z.string().nullable())).toBeTypeOf('string');
 	});

@@ -14,6 +14,14 @@ describe('create Tuples', () => {
 		NumberGenerator,
 	]);
 
+	test('produces a valid empty tuple', () => {
+		expect(core).toProduce(z.tuple([]));
+	});
+
+	test('produces a valid tuple', () => {
+		expect(core).toProduce(z.tuple([z.number(), z.string()]));
+	});
+
 	test('creates a tuple and preserves types', () => {
 		const input = z.tuple([
 			z.string(), // name

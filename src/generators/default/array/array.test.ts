@@ -12,6 +12,10 @@ describe('create Arrays', () => {
 		NumberGenerator,
 	]);
 
+	test('produces a valid array', () => {
+		expect(core).toProduce(z.array(z.number()));
+	});
+
 	test('creates an array with the length of 3', () => {
 		expect(core.generate(z.array(z.string()))).toHaveLength(3);
 		expect(core.generate(z.number().array())).toHaveLength(3);
