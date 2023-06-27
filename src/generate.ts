@@ -265,7 +265,7 @@ function extractConditions<ZSchema extends ZodTypeAny>(
 		checks.push({ kind: 'max', value: schema._def.maxLength.value });
 	}
 
-	const conditions = checks.reduce(
+	const conditions: Condition = checks.reduce(
 		(aggregate: Condition, check: Record<string, unknown>): Condition => {
 			switch (check.kind) {
 				case 'min':

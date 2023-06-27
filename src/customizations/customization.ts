@@ -1,3 +1,5 @@
+import type { Condition } from '../context';
+
 export type CustomizationRequest<
 	Properties extends Record<string, unknown> = Record<string, unknown>,
 > = {
@@ -12,5 +14,3 @@ export type Customization<
 	condition: (request: CustomizationRequest<Properties>) => boolean;
 	generator: (request: CustomizationRequest<Properties>) => unknown;
 };
-
-export type Condition = Record<string, number>;
