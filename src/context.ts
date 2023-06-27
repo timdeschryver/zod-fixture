@@ -7,4 +7,4 @@ export interface Context {
 	defaultLength: number;
 }
 
-export type Condition = Record<string, number | boolean>;
+export type Condition = Record<string, number>;
