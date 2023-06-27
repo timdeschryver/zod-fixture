@@ -17,6 +17,10 @@ describe('create unions', () => {
 		LiteralGenerator,
 	]);
 
+	test('produces a valid union', () => {
+		expect(core).toProduce(z.union([z.string(), z.number()]));
+	});
+
 	test('creates a union value', () => {
 		expect(typeof core.generate(z.union([z.string(), z.number()]))).toMatch(
 			/^string|number$/

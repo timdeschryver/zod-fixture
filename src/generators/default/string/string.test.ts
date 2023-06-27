@@ -27,22 +27,36 @@ describe('create strings', () => {
 		ObjectGenerator,
 	]);
 
+	test('produces a valid string', () => {
+		expect(core).toProduce(z.string());
+	});
+
 	test('creates a string', () => {
 		expect(core.generate(z.string())).toBeTypeOf('string');
+	});
+
+	test('produces a valid string with length', () => {
+		expect(core).toProduce(z.string().length(60));
 	});
 
 	test('creates a string with a fixed length', () => {
 		expect(core.generate(z.string().length(5))).toHaveLength(5);
 	});
 
+	test('produces a valid string with min and max', () => {
+		expect(core).toProduce(z.string().min(3).max(9));
+	});
+
 	test('creates a string with a min length', () => {
-		expect(core.generate(z.string().min(100)).length).toBeGreaterThanOrEqual(
-			100
-		);
+		expect(
+			(core.generate(z.string().min(100)) as string).length
+		).toBeGreaterThanOrEqual(100);
 	});
 
 	test('creates a string with a max length', () => {
-		expect(core.generate(z.string().max(2))?.length).toBeLessThanOrEqual(2);
+		expect(
+			(core.generate(z.string().max(2)) as string).length
+		).toBeLessThanOrEqual(2);
 	});
 
 	test('throws when min is greater than max', () => {
@@ -51,6 +65,10 @@ describe('create strings', () => {
 
 	test('throws when min is negative', () => {
 		expect(() => core.generate(z.string().min(-1))).toThrowError();
+	});
+
+	test('produces a valid string that is a uuid', () => {
+		expect(core).toProduce(z.string().uuid());
 	});
 
 	test('creates a string that is a uuid', () => {
@@ -71,8 +89,16 @@ describe('create strings', () => {
 		expect(() => core.generate(z.string().cuid())).toThrowError();
 	});
 
+	test('produces a valid string that is a cuid2', () => {
+		expect(core).toProduce(z.string().cuid2());
+	});
+
 	test('creates a string that is a cuid2', () => {
-		expect(isCuid2(core.generate(z.string().cuid2()))).toBeTruthy();
+		expect(isCuid2(core.generate(z.string().cuid2()) as string)).toBeTruthy();
+	});
+
+	test('produces a valid string that is a email', () => {
+		expect(core).toProduce(z.string().email());
 	});
 
 	test('creates a string that is an email', () => {
@@ -81,9 +107,17 @@ describe('create strings', () => {
 		expect(email).include('.');
 	});
 
+	test('produces a valid string that is a lowercase', () => {
+		expect(core).toProduce(z.string().toLowerCase());
+	});
+
 	test('creates a string is lowercase', () => {
 		const lowercase = core.generate(z.string().toLowerCase());
 		expect(lowercase).toMatch(/^[^A-Z]*$/);
+	});
+
+	test('produces a valid string that is a uppercase', () => {
+		expect(core).toProduce(z.string().toUpperCase());
 	});
 
 	test('creates a string is uppercase', () => {
@@ -91,22 +125,30 @@ describe('create strings', () => {
 		expect(uppercase).toMatch(/^[^a-z]*$/);
 	});
 
+	test('produces a valid string with a start and end', () => {
+		expect(core).toProduce(z.string().startsWith('begin').endsWith('end'));
+	});
+
 	test('creates a string that startsWith', () => {
-		const value = core.generate(z.string().startsWith('start_'));
+		const value = core.generate(z.string().startsWith('start_')) as string;
 		expect(value.startsWith('start_')).toBeTruthy();
 	});
 
 	test('creates a string that endsWith', () => {
-		const value = core.generate(z.string().endsWith('_end'));
+		const value = core.generate(z.string().endsWith('_end')) as string;
 		expect(value.endsWith('_end')).toBeTruthy();
 	});
 
 	test('creates a string that startsWith and endsWith', () => {
 		const value = core.generate(
 			z.string().startsWith('start_').endsWith('_end')
-		);
+		) as string;
 		expect(value.startsWith('start_')).toBeTruthy();
 		expect(value.endsWith('_end')).toBeTruthy();
+	});
+
+	test('produces a valid string that is a url', () => {
+		expect(core).toProduce(z.string().url());
 	});
 
 	test('creates a string that is an URL', () => {
@@ -129,7 +171,7 @@ describe('create strings', () => {
 	test('creates a large string using length with startsWith and EndsWith', () => {
 		const value = core.generate(
 			z.string().length(6000).startsWith('start_').endsWith('_end')
-		);
+		) as string;
 		expect(value).toHaveLength(6000);
 		expect(value.startsWith('start_')).toBeTruthy();
 		expect(value.endsWith('_end')).toBeTruthy();
@@ -138,7 +180,7 @@ describe('create strings', () => {
 	test('creates a large string using min and max', () => {
 		const value = core.generate(
 			z.string().min(6000).max(7000).startsWith('start_').endsWith('_end')
-		);
+		) as string;
 		expect(value.length).toBeGreaterThan(6000);
 		expect(value.length).toBeLessThan(7000);
 		expect(value.startsWith('start_')).toBeTruthy();

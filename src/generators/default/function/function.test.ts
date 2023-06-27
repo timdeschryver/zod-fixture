@@ -6,6 +6,10 @@ import { FunctionGenerator } from '.';
 describe('create Functions', () => {
 	const core = new Core().register([FunctionGenerator]);
 
+	test('produces a valid function', () => {
+		expect(core).toProduce(z.function());
+	});
+
 	test('creates a function', () => {
 		expect(core.generate(z.function())).toBeTypeOf('function');
 	});

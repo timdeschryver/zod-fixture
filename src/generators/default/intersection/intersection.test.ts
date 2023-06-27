@@ -14,6 +14,18 @@ describe('create intersections', () => {
 		ArrayGenerator,
 	]);
 
+	test('produces a valid intersection', () => {
+		const left = z.object({
+			left: z.boolean(),
+		});
+
+		const right = z.object({
+			right: z.boolean(),
+		});
+
+		expect(core).toProduce(z.intersection(left, right));
+	});
+
 	test('creates an intersection of objects', () => {
 		const left = z.object({
 			left: z.boolean(),

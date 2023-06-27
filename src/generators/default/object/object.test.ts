@@ -37,8 +37,21 @@ describe('create objects', () => {
 		RecordGenerator,
 	]);
 
+	test('produces a valid empty object', () => {
+		expect(core).toProduce(z.object({}));
+	});
+
 	test('creates an empty object', () => {
 		expect(core.generate(z.object({}))).toBeTypeOf('object');
+	});
+
+	test('produces a valid object', () => {
+		expect(core).toProduce(
+			z.object({
+				str: z.string(),
+				num: z.number(),
+			})
+		);
 	});
 
 	test('creates an object', () => {
@@ -54,6 +67,18 @@ describe('create objects', () => {
 		expect(result).toBeTypeOf('object');
 		expect((result as I).str).toBeTypeOf('string');
 		expect((result as I).num).toBeTypeOf('number');
+	});
+
+	test('produces a valid nested object', () => {
+		expect(core).toProduce(
+			z.object({
+				str: z.string(),
+				nested: z.object({
+					num: z.number(),
+					str: z.string(),
+				}),
+			})
+		);
 	});
 
 	test('creates a nested object', () => {
@@ -112,6 +137,10 @@ describe('create Records', () => {
 		StringGenerator,
 		NumberGenerator,
 	]);
+
+	test('produces a valid record', () => {
+		expect(core).toProduce(z.record(z.number()));
+	});
 
 	test('creates a record with 3 entries', () => {
 		const input = z.record(z.number());

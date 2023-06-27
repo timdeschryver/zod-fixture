@@ -7,6 +7,10 @@ import { NumberGenerator } from '../number';
 describe('create a branded type', () => {
 	const core = new Core().register([BrandedGenerator, NumberGenerator]);
 
+	test('produces a valid brand', () => {
+		expect(core).toProduce(z.number().brand('brand'));
+	});
+
 	test('creates a brand with the correct type', () => {
 		expect(core.generate(z.number().brand('test'))).toBeTypeOf('number');
 	});

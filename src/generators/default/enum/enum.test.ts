@@ -6,6 +6,10 @@ import { EnumGenerator, NativeEnumGenerator } from '.';
 describe('create enums', () => {
 	const core = new Core().register([EnumGenerator, NativeEnumGenerator]);
 
+	test('produces a valid enum', () => {
+		expect(core).toProduce(z.enum(['Salmon', 'Tuna', 'Trout']));
+	});
+
 	test('using zod enums creates an enum and returns a random value', () => {
 		expect(core.generate(z.enum(['Salmon', 'Tuna', 'Trout']))).toMatch(
 			/^Salmon|Tuna|Trout$/

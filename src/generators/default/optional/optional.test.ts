@@ -20,6 +20,14 @@ describe('create empty types', () => {
 		DateGenerator,
 	]);
 
+	test('produces a valid nullish', () => {
+		expect(core).toProduce(z.string().nullish());
+	});
+
+	test('produces a valid optional', () => {
+		expect(core).toProduce(z.number().optional());
+	});
+
 	test('creates a nullable string', () => {
 		expect(core.generate(z.string().nullish())).toBeTypeOf('string');
 		expect(core.generate(z.string().optional())).toBeTypeOf('string');
