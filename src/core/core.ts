@@ -1,3 +1,4 @@
+import type { ZodTypeAny } from 'zod';
 import type { Context, Definition } from './generator';
 import { ZOD_INSTANCE_IDENTIFIER, ZOD_TYPE_IDENTIFIER } from './generator';
 import { Utils } from './utils';
@@ -30,7 +31,10 @@ export class Core {
 		return this;
 	}
 
-	generate(schema: Zod.ZodTypeAny, context: Context = { path: [] }): unknown {
+	generate<ZSchema extends ZodTypeAny>(
+		schema: ZSchema,
+		context: Context = { path: [] }
+	): unknown {
 		// eslint-disable-next-line @typescript-eslint/no-this-alias
 		const core = this;
 		const def = schema._def;
@@ -38,17 +42,23 @@ export class Core {
 			if (
 				schema[ZOD_TYPE_IDENTIFIER] !==
 				generator.schema.prototype[ZOD_TYPE_IDENTIFIER]
-			)
+			) {
 				return false;
+			}
 
 			if (
 				schema[ZOD_INSTANCE_IDENTIFIER] !==
 				generator.schema[ZOD_INSTANCE_IDENTIFIER]
-			)
+			) {
 				return false;
+			}
 
-			if (generator.filter && !generator.filter({ schema, def, core, context }))
+			if (
+				generator.filter &&
+				!generator.filter({ schema, def, core, context })
+			) {
 				return false;
+			}
 
 			return true;
 		});
