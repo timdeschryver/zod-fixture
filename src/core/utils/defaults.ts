@@ -25,4 +25,8 @@ export default {
 		min: BigInt(Number.MIN_SAFE_INTEGER),
 		max: BigInt(Number.MAX_SAFE_INTEGER),
 	},
+	date: {
+		min: new Date(1900, 0, 1),
+		max: new Date(2100, 11, 31),
+	},
 };
