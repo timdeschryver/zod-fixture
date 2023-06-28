@@ -6,7 +6,7 @@ import { DateGenerator } from '.';
 describe('create dates', () => {
 	const core = new Core().register([DateGenerator]);
 
-	test.fails('produces a valid date', () => {
+	test('produces a valid date', () => {
 		expect(core).toProduce(z.date());
 	});
 
