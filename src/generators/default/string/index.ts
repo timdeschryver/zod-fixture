@@ -4,14 +4,14 @@ import type { ZodStringDef } from 'zod';
 import { ZodString } from 'zod';
 
 function formatString(core: Core, def: ZodStringDef, value: string) {
-	let max = core.utils.filter.checks(def.checks, 'max')?.value;
-	const length = core.utils.filter.checks(def.checks, 'length')?.value;
-	const isUpperCase =
-		core.utils.filter.checks(def.checks, 'toUpperCase') !== undefined;
-	const isLowerCase =
-		core.utils.filter.checks(def.checks, 'toLowerCase') !== undefined;
-	const startsWith = core.utils.filter.checks(def.checks, 'startsWith')?.value;
-	const endsWith = core.utils.filter.checks(def.checks, 'endsWith')?.value;
+	const checks = core.utils.checks(def.checks);
+
+	let max = checks.find('max')?.value;
+	const length = checks.find('length')?.value;
+	const isUpperCase = checks.has('toUpperCase');
+	const isLowerCase = checks.has('toLowerCase');
+	const startsWith = checks.find('startsWith')?.value;
+	const endsWith = checks.find('endsWith')?.value;
 
 	if (length) {
 		max = length;
@@ -48,9 +48,11 @@ function formatString(core: Core, def: ZodStringDef, value: string) {
 export const StringGenerator = Generator({
 	schema: ZodString,
 	output: ({ def, core }) => {
-		let min = core.utils.filter.checks(def.checks, 'min')?.value ?? 1;
-		let max = core.utils.filter.checks(def.checks, 'max')?.value ?? min + 25;
-		const length = core.utils.filter.checks(def.checks, 'length');
+		const checks = core.utils.checks(def.checks);
+
+		let min = checks.find('min')?.value ?? 1;
+		let max = checks.find('max')?.value ?? min + 25;
+		const length = checks.find('length');
 
 		if (length) {
 			min = length.value;
@@ -68,8 +70,7 @@ export const StringGenerator = Generator({
 
 export const UrlGenerator = Generator({
 	schema: ZodString,
-	filter: ({ def, core }) =>
-		core.utils.filter.checks(def.checks, 'url') !== undefined,
+	filter: ({ def, core }) => core.utils.checks(def.checks).has('url'),
 	output: ({ def, core }) => {
 		return formatString(core, def, `https://${core.utils.random.lorem(1)}.com`);
 	},
@@ -77,22 +78,19 @@ export const UrlGenerator = Generator({
 
 export const UuidGenerator = Generator({
 	schema: ZodString,
-	filter: ({ def, core }) =>
-		core.utils.filter.checks(def.checks, 'uuid') !== undefined,
+	filter: ({ def, core }) => core.utils.checks(def.checks).has('uuid'),
 	output: ({ core }) => core.utils.random.uuid(),
 });
 
 export const EmailGenerator = Generator({
 	schema: ZodString,
-	filter: ({ def, core }) =>
-		core.utils.filter.checks(def.checks, 'email') !== undefined,
+	filter: ({ def, core }) => core.utils.checks(def.checks).has('email'),
 	output: ({ def, core }) => formatString(core, def, 'rando@email.com'),
 });
 
 export const CuidGenerator = Generator({
 	schema: ZodString,
-	filter: ({ def, core }) =>
-		core.utils.filter.checks(def.checks, 'cuid') !== undefined,
+	filter: ({ def, core }) => core.utils.checks(def.checks).has('cuid'),
 	output: () => {
 		throw new Error(`cuid has been deprecated in favor of cuid2`);
 	},
@@ -100,14 +98,12 @@ export const CuidGenerator = Generator({
 
 export const Cuid2Generator = Generator({
 	schema: ZodString,
-	filter: ({ def, core }) =>
-		core.utils.filter.checks(def.checks, 'cuid2') !== undefined,
+	filter: ({ def, core }) => core.utils.checks(def.checks).has('cuid2'),
 	output: ({ def, core }) => formatString(core, def, core.utils.random.cuid2()),
 });
 
 export const DateTimeGenerator = Generator({
 	schema: ZodString,
-	filter: ({ def, core }) =>
-		core.utils.filter.checks(def.checks, 'datetime') !== undefined,
+	filter: ({ def, core }) => core.utils.checks(def.checks).has('datetime'),
 	output: ({ core }) => core.utils.random.date().toISOString(),
 });

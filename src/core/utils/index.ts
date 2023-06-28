@@ -1,4 +1,5 @@
 import type { Core } from '../core';
+import { Checks } from './Checks';
 import { Randomization } from './Randomization';
 
 export class Utils {
@@ -18,16 +19,9 @@ export class Utils {
 		return Array.from({ length }, (_, i) => factory(i));
 	}
 
-	filter = {
-		checks<TChecks extends { kind: string }[], TKind extends string>(
-			checks: TChecks,
-			kind: TKind
-		): Utils.FilterChecks<TChecks[number], TKind> | undefined {
-			return checks.find((check) => check.kind === kind) as
-				| Utils.FilterChecks<TChecks[number], TKind>
-				| undefined;
-		},
-	};
+	checks<TChecks extends { kind: string }[]>(checks: TChecks) {
+		return new Checks(checks);
+	}
 
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	noop() {}
