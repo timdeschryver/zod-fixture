@@ -127,7 +127,7 @@ export class Randomization {
 		return Array.from({ length }, () => this.from(target)).join(' ');
 	}
 
-	date(config?: { min?: Date; max?: Date }): Date {
+	date(config?: { min?: number; max?: number }): Date {
 		const min = config?.min ?? this.defaults.date.min;
 		const max = config?.max ?? this.defaults.date.max;
 
@@ -135,6 +135,6 @@ export class Randomization {
 			throw new Error(`min ${min} can't be greater than max ${max}`);
 		}
 
-		return new Date(this.int({ min: min.getTime(), max: max.getTime() }));
+		return new Date(this.int({ min, max }));
 	}
 }

@@ -1,8 +1,8 @@
 import type { ZodTypeAny, z } from 'zod';
-import type { Config } from './core/core';
-import { Core } from './core/core';
-import type { Definition } from './core/generator';
-import defaultGenerators from './generators/default';
+import type { Config } from '../core/core';
+import { Core } from '../core/core';
+import type { Definition } from '../core/generator';
+import defaultGenerators from '../generators/default';
 
 export function createFixture<TSchema extends ZodTypeAny>(
 	schema: TSchema,

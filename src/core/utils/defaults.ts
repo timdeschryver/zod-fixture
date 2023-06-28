@@ -26,7 +26,7 @@ export default {
 		max: BigInt(Number.MAX_SAFE_INTEGER),
 	},
 	date: {
-		min: new Date(1900, 0, 1),
-		max: new Date(2100, 11, 31),
+		min: Date.UTC(1900, 0, 1),
+		max: Date.UTC(2100, 11, 31),
 	},
 };
