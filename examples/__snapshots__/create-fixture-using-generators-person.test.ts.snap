@@ -7,7 +7,7 @@ exports[`generates a person using custom generators 1`] = `
     "state": "My State",
     "street": "My Street",
   },
-  "birthday": 1926-02-23T01:59:36.229Z,
+  "birthday": 1926-02-23T02:07:24.494Z,
   "name": "c",
   "pets": [
     {
