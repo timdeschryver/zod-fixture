@@ -19,7 +19,8 @@
 	"exports": {
 		".": {
 			"import": "./dist/zod-fixture.es.js",
-			"require": "./dist/zod-fixture.umd.cjs"
+			"require": "./dist/zod-fixture.umd.cjs",
+			"types": "./dist/index.d.ts"
 		}
 	},
 	"types": "./dist/index.d.ts",
