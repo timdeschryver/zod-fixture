@@ -4,15 +4,14 @@ import { ZodNumber } from 'zod';
 export const NumberGenerator = Generator({
 	schema: ZodNumber,
 	output: ({ def, core }) => {
-		const { checks } = def;
-		const { filter } = core.utils;
+		const checks = core.utils.checks(def.checks);
 
-		const min = filter.checks(checks, 'min')?.value ?? core.defaults.float.min;
-		const max = filter.checks(checks, 'max')?.value ?? core.defaults.float.max;
+		const min = checks.find('min')?.value ?? core.defaults.float.min;
+		const max = checks.find('max')?.value ?? core.defaults.float.max;
 
-		const multipleOf = filter.checks(checks, 'multipleOf')?.value;
-		const isInt = filter.checks(checks, 'int') !== undefined;
-		const isFinite = filter.checks(checks, 'finite') !== undefined;
+		const multipleOf = checks.find('multipleOf')?.value;
+		const isInt = checks.has('int');
+		const isFinite = checks.has('finite');
 
 		let result = isInt
 			? core.utils.random.int({ min, max })
