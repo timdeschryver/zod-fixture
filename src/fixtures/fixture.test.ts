@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 import { ZodNumber, z } from 'zod';
-import { Generator } from './core/generator';
+import { Generator } from '../core/generator';
 import { createFixture } from './fixture';
 
 test('creates a fixture', () => {

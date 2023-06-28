@@ -21,8 +21,8 @@
 		"types": ["vite/client"], // https://vitejs.dev/guide/features.html#client-types
 		"baseUrl": "./src",
 		"paths": {
-			"@/*": ["*"]
+			"@/*": ["*"],
+			"zod-fixture": ["."]
 		}
-	},
-	"include": ["src"]
+	}
 }

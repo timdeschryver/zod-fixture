@@ -14,15 +14,16 @@ export class Core {
 	#generators: Definition<any>[] = [];
 
 	readonly seed: number;
-	readonly defaults = defaults;
-	readonly utils = new Utils(this);
+	readonly defaults: typeof defaults;
+	readonly utils: Utils;
 
 	constructor(config?: Config) {
-		this.defaults = { ...this.defaults, ...config?.defaults };
+		this.defaults = { ...defaults, ...config?.defaults };
 		// Copied from defaults in MersenneTwister.
 		// We could allow MersenneTwister to do this for us but then we
 		// wouldn't have a reference to know what number was chosen.
 		this.seed = config?.seed ?? Math.floor(Math.random() * Math.pow(10, 13));
+		this.utils = new Utils(this);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
