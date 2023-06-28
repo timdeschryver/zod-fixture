@@ -9,8 +9,8 @@ export const DateGenerator = Generator({
 		const min = checks.find('min')?.value ?? core.defaults.date.min.getTime();
 		const max = checks.find('max')?.value ?? core.defaults.date.max.getTime();
 
-		const date = new Date(0);
-		date.setUTCMilliseconds(core.utils.random.int({ min, max }));
-		return date;
+		const date = new Date(core.utils.random.int({ min, max }));
+		const userTimezoneOffset = date.getTimezoneOffset() * 60000;
+		return new Date(date.getTime() - userTimezoneOffset);
 	},
 });
