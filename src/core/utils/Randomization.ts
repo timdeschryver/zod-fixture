@@ -49,6 +49,19 @@ export class Randomization {
 		return options[this.int({ min, max })] as T;
 	}
 
+	shuffle<T>(values: T[]): T[] {
+		const copy: (T | undefined)[] = [...values];
+
+		for (let i = copy.length - 1; i > 0; i--) {
+			const j = this.int({ min: 0, max: i });
+			const temp = copy[i];
+			copy[i] = copy[j];
+			copy[j] = temp;
+		}
+
+		return copy as T[];
+	}
+
 	string({ min, max }: { min: number; max: number }) {
 		const length = this.int({ min, max });
 
