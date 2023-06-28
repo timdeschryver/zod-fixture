@@ -22,6 +22,7 @@ import { SetGenerator } from './set';
 import {
 	Cuid2Generator,
 	CuidGenerator,
+	DateTimeGenerator,
 	EmailGenerator,
 	StringGenerator,
 	UrlGenerator,
@@ -53,6 +54,7 @@ export default [
 	Cuid2Generator,
 	EmailGenerator,
 	UrlGenerator,
+	DateTimeGenerator,
 	StringGenerator,
 	TupleGenerator,
 	UndefinedGenerator,

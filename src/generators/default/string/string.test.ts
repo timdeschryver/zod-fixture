@@ -5,6 +5,7 @@ import { z } from 'zod';
 import {
 	Cuid2Generator,
 	CuidGenerator,
+	DateTimeGenerator,
 	EmailGenerator,
 	StringGenerator,
 	UrlGenerator,
@@ -21,6 +22,7 @@ describe('create strings', () => {
 		Cuid2Generator,
 		UrlGenerator,
 		EmailGenerator,
+		DateTimeGenerator,
 		StringGenerator,
 		NullableGenerator,
 		OptionalGenerator,
@@ -191,5 +193,16 @@ describe('create strings', () => {
 		expect(core.generate(z.string().nullable())).toBeTypeOf('string');
 		expect(core.generate(z.string().nullish())).toBeTypeOf('string');
 		expect(core.generate(z.string().optional())).toBeTypeOf('string');
+	});
+
+	test('produces a valid string that is a datetime', () => {
+		expect(core).toProduce(z.string().datetime());
+	});
+
+	test('produces a valid string that is a datetime', () => {
+		expect(core.generate(z.string().datetime())).toBeTypeOf('string');
+		expect(
+			new Date(core.generate(z.string().datetime()) as string)
+		).toBeInstanceOf(Date);
 	});
 });

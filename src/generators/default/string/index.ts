@@ -79,7 +79,7 @@ export const UuidGenerator = Generator({
 	schema: ZodString,
 	filter: ({ def, core }) =>
 		core.utils.filter.checks(def.checks, 'uuid') !== undefined,
-	output: ({ def, core }) => formatString(core, def, core.utils.random.uuid()),
+	output: ({ core }) => core.utils.random.uuid(),
 });
 
 export const EmailGenerator = Generator({
@@ -103,4 +103,11 @@ export const Cuid2Generator = Generator({
 	filter: ({ def, core }) =>
 		core.utils.filter.checks(def.checks, 'cuid2') !== undefined,
 	output: ({ def, core }) => formatString(core, def, core.utils.random.cuid2()),
+});
+
+export const DateTimeGenerator = Generator({
+	schema: ZodString,
+	filter: ({ def, core }) =>
+		core.utils.filter.checks(def.checks, 'datetime') !== undefined,
+	output: ({ core }) => core.utils.random.date().toISOString(),
 });
