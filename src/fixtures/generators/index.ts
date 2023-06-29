@@ -33,7 +33,7 @@ import { TupleGenerator } from './tuple';
 import { UndefinedGenerator, VoidGenerator } from './undefined';
 import { UnionGenerator } from './union';
 
-export default [
+export const fixtureGenerators = [
 	ArrayGenerator,
 	BigIntGenerator,
 	BigIntMultipleOfGenerator,
