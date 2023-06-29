@@ -23,7 +23,7 @@ expect.extend({
 						),
 				};
 
-			if (result !== undefined) {
+			if (arguments.length === 3) {
 				expect(fixture).toBe(result);
 			}
 		}
