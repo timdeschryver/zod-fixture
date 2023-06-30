@@ -54,6 +54,9 @@
 		"zod": "^3.21.4"
 	},
 	"imports": {
-		"@/*": "./src/*"
+		"@/*": "./src/*",
+		"zod-fixture": [
+			"./src/public.ts"
+		]
 	}
 }
