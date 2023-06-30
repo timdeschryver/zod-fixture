@@ -1,4 +1,5 @@
-import type { Core } from './core';
+import type { ZodTypeAny } from 'zod';
+import type { Transformer } from './transformer';
 
 export const ZOD_TYPE_IDENTIFIER = Symbol('ZOD_TYPE_IDENTIFIER');
 export const ZOD_INSTANCE_IDENTIFIER = Symbol('ZOD_INSTANCE_IDENTIFIER');
@@ -14,37 +15,37 @@ export interface Context {
 	path: (string | number)[];
 }
 
-export type ZodConstructor<TSchema extends Zod.ZodTypeAny> = new (
+export type ZodConstructor<TSchema extends ZodTypeAny> = new (
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	def: any
 ) => TSchema;
 
-export type ZodConstructorOrSchema<TSchema extends Zod.ZodTypeAny> =
+export type ZodConstructorOrSchema<TSchema extends ZodTypeAny> =
 	| TSchema
 	| ZodConstructor<TSchema>;
 
-export type Filter<TSchema extends Zod.ZodTypeAny> = (obj: {
+export type Filter<TSchema extends ZodTypeAny> = (obj: {
 	def: TSchema['_def'];
 	schema: TSchema;
-	core: Core;
+	core: Transformer;
 	context: Context;
 }) => boolean;
 
-export type Generator<TSchema extends Zod.ZodTypeAny> = (obj: {
+export type Generator<TSchema extends ZodTypeAny> = (obj: {
 	def: TSchema['_def'];
 	schema: TSchema;
-	core: Core;
+	core: Transformer;
 	context: Context;
 }) => unknown;
 
-export interface Definition<TSchema extends Zod.ZodTypeAny> {
+export interface Definition<TSchema extends ZodTypeAny> {
 	schema: ZodConstructorOrSchema<TSchema>;
 	filter?: Filter<TSchema>;
 	output: Generator<TSchema>;
 }
 
 let vuid = 0;
-export function Generator<TSchema extends Zod.ZodTypeAny>(
+export function Generator<TSchema extends ZodTypeAny>(
 	definition: Definition<TSchema>
 ): Definition<TSchema> {
 	if (typeof definition.schema === 'function') {

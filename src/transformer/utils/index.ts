@@ -1,11 +1,11 @@
-import type { Core } from '../core';
+import type { Transformer } from '../transformer';
 import { Checks } from './Checks';
 import { Randomization } from './Randomization';
 
 export class Utils {
 	random: Randomization;
 
-	constructor(private core: Core) {
+	constructor(private core: Transformer) {
 		this.random = new Randomization(core.defaults, core.seed);
 	}
 

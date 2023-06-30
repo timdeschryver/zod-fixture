@@ -9,9 +9,11 @@ export interface Config {
 	defaults?: Partial<typeof defaults>;
 }
 
-export class Core {
+export class Transformer {
+	// @TODO We want this to be private
+	// but also extensible. 😕
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	#generators: Definition<any>[] = [];
+	generators: Definition<any>[];
 
 	readonly seed: number;
 	readonly defaults: typeof defaults;
@@ -24,11 +26,13 @@ export class Core {
 		// wouldn't have a reference to know what number was chosen.
 		this.seed = config?.seed ?? Math.floor(Math.random() * Math.pow(10, 13));
 		this.utils = new Utils(this);
+		this.generators = [];
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	register(generators: Definition<any> | Definition<any>[]): this {
-		this.#generators = this.#generators.concat(generators);
+	extend(generators: Definition<any> | Definition<any>[]) {
+		const input = Array.isArray(generators) ? generators : [generators];
+		this.generators = input.concat(this.generators);
 		return this;
 	}
 
@@ -39,7 +43,7 @@ export class Core {
 		// eslint-disable-next-line @typescript-eslint/no-this-alias
 		const core = this;
 		const def = schema._def;
-		const generator = this.#generators.find((generator) => {
+		const generator = this.generators.find((generator) => {
 			if (
 				schema[ZOD_TYPE_IDENTIFIER] !==
 				generator.schema.prototype[ZOD_TYPE_IDENTIFIER]

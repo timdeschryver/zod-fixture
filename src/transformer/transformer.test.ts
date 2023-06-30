@@ -4,18 +4,18 @@ import { fixtureGenerators } from '../fixtures/generators';
 import { NumberGenerator } from '../fixtures/generators/number';
 import { ObjectGenerator } from '../fixtures/generators/object';
 import { StringGenerator } from '../fixtures/generators/string';
-import { Core } from './core';
 import { Generator } from './generator';
+import { Transformer } from './transformer';
 
 describe('core', () => {
 	test('throws on invalid schema type', () => {
-		const core = new Core();
+		const core = new Transformer();
 		const input = z.string();
 		expect(() => core.generate(input)).toThrowError(input._def.typeName);
 	});
 
 	test('creates a fixture', () => {
-		const core = new Core().register(fixtureGenerators);
+		const core = new Transformer().extend(fixtureGenerators);
 		const PersonSchema = z.object({
 			name: z.string(),
 			birthday: z.date(),
@@ -35,7 +35,7 @@ describe('core', () => {
 		const generators = [...fixtureGenerators].filter(
 			(g) => g !== StringGenerator
 		);
-		const core = new Core().register(generators);
+		const core = new Transformer().extend(generators);
 		const PersonSchema = z.object({
 			name: z.string(),
 			birthday: z.date(),
@@ -61,7 +61,7 @@ describe('core', () => {
 				output: () => 4,
 			});
 
-			const core = new Core().register([
+			const core = new Transformer().extend([
 				ObjectGenerator,
 				FooNumberGenerator,
 				NumberGenerator,
@@ -78,16 +78,16 @@ describe('core', () => {
 			expect((result as schemaType).other).toBeTypeOf('number');
 		});
 
-		test(`picks up the first matching generator using register`, () => {
+		test(`picks up the first matching generator using extend`, () => {
 			const FooNumberGenerator = Generator({
 				schema: ZodNumber,
 				filter: ({ context }) => context?.path?.includes('foo'),
 				output: () => 4,
 			});
 
-			const core = new Core().register([ObjectGenerator]);
-			core.register(FooNumberGenerator);
-			core.register(NumberGenerator);
+			const core = new Transformer().extend([ObjectGenerator]);
+			core.extend(NumberGenerator);
+			core.extend(FooNumberGenerator);
 
 			const schema = z.object({
 				foo: z.number(),
