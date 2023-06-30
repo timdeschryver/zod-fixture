@@ -5,7 +5,9 @@
   </p>
 </p>
 <br/>
-[![ci](https://github.com/timdeschryver/zod-fixture/actions/workflows/ci.yaml/badge.svg?branch=beta)](https://github.com/timdeschryver/zod-fixture/actions/workflows/ci.yaml)
+<p align="center">
+	<img src="https://github.com/timdeschryver/zod-fixture/actions/workflows/ci.yaml/badge.svg?branch=beta">
+</p>
 
 Creating test fixtures should be easy.
 `zod-fixture` helps with the arrange phase of your tests by creating test fixtures based on a [zod](https://github.com/colinhacks/zod) schema.
