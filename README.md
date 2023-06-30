@@ -1,4 +1,16 @@
-# zod-fixture
+<p align="center">
+  <img src="logo.svg" width="200px" align="center" alt="Zod logo" />
+  <h1 align="center">Zod Fixture</h1>
+  <p align="center">
+    ✨ <a href="https://zod.dev">https://zod.dev</a> ✨
+    <br/>
+	Fixture generation with 1:1 Zod parity
+  </p>
+</p>
+<br/>
+<p align="center">
+	[![ci](https://github.com/timdeschryver/zod-fixture/actions/workflows/ci.yaml/badge.svg?branch=beta)](https://github.com/timdeschryver/zod-fixture/actions/workflows/ci.yaml)
+</p>
 
 Creating test fixtures should be easy.
 `zod-fixture` helps with the arrange phase of your tests by creating test fixtures based on a [zod](https://github.com/colinhacks/zod) schema.
