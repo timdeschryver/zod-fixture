@@ -1,6 +1,6 @@
+import { Fixture, Generator } from '@/export';
 import { expect, test } from 'vitest';
 import { ZodNumber, ZodObject, z } from 'zod';
-import { Fixture, Generator } from 'zod-fixture';
 
 test('generates a person using custom generators', () => {
 	const addressGenerator = Generator({

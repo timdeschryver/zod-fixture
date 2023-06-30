@@ -1,6 +1,6 @@
+import { Fixture } from '@/export';
 import { expect, test } from 'vitest';
 import { z } from 'zod';
-import { Fixture } from 'zod-fixture';
 
 test('creates object with string property of length', () => {
 	const schema = z.object({

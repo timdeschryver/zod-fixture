@@ -1,6 +1,6 @@
 import MersenneTwister from '@/transformer/utils/MersenneTwister';
 import { z } from 'zod';
-import { Fixture, Generator, Transformer } from '.';
+import { Fixture, Generator, Transformer } from './export';
 import {
 	ZOD_INSTANCE_IDENTIFIER,
 	ZOD_TYPE_IDENTIFIER,

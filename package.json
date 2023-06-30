@@ -20,10 +20,10 @@
 		".": {
 			"import": "./dist/zod-fixture.es.js",
 			"require": "./dist/zod-fixture.umd.cjs",
-			"types": "./dist/index.d.ts"
+			"types": "./dist/export.d.ts"
 		}
 	},
-	"types": "./dist/index.d.ts",
+	"types": "./dist/export.d.ts",
 	"type": "module",
 	"keywords": [
 		"zod",
