@@ -3,9 +3,9 @@ import { expect } from 'vitest';
 const ITERATIONS = 100;
 
 expect.extend({
-	toProduce(core, schema, result) {
+	toProduce(transform, schema, result) {
 		for (let i = 0; i < ITERATIONS; i++) {
-			const fixture = core.generate(schema);
+			const fixture = transform.from(schema);
 			const { success: pass, error } = schema.safeParse(fixture);
 
 			if (!pass)
@@ -15,7 +15,7 @@ expect.extend({
 						JSON.stringify(
 							{
 								fixture,
-								seed: core.seed,
+								seed: transform.seed,
 								error,
 							},
 							null,
