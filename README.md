@@ -1,13 +1,12 @@
-<p align="center">
-  <h1 align="center">Zod Fixture</h1>
-  <p align="center">
-	Fixture generation with 1:1 Zod parity
-  </p>
-</p>
-<br/>
+<h1 align="center">Zod Fixture</h1>
+<h5 align="center">Fixture Generation with 1:1 Zod Parity</h5>
+<br>
 <p align="center">
 	<img src="https://github.com/timdeschryver/zod-fixture/actions/workflows/ci.yaml/badge.svg?branch=beta">
+	<a href="https://opensource.org/licenses/MIT" rel="nofollow"><img src="https://img.shields.io/github/license/timdeschryver/zod-fixture" alt="License"></a>
+	<a href="https://www.npmjs.com/package/zod-fixture" rel="nofollow"><img src="https://img.shields.io/github/stars/timdeschryver/zod-fixture" alt="stars"></a>
 </p>
+<br>
 
 Creating test fixtures should be easy.
 `zod-fixture` helps with the arrange phase of your tests by creating test fixtures based on a [zod](https://github.com/colinhacks/zod) schema.
