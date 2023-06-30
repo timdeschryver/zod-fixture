@@ -40,5 +40,30 @@ test('generates a person using custom generators', () => {
 			extend: [addressGenerator, totalVisitsGenerator],
 			seed: 38,
 		})
-	).toMatchSnapshot();
+	).toMatchInlineSnapshot(`
+		{
+		  "address": {
+		    "city": "My City",
+		    "state": "My State",
+		    "street": "My Street",
+		  },
+		  "birthday": 1926-02-23T02:07:24.494Z,
+		  "name": "c",
+		  "pets": [
+		    {
+		      "breed": "5yOQfkYfI6=kRuH^F?5BCNHft",
+		      "name": "mYxRp1GBY2aw",
+		    },
+		    {
+		      "breed": "6Qz\\\\s",
+		      "name": "_",
+		    },
+		    {
+		      "breed": "6e9",
+		      "name": ";l]@",
+		    },
+		  ],
+		  "totalVisits": 22,
+		}
+	`);
 });
