@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 import { z } from 'zod';
-import { createFixture } from 'zod-fixture';
+import { Fixture } from 'zod-fixture';
 
 test('generates a person', () => {
 	const PersonSchema = z.object({
@@ -15,9 +15,5 @@ test('generates a person', () => {
 		totalVisits: z.number(),
 	});
 
-	expect(
-		createFixture(PersonSchema, {
-			seed: 11,
-		})
-	).toMatchSnapshot();
+	expect(new Fixture({ seed: 11 }).generate(PersonSchema)).toMatchSnapshot();
 });

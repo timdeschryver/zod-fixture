@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 import { ZodNumber, ZodObject, z } from 'zod';
-import { Generator, createFixture } from 'zod-fixture';
+import { Fixture, Generator } from 'zod-fixture';
 
 test('generates a person using custom generators', () => {
 	const addressGenerator = Generator({
@@ -36,9 +36,8 @@ test('generates a person using custom generators', () => {
 	});
 
 	expect(
-		createFixture(PersonSchema, {
-			extend: [addressGenerator, totalVisitsGenerator],
-			seed: 38,
-		})
+		new Fixture({ seed: 38 })
+			.extend([addressGenerator, totalVisitsGenerator])
+			.generate(PersonSchema)
 	).toMatchSnapshot();
 });
