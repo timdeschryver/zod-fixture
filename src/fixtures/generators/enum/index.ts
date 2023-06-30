@@ -1,4 +1,4 @@
-import { Generator } from '@/core/generator';
+import { Generator } from '@/transformer/generator';
 import { ZodEnum, ZodNativeEnum } from 'zod';
 
 export const EnumGenerator = Generator({

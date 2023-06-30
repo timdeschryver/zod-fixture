@@ -1,10 +1,10 @@
-import { Core } from '@/core/core';
+import { Transformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { NullGenerator } from '.';
 
 describe('create empty types', () => {
-	const core = new Core().register([NullGenerator]);
+	const core = new Transformer().extend([NullGenerator]);
 
 	test('produces a valid null', () => {
 		expect(core).toProduce(z.null());

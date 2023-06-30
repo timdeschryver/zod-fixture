@@ -1,9 +1,9 @@
-import type { Core } from '@/core/core';
-import { Generator } from '@/core/generator';
+import { Generator } from '@/transformer/generator';
+import type { Transformer } from '@/transformer/transformer';
 import type { ZodStringDef } from 'zod';
 import { ZodString } from 'zod';
 
-function formatString(core: Core, def: ZodStringDef, value: string) {
+function formatString(core: Transformer, def: ZodStringDef, value: string) {
 	const checks = core.utils.checks(def.checks);
 
 	let max = checks.find('max')?.value;

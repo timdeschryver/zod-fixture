@@ -1,10 +1,10 @@
-import { Core } from '@/core/core';
+import { Transformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { DateGenerator } from '.';
 
 describe('create dates', () => {
-	const core = new Core().register([DateGenerator]);
+	const core = new Transformer().extend([DateGenerator]);
 
 	test('produces a valid date', () => {
 		expect(core).toProduce(z.date());

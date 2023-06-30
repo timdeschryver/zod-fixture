@@ -1,10 +1,10 @@
-import { Core } from '@/core/core';
+import { Transformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { EnumGenerator, NativeEnumGenerator } from '.';
 
 describe('create enums', () => {
-	const core = new Core().register([EnumGenerator, NativeEnumGenerator]);
+	const core = new Transformer().extend([EnumGenerator, NativeEnumGenerator]);
 
 	test('produces a valid enum', () => {
 		expect(core).toProduce(z.enum(['Salmon', 'Tuna', 'Trout']));

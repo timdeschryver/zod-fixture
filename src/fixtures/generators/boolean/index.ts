@@ -1,4 +1,4 @@
-import { Generator } from '@/core/generator';
+import { Generator } from '@/transformer/generator';
 import { ZodBoolean } from 'zod';
 
 // eslint-disable-next-line prefer-const

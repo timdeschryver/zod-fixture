@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 import { ZodNumber, z } from 'zod';
-import { Generator } from '../core/generator';
-import { createFixture } from './fixture';
+import { Generator } from '../transformer/generator';
+import { Fixture } from './fixture';
 
 test('creates a fixture', () => {
 	const PersonSchema = z.object({
@@ -16,7 +16,7 @@ test('creates a fixture', () => {
 		totalVisits: z.number(),
 	});
 
-	const result = createFixture(PersonSchema);
+	const result = new Fixture().generate(PersonSchema);
 	expect(result.name).toBeTypeOf('string');
 	expect(result.birthday).toBeInstanceOf(Date);
 	expect(result.address).toBeTypeOf('object');
@@ -37,14 +37,11 @@ test(`priotizes generators via extend`, () => {
 		output: () => 4,
 	});
 
-	const result = createFixture(
+	const result = new Fixture().extend(FooNumberGenerator).generate(
 		z.object({
 			foo: z.number(),
 			other: z.number(),
-		}),
-		{
-			extend: [FooNumberGenerator],
-		}
+		})
 	);
 
 	expect(result.foo).toBe(4);

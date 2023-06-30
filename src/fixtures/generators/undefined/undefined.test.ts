@@ -1,10 +1,10 @@
-import { Core } from '@/core/core';
+import { Transformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { UndefinedGenerator } from '.';
 
 describe('create empty types', () => {
-	const core = new Core().register([UndefinedGenerator]);
+	const core = new Transformer().extend([UndefinedGenerator]);
 
 	test('produces a valid undefined', () => {
 		expect(core).toProduce(z.undefined());

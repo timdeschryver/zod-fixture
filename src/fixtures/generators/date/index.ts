@@ -1,4 +1,4 @@
-import { Generator } from '@/core/generator';
+import { Generator } from '@/transformer/generator';
 import { ZodDate } from 'zod';
 
 export const DateGenerator = Generator({

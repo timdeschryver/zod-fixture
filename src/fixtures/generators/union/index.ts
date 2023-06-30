@@ -1,4 +1,4 @@
-import { Generator } from '@/core/generator';
+import { Generator } from '@/transformer/generator';
 import { ZodDiscriminatedUnion, ZodUnion } from 'zod';
 
 export const UnionGenerator = Generator({

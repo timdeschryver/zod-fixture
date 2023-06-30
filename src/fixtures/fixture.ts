@@ -1,18 +1,16 @@
-import type { ZodTypeAny, z } from 'zod';
-import type { Config } from '../core/core';
-import { Core } from '../core/core';
-import type { Definition } from '../core/generator';
+import type { z } from 'zod';
+import type { Context } from '../transformer/generator';
+import { Transformer } from '../transformer/transformer';
 import { fixtureGenerators } from './generators';
 
-export function createFixture<TSchema extends ZodTypeAny>(
-	schema: TSchema,
-	config: Config & {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		extend?: Definition<any> | Definition<any>[];
-	} = {}
-): z.infer<TSchema> {
-	return new Core(config)
-		.register(config.extend ?? [])
-		.register(fixtureGenerators)
-		.generate(schema);
+export class Fixture extends Transformer {
+	generators = fixtureGenerators;
+
+	// explicitly define the return type
+	generate<TSchema extends z.ZodTypeAny>(
+		schema: TSchema,
+		context?: Context
+	): z.infer<TSchema> {
+		return super.generate(schema, context);
+	}
 }

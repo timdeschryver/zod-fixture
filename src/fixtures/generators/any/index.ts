@@ -1,4 +1,4 @@
-import { Generator } from '@/core/generator';
+import { Generator } from '@/transformer/generator';
 import { ZodAny, z } from 'zod';
 
 const POTENTIAL_SCHEMAS = [

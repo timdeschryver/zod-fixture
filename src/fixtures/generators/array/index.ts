@@ -1,4 +1,4 @@
-import { Generator } from '@/core/generator';
+import { Generator } from '@/transformer/generator';
 import { ZodArray } from 'zod';
 
 export const ArrayGenerator = Generator({

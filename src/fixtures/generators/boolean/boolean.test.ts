@@ -1,10 +1,10 @@
-import { Core } from '@/core/core';
+import { Transformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { BooleanGenerator } from '.';
 
 describe('create booleans', () => {
-	const core = new Core().register([BooleanGenerator]);
+	const core = new Transformer().extend([BooleanGenerator]);
 
 	test('produces a valid boolean', () => {
 		expect(core).toProduce(z.boolean());

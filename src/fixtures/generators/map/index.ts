@@ -1,4 +1,4 @@
-import { Generator } from '@/core/generator';
+import { Generator } from '@/transformer/generator';
 import type { z } from 'zod';
 import { ZodMap } from 'zod';
 

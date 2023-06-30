@@ -1,4 +1,4 @@
-import { Generator } from '@/core/generator';
+import { Generator } from '@/transformer/generator';
 import { ZodNaN } from 'zod';
 
 export const NanGenerator = Generator({

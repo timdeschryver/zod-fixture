@@ -1,10 +1,10 @@
-import { Core } from '@/core/core';
+import { Transformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { LiteralGenerator } from '.';
 
 describe('create literals', () => {
-	const core = new Core().register([LiteralGenerator]);
+	const core = new Transformer().extend([LiteralGenerator]);
 
 	test('produces a valid literal', () => {
 		expect(core).toProduce(z.literal('tuna'));

@@ -1,4 +1,4 @@
-import { Core } from '@/core/core';
+import { Transformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { IntersectionGenerator } from '.';
@@ -7,7 +7,7 @@ import { BooleanGenerator } from '../boolean';
 import { ObjectGenerator } from '../object';
 
 describe('create intersections', () => {
-	const core = new Core().register([
+	const core = new Transformer().extend([
 		IntersectionGenerator,
 		ObjectGenerator,
 		BooleanGenerator,

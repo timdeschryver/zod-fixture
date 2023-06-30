@@ -1,11 +1,11 @@
-import { Core } from '@/core/core';
+import { Transformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { SetGenerator } from '.';
 import { NumberGenerator } from '../number';
 
 describe('create Sets', () => {
-	const core = new Core().register([SetGenerator, NumberGenerator]);
+	const core = new Transformer().extend([SetGenerator, NumberGenerator]);
 
 	test('produces a valid set', () => {
 		expect(core).toProduce(z.set(z.number()));

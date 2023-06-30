@@ -1,10 +1,10 @@
-import { Core } from '@/core/core';
+import { Transformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { BigIntGenerator, BigIntMultipleOfGenerator } from '.';
 
 describe('create bigint', () => {
-	const core = new Core().register([
+	const core = new Transformer().extend([
 		BigIntGenerator,
 		BigIntMultipleOfGenerator,
 	]);

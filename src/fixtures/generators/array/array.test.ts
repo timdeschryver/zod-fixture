@@ -1,4 +1,4 @@
-import { Core } from '@/core/core';
+import { Transformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { ArrayGenerator } from '.';
@@ -6,7 +6,7 @@ import { NumberGenerator } from '../number';
 import { StringGenerator } from '../string';
 
 describe('create Arrays', () => {
-	const core = new Core().register([
+	const core = new Transformer().extend([
 		ArrayGenerator,
 		StringGenerator,
 		NumberGenerator,

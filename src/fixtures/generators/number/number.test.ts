@@ -1,10 +1,10 @@
-import { Core } from '@/core/core';
+import { Transformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { NumberGenerator } from '.';
 
 describe('create numbers', () => {
-	const core = new Core().register([NumberGenerator]);
+	const core = new Transformer().extend([NumberGenerator]);
 
 	test('produces a valid number', () => {
 		expect(core).toProduce(z.number());

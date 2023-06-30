@@ -1,4 +1,4 @@
-import { Generator } from '@/core/generator';
+import { Generator } from '@/transformer/generator';
 import { ZodIntersection, ZodParsedType, getParsedType, util } from 'zod';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */

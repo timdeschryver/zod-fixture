@@ -1,4 +1,4 @@
-import { Core } from '@/core/core';
+import { Transformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { TupleGenerator } from '.';
@@ -7,7 +7,7 @@ import { ObjectGenerator } from '../object';
 import { StringGenerator } from '../string';
 
 describe('create Tuples', () => {
-	const core = new Core().register([
+	const core = new Transformer().extend([
 		TupleGenerator,
 		ObjectGenerator,
 		StringGenerator,

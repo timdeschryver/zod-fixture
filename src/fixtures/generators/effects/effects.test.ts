@@ -1,4 +1,4 @@
-import { Core } from '@/core/core';
+import { Transformer } from '@/transformer/transformer';
 import { describe, expect, test, vi } from 'vitest';
 import { z } from 'zod';
 import {
@@ -9,7 +9,7 @@ import {
 import { StringGenerator } from '../string';
 
 describe('usage with effects', () => {
-	const core = new Core().register([
+	const core = new Transformer().extend([
 		PreprocessGenerator,
 		RefinementGenerator,
 		TransformGenerator,

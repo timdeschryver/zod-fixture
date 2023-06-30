@@ -1,4 +1,4 @@
-import { Core } from '@/core/core';
+import { Transformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { ObjectGenerator, RecordGenerator } from '.';
@@ -18,7 +18,7 @@ import { SymbolGenerator } from '../symbol';
 import { UndefinedGenerator } from '../undefined';
 
 describe('create objects', () => {
-	const core = new Core().register([
+	const core = new Transformer().extend([
 		ObjectGenerator,
 		StringGenerator,
 		NumberGenerator,
@@ -132,7 +132,7 @@ describe('create objects', () => {
 });
 
 describe('create Records', () => {
-	const core = new Core().register([
+	const core = new Transformer().extend([
 		RecordGenerator,
 		StringGenerator,
 		NumberGenerator,

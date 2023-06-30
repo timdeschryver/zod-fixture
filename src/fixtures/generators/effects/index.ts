@@ -1,4 +1,4 @@
-import { Generator } from '@/core/generator';
+import { Generator } from '@/transformer/generator';
 import { ZodEffects } from 'zod';
 
 export const TransformGenerator = Generator({

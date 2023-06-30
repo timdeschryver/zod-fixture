@@ -1,10 +1,10 @@
-import { Core } from '@/core/core';
+import { Transformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { SymbolGenerator } from '.';
 
 describe('create a symbol type', () => {
-	const core = new Core().register([SymbolGenerator]);
+	const core = new Transformer().extend([SymbolGenerator]);
 
 	test('produces a valid symbol', () => {
 		expect(core).toProduce(z.symbol());
