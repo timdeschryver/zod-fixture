@@ -89,7 +89,7 @@ export const ArrayGenerator = Generator({
 	schema: ZodArray,
 	output: ({ def, core, context }) => ({
 		type: 'array',
-		value: core.generate(def.type, context),
+		value: core.from(def.type, context),
 	}),
 });
 
@@ -97,7 +97,7 @@ export const UnionGenerator = Generator({
 	schema: ZodUnion,
 	output: ({ def, core, context }) => ({
 		type: 'union',
-		value: def.options.map((type) => core.generate(type, context)),
+		value: def.options.map((type) => core.from(type, context)),
 	}),
 });
 
@@ -105,10 +105,10 @@ export const TupleGenerator = Generator({
 	schema: ZodTuple,
 	output: ({ def, core, context }) => {
 		const known = def.items.map((type, idx) =>
-			core.generate(type, { path: [...context.path, idx] })
+			core.from(type, { path: [...context.path, idx] })
 		);
 		const rest = def.rest
-			? [core.generate(def.rest, { path: [...context.path, known.length] })]
+			? [core.from(def.rest, { path: [...context.path, known.length] })]
 			: [];
 
 		return [...known, ...rest];

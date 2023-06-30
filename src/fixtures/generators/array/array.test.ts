@@ -17,13 +17,11 @@ describe('create Arrays', () => {
 	});
 
 	test('creates an array with the length of 3', () => {
-		expect(core.generate(z.array(z.string()))).toHaveLength(3);
-		expect(core.generate(z.number().array())).toHaveLength(3);
+		expect(core.from(z.array(z.string()))).toHaveLength(3);
+		expect(core.from(z.number().array())).toHaveLength(3);
 	});
 
 	test('throws when min is greater than max', () => {
-		expect(() =>
-			core.generate(z.array(z.string()).min(10).max(5))
-		).toThrowError();
+		expect(() => core.from(z.array(z.string()).min(10).max(5))).toThrowError();
 	});
 });

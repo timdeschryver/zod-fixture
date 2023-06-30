@@ -11,6 +11,6 @@ describe('create a symbol type', () => {
 	});
 
 	test('creates a symbol', () => {
-		expect(core.generate(z.symbol())).toBeTypeOf('symbol');
+		expect(core.from(z.symbol())).toBeTypeOf('symbol');
 	});
 });

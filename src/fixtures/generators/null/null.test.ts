@@ -11,6 +11,6 @@ describe('create empty types', () => {
 	});
 
 	test('creates a null', () => {
-		expect(core.generate(z.null())).toBeNull();
+		expect(core.from(z.null())).toBeNull();
 	});
 });

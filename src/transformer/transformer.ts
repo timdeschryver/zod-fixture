@@ -36,7 +36,7 @@ export class Transformer {
 		return this;
 	}
 
-	generate<ZSchema extends ZodTypeAny>(
+	from<ZSchema extends ZodTypeAny>(
 		schema: ZSchema,
 		context: Context = { path: [] }
 	): unknown {

@@ -11,6 +11,6 @@ describe('create Functions', () => {
 	});
 
 	test('creates a function', () => {
-		expect(core.generate(z.function())).toBeTypeOf('function');
+		expect(core.from(z.function())).toBeTypeOf('function');
 	});
 });

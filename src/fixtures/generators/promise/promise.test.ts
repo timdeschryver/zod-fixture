@@ -12,6 +12,6 @@ describe('create a promise type', () => {
 	});
 
 	test('creates a promise with the correct type', () => {
-		expect(core.generate(z.promise(z.number()))).resolves.toBeTypeOf('number');
+		expect(core.from(z.promise(z.number()))).resolves.toBeTypeOf('number');
 	});
 });

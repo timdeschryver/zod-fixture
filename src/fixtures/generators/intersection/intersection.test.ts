@@ -36,7 +36,7 @@ describe('create intersections', () => {
 		});
 
 		const intersection = z.intersection(left, right);
-		const result = core.generate(intersection);
+		const result = core.from(intersection);
 
 		expect(result).toHaveProperty('left');
 		expect(result).toHaveProperty('right');
@@ -61,7 +61,7 @@ describe('create intersections', () => {
 
 		const intersection = z.intersection(left, right);
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const result = core.generate(intersection) as any[];
+		const result = core.from(intersection) as any[];
 
 		expect(result[0]).toHaveProperty('left');
 		expect(result[0]).toHaveProperty('right');

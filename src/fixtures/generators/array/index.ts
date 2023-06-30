@@ -10,7 +10,7 @@ export const ArrayGenerator = Generator({
 			def.maxLength?.value ?? def.exactLength?.value ?? core.defaults.array.max;
 
 		return core.utils.n(
-			(key) => core.generate(def.type, { path: [...context.path, key] }),
+			(key) => core.from(def.type, { path: [...context.path, key] }),
 			{ min, max }
 		);
 	},

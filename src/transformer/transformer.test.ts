@@ -11,7 +11,7 @@ describe('core', () => {
 	test('throws on invalid schema type', () => {
 		const core = new Transformer();
 		const input = z.string();
-		expect(() => core.generate(input)).toThrowError(input._def.typeName);
+		expect(() => core.from(input)).toThrowError(input._def.typeName);
 	});
 
 	test('creates a fixture', () => {
@@ -28,7 +28,7 @@ describe('core', () => {
 			totalVisits: z.number(),
 		});
 
-		expect(() => core.generate(PersonSchema)).not.toThrow();
+		expect(() => core.from(PersonSchema)).not.toThrow();
 	});
 
 	test('throws when schema missing', () => {
@@ -48,7 +48,7 @@ describe('core', () => {
 			totalVisits: z.number(),
 		});
 
-		expect(() => core.generate(PersonSchema)).toThrow(
+		expect(() => core.from(PersonSchema)).toThrow(
 			/No generator found for ZodString/i
 		);
 	});
@@ -71,7 +71,7 @@ describe('core', () => {
 				foo: z.number(),
 				other: z.number(),
 			});
-			const result = core.generate(schema);
+			const result = core.from(schema);
 			type schemaType = z.infer<typeof schema>;
 
 			expect((result as schemaType).foo).toBe(4);
@@ -93,7 +93,7 @@ describe('core', () => {
 				foo: z.number(),
 				other: z.number(),
 			});
-			const result = core.generate(schema);
+			const result = core.from(schema);
 			type schemaType = z.infer<typeof schema>;
 
 			expect((result as schemaType).foo).toBe(4);

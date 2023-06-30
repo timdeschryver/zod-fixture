@@ -11,6 +11,6 @@ describe('create empty types', () => {
 	});
 
 	test('creates an undefined', () => {
-		expect(core.generate(z.undefined())).toBeUndefined();
+		expect(core.from(z.undefined())).toBeUndefined();
 	});
 });

@@ -11,8 +11,8 @@ export const MapGenerator = Generator({
 		const map = new Map<z.infer<typeof key>, z.infer<typeof value>>();
 
 		core.utils.n(() => {
-			const k = core.generate(key, context) as string | number;
-			const v = core.generate(value, { path: [...context.path, k] });
+			const k = core.from(key, context) as string | number;
+			const v = core.from(value, { path: [...context.path, k] });
 
 			map.set(k, v);
 		}, core.defaults.map);

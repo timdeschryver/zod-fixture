@@ -9,8 +9,7 @@ export const ObjectGenerator = Generator({
 
 		for (const key in shape) {
 			const type = shape[key];
-			if (type)
-				result[key] = core.generate(type, { path: [...context.path, key] });
+			if (type) result[key] = core.from(type, { path: [...context.path, key] });
 		}
 
 		const passthrough =
@@ -21,7 +20,7 @@ export const ObjectGenerator = Generator({
 			const key = core.utils.random.lorem(1, 'word');
 			const type =
 				def.catchall._def.typeName === 'ZodNever' ? z.any() : def.catchall;
-			result[key] = core.generate(type, { path: [...context.path, key] });
+			result[key] = core.from(type, { path: [...context.path, key] });
 		}
 
 		return result;
@@ -37,8 +36,8 @@ export const RecordGenerator = Generator({
 		> = {};
 
 		core.utils.n(() => {
-			const key = core.generate(def.keyType, context) as string | number;
-			const value = core.generate(def.valueType, {
+			const key = core.from(def.keyType, context) as string | number;
+			const value = core.from(def.valueType, {
 				path: [...context.path, key],
 			});
 

@@ -15,5 +15,5 @@ test('generates a person', () => {
 		totalVisits: z.number(),
 	});
 
-	expect(new Fixture({ seed: 11 }).generate(PersonSchema)).toMatchSnapshot();
+	expect(new Fixture({ seed: 11 }).from(PersonSchema)).toMatchSnapshot();
 });

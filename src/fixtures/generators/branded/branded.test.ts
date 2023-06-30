@@ -12,6 +12,6 @@ describe('create a branded type', () => {
 	});
 
 	test('creates a brand with the correct type', () => {
-		expect(core.generate(z.number().brand('test'))).toBeTypeOf('number');
+		expect(core.from(z.number().brand('test'))).toBeTypeOf('number');
 	});
 });

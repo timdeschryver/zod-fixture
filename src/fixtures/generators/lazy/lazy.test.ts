@@ -12,6 +12,6 @@ describe('create a lazy type', () => {
 	});
 
 	test('creates a promise with the correct type', () => {
-		expect(core.generate(z.lazy(() => z.number()))).toBeTypeOf('number');
+		expect(core.from(z.lazy(() => z.number()))).toBeTypeOf('number');
 	});
 });

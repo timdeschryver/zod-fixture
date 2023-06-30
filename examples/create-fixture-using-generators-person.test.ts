@@ -38,6 +38,6 @@ test('generates a person using custom generators', () => {
 	expect(
 		new Fixture({ seed: 38 })
 			.extend([addressGenerator, totalVisitsGenerator])
-			.generate(PersonSchema)
+			.from(PersonSchema)
 	).toMatchSnapshot();
 });

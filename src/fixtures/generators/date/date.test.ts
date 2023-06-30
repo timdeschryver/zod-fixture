@@ -11,7 +11,7 @@ describe('create dates', () => {
 	});
 
 	test('creates a date', () => {
-		const result = core.generate(z.date());
+		const result = core.from(z.date());
 		expect(result).toBeInstanceOf(Date);
 	});
 
@@ -22,14 +22,14 @@ describe('create dates', () => {
 	});
 
 	test('creates a date with a min value', () => {
-		const result = core.generate(z.date().min(new Date(2050, 5, 16)));
+		const result = core.from(z.date().min(new Date(2050, 5, 16)));
 		expect((result as Date).getTime()).toBeGreaterThanOrEqual(
 			new Date(2050, 5, 16).getTime()
 		);
 	});
 
 	test('creates a date with a max value', () => {
-		const result = core.generate(z.date().max(new Date(1991, 10, 20)));
+		const result = core.from(z.date().max(new Date(1991, 10, 20)));
 		expect((result as Date).getTime()).toBeLessThanOrEqual(
 			new Date(1991, 10, 20).getTime()
 		);
@@ -37,9 +37,7 @@ describe('create dates', () => {
 
 	test('throws when min is greater then max', () => {
 		expect(() =>
-			core.generate(
-				z.date().min(new Date(2025, 1, 1)).max(new Date(1991, 10, 20))
-			)
+			core.from(z.date().min(new Date(2025, 1, 1)).max(new Date(1991, 10, 20)))
 		).toThrow();
 	});
 });

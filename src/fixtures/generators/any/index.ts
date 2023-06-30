@@ -24,7 +24,7 @@ export const AnyGenerator = Generator({
 		const shuffled = core.utils.random.shuffle(POTENTIAL_SCHEMAS);
 		for (const schema of shuffled) {
 			try {
-				return core.generate(schema, context);
+				return core.from(schema, context);
 			} catch (e) {
 				/* empty */
 			}

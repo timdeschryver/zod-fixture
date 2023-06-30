@@ -14,6 +14,6 @@ describe('create any', () => {
 		const core = new Transformer().extend([AnyGenerator, NumberGenerator]);
 		const schema = z.any();
 		expect(core).toProduce(schema);
-		expect(core.generate(schema)).toBeTypeOf('number');
+		expect(core.from(schema)).toBeTypeOf('number');
 	});
 });
