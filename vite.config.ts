@@ -18,7 +18,7 @@ export default defineConfig({
 	build: {
 		target: 'esnext',
 		lib: {
-			entry: './src/export.ts',
+			entry: './src/public.ts',
 			name: 'zod-fixture',
 			formats: ['es', 'umd'],
 			fileName: (format) =>
