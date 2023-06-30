@@ -1,3 +1,3 @@
-export { Core } from '@/core/core';
-export { Generator } from '@/core/generator';
-export { createFixture, fixtureGenerators } from '@/fixtures';
+export { Fixture, fixtureGenerators } from '@/fixtures';
+export { Generator } from '@/transformer/generator';
+export { Transformer } from '@/transformer/transformer';
