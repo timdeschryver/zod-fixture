@@ -1,9 +1,9 @@
 import { describe, expect, test } from 'vitest';
 import { ZodNumber, z } from 'zod';
-import { fixtureGenerators } from '../fixtures/generators';
-import { NumberGenerator } from '../fixtures/generators/number';
-import { ObjectGenerator } from '../fixtures/generators/object';
-import { StringGenerator } from '../fixtures/generators/string';
+import { fixtureGenerators } from '../fixture/generators';
+import { NumberGenerator } from '../fixture/generators/number';
+import { ObjectGenerator } from '../fixture/generators/object';
+import { StringGenerator } from '../fixture/generators/string';
 import { Generator } from './generator';
 import { Transformer } from './transformer';
 
