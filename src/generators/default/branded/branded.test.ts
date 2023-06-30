@@ -8,7 +8,7 @@ describe('create a branded type', () => {
 	const core = new Core().register([BrandedGenerator, NumberGenerator]);
 
 	test('produces a valid brand', () => {
-		expect(core).toProduce(z.number().brand('brand'));
+		expect(core).toReasonablySatisfy(z.number().brand('brand'));
 	});
 
 	test('creates a brand with the correct type', () => {

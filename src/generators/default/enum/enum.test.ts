@@ -7,7 +7,7 @@ describe('create enums', () => {
 	const core = new Core().register([EnumGenerator, NativeEnumGenerator]);
 
 	test('produces a valid enum', () => {
-		expect(core).toProduce(z.enum(['Salmon', 'Tuna', 'Trout']));
+		expect(core).toReasonablySatisfy(z.enum(['Salmon', 'Tuna', 'Trout']));
 	});
 
 	test('using zod enums creates an enum and returns a random value', () => {

@@ -7,7 +7,7 @@ describe('create booleans', () => {
 	const core = new Core().register([BooleanGenerator]);
 
 	test('produces a valid boolean', () => {
-		expect(core).toProduce(z.boolean());
+		expect(core).toReasonablySatisfy(z.boolean());
 	});
 
 	test('creates a boolean', () => {

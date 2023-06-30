@@ -15,11 +15,11 @@ describe('create Tuples', () => {
 	]);
 
 	test('produces a valid empty tuple', () => {
-		expect(core).toProduce(z.tuple([]));
+		expect(core).toReasonablySatisfy(z.tuple([]));
 	});
 
 	test('produces a valid tuple', () => {
-		expect(core).toProduce(z.tuple([z.number(), z.string()]));
+		expect(core).toReasonablySatisfy(z.tuple([z.number(), z.string()]));
 	});
 
 	test('creates a tuple and preserves types', () => {

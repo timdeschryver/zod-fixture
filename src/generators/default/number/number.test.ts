@@ -7,7 +7,7 @@ describe('create numbers', () => {
 	const core = new Core().register([NumberGenerator]);
 
 	test('produces a valid number', () => {
-		expect(core).toProduce(z.number());
+		expect(core).toReasonablySatisfy(z.number());
 	});
 
 	test(`creates a number between Number.MIN_SAFE_INTEGER and Number.MAX_SAFE_INTEGER`, () => {
@@ -24,7 +24,7 @@ describe('create numbers', () => {
 
 	describe('min and max', () => {
 		test('produces a valid number', () => {
-			expect(core).toProduce(z.number().min(10).max(20));
+			expect(core).toReasonablySatisfy(z.number().min(10).max(20));
 		});
 
 		test('creates a number with a min value', () => {
@@ -62,7 +62,7 @@ describe('create numbers', () => {
 
 	describe('positive and negative', () => {
 		test('produces a valid positive number', () => {
-			expect(core).toProduce(z.number().positive());
+			expect(core).toReasonablySatisfy(z.number().positive());
 		});
 
 		test('creates a positive number', () => {
@@ -71,7 +71,7 @@ describe('create numbers', () => {
 		});
 
 		test('produces a valid negative number', () => {
-			expect(core).toProduce(z.number().positive());
+			expect(core).toReasonablySatisfy(z.number().positive());
 		});
 
 		test('creates a negative number', () => {
@@ -82,17 +82,17 @@ describe('create numbers', () => {
 
 	describe('multipleOf', () => {
 		test('produces a valid multipleOf number', () => {
-			expect(core).toProduce(z.number().multipleOf(33));
+			expect(core).toReasonablySatisfy(z.number().multipleOf(33));
 		});
 
 		test("creates a number that's a multiple with min and max", () => {
 			const schema = z.number().multipleOf(3).min(16).max(20);
-			expect(core).toProduce(schema, 18);
+			expect(core).toReasonablySatisfy(schema, 18);
 		});
 
 		test("creates a number that's a multiple of a decimal", () => {
 			const schema = z.number().multipleOf(3.3).min(16).max(19);
-			expect(core).toProduce(schema, 16.5);
+			expect(core).toReasonablySatisfy(schema, 16.5);
 		});
 	});
 

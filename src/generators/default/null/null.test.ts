@@ -7,7 +7,7 @@ describe('create empty types', () => {
 	const core = new Core().register([NullGenerator]);
 
 	test('produces a valid null', () => {
-		expect(core).toProduce(z.null());
+		expect(core).toReasonablySatisfy(z.null());
 	});
 
 	test('creates a null', () => {

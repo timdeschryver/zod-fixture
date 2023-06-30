@@ -10,7 +10,7 @@ describe('create bigint', () => {
 	]);
 
 	test('produces a valid bigint', () => {
-		expect(core).toProduce(z.bigint());
+		expect(core).toReasonablySatisfy(z.bigint());
 	});
 
 	test('creates a bigint between Number.MIN_SAFE_INTEGER and Number.MAX_SAFE_INTEGER', () => {

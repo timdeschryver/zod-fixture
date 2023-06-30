@@ -7,7 +7,7 @@ describe('create dates', () => {
 	const core = new Core().register([DateGenerator]);
 
 	test('produces a valid date', () => {
-		expect(core).toProduce(z.date());
+		expect(core).toReasonablySatisfy(z.date());
 	});
 
 	test('creates a date', () => {
@@ -16,7 +16,7 @@ describe('create dates', () => {
 	});
 
 	test('produces a valid date using min and max', () => {
-		expect(core).toProduce(
+		expect(core).toReasonablySatisfy(
 			z.date().min(new Date(2020, 1, 1)).max(new Date(2022, 12, 31))
 		);
 	});

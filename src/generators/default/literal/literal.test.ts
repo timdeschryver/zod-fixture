@@ -7,7 +7,7 @@ describe('create literals', () => {
 	const core = new Core().register([LiteralGenerator]);
 
 	test('produces a valid literal', () => {
-		expect(core).toProduce(z.literal('tuna'));
+		expect(core).toReasonablySatisfy(z.literal('tuna'));
 	});
 
 	test('creates a string literal and returns its value', () => {

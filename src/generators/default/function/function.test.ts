@@ -7,7 +7,7 @@ describe('create Functions', () => {
 	const core = new Core().register([FunctionGenerator]);
 
 	test('produces a valid function', () => {
-		expect(core).toProduce(z.function());
+		expect(core).toReasonablySatisfy(z.function());
 	});
 
 	test('creates a function', () => {

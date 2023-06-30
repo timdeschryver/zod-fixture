@@ -8,7 +8,7 @@ describe('create empty types', () => {
 	const core = new Core().register([NullableGenerator, StringGenerator]);
 
 	test('produces a valid nullable', () => {
-		expect(core).toProduce(z.string().nullable());
+		expect(core).toReasonablySatisfy(z.string().nullable());
 	});
 
 	test('creates a nullable string', () => {

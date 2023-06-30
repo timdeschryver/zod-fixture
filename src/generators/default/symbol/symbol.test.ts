@@ -7,7 +7,7 @@ describe('create a symbol type', () => {
 	const core = new Core().register([SymbolGenerator]);
 
 	test('produces a valid symbol', () => {
-		expect(core).toProduce(z.symbol());
+		expect(core).toReasonablySatisfy(z.symbol());
 	});
 
 	test('creates a symbol', () => {

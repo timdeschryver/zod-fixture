@@ -7,7 +7,7 @@ describe('create NaNs', () => {
 	const core = new Core().register([NanGenerator]);
 
 	test('produces a valid NaN', () => {
-		expect(core).toProduce(z.nan());
+		expect(core).toReasonablySatisfy(z.nan());
 	});
 
 	test('creates a NaN', () => {

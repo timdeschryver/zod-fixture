@@ -8,7 +8,7 @@ describe('create Sets', () => {
 	const core = new Core().register([SetGenerator, NumberGenerator]);
 
 	test('produces a valid set', () => {
-		expect(core).toProduce(z.set(z.number()));
+		expect(core).toReasonablySatisfy(z.set(z.number()));
 	});
 
 	test('creates a Set with 3 entries', () => {

@@ -8,7 +8,7 @@ describe('create a promise type', () => {
 	const core = new Core().register([PromiseGenerator, NumberGenerator]);
 
 	test('produces a valid promoise', () => {
-		expect(core).toProduce(z.promise(z.number()));
+		expect(core).toReasonablySatisfy(z.promise(z.number()));
 	});
 
 	test('creates a promise with the correct type', () => {

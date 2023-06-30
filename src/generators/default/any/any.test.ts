@@ -7,13 +7,13 @@ import { NumberGenerator } from '../number';
 describe('create any', () => {
 	test('produces an any', () => {
 		const core = new Core().register([AnyGenerator]);
-		expect(core).toProduce(z.any());
+		expect(core).toReasonablySatisfy(z.any());
 	});
 
 	test('creates a value for the registered generator', () => {
 		const core = new Core().register([AnyGenerator, NumberGenerator]);
 		const schema = z.any();
-		expect(core).toProduce(schema);
+		expect(core).toReasonablySatisfy(schema);
 		expect(core.generate(schema)).toBeTypeOf('number');
 	});
 });

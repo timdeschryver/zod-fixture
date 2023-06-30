@@ -38,7 +38,7 @@ describe('create objects', () => {
 	]);
 
 	test('produces a valid empty object', () => {
-		expect(core).toProduce(z.object({}));
+		expect(core).toReasonablySatisfy(z.object({}));
 	});
 
 	test('creates an empty object', () => {
@@ -46,7 +46,7 @@ describe('create objects', () => {
 	});
 
 	test('produces a valid object', () => {
-		expect(core).toProduce(
+		expect(core).toReasonablySatisfy(
 			z.object({
 				str: z.string(),
 				num: z.number(),
@@ -70,7 +70,7 @@ describe('create objects', () => {
 	});
 
 	test('produces a valid nested object', () => {
-		expect(core).toProduce(
+		expect(core).toReasonablySatisfy(
 			z.object({
 				str: z.string(),
 				nested: z.object({
@@ -139,7 +139,7 @@ describe('create Records', () => {
 	]);
 
 	test('produces a valid record', () => {
-		expect(core).toProduce(z.record(z.number()));
+		expect(core).toReasonablySatisfy(z.record(z.number()));
 	});
 
 	test('creates a record with 3 entries', () => {

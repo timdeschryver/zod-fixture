@@ -7,7 +7,7 @@ describe('create empty types', () => {
 	const core = new Core().register([UndefinedGenerator]);
 
 	test('produces a valid undefined', () => {
-		expect(core).toProduce(z.undefined());
+		expect(core).toReasonablySatisfy(z.undefined());
 	});
 
 	test('creates an undefined', () => {

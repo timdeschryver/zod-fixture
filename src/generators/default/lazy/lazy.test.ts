@@ -8,7 +8,7 @@ describe('create a lazy type', () => {
 	const core = new Core().register([LazyGenerator, NumberGenerator]);
 
 	test('produces a valid lazy', () => {
-		expect(core).toProduce(z.lazy(() => z.number()));
+		expect(core).toReasonablySatisfy(z.lazy(() => z.number()));
 	});
 
 	test('creates a promise with the correct type', () => {
