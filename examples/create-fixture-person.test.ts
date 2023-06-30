@@ -1,6 +1,6 @@
-import { Fixture } from '@/public';
 import { expect, test } from 'vitest';
 import { z } from 'zod';
+import { Fixture } from 'zod-fixture';
 
 test('generates a person', () => {
 	const PersonSchema = z.object({
