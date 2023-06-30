@@ -1,4 +1,4 @@
-import { Fixture, Generator } from '@/export';
+import { Fixture, Generator } from '@/public';
 import { expect, test } from 'vitest';
 import { ZodNumber, ZodObject, z } from 'zod';
 
@@ -20,7 +20,7 @@ test('generates a person using custom generators', () => {
 		// we're interested in zod objects
 		schema: ZodNumber,
 		// we return our desired output based on a custom implementation
-		output: ({ core }) => core.utils.random.int({ min: 0, max: 25 }),
+		output: ({ transform }) => transform.utils.random.int({ min: 0, max: 25 }),
 	});
 
 	const PersonSchema = z.object({

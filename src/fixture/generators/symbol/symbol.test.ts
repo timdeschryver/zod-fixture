@@ -4,13 +4,13 @@ import { z } from 'zod';
 import { SymbolGenerator } from '.';
 
 describe('create a symbol type', () => {
-	const core = new Transformer().extend([SymbolGenerator]);
+	const transform = new Transformer().extend([SymbolGenerator]);
 
 	test('produces a valid symbol', () => {
-		expect(core).toProduce(z.symbol());
+		expect(transform).toProduce(z.symbol());
 	});
 
 	test('creates a symbol', () => {
-		expect(core.from(z.symbol())).toBeTypeOf('symbol');
+		expect(transform.from(z.symbol())).toBeTypeOf('symbol');
 	});
 });

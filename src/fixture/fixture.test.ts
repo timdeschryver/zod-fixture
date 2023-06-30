@@ -1,6 +1,6 @@
+import { Generator } from '@/transformer/generator';
 import { expect, test } from 'vitest';
 import { ZodNumber, z } from 'zod';
-import { Generator } from '../transformer/generator';
 import { Fixture } from './fixture';
 
 test('creates a fixture', () => {

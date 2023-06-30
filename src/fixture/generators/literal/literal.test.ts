@@ -4,21 +4,21 @@ import { z } from 'zod';
 import { LiteralGenerator } from '.';
 
 describe('create literals', () => {
-	const core = new Transformer().extend([LiteralGenerator]);
+	const transform = new Transformer().extend([LiteralGenerator]);
 
 	test('produces a valid literal', () => {
-		expect(core).toProduce(z.literal('tuna'));
+		expect(transform).toProduce(z.literal('tuna'));
 	});
 
 	test('creates a string literal and returns its value', () => {
-		expect(core.from(z.literal('tuna'))).toBe('tuna');
+		expect(transform.from(z.literal('tuna'))).toBe('tuna');
 	});
 
 	test('creates a number literal and returns its value', () => {
-		expect(core.from(z.literal(12))).toBe(12);
+		expect(transform.from(z.literal(12))).toBe(12);
 	});
 
 	test('creates a boolean literal and returns its value', () => {
-		expect(core.from(z.literal(true))).toBe(true);
+		expect(transform.from(z.literal(true))).toBe(true);
 	});
 });

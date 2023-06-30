@@ -8,7 +8,7 @@ import { ObjectGenerator } from '../object';
 import { StringGenerator } from '../string';
 
 describe('create unions', () => {
-	const core = new Transformer().extend([
+	const transform = new Transformer().extend([
 		UnionGenerator,
 		DiscriminatedUnionGenerator,
 		ObjectGenerator,
@@ -18,17 +18,17 @@ describe('create unions', () => {
 	]);
 
 	test('produces a valid union', () => {
-		expect(core).toProduce(z.union([z.string(), z.number()]));
+		expect(transform).toProduce(z.union([z.string(), z.number()]));
 	});
 
 	test('creates a union value', () => {
-		expect(typeof core.from(z.union([z.string(), z.number()]))).toMatch(
+		expect(typeof transform.from(z.union([z.string(), z.number()]))).toMatch(
 			/^string|number$/
 		);
 	});
 
 	test('creates a union value with the or syntax', () => {
-		expect(typeof core.from(z.string().or(z.number()))).toMatch(
+		expect(typeof transform.from(z.string().or(z.number()))).toMatch(
 			/^string|number$/
 		);
 	});
@@ -38,7 +38,7 @@ describe('create unions', () => {
 			z.object({ type: z.literal('a'), a: z.string() }),
 			z.object({ type: z.literal('b'), b: z.string() }),
 		]);
-		const result = core.from(input);
+		const result = transform.from(input);
 
 		type I = z.infer<typeof input>;
 

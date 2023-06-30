@@ -4,18 +4,18 @@ import { ZodMap } from 'zod';
 
 export const MapGenerator = Generator({
 	schema: ZodMap,
-	output: ({ def, core, context }) => {
+	output: ({ def, transform, context }) => {
 		const key = def.keyType;
 		const value = def.valueType;
 
 		const map = new Map<z.infer<typeof key>, z.infer<typeof value>>();
 
-		core.utils.n(() => {
-			const k = core.from(key, context) as string | number;
-			const v = core.from(value, { path: [...context.path, k] });
+		transform.utils.n(() => {
+			const k = transform.from(key, context) as string | number;
+			const v = transform.from(value, { path: [...context.path, k] });
 
 			map.set(k, v);
-		}, core.defaults.map);
+		}, transform.defaults.map);
 
 		return map;
 	},

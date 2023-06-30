@@ -3,18 +3,18 @@ import { ZodDiscriminatedUnion, ZodUnion } from 'zod';
 
 export const UnionGenerator = Generator({
 	schema: ZodUnion,
-	output: ({ def, core, context }) => {
-		const type = core.utils.random.from(def.options);
+	output: ({ def, transform, context }) => {
+		const type = transform.utils.random.from(def.options);
 
-		return core.from(type, context);
+		return transform.from(type, context);
 	},
 });
 
 export const DiscriminatedUnionGenerator = Generator({
 	schema: ZodDiscriminatedUnion,
-	output: ({ def, core, context }) => {
-		const type = core.utils.random.from(def.options);
+	output: ({ def, transform, context }) => {
+		const type = transform.utils.random.from(def.options);
 
-		return core.from(type, context);
+		return transform.from(type, context);
 	},
 });

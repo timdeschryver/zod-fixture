@@ -6,22 +6,24 @@ import { NumberGenerator } from '../number';
 import { StringGenerator } from '../string';
 
 describe('create Arrays', () => {
-	const core = new Transformer().extend([
+	const transform = new Transformer().extend([
 		ArrayGenerator,
 		StringGenerator,
 		NumberGenerator,
 	]);
 
 	test('produces a valid array', () => {
-		expect(core).toProduce(z.array(z.number()));
+		expect(transform).toProduce(z.array(z.number()));
 	});
 
 	test('creates an array with the length of 3', () => {
-		expect(core.from(z.array(z.string()))).toHaveLength(3);
-		expect(core.from(z.number().array())).toHaveLength(3);
+		expect(transform.from(z.array(z.string()))).toHaveLength(3);
+		expect(transform.from(z.number().array())).toHaveLength(3);
 	});
 
 	test('throws when min is greater than max', () => {
-		expect(() => core.from(z.array(z.string()).min(10).max(5))).toThrowError();
+		expect(() =>
+			transform.from(z.array(z.string()).min(10).max(5))
+		).toThrowError();
 	});
 });

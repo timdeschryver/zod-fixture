@@ -9,7 +9,7 @@ import {
 import { StringGenerator } from '../string';
 
 describe('usage with effects', () => {
-	const core = new Transformer().extend([
+	const transform = new Transformer().extend([
 		PreprocessGenerator,
 		RefinementGenerator,
 		TransformGenerator,
@@ -19,28 +19,28 @@ describe('usage with effects', () => {
 	test('does invoke transform', () => {
 		const value = 0;
 		const spy = vi.fn(() => value);
-		const result = core.from(z.string().transform(spy));
+		const result = transform.from(z.string().transform(spy));
 		expect(spy).toBeCalled();
 		expect(result).toBeTypeOf(typeof value);
 	});
 
 	test('does not invoke preprocess', () => {
 		const spy = vi.fn(() => 0);
-		const result = core.from(z.preprocess(spy, z.string()));
+		const result = transform.from(z.preprocess(spy, z.string()));
 		expect(spy).not.toBeCalled();
 		expect(result).toBeTypeOf('string');
 	});
 
 	test('does not invoke refine', () => {
 		const spy = vi.fn(() => 0);
-		const result = core.from(z.string().refine(spy));
+		const result = transform.from(z.string().refine(spy));
 		expect(spy).not.toBeCalled();
 		expect(result).toBeTypeOf('string');
 	});
 
 	test('does not invoke superRefine', () => {
 		const spy = vi.fn(() => 0);
-		const result = core.from(z.string().superRefine(spy));
+		const result = transform.from(z.string().superRefine(spy));
 		expect(spy).not.toBeCalled();
 		expect(result).toBeTypeOf('string');
 	});

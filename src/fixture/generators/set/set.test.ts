@@ -5,15 +5,15 @@ import { SetGenerator } from '.';
 import { NumberGenerator } from '../number';
 
 describe('create Sets', () => {
-	const core = new Transformer().extend([SetGenerator, NumberGenerator]);
+	const transform = new Transformer().extend([SetGenerator, NumberGenerator]);
 
 	test('produces a valid set', () => {
-		expect(core).toProduce(z.set(z.number()));
+		expect(transform).toProduce(z.set(z.number()));
 	});
 
 	test('creates a Set with 3 entries', () => {
 		const input = z.set(z.number());
-		const result = core.from(input);
+		const result = transform.from(input);
 
 		type I = z.infer<typeof input>;
 

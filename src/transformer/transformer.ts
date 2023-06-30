@@ -41,7 +41,7 @@ export class Transformer {
 		context: Context = { path: [] }
 	): unknown {
 		// eslint-disable-next-line @typescript-eslint/no-this-alias
-		const core = this;
+		const transform = this;
 		const def = schema._def;
 		const generator = this.generators.find((generator) => {
 			if (
@@ -60,7 +60,7 @@ export class Transformer {
 
 			if (
 				generator.filter &&
-				!generator.filter({ schema, def, core, context })
+				!generator.filter({ schema, def, transform, context })
 			) {
 				return false;
 			}
@@ -71,6 +71,6 @@ export class Transformer {
 		if (!generator)
 			throw new Error(`No generator found for ${schema.constructor.name}`);
 
-		return generator.output({ schema, def, core, context });
+		return generator.output({ schema, def, transform, context });
 	}
 }

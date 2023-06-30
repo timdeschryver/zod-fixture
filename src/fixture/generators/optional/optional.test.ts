@@ -10,7 +10,7 @@ import { ObjectGenerator } from '../object';
 import { StringGenerator } from '../string';
 
 describe('create empty types', () => {
-	const core = new Transformer().extend([
+	const transform = new Transformer().extend([
 		OptionalGenerator,
 		StringGenerator,
 		NullableGenerator,
@@ -21,31 +21,31 @@ describe('create empty types', () => {
 	]);
 
 	test('produces a valid nullish', () => {
-		expect(core).toProduce(z.string().nullish());
+		expect(transform).toProduce(z.string().nullish());
 	});
 
 	test('produces a valid optional', () => {
-		expect(core).toProduce(z.number().optional());
+		expect(transform).toProduce(z.number().optional());
 	});
 
 	test('creates a nullable string', () => {
-		expect(core.from(z.string().nullish())).toBeTypeOf('string');
-		expect(core.from(z.string().optional())).toBeTypeOf('string');
+		expect(transform.from(z.string().nullish())).toBeTypeOf('string');
+		expect(transform.from(z.string().optional())).toBeTypeOf('string');
 	});
 
 	test('creates a nullable boolean', () => {
-		expect(core.from(z.boolean().nullish())).toBeTypeOf('boolean');
-		expect(core.from(z.boolean().optional())).toBeTypeOf('boolean');
+		expect(transform.from(z.boolean().nullish())).toBeTypeOf('boolean');
+		expect(transform.from(z.boolean().optional())).toBeTypeOf('boolean');
 	});
 
 	test('creates a nullable number', () => {
-		expect(core.from(z.number().nullish())).toBeTypeOf('number');
-		expect(core.from(z.number().optional())).toBeTypeOf('number');
+		expect(transform.from(z.number().nullish())).toBeTypeOf('number');
+		expect(transform.from(z.number().optional())).toBeTypeOf('number');
 	});
 
 	test('creates a nullable empty object', () => {
-		expect(core.from(z.object({}).optional())).toBeTypeOf('object');
-		expect(core.from(z.object({}).nullish())).toBeTypeOf('object');
+		expect(transform.from(z.object({}).optional())).toBeTypeOf('object');
+		expect(transform.from(z.object({}).nullish())).toBeTypeOf('object');
 	});
 
 	test('creates object with optional value ', () => {
@@ -54,12 +54,12 @@ describe('create empty types', () => {
 			modify: z.number().optional(),
 		});
 		expect(() => {
-			core.from(SampleWithOptionalValueSchema);
+			transform.from(SampleWithOptionalValueSchema);
 		}).not.toThrow();
 	});
 
 	test('creates a nullable date', () => {
-		expect(core.from(z.date().nullish())).toBeInstanceOf(Date);
-		expect(core.from(z.date().optional())).toBeInstanceOf(Date);
+		expect(transform.from(z.date().nullish())).toBeInstanceOf(Date);
+		expect(transform.from(z.date().optional())).toBeInstanceOf(Date);
 	});
 });

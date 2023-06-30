@@ -18,7 +18,7 @@ import { SymbolGenerator } from '../symbol';
 import { UndefinedGenerator } from '../undefined';
 
 describe('create objects', () => {
-	const core = new Transformer().extend([
+	const transform = new Transformer().extend([
 		ObjectGenerator,
 		StringGenerator,
 		NumberGenerator,
@@ -38,15 +38,15 @@ describe('create objects', () => {
 	]);
 
 	test('produces a valid empty object', () => {
-		expect(core).toProduce(z.object({}));
+		expect(transform).toProduce(z.object({}));
 	});
 
 	test('creates an empty object', () => {
-		expect(core.from(z.object({}))).toBeTypeOf('object');
+		expect(transform.from(z.object({}))).toBeTypeOf('object');
 	});
 
 	test('produces a valid object', () => {
-		expect(core).toProduce(
+		expect(transform).toProduce(
 			z.object({
 				str: z.string(),
 				num: z.number(),
@@ -62,7 +62,7 @@ describe('create objects', () => {
 
 		type I = z.infer<typeof input>;
 
-		const result = core.from(input);
+		const result = transform.from(input);
 
 		expect(result).toBeTypeOf('object');
 		expect((result as I).str).toBeTypeOf('string');
@@ -70,7 +70,7 @@ describe('create objects', () => {
 	});
 
 	test('produces a valid nested object', () => {
-		expect(core).toProduce(
+		expect(transform).toProduce(
 			z.object({
 				str: z.string(),
 				nested: z.object({
@@ -92,7 +92,7 @@ describe('create objects', () => {
 
 		type I = z.infer<typeof input>;
 
-		const result = core.from(input);
+		const result = transform.from(input);
 		expect(result).toBeTypeOf('object');
 		expect((result as I).str).toBeTypeOf('string');
 		expect((result as I).nested.num).toBeTypeOf('number');
@@ -106,7 +106,7 @@ describe('create objects', () => {
 		type BaseTeacher = z.infer<typeof BaseTeacher>;
 		type HasID = z.infer<typeof HasID>;
 
-		const result = core.from(Teacher);
+		const result = transform.from(Teacher);
 		expect(result).toBeTypeOf('object');
 		expect((result as HasID).id).toBeTypeOf('string');
 		expect((result as BaseTeacher).name).toBeTypeOf('string');
@@ -122,7 +122,7 @@ describe('create objects', () => {
 
 		type I = z.infer<typeof input>;
 
-		const result = core.from(input);
+		const result = transform.from(input);
 
 		expect(result).toBeTypeOf('object');
 		expect((result as I).str).toBeTypeOf('string');
@@ -132,19 +132,19 @@ describe('create objects', () => {
 });
 
 describe('create Records', () => {
-	const core = new Transformer().extend([
+	const transform = new Transformer().extend([
 		RecordGenerator,
 		StringGenerator,
 		NumberGenerator,
 	]);
 
 	test('produces a valid record', () => {
-		expect(core).toProduce(z.record(z.number()));
+		expect(transform).toProduce(z.record(z.number()));
 	});
 
 	test('creates a record with 3 entries', () => {
 		const input = z.record(z.number());
-		const result = core.from(input);
+		const result = transform.from(input);
 
 		type I = z.infer<typeof input>;
 
@@ -155,7 +155,7 @@ describe('create Records', () => {
 
 	test('creates a record with a defined key type', () => {
 		const input = z.record(z.string(), z.string());
-		const result = core.from(input);
+		const result = transform.from(input);
 
 		type I = z.infer<typeof input>;
 

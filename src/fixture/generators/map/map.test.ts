@@ -6,19 +6,19 @@ import { NumberGenerator } from '../number';
 import { StringGenerator } from '../string';
 
 describe('create Maps', () => {
-	const core = new Transformer().extend([
+	const transform = new Transformer().extend([
 		MapGenerator,
 		StringGenerator,
 		NumberGenerator,
 	]);
 
 	test('produces a valid map', () => {
-		expect(core).toProduce(z.map(z.string(), z.number()));
+		expect(transform).toProduce(z.map(z.string(), z.number()));
 	});
 
 	test('creates a Map with 3 entries', () => {
 		const input = z.map(z.string(), z.number());
-		const result = core.from(input);
+		const result = transform.from(input);
 
 		type I = z.infer<typeof input>;
 

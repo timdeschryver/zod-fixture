@@ -3,5 +3,6 @@ import { ZodLazy } from 'zod';
 
 export const LazyGenerator = Generator({
 	schema: ZodLazy,
-	output: ({ def, core, context }) => core.from(def.getter(), context),
+	output: ({ def, transform, context }) =>
+		transform.from(def.getter(), context),
 });

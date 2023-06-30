@@ -4,13 +4,13 @@ import { z } from 'zod';
 import { NullGenerator } from '.';
 
 describe('create empty types', () => {
-	const core = new Transformer().extend([NullGenerator]);
+	const transform = new Transformer().extend([NullGenerator]);
 
 	test('produces a valid null', () => {
-		expect(core).toProduce(z.null());
+		expect(transform).toProduce(z.null());
 	});
 
 	test('creates a null', () => {
-		expect(core.from(z.null())).toBeNull();
+		expect(transform.from(z.null())).toBeNull();
 	});
 });

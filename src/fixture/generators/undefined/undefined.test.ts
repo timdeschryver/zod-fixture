@@ -4,13 +4,13 @@ import { z } from 'zod';
 import { UndefinedGenerator } from '.';
 
 describe('create empty types', () => {
-	const core = new Transformer().extend([UndefinedGenerator]);
+	const transform = new Transformer().extend([UndefinedGenerator]);
 
 	test('produces a valid undefined', () => {
-		expect(core).toProduce(z.undefined());
+		expect(transform).toProduce(z.undefined());
 	});
 
 	test('creates an undefined', () => {
-		expect(core.from(z.undefined())).toBeUndefined();
+		expect(transform.from(z.undefined())).toBeUndefined();
 	});
 });

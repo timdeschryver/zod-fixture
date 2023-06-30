@@ -7,7 +7,7 @@ import { BooleanGenerator } from '../boolean';
 import { ObjectGenerator } from '../object';
 
 describe('create intersections', () => {
-	const core = new Transformer().extend([
+	const transform = new Transformer().extend([
 		IntersectionGenerator,
 		ObjectGenerator,
 		BooleanGenerator,
@@ -23,7 +23,7 @@ describe('create intersections', () => {
 			right: z.boolean(),
 		});
 
-		expect(core).toProduce(z.intersection(left, right));
+		expect(transform).toProduce(z.intersection(left, right));
 	});
 
 	test('creates an intersection of objects', () => {
@@ -36,7 +36,7 @@ describe('create intersections', () => {
 		});
 
 		const intersection = z.intersection(left, right);
-		const result = core.from(intersection);
+		const result = transform.from(intersection);
 
 		expect(result).toHaveProperty('left');
 		expect(result).toHaveProperty('right');
@@ -61,7 +61,7 @@ describe('create intersections', () => {
 
 		const intersection = z.intersection(left, right);
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const result = core.from(intersection) as any[];
+		const result = transform.from(intersection) as any[];
 
 		expect(result[0]).toHaveProperty('left');
 		expect(result[0]).toHaveProperty('right');

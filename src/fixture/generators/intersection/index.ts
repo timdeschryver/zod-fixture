@@ -4,9 +4,9 @@ import { ZodIntersection, ZodParsedType, getParsedType, util } from 'zod';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const IntersectionGenerator = Generator({
 	schema: ZodIntersection,
-	output: ({ def, core, context }) => {
-		const left = core.from(def.left, context);
-		const right = core.from(def.right, context);
+	output: ({ def, transform, context }) => {
+		const left = transform.from(def.left, context);
+		const right = transform.from(def.right, context);
 		const result = mergeValues(left, right);
 
 		if (!result.valid) throw new Error('Intersection is not valid.');

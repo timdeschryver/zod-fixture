@@ -27,14 +27,14 @@ export type ZodConstructorOrSchema<TSchema extends ZodTypeAny> =
 export type Filter<TSchema extends ZodTypeAny> = (obj: {
 	def: TSchema['_def'];
 	schema: TSchema;
-	core: Transformer;
+	transform: Transformer;
 	context: Context;
 }) => boolean;
 
 export type Generator<TSchema extends ZodTypeAny> = (obj: {
 	def: TSchema['_def'];
 	schema: TSchema;
-	core: Transformer;
+	transform: Transformer;
 	context: Context;
 }) => unknown;
 

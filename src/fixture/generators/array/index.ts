@@ -3,14 +3,18 @@ import { ZodArray } from 'zod';
 
 export const ArrayGenerator = Generator({
 	schema: ZodArray,
-	output: ({ def, core, context }) => {
+	output: ({ def, transform, context }) => {
 		const min =
-			def.minLength?.value ?? def.exactLength?.value ?? core.defaults.array.min;
+			def.minLength?.value ??
+			def.exactLength?.value ??
+			transform.defaults.array.min;
 		const max =
-			def.maxLength?.value ?? def.exactLength?.value ?? core.defaults.array.max;
+			def.maxLength?.value ??
+			def.exactLength?.value ??
+			transform.defaults.array.max;
 
-		return core.utils.n(
-			(key) => core.from(def.type, { path: [...context.path, key] }),
+		return transform.utils.n(
+			(key) => transform.from(def.type, { path: [...context.path, key] }),
 			{ min, max }
 		);
 	},

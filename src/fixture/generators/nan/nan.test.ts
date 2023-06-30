@@ -4,13 +4,13 @@ import { z } from 'zod';
 import { NanGenerator } from '.';
 
 describe('create NaNs', () => {
-	const core = new Transformer().extend([NanGenerator]);
+	const transform = new Transformer().extend([NanGenerator]);
 
 	test('produces a valid NaN', () => {
-		expect(core).toProduce(z.nan());
+		expect(transform).toProduce(z.nan());
 	});
 
 	test('creates a NaN', () => {
-		expect(Number.isNaN(core.from(z.nan()))).toBeTruthy();
+		expect(Number.isNaN(transform.from(z.nan()))).toBeTruthy();
 	});
 });

@@ -7,15 +7,15 @@ import { StringGenerator } from '../fixture/generators/string';
 import { Generator } from './generator';
 import { Transformer } from './transformer';
 
-describe('core', () => {
+describe('transform', () => {
 	test('throws on invalid schema type', () => {
-		const core = new Transformer();
+		const transform = new Transformer();
 		const input = z.string();
-		expect(() => core.from(input)).toThrowError(input._def.typeName);
+		expect(() => transform.from(input)).toThrowError(input._def.typeName);
 	});
 
 	test('creates a fixture', () => {
-		const core = new Transformer().extend(fixtureGenerators);
+		const transform = new Transformer().extend(fixtureGenerators);
 		const PersonSchema = z.object({
 			name: z.string(),
 			birthday: z.date(),
@@ -28,14 +28,14 @@ describe('core', () => {
 			totalVisits: z.number(),
 		});
 
-		expect(() => core.from(PersonSchema)).not.toThrow();
+		expect(() => transform.from(PersonSchema)).not.toThrow();
 	});
 
 	test('throws when schema missing', () => {
 		const generators = [...fixtureGenerators].filter(
 			(g) => g !== StringGenerator
 		);
-		const core = new Transformer().extend(generators);
+		const transform = new Transformer().extend(generators);
 		const PersonSchema = z.object({
 			name: z.string(),
 			birthday: z.date(),
@@ -48,7 +48,7 @@ describe('core', () => {
 			totalVisits: z.number(),
 		});
 
-		expect(() => core.from(PersonSchema)).toThrow(
+		expect(() => transform.from(PersonSchema)).toThrow(
 			/No generator found for ZodString/i
 		);
 	});
@@ -61,7 +61,7 @@ describe('core', () => {
 				output: () => 4,
 			});
 
-			const core = new Transformer().extend([
+			const transform = new Transformer().extend([
 				ObjectGenerator,
 				FooNumberGenerator,
 				NumberGenerator,
@@ -71,7 +71,7 @@ describe('core', () => {
 				foo: z.number(),
 				other: z.number(),
 			});
-			const result = core.from(schema);
+			const result = transform.from(schema);
 			type schemaType = z.infer<typeof schema>;
 
 			expect((result as schemaType).foo).toBe(4);
@@ -85,15 +85,15 @@ describe('core', () => {
 				output: () => 4,
 			});
 
-			const core = new Transformer().extend([ObjectGenerator]);
-			core.extend(NumberGenerator);
-			core.extend(FooNumberGenerator);
+			const transform = new Transformer().extend([ObjectGenerator]);
+			transform.extend(NumberGenerator);
+			transform.extend(FooNumberGenerator);
 
 			const schema = z.object({
 				foo: z.number(),
 				other: z.number(),
 			});
-			const result = core.from(schema);
+			const result = transform.from(schema);
 			type schemaType = z.infer<typeof schema>;
 
 			expect((result as schemaType).foo).toBe(4);

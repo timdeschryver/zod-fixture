@@ -1,4 +1,4 @@
-import { Fixture } from '@/export';
+import { Fixture } from '@/public';
 import { expect, test } from 'vitest';
 import { z } from 'zod';
 

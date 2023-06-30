@@ -5,13 +5,14 @@ import { Randomization } from './Randomization';
 export class Utils {
 	random: Randomization;
 
-	constructor(private core: Transformer) {
-		this.random = new Randomization(core.defaults, core.seed);
+	constructor(private transform: Transformer) {
+		this.random = new Randomization(transform.defaults, transform.seed);
 	}
 
 	n<T>(
 		factory: (index: number) => T,
-		config: number | { min: number; max: number } = this.core.defaults.array
+		config: number | { min: number; max: number } = this.transform.defaults
+			.array
 	): Array<T> {
 		const length =
 			typeof config === 'number' ? config : this.random.int(config);

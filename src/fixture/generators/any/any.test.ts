@@ -6,14 +6,14 @@ import { NumberGenerator } from '../number';
 
 describe('create any', () => {
 	test('produces an any', () => {
-		const core = new Transformer().extend([AnyGenerator]);
-		expect(core).toProduce(z.any());
+		const transform = new Transformer().extend([AnyGenerator]);
+		expect(transform).toProduce(z.any());
 	});
 
 	test('creates a value for the registered generator', () => {
-		const core = new Transformer().extend([AnyGenerator, NumberGenerator]);
+		const transform = new Transformer().extend([AnyGenerator, NumberGenerator]);
 		const schema = z.any();
-		expect(core).toProduce(schema);
-		expect(core.from(schema)).toBeTypeOf('number');
+		expect(transform).toProduce(schema);
+		expect(transform.from(schema)).toBeTypeOf('number');
 	});
 });

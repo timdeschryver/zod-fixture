@@ -5,13 +5,16 @@ import { NullableGenerator } from '.';
 import { StringGenerator } from '../string';
 
 describe('create empty types', () => {
-	const core = new Transformer().extend([NullableGenerator, StringGenerator]);
+	const transform = new Transformer().extend([
+		NullableGenerator,
+		StringGenerator,
+	]);
 
 	test('produces a valid nullable', () => {
-		expect(core).toProduce(z.string().nullable());
+		expect(transform).toProduce(z.string().nullable());
 	});
 
 	test('creates a nullable string', () => {
-		expect(core.from(z.string().nullable())).toBeTypeOf('string');
+		expect(transform.from(z.string().nullable())).toBeTypeOf('string');
 	});
 });
