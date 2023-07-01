@@ -22,7 +22,7 @@
 		"baseUrl": "./src",
 		"paths": {
 			"@/*": ["*"],
-			"zod-fixture": ["."]
+			"zod-fixture": ["./public"]
 		}
 	}
 }
