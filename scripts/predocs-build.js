@@ -1,3 +1,3 @@
 import { copyFileSync } from 'fs';
 
-copyFileSync('readme.md', 'index.md');
+copyFileSync('README.md', 'index.md');
