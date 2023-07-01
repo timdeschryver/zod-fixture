@@ -33,10 +33,10 @@ Creating test fixtures should be easy.<br>
 From npm (Node/Bun)
 
 ```bash
-npm install -D zod-fixture       # npm
-yarn add -D zod-fixture          # yarn
-bun add -d zod-fixture           # bun
-pnpm add -D zod-fixture          # pnpm
+npm install -D zod-fixture
+yarn add -D zod-fixture
+bun add -d zod-fixture
+pnpm add -D zod-fixture
 ```
 
 ## Getting Started
@@ -46,6 +46,8 @@ The easiest way to start using zod-fixture is to import the preconfigured `Fixtu
 <sub>[view implementation](./examples/create-fixture-person.test.ts)</sub>
 
 ```ts
+// examples/create-fixture-person.test.ts#L2-L18
+
 import { z } from 'zod';
 import { Fixture } from 'zod-fixture';
 
@@ -67,30 +69,32 @@ const person = fixture.from(PersonSchema);
 
 The above results in the following value for `person`:
 
-```json
+```ts
+// examples/create-fixture-person.test.ts#L22-L45
+
 {
-	"address": {
-		"city": "43K>5SG250E",
-		"state": "kbszkSZm^3Kg<CPyfa4z1HikF",
-		"street": "oQes]5YUwRzbITAPk"
-	},
-	"birthday": "1980-09-26T06:36:51.341Z",
-	"name": "8zGj;1humNI>G?8p6;ej\\\\T4jS3",
-	"pets": [
-		{
-			"breed": "RIEgfwDI7]yK6RE581:h]QM^P",
-			"name": "wgIuUNfJKl;i4``l3`A"
-		},
-		{
-			"breed": "iVI2P\\\\",
-			"name": "YOMKN<ukgnGg1qp`CdV>"
-		},
-		{
-			"breed": "fotFqP",
-			"name": "8Z?ap[eGC"
-		}
-	],
-	"totalVisits": 5544703130861567
+  "address": {
+    "city": "43K>5SG250E",
+    "state": "kbszkSZm^3Kg<CPyfa4z1HikF",
+    "street": "oQes]5YUwRzbITAPk",
+  },
+  "birthday": 1980-09-26T06:36:51.341Z,
+  "name": "8zGj;1humNI>G?8p6;ej\\\\T4jS3",
+  "pets": [
+    {
+      "breed": "RIEgfwDI7]yK6RE581:h]QM^P",
+      "name": "wgIuUNfJKl;i4\`\`l3\`A",
+    },
+    {
+      "breed": "iVI2P\\\\",
+      "name": "YOMKN<ukgnGg1qp\`CdV>",
+    },
+    {
+      "breed": "fotFqP",
+      "name": "8Z?ap[eGC",
+    },
+  ],
+  "totalVisits": 5544703130861567,
 }
 ```
 
@@ -111,7 +115,9 @@ In the example below we create a custom implemantion `AddressGenerator` to retur
 <sub>[view implementation](./examples/create-fixture-using-generators-person.test.ts)</sub>
 
 ```ts
-import { z, ZodObject, ZodNumber } from 'zod';
+// examples/create-fixture-extension.test.ts#L2-L36
+
+import { ZodNumber, ZodObject, z } from 'zod';
 import { Fixture, Generator } from 'zod-fixture';
 
 const addressGenerator = Generator({
@@ -173,28 +179,29 @@ To make your own generators simpler this library also includes some useful utili
 In the example below we create our own `NumberBetween0And25Generator` to return more realastic numbers using the `random` utilities.
 
 ```ts
-import { z, ZodObject, ZodNumber } from 'zod';
+// examples/create-fixture-using-generators-person.test.ts#L2-L49
+
+import { ZodNumber, ZodObject, z } from 'zod';
 import { Fixture, Generator } from 'zod-fixture';
 
-const NumberBetween0And25Generator = Generator({
-	// we're interested in zod numbers
-	schema: ZodNumber,
-	// because we only have one number object we can ignore the additional `filter`
-	// we make use of the utils to create a random number
-	output: ({ core }) => core.utils.random.int({ min: 0, max: 25 }),
-});
-
-const AddressGenerator = Generator({
+const addressGenerator = Generator({
 	// we're interested in zod objects
 	schema: ZodObject,
 	// we only want to change the behavior of the address object
 	filter: ({ context }) => context.path.at(-1) === 'address',
-	// return the desired output based on a custom implementation
+	// we return our desired output based on a custom implementation
 	output: () => ({
 		street: 'My Street',
 		city: 'My City',
 		state: 'My State',
 	}),
+});
+
+const totalVisitsGenerator = Generator({
+	// we're interested in zod objects
+	schema: ZodNumber,
+	// we return our desired output based on a custom implementation
+	output: ({ transform }) => transform.utils.random.int({ min: 0, max: 25 }),
 });
 
 const PersonSchema = z.object({
@@ -217,14 +224,18 @@ const PersonSchema = z.object({
 	totalVisits: z.number(),
 });
 
-const person = new Fixture()
-	.extend([AddressGenerator, NumberBetween0And25Generator])
-	.from(PersonSchema);
+const fixture = new Fixture({ seed: 38 }).extend([
+	addressGenerator,
+	totalVisitsGenerator,
+]);
+const person = fixture.from(PersonSchema);
 ```
 
 When we create a new `person` fixture using the two custom generators we get the following value (notice the `address` and `totalVisits` values).
 
-```json
+```ts
+//  examples/create-fixture-using-generators-person.test.ts#L53-L84
+
 {
 	"address": {
 		"city": "My City",
