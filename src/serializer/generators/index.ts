@@ -115,7 +115,7 @@ export const TupleGenerator = Generator({
 	},
 });
 
-export const seraializeGenerators = [
+export const serializerGenerators = [
 	BigIntGenerator,
 	NumberGenerator,
 	StringGenerator,

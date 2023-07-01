@@ -1,6 +1,6 @@
 import { Transformer } from '@/transformer/transformer';
-import { seraializeGenerators } from './generators';
+import { serializerGenerators } from './generators';
 
 export class Serializer extends Transformer {
-	generators = seraializeGenerators;
+	generators = serializerGenerators;
 }
