@@ -35,11 +35,13 @@ test('generates a person using custom generators', () => {
 		totalVisits: z.number(),
 	});
 
-	expect(
-		new Fixture({ seed: 38 })
-			.extend([addressGenerator, totalVisitsGenerator])
-			.from(PersonSchema)
-	).toMatchInlineSnapshot(`
+	const fixture = new Fixture({ seed: 38 }).extend([
+		addressGenerator,
+		totalVisitsGenerator,
+	]);
+	const person = fixture.from(PersonSchema);
+
+	expect(person).toMatchInlineSnapshot(`
 		{
 		  "address": {
 		    "city": "My City",

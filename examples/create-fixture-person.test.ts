@@ -15,7 +15,10 @@ test('generates a person', () => {
 		totalVisits: z.number(),
 	});
 
-	expect(new Fixture({ seed: 11 }).from(PersonSchema)).toMatchInlineSnapshot(`
+	const fixture = new Fixture({ seed: 11 });
+	const person = fixture.from(PersonSchema);
+
+	expect(person).toMatchInlineSnapshot(`
 		{
 		  "address": {
 		    "city": "43K>5SG250E",

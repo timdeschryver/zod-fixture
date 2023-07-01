@@ -43,6 +43,8 @@ pnpm add -D zod-fixture          # pnpm
 
 The easiest way to start using zod-fixture is to import the preconfigured `Fixture` class.
 
+<sub>[view implementation](./examples/create-fixture-person.test.ts)</sub>
+
 ```ts
 import { z } from 'zod';
 import { Fixture } from 'zod-fixture';
@@ -59,11 +61,9 @@ const PersonSchema = z.object({
 	totalVisits: z.number(),
 });
 
-const fixture = new Fixture();
+const fixture = new Fixture({ seed: 11 });
 const person = fixture.from(PersonSchema);
 ```
-
-> You can also take a look at the [implemented example](./examples/create-fixture-person.test.ts).
 
 The above results in the following value for `person`:
 
@@ -108,21 +108,25 @@ But, for those times where you need a custom implementation, you can write your 
 
 In the example below we create a custom implemantion `AddressGenerator` to return a custom address object.
 
+<sub>[view implementation](./examples/create-fixture-using-generators-person.test.ts)</sub>
+
 ```ts
 import { z, ZodObject } from 'zod';
 import { createFixture, Generator } from 'zod-fixture';
 
-const AddressGenerator = Generator({
-	// we're interested in zod objects
+const addressGenerator = Generator({
 	schema: ZodObject,
-	// we only want to change the behavior of the address object
 	filter: ({ context }) => context.path.at(0) === 'address',
-	// return the desired output based on a custom implementation
 	output: () => ({
 		street: 'My Street',
 		city: 'My City',
 		state: 'My State',
 	}),
+});
+
+const totalVisitsGenerator = Generator({
+	schema: ZodNumber,
+	output: ({ transform }) => transform.utils.random.int({ min: 0, max: 25 }),
 });
 
 const PersonSchema = z.object({
@@ -137,12 +141,12 @@ const PersonSchema = z.object({
 	totalVisits: z.number(),
 });
 
-const person = createFixture(PersonSchema, {
-	extend: [AddressGenerator],
-});
+const fixture = new Fixture({ seed: 38 }).extend([
+	addressGenerator,
+	totalVisitsGenerator,
+]);
+const person = fixture.from(PersonSchema);
 ```
-
-> You can also take a look at the [implemented example](./examples/create-fixture-using-generators-person.test.ts).
 
 ### Create Your Own Transformer
 
