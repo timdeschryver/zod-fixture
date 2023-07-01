@@ -2,13 +2,13 @@ import { expect } from 'vitest';
 import { ZodTypeAny } from 'zod';
 
 expect.extend({
-	toReasonablySatisfy(core, schema: ZodTypeAny, iterations = 100) {
+	toReasonablySatisfy(transform, schema: ZodTypeAny, iterations = 100) {
 		for (let i = 0; i < iterations; i++) {
-			const fixture = core.generate(schema);
+			const fixture = transform.from(schema);
 			const result = schema.safeParse(fixture);
 
 			if (result.success === false) {
-				const { seed } = core;
+				const { seed } = transform;
 				const { success: pass, error } = result;
 
 				return {
