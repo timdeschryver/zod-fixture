@@ -238,4 +238,4 @@ A codespace will open in a web-based version of Visual Studio Code. The [dev con
 
 ## Credits
 
-This package is inspired on [AutoFixture](https://github.com/AutoFixture/AutoFixture).
+This package is inspired by [AutoFixture](https://github.com/AutoFixture/AutoFixture).
