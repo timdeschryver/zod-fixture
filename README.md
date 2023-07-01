@@ -116,7 +116,7 @@ import { Fixture, Generator } from 'zod-fixture';
 
 const addressGenerator = Generator({
 	schema: ZodObject,
-	filter: ({ context }) => context.path.at(0) === 'address',
+	filter: ({ context }) => context.path.at(-1) === 'address',
 	output: () => ({
 		street: 'My Street',
 		city: 'My City',
@@ -188,7 +188,7 @@ const AddressGenerator = Generator({
 	// we're interested in zod objects
 	schema: ZodObject,
 	// we only want to change the behavior of the address object
-	filter: ({ context }) => context.path.at(0) === 'address',
+	filter: ({ context }) => context.path.at(-1) === 'address',
 	// return the desired output based on a custom implementation
 	output: () => ({
 		street: 'My Street',
@@ -239,7 +239,15 @@ When we create a new `person` fixture using the two custom generators we get the
 			"name": ";l]@"
 		}
 	],
-	"totalVisits": 22
+	"totalVisits": 21,
+	"veterinarian": {
+		"address": {
+			"city": "My City",
+			"state": "My State",
+			"street": "My Street"
+		},
+		"name": "zNHTN?SsO6FlZ_K8B;QN]OH"
+	}
 }
 ```
 

@@ -7,7 +7,7 @@ test('generates a person using custom generators', () => {
 		// we're interested in zod objects
 		schema: ZodObject,
 		// we only want to change the behavior of the address object
-		filter: ({ context }) => context.path.at(0) === 'address',
+		filter: ({ context }) => context.path.at(-1) === 'address',
 		// we return our desired output based on a custom implementation
 		output: () => ({
 			street: 'My Street',
@@ -32,6 +32,14 @@ test('generates a person using custom generators', () => {
 			state: z.string(),
 		}),
 		pets: z.array(z.object({ name: z.string(), breed: z.string() })),
+		veterinarian: z.object({
+			name: z.string(),
+			address: z.object({
+				street: z.string(),
+				city: z.string(),
+				state: z.string(),
+			}),
+		}),
 		totalVisits: z.number(),
 	});
 
@@ -64,7 +72,15 @@ test('generates a person using custom generators', () => {
 		      "name": ";l]@",
 		    },
 		  ],
-		  "totalVisits": 22,
+		  "totalVisits": 21,
+		  "veterinarian": {
+		    "address": {
+		      "city": "My City",
+		      "state": "My State",
+		      "street": "My Street",
+		    },
+		    "name": "zNHTN?SsO6FlZ_K8B;QN]OH",
+		  },
 		}
 	`);
 });
