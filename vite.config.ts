@@ -7,7 +7,7 @@ export default defineConfig({
 		alias: {
 			// eslint-disable-next-line no-undef
 			'@': path.resolve(__dirname, './src'),
-			'zod-fixture': path.resolve(__dirname, './src'),
+			'zod-fixture': path.resolve(__dirname, './src/public.ts'),
 		},
 	},
 	plugins: [
@@ -18,7 +18,7 @@ export default defineConfig({
 	build: {
 		target: 'esnext',
 		lib: {
-			entry: './src/index.ts',
+			entry: './src/public.ts',
 			name: 'zod-fixture',
 			formats: ['es', 'umd'],
 			fileName: (format) =>

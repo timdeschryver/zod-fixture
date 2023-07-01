@@ -20,10 +20,10 @@
 		".": {
 			"import": "./dist/zod-fixture.es.js",
 			"require": "./dist/zod-fixture.umd.cjs",
-			"types": "./dist/index.d.ts"
+			"types": "./dist/public.d.ts"
 		}
 	},
-	"types": "./dist/index.d.ts",
+	"types": "./dist/public.d.ts",
 	"type": "module",
 	"keywords": [
 		"zod",
@@ -54,6 +54,9 @@
 		"zod": "^3.21.4"
 	},
 	"imports": {
-		"@/*": "./src/*"
+		"@/*": "./src/*",
+		"zod-fixture": [
+			"./src/public.ts"
+		]
 	}
 }
