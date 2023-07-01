@@ -112,7 +112,7 @@ In the example below we create a custom implemantion `AddressGenerator` to retur
 
 ```ts
 import { z, ZodObject } from 'zod';
-import { createFixture, Generator } from 'zod-fixture';
+import { Fixture, Generator } from 'zod-fixture';
 
 const addressGenerator = Generator({
 	schema: ZodObject,
@@ -174,7 +174,7 @@ In the example below we create our own `NumberBetween0And25Generator` to return 
 
 ```ts
 import { z, ZodObject } from 'zod';
-import { createFixture, Generator } from 'zod-fixture';
+import { Fixture, Generator } from 'zod-fixture';
 
 const NumberBetween0And25Generator = Generator({
 	// we're interested in zod numbers
