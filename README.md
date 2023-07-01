@@ -239,7 +239,9 @@ When we create a new `person` fixture using the two custom generators we get the
 }
 ```
 
-⚠️ Note: The order the registered generators matters. The first generator that matches the conditions (`schema` and `filter`) is used to create the value.
+::: tip
+The order the registered generators matters. The first generator that matches the conditions (`schema` and `filter`) is used to create the value.
+:::
 
 ## Contributing
 
