@@ -206,6 +206,14 @@ const PersonSchema = z.object({
 		state: z.string(),
 	}),
 	pets: z.array(z.object({ name: z.string(), breed: z.string() })),
+	veterinarian: z.object({
+		name: z.string(),
+		address: z.object({
+			street: z.string(),
+			city: z.string(),
+			state: z.string(),
+		}),
+	}),
 	totalVisits: z.number(),
 });
 
