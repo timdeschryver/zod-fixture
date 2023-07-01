@@ -14,7 +14,7 @@ export default defineConfig({
 		search: { provider: 'local' },
 		editLink: {
 			pattern:
-				'https://github.com/timdeschryver/zod-fixture/edit/main/docs/README.md',
+				'https://github.com/timdeschryver/zod-fixture/edit/mains/README.md',
 		},
 		socialLinks: [
 			{ icon: 'github', link: 'https://github.com/timdeschryver/zod-fixture' },
