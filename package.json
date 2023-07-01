@@ -4,12 +4,17 @@
 	"description": "Creating fixtures based on zod schemas",
 	"packageManager": "npm@9.5.0",
 	"scripts": {
-		"start": "vite",
-		"test": "vitest --ui",
-		"test:coverage": "vitest run --coverage",
-		"build": "vite build",
+		"start": "vite -c vite.lib.config.ts",
+		"test": "vitest run -c vite.lib.config.ts",
+		"test:ui": "vitest -c vite.lib.config.ts --ui",
+		"test:coverage": "vitest run --coverage -c vite.lib.config.ts",
+		"build": "vite build -c vite.lib.config.ts",
 		"lint": "eslint . --max-warnings 0",
-		"prepare": "git config core.hookspath .githooks"
+		"prepare": "git config core.hookspath .githooks",
+		"docs:dev": "vitepress dev docs",
+		"predocs:build": "node ./scripts/predocs-build.js",
+		"docs:build": "vitepress build docs",
+		"docs:preview": "vitepress preview docs"
 	},
 	"files": [
 		"dist"
@@ -50,6 +55,7 @@
 		"typescript": "^5.0.4",
 		"vite": "^3.2.6",
 		"vite-plugin-dts": "^1.4.1",
+		"vitepress": "^1.0.0-beta.3",
 		"vitest": "^0.31.0",
 		"zod": "^3.21.4"
 	},
