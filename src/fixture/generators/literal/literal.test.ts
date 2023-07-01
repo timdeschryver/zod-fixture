@@ -7,7 +7,7 @@ describe('create literals', () => {
 	const transform = new Transformer().extend([LiteralGenerator]);
 
 	test('produces a valid literal', () => {
-		expect(transform).toProduce(z.literal('tuna'));
+		expect(transform).toReasonablySatisfy(z.literal('tuna'));
 	});
 
 	test('creates a string literal and returns its value', () => {

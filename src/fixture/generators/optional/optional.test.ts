@@ -21,11 +21,11 @@ describe('create empty types', () => {
 	]);
 
 	test('produces a valid nullish', () => {
-		expect(transform).toProduce(z.string().nullish());
+		expect(transform).toReasonablySatisfy(z.string().nullish());
 	});
 
 	test('produces a valid optional', () => {
-		expect(transform).toProduce(z.number().optional());
+		expect(transform).toReasonablySatisfy(z.number().optional());
 	});
 
 	test('creates a nullable string', () => {

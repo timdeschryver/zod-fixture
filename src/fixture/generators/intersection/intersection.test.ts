@@ -23,7 +23,7 @@ describe('create intersections', () => {
 			right: z.boolean(),
 		});
 
-		expect(transform).toProduce(z.intersection(left, right));
+		expect(transform).toReasonablySatisfy(z.intersection(left, right));
 	});
 
 	test('creates an intersection of objects', () => {

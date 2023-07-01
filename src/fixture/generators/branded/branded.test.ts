@@ -11,7 +11,7 @@ describe('create a branded type', () => {
 	]);
 
 	test('produces a valid brand', () => {
-		expect(transform).toProduce(z.number().brand('brand'));
+		expect(transform).toReasonablySatisfy(z.number().brand('brand'));
 	});
 
 	test('creates a brand with the correct type', () => {

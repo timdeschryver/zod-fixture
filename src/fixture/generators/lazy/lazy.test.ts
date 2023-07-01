@@ -8,7 +8,7 @@ describe('create a lazy type', () => {
 	const transform = new Transformer().extend([LazyGenerator, NumberGenerator]);
 
 	test('produces a valid lazy', () => {
-		expect(transform).toProduce(z.lazy(() => z.number()));
+		expect(transform).toReasonablySatisfy(z.lazy(() => z.number()));
 	});
 
 	test('creates a promise with the correct type', () => {

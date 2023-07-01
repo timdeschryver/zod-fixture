@@ -7,7 +7,7 @@ describe('create empty types', () => {
 	const transform = new Transformer().extend([UndefinedGenerator]);
 
 	test('produces a valid undefined', () => {
-		expect(transform).toProduce(z.undefined());
+		expect(transform).toReasonablySatisfy(z.undefined());
 	});
 
 	test('creates an undefined', () => {

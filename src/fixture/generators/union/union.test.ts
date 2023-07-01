@@ -18,7 +18,7 @@ describe('create unions', () => {
 	]);
 
 	test('produces a valid union', () => {
-		expect(transform).toProduce(z.union([z.string(), z.number()]));
+		expect(transform).toReasonablySatisfy(z.union([z.string(), z.number()]));
 	});
 
 	test('creates a union value', () => {

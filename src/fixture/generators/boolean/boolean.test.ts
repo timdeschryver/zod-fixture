@@ -7,7 +7,7 @@ describe('create booleans', () => {
 	const transform = new Transformer().extend([BooleanGenerator]);
 
 	test('produces a valid boolean', () => {
-		expect(transform).toProduce(z.boolean());
+		expect(transform).toReasonablySatisfy(z.boolean());
 	});
 
 	test('creates a boolean', () => {

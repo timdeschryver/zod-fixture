@@ -7,7 +7,7 @@ describe('create a symbol type', () => {
 	const transform = new Transformer().extend([SymbolGenerator]);
 
 	test('produces a valid symbol', () => {
-		expect(transform).toProduce(z.symbol());
+		expect(transform).toReasonablySatisfy(z.symbol());
 	});
 
 	test('creates a symbol', () => {

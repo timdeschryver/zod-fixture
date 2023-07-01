@@ -7,7 +7,7 @@ describe('create dates', () => {
 	const transform = new Transformer().extend([DateGenerator]);
 
 	test('produces a valid date', () => {
-		expect(transform).toProduce(z.date());
+		expect(transform).toReasonablySatisfy(z.date());
 	});
 
 	test('creates a date', () => {
@@ -16,7 +16,7 @@ describe('create dates', () => {
 	});
 
 	test('produces a valid date using min and max', () => {
-		expect(transform).toProduce(
+		expect(transform).toReasonablySatisfy(
 			z.date().min(new Date(2020, 1, 1)).max(new Date(2022, 12, 31))
 		);
 	});

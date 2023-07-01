@@ -13,7 +13,7 @@ describe('create Maps', () => {
 	]);
 
 	test('produces a valid map', () => {
-		expect(transform).toProduce(z.map(z.string(), z.number()));
+		expect(transform).toReasonablySatisfy(z.map(z.string(), z.number()));
 	});
 
 	test('creates a Map with 3 entries', () => {

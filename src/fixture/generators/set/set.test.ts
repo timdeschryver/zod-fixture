@@ -8,7 +8,7 @@ describe('create Sets', () => {
 	const transform = new Transformer().extend([SetGenerator, NumberGenerator]);
 
 	test('produces a valid set', () => {
-		expect(transform).toProduce(z.set(z.number()));
+		expect(transform).toReasonablySatisfy(z.set(z.number()));
 	});
 
 	test('creates a Set with 3 entries', () => {

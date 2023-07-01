@@ -11,7 +11,7 @@ describe('create a promise type', () => {
 	]);
 
 	test('produces a valid promoise', () => {
-		expect(transform).toProduce(z.promise(z.number()));
+		expect(transform).toReasonablySatisfy(z.promise(z.number()));
 	});
 
 	test('creates a promise with the correct type', () => {
