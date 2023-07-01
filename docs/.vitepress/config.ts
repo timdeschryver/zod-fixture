@@ -4,7 +4,6 @@ import { defineConfig } from 'vitepress';
 export default defineConfig({
 	title: 'zod-fixture',
 	description: 'Documentation for zod-fixture',
-	base: '/zod-fixture/',
 	lang: 'en-US',
 	lastUpdated: true,
 	cleanUrls: true,
