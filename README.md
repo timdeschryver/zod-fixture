@@ -111,7 +111,7 @@ In the example below we create a custom implemantion `AddressGenerator` to retur
 <sub>[view implementation](./examples/create-fixture-using-generators-person.test.ts)</sub>
 
 ```ts
-import { z, ZodObject } from 'zod';
+import { z, ZodObject, ZodNumber } from 'zod';
 import { Fixture, Generator } from 'zod-fixture';
 
 const addressGenerator = Generator({
@@ -173,7 +173,7 @@ To make your own generators simpler this library also includes some useful utili
 In the example below we create our own `NumberBetween0And25Generator` to return more realastic numbers using the `random` utilities.
 
 ```ts
-import { z, ZodObject } from 'zod';
+import { z, ZodObject, ZodNumber } from 'zod';
 import { Fixture, Generator } from 'zod-fixture';
 
 const NumberBetween0And25Generator = Generator({
