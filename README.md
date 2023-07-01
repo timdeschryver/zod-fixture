@@ -41,7 +41,7 @@ pnpm add -D zod-fixture          # pnpm
 
 ## Getting Started
 
-The easiest way to start using zod-fixture is to import the preconfigured Fixture class.
+The easiest way to start using zod-fixture is to import the preconfigured `Fixture` class.
 
 ```ts
 import { z } from 'zod';
