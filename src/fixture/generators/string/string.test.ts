@@ -185,8 +185,8 @@ describe('create strings', () => {
 		const value = transform.from(
 			z.string().min(6000).max(7000).startsWith('start_').endsWith('_end')
 		) as string;
-		expect(value.length).toBeGreaterThan(6000);
-		expect(value.length).toBeLessThan(7000);
+		expect(value.length).toBeGreaterThanOrEqual(6000);
+		expect(value.length).toBeLessThanOrEqual(7000);
 		expect(value.startsWith('start_')).toBeTruthy();
 		expect(value.endsWith('_end')).toBeTruthy();
 	});
