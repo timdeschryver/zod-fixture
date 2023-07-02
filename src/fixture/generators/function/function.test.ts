@@ -7,7 +7,7 @@ describe('create Functions', () => {
 	const transform = new Transformer().extend([FunctionGenerator]);
 
 	test('produces a valid function', () => {
-		expect(transform).toProduce(z.function());
+		expect(transform).toReasonablySatisfy(z.function());
 	});
 
 	test('creates a function', () => {

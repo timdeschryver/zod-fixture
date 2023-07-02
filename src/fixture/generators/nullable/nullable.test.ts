@@ -11,7 +11,7 @@ describe('create empty types', () => {
 	]);
 
 	test('produces a valid nullable', () => {
-		expect(transform).toProduce(z.string().nullable());
+		expect(transform).toReasonablySatisfy(z.string().nullable());
 	});
 
 	test('creates a nullable string', () => {

@@ -1,36 +1,26 @@
 import { expect } from 'vitest';
-
-const ITERATIONS = 100;
+import { ZodTypeAny } from 'zod';
 
 expect.extend({
-	toProduce(transform, schema, result) {
-		for (let i = 0; i < ITERATIONS; i++) {
+	toReasonablySatisfy(transform, schema: ZodTypeAny, iterations = 100) {
+		for (let i = 0; i < iterations; i++) {
 			const fixture = transform.from(schema);
-			const { success: pass, error } = schema.safeParse(fixture);
+			const result = schema.safeParse(fixture);
 
-			if (!pass)
+			if (result.success === false) {
+				const { seed } = transform;
+				const { success: pass, error } = result;
+
 				return {
 					pass,
-					message: () =>
-						JSON.stringify(
-							{
-								fixture,
-								seed: transform.seed,
-								error,
-							},
-							null,
-							2
-						),
+					message: () => JSON.stringify({ fixture, seed, error }, null, 2),
 				};
-
-			if (arguments.length === 3) {
-				expect(fixture).toBe(result);
 			}
 		}
 
 		return {
 			pass: true,
-			message: () => `Successfully ran ${ITERATIONS} iterations.`,
+			message: () => `Successfully ran ${iterations} iterations.`,
 		};
 	},
 });

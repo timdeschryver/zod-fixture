@@ -10,7 +10,7 @@ describe('create enums', () => {
 	]);
 
 	test('produces a valid enum', () => {
-		expect(transform).toProduce(z.enum(['Salmon', 'Tuna', 'Trout']));
+		expect(transform).toReasonablySatisfy(z.enum(['Salmon', 'Tuna', 'Trout']));
 	});
 
 	test('using zod enums creates an enum and returns a random value', () => {

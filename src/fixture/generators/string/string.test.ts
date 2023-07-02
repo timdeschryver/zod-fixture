@@ -30,7 +30,7 @@ describe('create strings', () => {
 	]);
 
 	test('produces a valid string', () => {
-		expect(transform).toProduce(z.string());
+		expect(transform).toReasonablySatisfy(z.string());
 	});
 
 	test('creates a string', () => {
@@ -38,7 +38,7 @@ describe('create strings', () => {
 	});
 
 	test('produces a valid string with length', () => {
-		expect(transform).toProduce(z.string().length(60));
+		expect(transform).toReasonablySatisfy(z.string().length(60));
 	});
 
 	test('creates a string with a fixed length', () => {
@@ -46,7 +46,7 @@ describe('create strings', () => {
 	});
 
 	test('produces a valid string with min and max', () => {
-		expect(transform).toProduce(z.string().min(3).max(9));
+		expect(transform).toReasonablySatisfy(z.string().min(3).max(9));
 	});
 
 	test('creates a string with a min length', () => {
@@ -70,7 +70,7 @@ describe('create strings', () => {
 	});
 
 	test('produces a valid string that is a uuid', () => {
-		expect(transform).toProduce(z.string().uuid());
+		expect(transform).toReasonablySatisfy(z.string().uuid());
 	});
 
 	test('creates a string that is a uuid', () => {
@@ -92,7 +92,7 @@ describe('create strings', () => {
 	});
 
 	test('produces a valid string that is a cuid2', () => {
-		expect(transform).toProduce(z.string().cuid2());
+		expect(transform).toReasonablySatisfy(z.string().cuid2());
 	});
 
 	test('creates a string that is a cuid2', () => {
@@ -100,7 +100,7 @@ describe('create strings', () => {
 	});
 
 	test('produces a valid string that is a email', () => {
-		expect(transform).toProduce(z.string().email());
+		expect(transform).toReasonablySatisfy(z.string().email());
 	});
 
 	test('creates a string that is an email', () => {
@@ -110,7 +110,7 @@ describe('create strings', () => {
 	});
 
 	test('produces a valid string that is a lowercase', () => {
-		expect(transform).toProduce(z.string().toLowerCase());
+		expect(transform).toReasonablySatisfy(z.string().toLowerCase());
 	});
 
 	test('creates a string is lowercase', () => {
@@ -119,7 +119,7 @@ describe('create strings', () => {
 	});
 
 	test('produces a valid string that is a uppercase', () => {
-		expect(transform).toProduce(z.string().toUpperCase());
+		expect(transform).toReasonablySatisfy(z.string().toUpperCase());
 	});
 
 	test('creates a string is uppercase', () => {
@@ -128,7 +128,9 @@ describe('create strings', () => {
 	});
 
 	test('produces a valid string with a start and end', () => {
-		expect(transform).toProduce(z.string().startsWith('begin').endsWith('end'));
+		expect(transform).toReasonablySatisfy(
+			z.string().startsWith('begin').endsWith('end')
+		);
 	});
 
 	test('creates a string that startsWith', () => {
@@ -150,7 +152,7 @@ describe('create strings', () => {
 	});
 
 	test('produces a valid string that is a url', () => {
-		expect(transform).toProduce(z.string().url());
+		expect(transform).toReasonablySatisfy(z.string().url());
 	});
 
 	test('creates a string that is an URL', () => {
@@ -196,7 +198,7 @@ describe('create strings', () => {
 	});
 
 	test('produces a valid string that is a datetime', () => {
-		expect(transform).toProduce(z.string().datetime());
+		expect(transform).toReasonablySatisfy(z.string().datetime());
 	});
 
 	test('produces a valid string that is a datetime', () => {

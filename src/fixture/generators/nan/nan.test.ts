@@ -7,7 +7,7 @@ describe('create NaNs', () => {
 	const transform = new Transformer().extend([NanGenerator]);
 
 	test('produces a valid NaN', () => {
-		expect(transform).toProduce(z.nan());
+		expect(transform).toReasonablySatisfy(z.nan());
 	});
 
 	test('creates a NaN', () => {

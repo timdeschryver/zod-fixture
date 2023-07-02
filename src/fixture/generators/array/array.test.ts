@@ -13,7 +13,7 @@ describe('create Arrays', () => {
 	]);
 
 	test('produces a valid array', () => {
-		expect(transform).toProduce(z.array(z.number()));
+		expect(transform).toReasonablySatisfy(z.array(z.number()));
 	});
 
 	test('creates an array with the length of 3', () => {
