@@ -1,7 +1,7 @@
 <h1 align="center">Zod Fixture</h1>
 <p align="center">Fixture Generation with 1:1 Zod Parity</p>
 <br>
-<p align="center">
+<p align="center" style="display: flex; gap: .5em; justify-content:center">
 	<a href="https://badge.fury.io/js/zod-fixture"><img src="https://badge.fury.io/js/zod-fixture.svg" alt="npm version" height="18"></a>
 	<a href="https://github.com/timdeschryver/zod-fixture/actions/workflows/ci.yaml"><img src="https://github.com/timdeschryver/zod-fixture/actions/workflows/ci.yaml/badge.svg?branch=beta"></a>
 	<a href="https://opensource.org/licenses/MIT" rel="nofollow"><img src="https://img.shields.io/github/license/timdeschryver/zod-fixture" alt="License"></a>
@@ -10,43 +10,44 @@
 <br>
 <p align="center">
 Creating test fixtures should be easy.<br>
-<a href="https://www.npmjs.com/package/zod-fixture">zod-fixture</a> helps with the arrange phase of your tests by creating test fixtures based on a <a href="https://github.com/colinhacks/zod">zod</a> schema.
+<a href="https://github.com/timdeschryver/zod-fixture">zod-fixture</a> helps with the arrange phase of your tests by creating test fixtures based on a <a href="https://github.com/colinhacks/zod">zod</a> schema.
 </p>
 
 ## Table of Contents
 
-- [Table of Contents](#table-of-contents)
-- [Installation](#installation)
-- [Getting Started](#getting-started)
-- [Customizing](#customizing)
-  - [Extending](#extending)
-  - [Create Your Own Transformer](#create-your-own-transformer)
-- [API](#api)
-  - [Generators](#generators)
-- [Contributing](#contributing)
-  - [Getting started with GitHub Codespaces](#getting-started-with-github-codespaces)
-  - [StackBlitz](#stackblitz)
-- [Blog posts](#blog-posts)
-- [Credits](#credits)
+[[toc]]
 
 ## Installation
 
-From npm (Node/Bun)
+::: code-group
 
-```bash
-npm install -D zod-fixture
-yarn add -D zod-fixture
-bun add -d zod-fixture
-pnpm add -D zod-fixture
+```sh [npm]
+$ npm install -D vitepress
 ```
+
+```sh [pnpm]
+$ pnpm add -D vitepress
+```
+
+```sh [yarn]
+$ yarn add -D vitepress
+```
+
+```sh [bun]
+$ bun add -d zod-fixture
+```
+
+:::
 
 ## Getting Started
 
 The easiest way to start using zod-fixture is to import the preconfigured `Fixture` class.
 
-<sub>[view implementation](./examples/create-fixture-person.test.ts)</sub>
+<sub>[view implementation](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/create-fixture-person.test.ts)</sub>
 
-```ts
+::: code-group
+
+```ts [input.ts]
 // examples/create-fixture-person.test.ts#L2-L18
 
 import { z } from 'zod';
@@ -68,9 +69,7 @@ const fixture = new Fixture({ seed: 11 });
 const person = fixture.from(PersonSchema);
 ```
 
-The above results in the following value for `person`:
-
-```ts
+```json [person.json]
 // examples/create-fixture-person.test.ts#L22-L45
 
 {
@@ -99,6 +98,8 @@ The above results in the following value for `person`:
 }
 ```
 
+:::
+
 ## Customizing
 
 This library provides utility methods to provide fine-grained support to create your fixtures.
@@ -111,11 +112,13 @@ The `Fixture` class provides a predefined set of generators that supports each t
 For most cases this is fine, and offers a fast and easy way to create fixtures.
 But, for those times where you need a custom implementation, you can write your own [Generator](#generators) to change it's behavior using the `extend` method.
 
-In the example below we create a custom implemantion `AddressGenerator` to return a custom address object.
+In the example below we create a custom implemantion `addressGenerator` to return a custom address object, and a `totalVisitsGenerator` to return a more realistic number of visits.
 
-<sub>[view implementation](./examples/create-fixture-using-generators-person.test.ts)</sub>
+<sub>[view implementation](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/create-fixture-using-generators-person.test.ts)</sub>
 
-```ts
+::: code-group
+
+```ts [input.ts]
 // examples/create-fixture-extension.test.ts#L2-L36
 
 import { ZodNumber, ZodObject, z } from 'zod';
@@ -155,86 +158,7 @@ const fixture = new Fixture({ seed: 38 }).extend([
 const person = fixture.from(PersonSchema);
 ```
 
-### Create Your Own Transformer
-
-Instead of using the opinionated `Fixture` class, you can extend the unopinionated `Transformer` and register the desired generators.
-
-```ts
-import { Transformer } from 'zod-fixture';
-
-const transform = new Transformer().extend([
-	/* insert your generators here */
-]);
-
-const value = transform.from(zodSchema);
-```
-
-## API
-
-### Generators
-
-To generate a value based on a zod type we're using what we call a `Generator`.
-
-To make your own generators simpler this library also includes some useful utility methods to generate data.
-
-In the example below we create our own `NumberBetween0And25Generator` to return more realastic numbers using the `random` utilities.
-
-```ts
-// examples/create-fixture-using-generators-person.test.ts#L2-L49
-
-import { ZodNumber, ZodObject, z } from 'zod';
-import { Fixture, Generator } from 'zod-fixture';
-
-const addressGenerator = Generator({
-	// we're interested in zod objects
-	schema: ZodObject,
-	// we only want to change the behavior of the address object
-	filter: ({ context }) => context.path.at(-1) === 'address',
-	// we return our desired output based on a custom implementation
-	output: () => ({
-		street: 'My Street',
-		city: 'My City',
-		state: 'My State',
-	}),
-});
-
-const totalVisitsGenerator = Generator({
-	// we're interested in zod objects
-	schema: ZodNumber,
-	// we return our desired output based on a custom implementation
-	output: ({ transform }) => transform.utils.random.int({ min: 0, max: 25 }),
-});
-
-const PersonSchema = z.object({
-	name: z.string(),
-	birthday: z.date(),
-	address: z.object({
-		street: z.string(),
-		city: z.string(),
-		state: z.string(),
-	}),
-	pets: z.array(z.object({ name: z.string(), breed: z.string() })),
-	veterinarian: z.object({
-		name: z.string(),
-		address: z.object({
-			street: z.string(),
-			city: z.string(),
-			state: z.string(),
-		}),
-	}),
-	totalVisits: z.number(),
-});
-
-const fixture = new Fixture({ seed: 38 }).extend([
-	addressGenerator,
-	totalVisitsGenerator,
-]);
-const person = fixture.from(PersonSchema);
-```
-
-When we create a new `person` fixture using the two custom generators we get the following value (notice the `address` and `totalVisits` values).
-
-```ts
+```json [person.json]
 //  examples/create-fixture-using-generators-person.test.ts#L53-L84
 
 {
@@ -269,6 +193,43 @@ When we create a new `person` fixture using the two custom generators we get the
 		"name": "zNHTN?SsO6FlZ_K8B;QN]OH"
 	}
 }
+```
+
+:::
+
+### Create Your Own Transformer
+
+Instead of using the opinionated `Fixture` class, you can extend the unopinionated `Transformer` and register the desired generators.
+
+```ts
+import { Transformer } from 'zod-fixture';
+
+const transform = new Transformer().extend([
+	/* insert your generators here */
+]);
+
+const value = transform.from(zodSchema);
+```
+
+## API
+
+### Generators
+
+To generate a value based on a zod type we're using what we call a `Generator`.
+
+To make your own generators simpler this library also includes some useful utility methods to generate data.
+
+In the example below we create our own `totalVisitsGenerator` to return more realastic numbers using the `random` utilities.
+
+```ts [input.ts]
+// examples/create-fixture-using-generators-person.test.ts#L18-L23
+
+const totalVisitsGenerator = Generator({
+	// we're interested in zod objects
+	schema: ZodNumber,
+	// we return our desired output based on a custom implementation
+	output: ({ transform }) => transform.utils.random.int({ min: 0, max: 25 }),
+});
 ```
 
 ::: tip
