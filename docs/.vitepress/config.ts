@@ -12,6 +12,8 @@ export default defineConfig({
 		nav: [],
 		sidebar: [],
 		search: { provider: 'local' },
+		aside: true,
+		outline: 'deep',
 		editLink: {
 			pattern:
 				'https://github.com/timdeschryver/zod-fixture/edit/main/README.md',
