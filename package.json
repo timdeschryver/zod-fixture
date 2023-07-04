@@ -6,6 +6,7 @@
 	"scripts": {
 		"start": "vite -c vite.lib.config.ts",
 		"test": "vitest run -c vite.lib.config.ts",
+		"test:watch": "vitest -c vite.lib.config.ts",
 		"test:ui": "vitest -c vite.lib.config.ts --ui",
 		"test:coverage": "vitest run --coverage -c vite.lib.config.ts",
 		"build": "vite build -c vite.lib.config.ts",

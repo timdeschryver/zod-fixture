@@ -6,8 +6,17 @@ export const NumberGenerator = Generator({
 	output: ({ def, transform }) => {
 		const checks = transform.utils.checks(def.checks);
 
-		const min = checks.find('min')?.value ?? transform.defaults.float.min;
-		const max = checks.find('max')?.value ?? transform.defaults.float.max;
+		const minCheck = checks.find('min') ?? {
+			value: transform.defaults.float.min,
+			inclusive: true,
+		};
+		const maxCheck = checks.find('max') ?? {
+			value: transform.defaults.float.max,
+			inclusive: true,
+		};
+
+		const min = minCheck.inclusive ? minCheck.value : minCheck.value + 1;
+		const max = maxCheck.inclusive ? maxCheck.value : maxCheck.value - 1;
 
 		const multipleOf = checks.find('multipleOf')?.value;
 		const isInt = checks.has('int');
