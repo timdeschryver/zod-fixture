@@ -15,6 +15,7 @@ Creating test fixtures should be easy.<br>
 
 ## Table of Contents
 
+- [Table of Contents](#table-of-contents)
 - [Installation](#installation)
 - [Getting Started](#getting-started)
 - [Customizing](#customizing)
@@ -23,9 +24,9 @@ Creating test fixtures should be easy.<br>
 - [API](#api)
   - [Generators](#generators)
 - [Contributing](#contributing)
-  - [CodeSpaces](#getting-started-with-github-codespaces)
+  - [Getting started with GitHub Codespaces](#getting-started-with-github-codespaces)
   - [StackBlitz](#stackblitz)
-- [Blog Posts](#blog-posts)
+- [Blog posts](#blog-posts)
 - [Credits](#credits)
 
 ## Installation
@@ -101,7 +102,7 @@ The above results in the following value for `person`:
 ## Customizing
 
 This library provides utility methods to provide fine-grained support to create your fixtures.
-Take a look at the [examples](./examples) to see how you can use `zod-fixture` in your tests.
+Take a look at the [examples](https://github.com/timdeschryver/zod-fixture/tree/beta/examples) to see how you can use `zod-fixture` in your tests.
 
 ### Extending
 
