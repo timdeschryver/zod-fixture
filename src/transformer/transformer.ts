@@ -1,6 +1,5 @@
 import type { ZodTypeAny } from 'zod';
 import type { Context, Definition } from './generator';
-import { ZOD_INSTANCE_IDENTIFIER, ZOD_TYPE_IDENTIFIER } from './generator';
 import { Utils } from './utils';
 import defaults from './utils/defaults';
 
@@ -44,17 +43,7 @@ export class Transformer {
 		const transform = this;
 		const def = schema._def;
 		const generator = this.generators.find((generator) => {
-			if (
-				schema[ZOD_TYPE_IDENTIFIER] !==
-				generator.schema.prototype[ZOD_TYPE_IDENTIFIER]
-			) {
-				return false;
-			}
-
-			if (
-				schema[ZOD_INSTANCE_IDENTIFIER] !==
-				generator.schema[ZOD_INSTANCE_IDENTIFIER]
-			) {
+			if (def.typeName !== generator.schema.name) {
 				return false;
 			}
 
