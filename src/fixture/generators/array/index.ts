@@ -13,9 +13,16 @@ export const ArrayGenerator = Generator({
 			def.exactLength?.value ??
 			transform.defaults.array.max;
 
-		return transform.utils.n(
-			(key) => transform.from(def.type, { path: [...context.path, key] }),
-			{ min, max }
-		);
+		const result: unknown[] = [];
+
+		transform.utils.ifNotNever(def.type, (schema) => {
+			transform.utils.n(
+				(key) =>
+					result.push(transform.from(schema, { path: [...context.path, key] })),
+				{ min, max }
+			);
+		});
+
+		return result;
 	},
 });
