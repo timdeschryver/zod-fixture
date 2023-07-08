@@ -13,4 +13,16 @@ export class Fixture extends Transformer {
 	): z.infer<TSchema> {
 		return super.from(schema, context);
 	}
+
+	missingGenerator(schema: z.ZodTypeAny) {
+		const message = [
+			`No generator found for ${schema.constructor.name}.`,
+			'',
+			'For z.custom, refer to the documentation https://github.com/timdeschryver/zod-fixture.',
+			'If you still believe this is an error, please open an issue at https://github.com/timdeschryver/zod-fixture/issues/new.',
+			'',
+		].join('\n');
+
+		return new Error(message);
+	}
 }

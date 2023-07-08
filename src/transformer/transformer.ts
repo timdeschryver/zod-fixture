@@ -68,9 +68,19 @@ export class Transformer {
 			return true;
 		});
 
-		if (!generator)
-			throw new Error(`No generator found for ${schema.constructor.name}`);
+		this.checkHasMatch(schema, generator);
 
 		return generator.output({ schema, def, transform, context });
+	}
+
+	checkHasMatch(
+		schema: ZodTypeAny,
+		generator: unknown
+	): asserts generator is NonNullable<unknown> {
+		if (!generator) throw this.missingGenerator(schema);
+	}
+
+	missingGenerator(schema: ZodTypeAny) {
+		return new Error(`No generator found for ${schema.constructor.name}.`);
 	}
 }
