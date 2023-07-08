@@ -44,9 +44,7 @@ export class Transformer {
 		const transform = this;
 		const def = schema._def;
 		const generator = this.generators.find((generator) => {
-			const isConstructor = isZodConstructor(generator.schema);
-
-			const generaterType = isConstructor
+			const generaterType = isZodConstructor(generator.schema)
 				? generator.schema.name
 				: generator.schema._def.typeName;
 
