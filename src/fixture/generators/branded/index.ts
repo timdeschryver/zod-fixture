@@ -1,5 +1,5 @@
+import { ZodBranded } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
-import { ZodBranded } from 'zod';
 
 export const BrandedGenerator = Generator({
 	schema: ZodBranded,

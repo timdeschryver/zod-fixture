@@ -1,5 +1,5 @@
+import { ZodDate } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
-import { ZodDate } from 'zod';
 
 export const DateGenerator = Generator({
 	schema: ZodDate,

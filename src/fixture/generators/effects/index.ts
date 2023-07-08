@@ -1,5 +1,5 @@
+import { ZodEffects } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
-import { ZodEffects } from 'zod';
 
 export const TransformGenerator = Generator({
 	schema: ZodEffects,

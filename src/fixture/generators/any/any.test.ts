@@ -2,7 +2,6 @@ import { Transformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { AnyGenerator } from '.';
-import { NumberGenerator } from '../number';
 
 describe('create any', () => {
 	test('produces an any', () => {
@@ -11,9 +10,9 @@ describe('create any', () => {
 	});
 
 	test('creates a value for the registered generator', () => {
-		const transform = new Transformer().extend([AnyGenerator, NumberGenerator]);
+		const transform = new Transformer().extend([AnyGenerator]);
 		const schema = z.any();
 		expect(transform).toReasonablySatisfy(schema);
-		expect(transform.from(schema)).toBeTypeOf('number');
+		expect(transform.from(schema)).toBeTypeOf('string');
 	});
 });

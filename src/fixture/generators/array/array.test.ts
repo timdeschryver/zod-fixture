@@ -6,6 +6,7 @@ import { NumberGenerator } from '../number';
 import { StringGenerator } from '../string';
 
 describe('create Arrays', () => {
+	console.log('ARRAY TEST');
 	const transform = new Transformer().extend([
 		ArrayGenerator,
 		StringGenerator,
