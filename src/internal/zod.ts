@@ -47,17 +47,16 @@ import type {
 import type { ZodConstructor } from '@/transformer/generator';
 
 // Forces typescript to cast our fake constructors as a true zod type
-const castAs = <T extends ZodTypeAny>(value: string) => {
+const castAs = <T extends ZodTypeAny>(typeName: string) => {
 	const fake = () => {};
-	Object.defineProperty(fake, 'name', { value });
+	// Reassign function name to match the zod type name
+	Object.defineProperty(fake, 'name', { value: typeName });
+	// Stubs out the create method so we can create "instances" to use with `.from`
+	Object.defineProperty(fake, 'create', {
+		value: () => ({ _def: { typeName } }),
+	});
 	return fake as unknown as ZodConstructor<T>;
 };
-
-export const instance = <TSchema extends ZodTypeAny>(schema: TSchema) =>
-	({
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		_def: { typeName: (schema as any).name },
-	} as TSchema);
 
 export const ZodString = castAs<TrueZodString>('ZodString');
 export const ZodNumber = castAs<TrueZodNumber>('ZodNumber');

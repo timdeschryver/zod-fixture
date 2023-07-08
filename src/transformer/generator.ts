@@ -13,10 +13,12 @@ export interface Context {
 	path: (string | number)[];
 }
 
-export type ZodConstructor<TSchema extends ZodTypeAny> = new (
+export interface ZodConstructor<TSchema extends ZodTypeAny> {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	def: any
-) => TSchema;
+	new (...args: any[]): TSchema;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	create(...args: any[]): TSchema;
+}
 
 export type ZodConstructorOrSchema<TSchema extends ZodTypeAny> =
 	| TSchema

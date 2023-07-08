@@ -1,4 +1,4 @@
-import { instance, ZodAny, ZodObject, ZodRecord } from '@/internal/zod';
+import { ZodAny, ZodObject, ZodRecord } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
 import type { z } from 'zod';
 
@@ -22,7 +22,7 @@ export const ObjectGenerator = Generator({
 			const key = transform.utils.random.lorem(1, 'word');
 			const type =
 				def.catchall._def.typeName === 'ZodNever'
-					? instance(ZodAny)
+					? ZodAny.create()
 					: def.catchall;
 			result[key] = transform.from(type, { path: [...context.path, key] });
 		}
