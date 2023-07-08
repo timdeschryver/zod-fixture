@@ -17,7 +17,6 @@ export default defineConfig({
 	],
 	build: {
 		target: 'esnext',
-		minify: 'terser',
 		lib: {
 			entry: './src/public.ts',
 			name: 'zod-fixture',
