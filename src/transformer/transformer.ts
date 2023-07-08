@@ -1,5 +1,6 @@
 import type { ZodTypeAny } from 'zod';
 import type { Context, Definition } from './generator';
+import { ZOD_INSTANCE_IDENTIFIER, isZodConstructor } from './generator';
 import { Utils } from './utils';
 import defaults from './utils/defaults';
 
@@ -43,8 +44,25 @@ export class Transformer {
 		const transform = this;
 		const def = schema._def;
 		const generator = this.generators.find((generator) => {
-			if (def.typeName !== generator.schema.name) {
+			const isConstructor = isZodConstructor(generator.schema);
+
+			const generaterType = isConstructor
+				? generator.schema.name
+				: generator.schema._def.typeName;
+
+			if (def.typeName !== generaterType) {
 				return false;
+			}
+
+			// If our generator was created with an instance, make sure it matches
+			// the schema we're trying to generate.
+			// This is particularly important for z.custom schemas.
+			if (generator.schema[ZOD_INSTANCE_IDENTIFIER] !== undefined) {
+				if (
+					schema[ZOD_INSTANCE_IDENTIFIER] !==
+					generator.schema[ZOD_INSTANCE_IDENTIFIER]
+				)
+					return false;
 			}
 
 			if (
