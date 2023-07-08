@@ -1,3 +1,5 @@
+import type { ZodTypeAny } from 'zod';
+import { ZodNever } from 'zod';
 import type { Transformer } from '../transformer';
 import { Checks } from './Checks';
 import { Randomization } from './Randomization';
@@ -18,6 +20,15 @@ export class Utils {
 			typeof config === 'number' ? config : this.random.int(config);
 
 		return Array.from({ length }, (_, i) => factory(i));
+	}
+
+	ifNotNever<TSchema extends ZodTypeAny>(
+		schema: TSchema | null | undefined,
+		assignment: (schema: TSchema) => unknown
+	) {
+		const type = schema ?? (ZodNever.create() as unknown as TSchema);
+		if (type._def.typeName === 'ZodNever') return;
+		assignment(type);
 	}
 
 	checks<TChecks extends { kind: string }[]>(checks: TChecks) {
