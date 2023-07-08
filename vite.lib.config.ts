@@ -17,11 +17,7 @@ export default defineConfig({
 	],
 	build: {
 		target: 'esnext',
-		// because we use Class.name we need to preserve the names
 		minify: 'terser',
-		terserOptions: {
-			mangle: false,
-		},
 		lib: {
 			entry: './src/public.ts',
 			name: 'zod-fixture',
