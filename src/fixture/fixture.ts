@@ -14,7 +14,7 @@ export class Fixture extends Transformer {
 		return super.from(schema, context);
 	}
 
-	missingGenerator(schema: z.ZodTypeAny) {
+	missingGeneratorError(schema: z.ZodTypeAny) {
 		const message = [
 			`No generator found for ${schema.constructor.name}.`,
 			'',
