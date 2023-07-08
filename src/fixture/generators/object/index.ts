@@ -24,7 +24,6 @@ export const ObjectGenerator = Generator({
 				def.catchall._def.typeName === 'ZodNever'
 					? instance(ZodAny)
 					: def.catchall;
-			console.log({ type });
 			result[key] = transform.from(type, { path: [...context.path, key] });
 		}
 
