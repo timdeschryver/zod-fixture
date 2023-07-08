@@ -3,16 +3,16 @@ import type { Context } from '../transformer/generator';
 import { Transformer } from '../transformer/transformer';
 import { fixtureGenerators } from './generators';
 
-export class Fixture extends Transformer {
-	generators = fixtureGenerators;
-
+export interface Fixture extends Transformer {
 	// explicitly define the return type
 	from<TSchema extends z.ZodTypeAny>(
 		schema: TSchema,
 		context?: Context
-	): z.infer<TSchema> {
-		return super.from(schema, context);
-	}
+	): z.infer<TSchema>;
+}
+
+export class Fixture extends Transformer {
+	generators = fixtureGenerators;
 
 	missingGeneratorError(schema: z.ZodTypeAny) {
 		const message = [
