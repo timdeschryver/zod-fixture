@@ -53,6 +53,7 @@ const castAs = <T extends ZodTypeAny>(value: string) => {
 
 export const instance = <TSchema extends ZodTypeAny>(schema: TSchema) =>
 	({
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		_def: { typeName: (schema as any).name },
 	} as TSchema);
 
