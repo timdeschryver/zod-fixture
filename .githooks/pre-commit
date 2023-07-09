@@ -1,4 +1,3 @@
 #!/bin/sh
 
-node scripts/readme.js
 npx lint-staged --concurrent false
