@@ -51,7 +51,6 @@ The examples make use of a seed to generate the same fixture every time. This is
 <<< @/../examples/create-fixture-person.test.ts#example [Example]
 <<< @/../examples/create-fixture-person.test.ts#output [Output]
 :::
-testing
 
 ## Customizing
 
