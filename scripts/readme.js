@@ -55,4 +55,8 @@ const result = readme
 		}
 	});
 
-fs.writeFileSync('README.md', result);
+if (readme !== result) {
+	fs.writeFileSync('README.md', result);
+	// eslint-disable-next-line no-undef
+	process.exit(1);
+}
