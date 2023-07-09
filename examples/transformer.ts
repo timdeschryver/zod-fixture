@@ -5,4 +5,4 @@ const transform = new Transformer().extend([
 	/* insert your generators here */
 ]);
 
-const value = transform.from(z.any());
+transform.from(z.any());
