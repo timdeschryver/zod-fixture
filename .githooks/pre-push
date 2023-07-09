@@ -1,3 +1,5 @@
 #!/bin/sh
 
-(node scripts/readme.js) || echo "README.md has been updated. Please commit and repush." 1>&2 && exit(1)
+trap "echo \"README.md has been updated. Please commit and repush.\" 1>&2" EXIT
+
+node scripts/readme.js
