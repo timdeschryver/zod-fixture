@@ -56,7 +56,8 @@ const result = readme
 		}
 	});
 
-const formatted = prettier.format(result, { parser: 'markdown' });
+const config = await prettier.resolveConfig('README.md');
+const formatted = prettier.format(result, { ...config, parser: 'markdown' });
 
 if (readme !== formatted) {
 	fs.writeFileSync('README.md', formatted);
