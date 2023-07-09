@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import prettier from 'prettier';
 
 const readme = fs.readFileSync('docs/index.md', 'utf-8');
 
@@ -55,8 +56,10 @@ const result = readme
 		}
 	});
 
-if (readme !== result) {
-	fs.writeFileSync('README.md', result);
+const formatted = prettier.format(result, { parser: 'markdown' });
+
+if (readme !== formatted) {
+	fs.writeFileSync('README.md', formatted);
 	// eslint-disable-next-line no-undef
 	process.exit(1);
 }
