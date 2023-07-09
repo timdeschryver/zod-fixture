@@ -58,8 +58,9 @@ const result = readme
 
 const config = await prettier.resolveConfig('README.md');
 const formatted = prettier.format(result, { ...config, parser: 'markdown' });
+const existing = fs.readFileSync('README.md');
 
-if (readme !== formatted) {
+if (existing.toString() !== formatted) {
 	fs.writeFileSync('README.md', formatted);
 	// eslint-disable-next-line no-undef
 	process.exit(1);
