@@ -1,5 +1,5 @@
 #!/bin/sh
 
-trap "echo \"\nREADME.md has been updated. Please commit and repush.\n\" 1>&2" EXIT
+trap "echo \"\nREADME.md has been updated. Please commit and repush.\n\"" ERR
 
 node scripts/readme.js
