@@ -7,7 +7,6 @@ export default defineConfig({
 	lang: 'en-US',
 	lastUpdated: true,
 	cleanUrls: true,
-	srcDir: '..',
 	themeConfig: {
 		nav: [],
 		sidebar: [],
