@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 // No need to bundle the full zod library since we only use the typeNames
 // to identify the schemas.
 
@@ -48,14 +47,15 @@ import type { ZodConstructor } from '@/transformer/generator';
 
 // Forces typescript to cast our fake constructors as a true zod type
 const castAs = <T extends ZodTypeAny>(typeName: string) => {
-	const fake = () => {};
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	const mock = () => {};
 	// Reassign function name to match the zod type name
-	Object.defineProperty(fake, 'name', { value: typeName });
+	Object.defineProperty(mock, 'name', { value: typeName });
 	// Stubs out the create method so we can create "instances" to use with `.from`
-	Object.defineProperty(fake, 'create', {
+	Object.defineProperty(mock, 'create', {
 		value: () => ({ _def: { typeName } }),
 	});
-	return fake as unknown as ZodConstructor<T>;
+	return mock as unknown as ZodConstructor<T>;
 };
 
 export const ZodString = castAs<TrueZodString>('ZodString');
@@ -103,5 +103,3 @@ export const ZodBranded =
 	castAs<TrueZodBranded<ZodTypeAny, PropertyKey>>('ZodBranded');
 export const ZodPipeline =
 	castAs<TrueZodPipeline<ZodTypeAny, ZodTypeAny>>('ZodPipeline');
-
-/* eslint-enable @typescript-eslint/no-empty-function */
