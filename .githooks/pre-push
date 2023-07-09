@@ -1,5 +1,5 @@
 #!/bin/sh
 
-trap "echo \"\nREADME.md has been updated. Please commit and repush.\n\"" ERR
+trap "echo \"\nREADME.md has been auto-updated. Please commit and repush.\n\"" ERR
 
 node scripts/readme.js
