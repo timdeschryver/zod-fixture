@@ -54,7 +54,6 @@ The examples make use of a seed to generate the same fixture every time. This is
 
 ## Customizing
 
-testing
 This library provides utility methods to provide fine-grained support to create your fixtures.
 Take a look at the [examples](https://github.com/timdeschryver/zod-fixture/tree/beta/examples) to see how you can use `zod-fixture` in your tests.
 
