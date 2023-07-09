@@ -1,4 +1,5 @@
 import { expect, test } from 'vitest';
+// #region example
 import { ZodNumber, ZodObject, z } from 'zod';
 import { Fixture, Generator } from 'zod-fixture';
 
@@ -12,10 +13,12 @@ const addressGenerator = Generator({
 	}),
 });
 
+// #region generator
 const totalVisitsGenerator = Generator({
 	schema: ZodNumber,
 	output: ({ transform }) => transform.utils.random.int({ min: 0, max: 25 }),
 });
+// #endregion generator
 
 const PersonSchema = z.object({
 	name: z.string(),
@@ -34,9 +37,12 @@ const fixture = new Fixture({ seed: 38 }).extend([
 	totalVisitsGenerator,
 ]);
 const person = fixture.from(PersonSchema);
+// #endregion example
 
 test('generates a person', () => {
-	expect(person).toMatchInlineSnapshot(`
+	expect(person).toMatchInlineSnapshot(
+		// #region output
+		`
 		{
 		  "address": {
 		    "city": "My City",
@@ -61,5 +67,7 @@ test('generates a person', () => {
 		  ],
 		  "totalVisits": 22,
 		}
-	`);
+	`
+		// #endregion output
+	);
 });

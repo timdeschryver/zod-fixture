@@ -1,4 +1,5 @@
 import { expect, test } from 'vitest';
+// #region example
 import { z } from 'zod';
 import { Fixture } from 'zod-fixture';
 
@@ -16,9 +17,12 @@ const PersonSchema = z.object({
 
 const fixture = new Fixture({ seed: 11 });
 const person = fixture.from(PersonSchema);
+// #endregion example
 
 test('generates a person', () => {
-	expect(person).toMatchInlineSnapshot(`
+	expect(person).toMatchInlineSnapshot(
+		// #region output
+		`
 		{
 		  "address": {
 		    "city": "43K>5SG250E",
@@ -43,5 +47,7 @@ test('generates a person', () => {
 		  ],
 		  "totalVisits": 5544703130861567,
 		}
-	`);
+	`
+		// #endregion output
+	);
 });
