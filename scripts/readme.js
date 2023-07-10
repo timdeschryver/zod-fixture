@@ -26,14 +26,17 @@ const result = readme
 			let result = fs.readFileSync(resolved);
 
 			if (region) {
-				const open = `\\/\\/ #region ${region}\n`;
+				const open = `([ \t]*)\\/\\/ #region ${region}\n`;
 				const content = '([\\s\\S]*)';
-				const close = `\\/\\/ #endregion ${region}\n`;
+				const close = `([ \t]*)\\/\\/ #endregion ${region}\n`;
 				const matcher = new RegExp(`${open}${content}${close}`, 'g');
 				const match = matcher.exec(result);
 
 				if (!match) throw new Error(`Region not found: ${filepath}#${region}`);
-				result = match[1];
+				result = match[2].replace(
+					new RegExp(`${match[1]}(.*\n)`, 'g'),
+					(_, content) => content
+				);
 			}
 
 			const href = `https://github.com/timdeschryver/zod-fixture/tree/beta/${resolved}`;
@@ -44,7 +47,7 @@ const result = readme
 			return `${label}\n\`\`\`${type}\n${result}\n\`\`\``;
 		}
 	)
-	.replace(/\/\/ #(end)?region [\S]+\n?/g, '')
+	.replace(/\s*\/\/ #(end)?region [\S]+\n?/g, '')
 	.replace(/:::\s+(\S+)\n?([\s\S]*?)\n?:::/g, (m, type, content) => {
 		switch (type) {
 			case 'info':
