@@ -36,8 +36,8 @@ export class Transformer {
 		return this;
 	}
 
-	from<ZSchema extends ZodTypeAny>(
-		schema: ZSchema,
+	from<TSchema extends ZodTypeAny>(
+		schema: TSchema,
 		context: Context = { path: [] }
 	): unknown {
 		// eslint-disable-next-line @typescript-eslint/no-this-alias
