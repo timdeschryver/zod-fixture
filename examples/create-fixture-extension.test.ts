@@ -39,35 +39,35 @@ const fixture = new Fixture({ seed: 38 }).extend([
 const person = fixture.from(PersonSchema);
 // #endregion example
 
+const output = Object.assign(
+	// #region output
+	{
+		address: {
+			city: 'My City',
+			state: 'My State',
+			street: 'My Street',
+		},
+		birthday: new Date('1926-02-23T02:07:24.494Z'),
+		name: 'c',
+		pets: [
+			{
+				breed: '5yOQfkYfI6=kRuH^F?5BCNHft',
+				name: 'mYxRp1GBY2aw',
+			},
+			{
+				breed: '6Qz\\s',
+				name: '_',
+			},
+			{
+				breed: '6e9',
+				name: ';l]@',
+			},
+		],
+		totalVisits: 22,
+	}
+	// #endregion output
+);
+
 test('generates a person', () => {
-	expect(person).toMatchInlineSnapshot(
-		// #region output
-		`
-		{
-		  "address": {
-		    "city": "My City",
-		    "state": "My State",
-		    "street": "My Street",
-		  },
-		  "birthday": 1926-02-23T02:07:24.494Z,
-		  "name": "c",
-		  "pets": [
-		    {
-		      "breed": "5yOQfkYfI6=kRuH^F?5BCNHft",
-		      "name": "mYxRp1GBY2aw",
-		    },
-		    {
-		      "breed": "6Qz\\\\s",
-		      "name": "_",
-		    },
-		    {
-		      "breed": "6e9",
-		      "name": ";l]@",
-		    },
-		  ],
-		  "totalVisits": 22,
-		}
-	`
-		// #endregion output
-	);
+	expect(person).toEqual(output);
 });

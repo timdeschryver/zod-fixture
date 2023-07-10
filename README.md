@@ -78,32 +78,31 @@ const person = fixture.from(PersonSchema);
 <sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/create-fixture-person.test.ts)</sub>
 
 ```ts
-`
-		{
-		  "address": {
-		    "city": "43K>5SG250E",
-		    "state": "kbszkSZm^3Kg<CPyfa4z1HikF",
-		    "street": "oQes]5YUwRzbITAPk",
-		  },
-		  "birthday": 1980-09-26T06:36:51.341Z,
-		  "name": "8zGj;1humNI>G?8p6;ej\\\\T4jS3",
-		  "pets": [
-		    {
-		      "breed": "RIEgfwDI7]yK6RE581:h]QM^P",
-		      "name": "wgIuUNfJKl;i4\`\`l3\`A",
-		    },
-		    {
-		      "breed": "iVI2P\\\\",
-		      "name": "YOMKN<ukgnGg1qp\`CdV>",
-		    },
-		    {
-		      "breed": "fotFqP",
-		      "name": "8Z?ap[eGC",
-		    },
-		  ],
-		  "totalVisits": 5544703130861567,
-		}
-	`;
+	{
+		address: {
+			city: '43K>5SG250E',
+			state: 'kbszkSZm^3Kg<CPyfa4z1HikF',
+			street: 'oQes]5YUwRzbITAPk',
+		},
+		birthday: new Date('1980-09-26T06:36:51.341Z'),
+		name: '8zGj;1humNI>G?8p6;ej\\T4jS3',
+		pets: [
+			{
+				breed: 'RIEgfwDI7]yK6RE581:h]QM^P',
+				name: 'wgIuUNfJKl;i4``l3`A',
+			},
+			{
+				breed: 'iVI2P\\',
+				name: 'YOMKN<ukgnGg1qp`CdV>',
+			},
+			{
+				breed: 'fotFqP',
+				name: '8Z?ap[eGC',
+			},
+		],
+		totalVisits: 5544703130861567,
+	}
+
 ```
 
 ## Customizing
@@ -163,32 +162,31 @@ const person = fixture.from(PersonSchema);
 <sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/create-fixture-extension.test.ts)</sub>
 
 ```ts
-`
-		{
-		  "address": {
-		    "city": "My City",
-		    "state": "My State",
-		    "street": "My Street",
-		  },
-		  "birthday": 1926-02-23T02:07:24.494Z,
-		  "name": "c",
-		  "pets": [
-		    {
-		      "breed": "5yOQfkYfI6=kRuH^F?5BCNHft",
-		      "name": "mYxRp1GBY2aw",
-		    },
-		    {
-		      "breed": "6Qz\\\\s",
-		      "name": "_",
-		    },
-		    {
-		      "breed": "6e9",
-		      "name": ";l]@",
-		    },
-		  ],
-		  "totalVisits": 22,
-		}
-	`;
+	{
+		address: {
+			city: 'My City',
+			state: 'My State',
+			street: 'My Street',
+		},
+		birthday: new Date('1926-02-23T02:07:24.494Z'),
+		name: 'c',
+		pets: [
+			{
+				breed: '5yOQfkYfI6=kRuH^F?5BCNHft',
+				name: 'mYxRp1GBY2aw',
+			},
+			{
+				breed: '6Qz\\s',
+				name: '_',
+			},
+			{
+				breed: '6e9',
+				name: ';l]@',
+			},
+		],
+		totalVisits: 22,
+	}
+
 ```
 
 ### Create Your Own Transformer
