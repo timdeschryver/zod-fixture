@@ -1,6 +1,6 @@
+import { ZodMap } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
 import type { z } from 'zod';
-import { ZodMap } from 'zod';
 
 export const MapGenerator = Generator({
 	schema: ZodMap,

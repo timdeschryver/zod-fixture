@@ -1,5 +1,5 @@
+import { ZodLazy } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
-import { ZodLazy } from 'zod';
 
 export const LazyGenerator = Generator({
 	schema: ZodLazy,

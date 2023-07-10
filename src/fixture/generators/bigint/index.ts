@@ -1,5 +1,5 @@
+import { ZodBigInt } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
-import { ZodBigInt } from 'zod';
 
 export const BigIntGenerator = Generator({
 	schema: ZodBigInt,

@@ -1,6 +1,6 @@
+import { ZodSet } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
 import type { z } from 'zod';
-import { ZodSet } from 'zod';
 
 export const SetGenerator = Generator({
 	schema: ZodSet,

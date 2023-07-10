@@ -1,5 +1,5 @@
+import { ZodDiscriminatedUnion, ZodUnion } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
-import { ZodDiscriminatedUnion, ZodUnion } from 'zod';
 
 export const UnionGenerator = Generator({
 	schema: ZodUnion,
