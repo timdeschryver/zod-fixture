@@ -11,6 +11,6 @@ describe('create a symbol type', () => {
 	});
 
 	test('creates a symbol', () => {
-		expect(transform.from(z.symbol())).toBeTypeOf('symbol');
+		expect(transform.fromSchema(z.symbol())).toBeTypeOf('symbol');
 	});
 });

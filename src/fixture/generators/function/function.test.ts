@@ -11,6 +11,6 @@ describe('create Functions', () => {
 	});
 
 	test('creates a function', () => {
-		expect(transform.from(z.function())).toBeTypeOf('function');
+		expect(transform.fromSchema(z.function())).toBeTypeOf('function');
 	});
 });

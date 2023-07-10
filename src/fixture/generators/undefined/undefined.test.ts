@@ -11,6 +11,6 @@ describe('create empty types', () => {
 	});
 
 	test('creates an undefined', () => {
-		expect(transform.from(z.undefined())).toBeUndefined();
+		expect(transform.fromSchema(z.undefined())).toBeUndefined();
 	});
 });

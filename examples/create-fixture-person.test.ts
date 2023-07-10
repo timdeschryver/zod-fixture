@@ -15,7 +15,7 @@ const PersonSchema = z.object({
 });
 
 const fixture = new Fixture({ seed: 11 });
-const person = fixture.from(PersonSchema);
+const person = fixture.fromSchema(PersonSchema);
 
 test('generates a person', () => {
 	expect(person).toMatchInlineSnapshot(`

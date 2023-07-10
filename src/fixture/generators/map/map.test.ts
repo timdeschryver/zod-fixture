@@ -18,7 +18,7 @@ describe('create Maps', () => {
 
 	test('creates a Map with 3 entries', () => {
 		const input = z.map(z.string(), z.number());
-		const result = transform.from(input);
+		const result = transform.fromSchema(input);
 
 		type I = z.infer<typeof input>;
 

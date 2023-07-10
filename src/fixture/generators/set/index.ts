@@ -14,7 +14,7 @@ export const SetGenerator = Generator({
 			transform.utils.n(
 				() => {
 					result.add(
-						transform.from(valueType, {
+						transform.fromSchema(valueType, {
 							path: [...context.path, result.size],
 						})
 					);

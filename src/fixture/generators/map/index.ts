@@ -13,8 +13,8 @@ export const MapGenerator = Generator({
 		transform.utils.ifNotNever(key, (keySchema) => {
 			transform.utils.ifNotNever(value, (valueSchema) => {
 				transform.utils.n(() => {
-					const k = transform.from(keySchema, context) as string | number;
-					const v = transform.from(valueSchema, {
+					const k = transform.fromSchema(keySchema, context) as string | number;
+					const v = transform.fromSchema(valueSchema, {
 						path: [...context.path, k],
 					});
 

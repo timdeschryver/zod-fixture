@@ -10,7 +10,9 @@ export const ObjectGenerator = Generator({
 
 		for (const key in shape) {
 			transform.utils.ifNotNever(shape[key], (schema) => {
-				result[key] = transform.from(schema, { path: [...context.path, key] });
+				result[key] = transform.fromSchema(schema, {
+					path: [...context.path, key],
+				});
 			});
 		}
 		const passthrough =
@@ -23,7 +25,9 @@ export const ObjectGenerator = Generator({
 				def.catchall._def.typeName === 'ZodNever'
 					? ZodAny.create()
 					: def.catchall;
-			result[key] = transform.from(type, { path: [...context.path, key] });
+			result[key] = transform.fromSchema(type, {
+				path: [...context.path, key],
+			});
 		}
 
 		return result;
@@ -41,8 +45,8 @@ export const RecordGenerator = Generator({
 		transform.utils.ifNotNever(def.keyType, (keyType) => {
 			transform.utils.ifNotNever(def.valueType, (valueType) => {
 				transform.utils.n(() => {
-					const key = transform.from(keyType, context) as string | number;
-					const value = transform.from(valueType, {
+					const key = transform.fromSchema(keyType, context) as string | number;
+					const value = transform.fromSchema(valueType, {
 						path: [...context.path, key],
 					});
 

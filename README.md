@@ -82,7 +82,7 @@ const PersonSchema = z.object({
 });
 
 const fixture = new Fixture({ seed: 11 });
-const person = fixture.from(PersonSchema);
+const person = fixture.fromSchema(PersonSchema);
 ```
 
 <!-- embedme examples/create-fixture-person.test.ts#L22-L45 -->
@@ -198,7 +198,7 @@ const transform = new Transformer().extend([
 	/* insert your generators here */
 ]);
 
-const value = transform.from(zodSchema);
+const value = transform.fromSchema(zodSchema);
 ```
 
 ## API

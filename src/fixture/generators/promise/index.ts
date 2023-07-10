@@ -4,5 +4,5 @@ import { Generator } from '@/transformer/generator';
 export const PromiseGenerator = Generator({
 	schema: ZodPromise,
 	output: ({ def, transform, context }) =>
-		Promise.resolve(transform.from(def.type, context)),
+		Promise.resolve(transform.fromSchema(def.type, context)),
 });

@@ -36,7 +36,7 @@ export class Transformer {
 		return this;
 	}
 
-	from<TSchema extends ZodTypeAny>(
+	fromSchema<TSchema extends ZodTypeAny>(
 		schema: TSchema,
 		context: Context = { path: [] }
 	): unknown {

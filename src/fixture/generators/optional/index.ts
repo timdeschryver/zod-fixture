@@ -4,5 +4,5 @@ import { Generator } from '@/transformer/generator';
 export const OptionalGenerator = Generator({
 	schema: ZodOptional,
 	output: ({ def, transform, context }) =>
-		transform.from(def.innerType, context),
+		transform.fromSchema(def.innerType, context),
 });
