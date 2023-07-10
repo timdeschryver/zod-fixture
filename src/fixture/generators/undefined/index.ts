@@ -1,5 +1,5 @@
+import { ZodUndefined, ZodVoid } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
-import { ZodUndefined, ZodVoid } from 'zod';
 
 export const UndefinedGenerator = Generator({
 	schema: ZodUndefined,

@@ -1,5 +1,5 @@
+import { ZodTuple } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
-import { ZodTuple } from 'zod';
 
 export const TupleGenerator = Generator({
 	schema: ZodTuple,
