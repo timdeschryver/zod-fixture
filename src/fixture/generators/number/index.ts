@@ -1,5 +1,5 @@
+import { ZodNumber } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
-import { ZodNumber } from 'zod';
 
 export const NumberGenerator = Generator({
 	schema: ZodNumber,

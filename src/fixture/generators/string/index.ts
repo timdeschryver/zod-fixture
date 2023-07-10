@@ -1,7 +1,7 @@
+import { ZodString } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
 import type { Transformer } from '@/transformer/transformer';
 import type { ZodStringDef } from 'zod';
-import { ZodString } from 'zod';
 
 function formatString(
 	transform: Transformer,

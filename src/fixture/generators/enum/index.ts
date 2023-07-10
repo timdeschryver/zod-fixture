@@ -1,5 +1,5 @@
+import { ZodEnum, ZodNativeEnum } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
-import { ZodEnum, ZodNativeEnum } from 'zod';
 
 export const EnumGenerator = Generator({
 	schema: ZodEnum,

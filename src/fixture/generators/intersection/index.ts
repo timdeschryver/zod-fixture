@@ -1,5 +1,7 @@
+import { ZodIntersection } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
-import { ZodIntersection, ZodParsedType, getParsedType, util } from 'zod';
+// @TODO: refactor so we don't have to bundle zod
+import { ZodParsedType, getParsedType, util } from 'zod';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const IntersectionGenerator = Generator({

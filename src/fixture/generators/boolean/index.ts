@@ -1,5 +1,5 @@
+import { ZodBoolean } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
-import { ZodBoolean } from 'zod';
 
 // eslint-disable-next-line prefer-const
 let toggle = false;

@@ -1,5 +1,5 @@
+import { ZodArray } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
-import { ZodArray } from 'zod';
 
 export const ArrayGenerator = Generator({
 	schema: ZodArray,
