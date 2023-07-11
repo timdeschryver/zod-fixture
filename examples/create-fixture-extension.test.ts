@@ -1,4 +1,5 @@
 import { expect, test } from 'vitest';
+// #region example
 import { ZodNumber, ZodObject, z } from 'zod';
 import { Fixture, Generator } from 'zod-fixture';
 
@@ -12,10 +13,12 @@ const addressGenerator = Generator({
 	}),
 });
 
+// #region generator
 const totalVisitsGenerator = Generator({
 	schema: ZodNumber,
 	output: ({ transform }) => transform.utils.random.int({ min: 0, max: 25 }),
 });
+// #endregion generator
 
 const PersonSchema = z.object({
 	name: z.string(),
@@ -34,32 +37,37 @@ const fixture = new Fixture({ seed: 38 }).extend([
 	totalVisitsGenerator,
 ]);
 const person = fixture.fromSchema(PersonSchema);
+// #endregion example
+
+const output = Object.assign(
+	// #region output
+	{
+		address: {
+			city: 'My City',
+			state: 'My State',
+			street: 'My Street',
+		},
+		birthday: new Date('1926-02-23T02:07:24.494Z'),
+		name: 'c',
+		pets: [
+			{
+				breed: '5yOQfkYfI6=kRuH^F?5BCNHft',
+				name: 'mYxRp1GBY2aw',
+			},
+			{
+				breed: '6Qz\\s',
+				name: '_',
+			},
+			{
+				breed: '6e9',
+				name: ';l]@',
+			},
+		],
+		totalVisits: 22,
+	}
+	// #endregion output
+);
 
 test('generates a person', () => {
-	expect(person).toMatchInlineSnapshot(`
-		{
-		  "address": {
-		    "city": "My City",
-		    "state": "My State",
-		    "street": "My Street",
-		  },
-		  "birthday": 1926-02-23T02:07:24.494Z,
-		  "name": "c",
-		  "pets": [
-		    {
-		      "breed": "5yOQfkYfI6=kRuH^F?5BCNHft",
-		      "name": "mYxRp1GBY2aw",
-		    },
-		    {
-		      "breed": "6Qz\\\\s",
-		      "name": "_",
-		    },
-		    {
-		      "breed": "6e9",
-		      "name": ";l]@",
-		    },
-		  ],
-		  "totalVisits": 22,
-		}
-	`);
+	expect(person).toEqual(output);
 });

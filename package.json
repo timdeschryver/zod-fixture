@@ -13,7 +13,6 @@
 		"lint": "eslint . --max-warnings 0",
 		"prepare": "git config core.hookspath .githooks",
 		"docs:dev": "vitepress dev docs",
-		"predocs:build": "node ./scripts/predocs-build.js",
 		"docs:build": "vitepress build docs",
 		"docs:preview": "vitepress preview docs"
 	},

@@ -15,4 +15,3 @@ dist
 *.tgz
 **/.vitepress/dist
 **/.vitepress/cache
-index.md
