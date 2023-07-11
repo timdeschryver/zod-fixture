@@ -30,7 +30,7 @@ describe('create Tuples', () => {
 				pointsStransformd: z.number(),
 			}), // statistics
 		]);
-		const result = transform.from(input);
+		const result = transform.fromSchema(input);
 
 		type I = z.infer<typeof input>;
 
@@ -43,7 +43,7 @@ describe('create Tuples', () => {
 
 	test('creates a tuple with variadic rest argument', () => {
 		const input = z.tuple([z.string()]).rest(z.number());
-		const result = transform.from(input);
+		const result = transform.fromSchema(input);
 		type I = z.infer<typeof input>;
 
 		expect(result as I).toHaveLength(2);

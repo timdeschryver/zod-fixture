@@ -4,5 +4,5 @@ import { Generator } from '@/transformer/generator';
 export const NullableGenerator = Generator({
 	schema: ZodNullable,
 	output: ({ def, transform, context }) =>
-		transform.from(def.innerType, context),
+		transform.fromSchema(def.innerType, context),
 });

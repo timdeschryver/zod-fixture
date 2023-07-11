@@ -15,6 +15,6 @@ describe('create empty types', () => {
 	});
 
 	test('creates a nullable string', () => {
-		expect(transform.from(z.string().nullable())).toBeTypeOf('string');
+		expect(transform.fromSchema(z.string().nullable())).toBeTypeOf('string');
 	});
 });

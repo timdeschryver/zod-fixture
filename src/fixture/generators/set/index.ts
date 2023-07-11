@@ -10,16 +10,18 @@ export const SetGenerator = Generator({
 
 		const result = new Set<z.infer<typeof def.valueType>>();
 
-		transform.utils.n(
-			() => {
-				result.add(
-					transform.from(def.valueType, {
-						path: [...context.path, result.size],
-					})
-				);
-			},
-			{ min, max }
-		);
+		transform.utils.ifNotNever(def.valueType, (valueType) => {
+			transform.utils.n(
+				() => {
+					result.add(
+						transform.fromSchema(valueType, {
+							path: [...context.path, result.size],
+						})
+					);
+				},
+				{ min, max }
+			);
+		});
 
 		return result;
 	},

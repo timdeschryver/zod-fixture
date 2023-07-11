@@ -10,12 +10,18 @@ export const MapGenerator = Generator({
 
 		const map = new Map<z.infer<typeof key>, z.infer<typeof value>>();
 
-		transform.utils.n(() => {
-			const k = transform.from(key, context) as string | number;
-			const v = transform.from(value, { path: [...context.path, k] });
+		transform.utils.ifNotNever(key, (keySchema) => {
+			transform.utils.ifNotNever(value, (valueSchema) => {
+				transform.utils.n(() => {
+					const k = transform.fromSchema(keySchema, context) as string | number;
+					const v = transform.fromSchema(valueSchema, {
+						path: [...context.path, k],
+					});
 
-			map.set(k, v);
-		}, transform.defaults.map);
+					map.set(k, v);
+				}, transform.defaults.map);
+			});
+		});
 
 		return map;
 	},

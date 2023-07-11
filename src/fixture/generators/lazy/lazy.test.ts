@@ -12,6 +12,6 @@ describe('create a lazy type', () => {
 	});
 
 	test('creates a promise with the correct type', () => {
-		expect(transform.from(z.lazy(() => z.number()))).toBeTypeOf('number');
+		expect(transform.fromSchema(z.lazy(() => z.number()))).toBeTypeOf('number');
 	});
 });

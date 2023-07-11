@@ -11,14 +11,14 @@ describe('create literals', () => {
 	});
 
 	test('creates a string literal and returns its value', () => {
-		expect(transform.from(z.literal('tuna'))).toBe('tuna');
+		expect(transform.fromSchema(z.literal('tuna'))).toBe('tuna');
 	});
 
 	test('creates a number literal and returns its value', () => {
-		expect(transform.from(z.literal(12))).toBe(12);
+		expect(transform.fromSchema(z.literal(12))).toBe(12);
 	});
 
 	test('creates a boolean literal and returns its value', () => {
-		expect(transform.from(z.literal(true))).toBe(true);
+		expect(transform.fromSchema(z.literal(true))).toBe(true);
 	});
 });

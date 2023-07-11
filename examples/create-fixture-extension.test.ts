@@ -36,7 +36,7 @@ const fixture = new Fixture({ seed: 38 }).extend([
 	addressGenerator,
 	totalVisitsGenerator,
 ]);
-const person = fixture.from(PersonSchema);
+const person = fixture.fromSchema(PersonSchema);
 // #endregion example
 
 const output = Object.assign(

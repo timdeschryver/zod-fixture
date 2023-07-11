@@ -72,7 +72,7 @@ const PersonSchema = z.object({
 });
 
 const fixture = new Fixture({ seed: 11 });
-const person = fixture.from(PersonSchema);
+const person = fixture.fromSchema(PersonSchema);
 ```
 
 <sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/create-fixture-person.test.ts)</sub>
@@ -154,7 +154,7 @@ const fixture = new Fixture({ seed: 38 }).extend([
 	addressGenerator,
 	totalVisitsGenerator,
 ]);
-const person = fixture.from(PersonSchema);
+const person = fixture.fromSchema(PersonSchema);
 ```
 
 <sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/create-fixture-extension.test.ts)</sub>

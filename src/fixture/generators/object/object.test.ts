@@ -42,7 +42,7 @@ describe('create objects', () => {
 	});
 
 	test('creates an empty object', () => {
-		expect(transform.from(z.object({}))).toBeTypeOf('object');
+		expect(transform.fromSchema(z.object({}))).toBeTypeOf('object');
 	});
 
 	test('produces a valid object', () => {
@@ -62,7 +62,7 @@ describe('create objects', () => {
 
 		type I = z.infer<typeof input>;
 
-		const result = transform.from(input);
+		const result = transform.fromSchema(input);
 
 		expect(result).toBeTypeOf('object');
 		expect((result as I).str).toBeTypeOf('string');
@@ -92,7 +92,7 @@ describe('create objects', () => {
 
 		type I = z.infer<typeof input>;
 
-		const result = transform.from(input);
+		const result = transform.fromSchema(input);
 		expect(result).toBeTypeOf('object');
 		expect((result as I).str).toBeTypeOf('string');
 		expect((result as I).nested.num).toBeTypeOf('number');
@@ -106,7 +106,7 @@ describe('create objects', () => {
 		type BaseTeacher = z.infer<typeof BaseTeacher>;
 		type HasID = z.infer<typeof HasID>;
 
-		const result = transform.from(Teacher);
+		const result = transform.fromSchema(Teacher);
 		expect(result).toBeTypeOf('object');
 		expect((result as HasID).id).toBeTypeOf('string');
 		expect((result as BaseTeacher).name).toBeTypeOf('string');
@@ -122,7 +122,7 @@ describe('create objects', () => {
 
 		type I = z.infer<typeof input>;
 
-		const result = transform.from(input);
+		const result = transform.fromSchema(input);
 
 		expect(result).toBeTypeOf('object');
 		expect((result as I).str).toBeTypeOf('string');
@@ -144,7 +144,7 @@ describe('create Records', () => {
 
 	test('creates a record with 3 entries', () => {
 		const input = z.record(z.number());
-		const result = transform.from(input);
+		const result = transform.fromSchema(input);
 
 		type I = z.infer<typeof input>;
 
@@ -155,7 +155,7 @@ describe('create Records', () => {
 
 	test('creates a record with a defined key type', () => {
 		const input = z.record(z.string(), z.string());
-		const result = transform.from(input);
+		const result = transform.fromSchema(input);
 
 		type I = z.infer<typeof input>;
 

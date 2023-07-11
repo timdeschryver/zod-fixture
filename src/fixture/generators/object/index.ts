@@ -9,11 +9,12 @@ export const ObjectGenerator = Generator({
 		const result: Record<string, unknown> = {};
 
 		for (const key in shape) {
-			const type = shape[key];
-			if (type)
-				result[key] = transform.from(type, { path: [...context.path, key] });
+			transform.utils.ifNotNever(shape[key], (schema) => {
+				result[key] = transform.fromSchema(schema, {
+					path: [...context.path, key],
+				});
+			});
 		}
-
 		const passthrough =
 			def.unknownKeys === 'passthrough' ||
 			def.catchall._def.typeName !== 'ZodNever';
@@ -24,7 +25,9 @@ export const ObjectGenerator = Generator({
 				def.catchall._def.typeName === 'ZodNever'
 					? ZodAny.create()
 					: def.catchall;
-			result[key] = transform.from(type, { path: [...context.path, key] });
+			result[key] = transform.fromSchema(type, {
+				path: [...context.path, key],
+			});
 		}
 
 		return result;
@@ -39,13 +42,17 @@ export const RecordGenerator = Generator({
 			z.infer<typeof def.valueType>
 		> = {};
 
-		transform.utils.n(() => {
-			const key = transform.from(def.keyType, context) as string | number;
-			const value = transform.from(def.valueType, {
-				path: [...context.path, key],
-			});
+		transform.utils.ifNotNever(def.keyType, (keyType) => {
+			transform.utils.ifNotNever(def.valueType, (valueType) => {
+				transform.utils.n(() => {
+					const key = transform.fromSchema(keyType, context) as string | number;
+					const value = transform.fromSchema(valueType, {
+						path: [...context.path, key],
+					});
 
-			result[key] = value;
+					result[key] = value;
+				});
+			});
 		});
 
 		return result;

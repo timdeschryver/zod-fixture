@@ -11,6 +11,6 @@ describe('create NaNs', () => {
 	});
 
 	test('creates a NaN', () => {
-		expect(Number.isNaN(transform.from(z.nan()))).toBeTruthy();
+		expect(Number.isNaN(transform.fromSchema(z.nan()))).toBeTruthy();
 	});
 });

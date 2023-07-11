@@ -16,7 +16,7 @@ test('creates a fixture', () => {
 		totalVisits: z.number(),
 	});
 
-	const result = new Fixture().from(PersonSchema);
+	const result = new Fixture().fromSchema(PersonSchema);
 	expect(result.name).toBeTypeOf('string');
 	expect(result.birthday).toBeInstanceOf(Date);
 	expect(result.address).toBeTypeOf('object');
@@ -37,7 +37,7 @@ test(`priotizes generators via extend`, () => {
 		output: () => 4,
 	});
 
-	const result = new Fixture().extend(FooNumberGenerator).from(
+	const result = new Fixture().extend(FooNumberGenerator).fromSchema(
 		z.object({
 			foo: z.number(),
 			other: z.number(),

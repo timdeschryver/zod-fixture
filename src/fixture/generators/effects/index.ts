@@ -8,7 +8,7 @@ export const TransformGenerator = Generator({
 		if (def.effect.type !== 'transform')
 			throw new Error('Must be a transform effect.');
 
-		const initialValue = transform.from(def.schema, context);
+		const initialValue = transform.fromSchema(def.schema, context);
 		return def.effect.transform(initialValue, {
 			addIssue: transform.utils.noop,
 			// @TODO: Verify that path is not needed here.
@@ -27,7 +27,7 @@ export const PreprocessGenerator = Generator({
 		// We don't actually care about the preprocessor
 		// when mocking data because we're not validating
 		// input. We only care about the expected output.
-		return transform.from(def.schema, context);
+		return transform.fromSchema(def.schema, context);
 	},
 });
 
@@ -43,6 +43,6 @@ export const RefinementGenerator = Generator({
 		console.warn(
 			`Because refinements use custom validations, we have no way to accurately manufacture acceptable values. Using the parent type (${schema._def.typeName}) to approximate the result.`
 		);
-		return transform.from(schema, context);
+		return transform.fromSchema(schema, context);
 	},
 });
