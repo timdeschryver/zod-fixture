@@ -15,6 +15,8 @@ describe('create a promise type', () => {
 	});
 
 	test('creates a promise with the correct type', () => {
-		expect(transform.from(z.promise(z.number()))).resolves.toBeTypeOf('number');
+		expect(transform.fromSchema(z.promise(z.number()))).resolves.toBeTypeOf(
+			'number'
+		);
 	});
 });

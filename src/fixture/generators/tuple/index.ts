@@ -8,7 +8,9 @@ export const TupleGenerator = Generator({
 
 		def.items.forEach((type, idx) => {
 			transform.utils.ifNotNever(type, (schema) => {
-				known.push(transform.from(schema, { path: [...context.path, idx] }));
+				known.push(
+					transform.fromSchema(schema, { path: [...context.path, idx] })
+				);
 			});
 		});
 
@@ -17,9 +19,8 @@ export const TupleGenerator = Generator({
 		transform.utils.ifNotNever(def.rest, (schema) => {
 			transform.utils.n(
 				(idx) =>
-					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 					rest.push(
-						transform.from(schema, {
+						transform.fromSchema(schema, {
 							path: [...context.path, known.length + idx],
 						})
 					),

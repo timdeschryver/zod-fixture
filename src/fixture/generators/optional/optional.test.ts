@@ -29,23 +29,23 @@ describe('create empty types', () => {
 	});
 
 	test('creates a nullable string', () => {
-		expect(transform.from(z.string().nullish())).toBeTypeOf('string');
-		expect(transform.from(z.string().optional())).toBeTypeOf('string');
+		expect(transform.fromSchema(z.string().nullish())).toBeTypeOf('string');
+		expect(transform.fromSchema(z.string().optional())).toBeTypeOf('string');
 	});
 
 	test('creates a nullable boolean', () => {
-		expect(transform.from(z.boolean().nullish())).toBeTypeOf('boolean');
-		expect(transform.from(z.boolean().optional())).toBeTypeOf('boolean');
+		expect(transform.fromSchema(z.boolean().nullish())).toBeTypeOf('boolean');
+		expect(transform.fromSchema(z.boolean().optional())).toBeTypeOf('boolean');
 	});
 
 	test('creates a nullable number', () => {
-		expect(transform.from(z.number().nullish())).toBeTypeOf('number');
-		expect(transform.from(z.number().optional())).toBeTypeOf('number');
+		expect(transform.fromSchema(z.number().nullish())).toBeTypeOf('number');
+		expect(transform.fromSchema(z.number().optional())).toBeTypeOf('number');
 	});
 
 	test('creates a nullable empty object', () => {
-		expect(transform.from(z.object({}).optional())).toBeTypeOf('object');
-		expect(transform.from(z.object({}).nullish())).toBeTypeOf('object');
+		expect(transform.fromSchema(z.object({}).optional())).toBeTypeOf('object');
+		expect(transform.fromSchema(z.object({}).nullish())).toBeTypeOf('object');
 	});
 
 	test('creates object with optional value ', () => {
@@ -54,12 +54,12 @@ describe('create empty types', () => {
 			modify: z.number().optional(),
 		});
 		expect(() => {
-			transform.from(SampleWithOptionalValueSchema);
+			transform.fromSchema(SampleWithOptionalValueSchema);
 		}).not.toThrow();
 	});
 
 	test('creates a nullable date', () => {
-		expect(transform.from(z.date().nullish())).toBeInstanceOf(Date);
-		expect(transform.from(z.date().optional())).toBeInstanceOf(Date);
+		expect(transform.fromSchema(z.date().nullish())).toBeInstanceOf(Date);
+		expect(transform.fromSchema(z.date().optional())).toBeInstanceOf(Date);
 	});
 });

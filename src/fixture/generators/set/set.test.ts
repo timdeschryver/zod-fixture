@@ -13,7 +13,7 @@ describe('create Sets', () => {
 
 	test('creates a Set with 3 entries', () => {
 		const input = z.set(z.number());
-		const result = transform.from(input);
+		const result = transform.fromSchema(input);
 
 		type I = z.infer<typeof input>;
 

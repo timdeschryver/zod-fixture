@@ -6,7 +6,7 @@ export const UnionGenerator = Generator({
 	output: ({ def, transform, context }) => {
 		const type = transform.utils.random.from(def.options);
 
-		return transform.from(type, context);
+		return transform.fromSchema(type, context);
 	},
 });
 
@@ -15,6 +15,6 @@ export const DiscriminatedUnionGenerator = Generator({
 	output: ({ def, transform, context }) => {
 		const type = transform.utils.random.from(def.options);
 
-		return transform.from(type, context);
+		return transform.fromSchema(type, context);
 	},
 });

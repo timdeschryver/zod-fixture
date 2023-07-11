@@ -8,7 +8,7 @@ expect.extend({
 		iterations = process.env.SATISFY_ITERATIONS || 100
 	) {
 		for (let i = 0; i < iterations; i++) {
-			const fixture = transform.from(schema);
+			const fixture = transform.fromSchema(schema);
 			const result = schema.safeParse(fixture);
 
 			if (result.success === false) {

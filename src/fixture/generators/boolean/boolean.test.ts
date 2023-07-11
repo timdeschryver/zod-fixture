@@ -11,14 +11,14 @@ describe('create booleans', () => {
 	});
 
 	test('creates a boolean', () => {
-		expect(transform.from(z.boolean())).toBeTypeOf('boolean');
+		expect(transform.fromSchema(z.boolean())).toBeTypeOf('boolean');
 	});
 
 	test('alternates between boolean values', () => {
-		const one = transform.from(z.boolean());
-		const two = transform.from(z.boolean());
-		const three = transform.from(z.boolean());
-		const four = transform.from(z.boolean());
+		const one = transform.fromSchema(z.boolean());
+		const two = transform.fromSchema(z.boolean());
+		const three = transform.fromSchema(z.boolean());
+		const four = transform.fromSchema(z.boolean());
 
 		expect(one).not.toBe(two);
 		expect(one).toBe(three);

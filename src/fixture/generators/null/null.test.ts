@@ -11,6 +11,6 @@ describe('create empty types', () => {
 	});
 
 	test('creates a null', () => {
-		expect(transform.from(z.null())).toBeNull();
+		expect(transform.fromSchema(z.null())).toBeNull();
 	});
 });

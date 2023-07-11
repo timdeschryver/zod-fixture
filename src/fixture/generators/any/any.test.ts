@@ -13,6 +13,6 @@ describe('create any', () => {
 		const transform = new Transformer().extend([AnyGenerator]);
 		const schema = z.any();
 		expect(transform).toReasonablySatisfy(schema);
-		expect(transform.from(schema)).toBeTypeOf('string');
+		expect(transform.fromSchema(schema)).toBeTypeOf('string');
 	});
 });

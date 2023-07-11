@@ -22,13 +22,13 @@ describe('create unions', () => {
 	});
 
 	test('creates a union value', () => {
-		expect(typeof transform.from(z.union([z.string(), z.number()]))).toMatch(
-			/^string|number$/
-		);
+		expect(
+			typeof transform.fromSchema(z.union([z.string(), z.number()]))
+		).toMatch(/^string|number$/);
 	});
 
 	test('creates a union value with the or syntax', () => {
-		expect(typeof transform.from(z.string().or(z.number()))).toMatch(
+		expect(typeof transform.fromSchema(z.string().or(z.number()))).toMatch(
 			/^string|number$/
 		);
 	});
@@ -38,7 +38,7 @@ describe('create unions', () => {
 			z.object({ type: z.literal('a'), a: z.string() }),
 			z.object({ type: z.literal('b'), b: z.string() }),
 		]);
-		const result = transform.from(input);
+		const result = transform.fromSchema(input);
 
 		type I = z.infer<typeof input>;
 

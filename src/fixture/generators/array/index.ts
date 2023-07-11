@@ -18,7 +18,9 @@ export const ArrayGenerator = Generator({
 		transform.utils.ifNotNever(def.type, (schema) => {
 			transform.utils.n(
 				(key) =>
-					result.push(transform.from(schema, { path: [...context.path, key] })),
+					result.push(
+						transform.fromSchema(schema, { path: [...context.path, key] })
+					),
 				{ min, max }
 			);
 		});

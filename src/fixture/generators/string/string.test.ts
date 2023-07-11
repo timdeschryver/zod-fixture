@@ -34,7 +34,7 @@ describe('create strings', () => {
 	});
 
 	test('creates a string', () => {
-		expect(transform.from(z.string())).toBeTypeOf('string');
+		expect(transform.fromSchema(z.string())).toBeTypeOf('string');
 	});
 
 	test('produces a valid string with length', () => {
@@ -42,7 +42,7 @@ describe('create strings', () => {
 	});
 
 	test('creates a string with a fixed length', () => {
-		expect(transform.from(z.string().length(5))).toHaveLength(5);
+		expect(transform.fromSchema(z.string().length(5))).toHaveLength(5);
 	});
 
 	test('produces a valid string with min and max', () => {
@@ -51,22 +51,24 @@ describe('create strings', () => {
 
 	test('creates a string with a min length', () => {
 		expect(
-			(transform.from(z.string().min(100)) as string).length
+			(transform.fromSchema(z.string().min(100)) as string).length
 		).toBeGreaterThanOrEqual(100);
 	});
 
 	test('creates a string with a max length', () => {
 		expect(
-			(transform.from(z.string().max(2)) as string).length
+			(transform.fromSchema(z.string().max(2)) as string).length
 		).toBeLessThanOrEqual(2);
 	});
 
 	test('throws when min is greater than max', () => {
-		expect(() => transform.from(z.string().min(50).max(40))).toThrowError();
+		expect(() =>
+			transform.fromSchema(z.string().min(50).max(40))
+		).toThrowError();
 	});
 
 	test('throws when min is negative', () => {
-		expect(() => transform.from(z.string().min(-1))).toThrowError();
+		expect(() => transform.fromSchema(z.string().min(-1))).toThrowError();
 	});
 
 	test('produces a valid string that is a uuid', () => {
@@ -74,7 +76,7 @@ describe('create strings', () => {
 	});
 
 	test('creates a string that is a uuid', () => {
-		expect(transform.from(z.string().uuid())).toMatch(
+		expect(transform.fromSchema(z.string().uuid())).toMatch(
 			/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 		);
 	});
@@ -83,12 +85,12 @@ describe('create strings', () => {
 		const schema = z.object({
 			lastFour: z.string().length(4),
 		});
-		const fixture = transform.from(schema) as z.infer<typeof schema>;
+		const fixture = transform.fromSchema(schema) as z.infer<typeof schema>;
 		expect(fixture.lastFour).toHaveLength(4);
 	});
 
 	test('cuid throws an error', () => {
-		expect(() => transform.from(z.string().cuid())).toThrowError();
+		expect(() => transform.fromSchema(z.string().cuid())).toThrowError();
 	});
 
 	test('produces a valid string that is a cuid2', () => {
@@ -96,7 +98,9 @@ describe('create strings', () => {
 	});
 
 	test('creates a string that is a cuid2', () => {
-		expect(isCuid2(transform.from(z.string().cuid2()) as string)).toBeTruthy();
+		expect(
+			isCuid2(transform.fromSchema(z.string().cuid2()) as string)
+		).toBeTruthy();
 	});
 
 	test('produces a valid string that is a email', () => {
@@ -104,7 +108,7 @@ describe('create strings', () => {
 	});
 
 	test('creates a string that is an email', () => {
-		const email = transform.from(z.string().email());
+		const email = transform.fromSchema(z.string().email());
 		expect(email).include('@');
 		expect(email).include('.');
 	});
@@ -114,7 +118,7 @@ describe('create strings', () => {
 	});
 
 	test('creates a string is lowercase', () => {
-		const lowercase = transform.from(z.string().toLowerCase());
+		const lowercase = transform.fromSchema(z.string().toLowerCase());
 		expect(lowercase).toMatch(/^[^A-Z]*$/);
 	});
 
@@ -123,7 +127,7 @@ describe('create strings', () => {
 	});
 
 	test('creates a string is uppercase', () => {
-		const uppercase = transform.from(z.string().toUpperCase());
+		const uppercase = transform.fromSchema(z.string().toUpperCase());
 		expect(uppercase).toMatch(/^[^a-z]*$/);
 	});
 
@@ -134,17 +138,19 @@ describe('create strings', () => {
 	});
 
 	test('creates a string that startsWith', () => {
-		const value = transform.from(z.string().startsWith('start_')) as string;
+		const value = transform.fromSchema(
+			z.string().startsWith('start_')
+		) as string;
 		expect(value.startsWith('start_')).toBeTruthy();
 	});
 
 	test('creates a string that endsWith', () => {
-		const value = transform.from(z.string().endsWith('_end')) as string;
+		const value = transform.fromSchema(z.string().endsWith('_end')) as string;
 		expect(value.endsWith('_end')).toBeTruthy();
 	});
 
 	test('creates a string that startsWith and endsWith', () => {
-		const value = transform.from(
+		const value = transform.fromSchema(
 			z.string().startsWith('start_').endsWith('_end')
 		) as string;
 		expect(value.startsWith('start_')).toBeTruthy();
@@ -156,24 +162,24 @@ describe('create strings', () => {
 	});
 
 	test('creates a string that is an URL', () => {
-		const url = transform.from(z.string().url());
+		const url = transform.fromSchema(z.string().url());
 		expect(url).toMatch(
 			/(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-/]))?/
 		);
 	});
 
 	test('creates a small string using length', () => {
-		const value = transform.from(z.string().length(2));
+		const value = transform.fromSchema(z.string().length(2));
 		expect(value).toHaveLength(2);
 	});
 
 	test('creates a large string using length', () => {
-		const value = transform.from(z.string().length(6000));
+		const value = transform.fromSchema(z.string().length(6000));
 		expect(value).toHaveLength(6000);
 	});
 
 	test('creates a large string using length with startsWith and EndsWith', () => {
-		const value = transform.from(
+		const value = transform.fromSchema(
 			z.string().length(6000).startsWith('start_').endsWith('_end')
 		) as string;
 		expect(value).toHaveLength(6000);
@@ -182,7 +188,7 @@ describe('create strings', () => {
 	});
 
 	test('creates a large string using min and max', () => {
-		const value = transform.from(
+		const value = transform.fromSchema(
 			z.string().min(6000).max(7000).startsWith('start_').endsWith('_end')
 		) as string;
 		expect(value.length).toBeGreaterThanOrEqual(6000);
@@ -192,9 +198,9 @@ describe('create strings', () => {
 	});
 
 	test('creates a nullable string', () => {
-		expect(transform.from(z.string().nullable())).toBeTypeOf('string');
-		expect(transform.from(z.string().nullish())).toBeTypeOf('string');
-		expect(transform.from(z.string().optional())).toBeTypeOf('string');
+		expect(transform.fromSchema(z.string().nullable())).toBeTypeOf('string');
+		expect(transform.fromSchema(z.string().nullish())).toBeTypeOf('string');
+		expect(transform.fromSchema(z.string().optional())).toBeTypeOf('string');
 	});
 
 	test('produces a valid string that is a datetime', () => {
@@ -202,9 +208,9 @@ describe('create strings', () => {
 	});
 
 	test('produces a valid string that is a datetime', () => {
-		expect(transform.from(z.string().datetime())).toBeTypeOf('string');
+		expect(transform.fromSchema(z.string().datetime())).toBeTypeOf('string');
 		expect(
-			new Date(transform.from(z.string().datetime()) as string)
+			new Date(transform.fromSchema(z.string().datetime()) as string)
 		).toBeInstanceOf(Date);
 	});
 });

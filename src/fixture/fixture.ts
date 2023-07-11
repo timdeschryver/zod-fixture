@@ -5,7 +5,7 @@ import { fixtureGenerators } from './generators';
 
 export interface Fixture extends Transformer {
 	// explicitly define the return type
-	from<TSchema extends z.ZodTypeAny>(
+	fromSchema<TSchema extends z.ZodTypeAny>(
 		schema: TSchema,
 		context?: Context
 	): z.infer<TSchema>;
