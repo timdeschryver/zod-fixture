@@ -45,6 +45,9 @@ export const stringCustomization = (): Customization => {
 				return generateDateTimeString();
 			}
 
+			if (checks['url']) {
+				return `https://${generateString(propertName)}.com`
+			}
 			return generateString(propertName);
 		},
 	};
