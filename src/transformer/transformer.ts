@@ -36,8 +36,8 @@ export class Transformer {
 		return this;
 	}
 
-	from<ZSchema extends ZodTypeAny>(
-		schema: ZSchema,
+	from<TSchema extends ZodTypeAny>(
+		schema: TSchema,
 		context: Context = { path: [] }
 	): unknown {
 		// eslint-disable-next-line @typescript-eslint/no-this-alias
@@ -73,9 +73,19 @@ export class Transformer {
 			return true;
 		});
 
-		if (!generator)
-			throw new Error(`No generator found for ${schema.constructor.name}`);
+		this.shouldHaveMatch(schema, generator);
 
 		return generator.output({ schema, def, transform, context });
+	}
+
+	shouldHaveMatch(
+		schema: ZodTypeAny,
+		generator: unknown
+	): asserts generator is NonNullable<unknown> {
+		if (!generator) throw this.missingGeneratorError(schema);
+	}
+
+	missingGeneratorError(schema: ZodTypeAny) {
+		return new Error(`No generator found for ${schema.constructor.name}.`);
 	}
 }

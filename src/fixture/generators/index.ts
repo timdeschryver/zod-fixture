@@ -14,6 +14,7 @@ import { LazyGenerator } from './lazy';
 import { LiteralGenerator } from './literal';
 import { MapGenerator } from './map';
 import { NanGenerator } from './nan';
+import { NeverGenerator } from './never';
 import { NullGenerator } from './null';
 import { NumberGenerator } from './number';
 import { ObjectGenerator, RecordGenerator } from './object';
@@ -67,4 +68,5 @@ export const fixtureGenerators = [
 	LazyGenerator,
 	BrandedGenerator,
 	VoidGenerator,
+	NeverGenerator,
 ];
