@@ -16,7 +16,7 @@ export default defineConfig({
 		lastUpdatedText: 'Last Updated',
 		editLink: {
 			pattern:
-				'https://github.com/timdeschryver/zod-fixture/edit/main/README.md',
+				'https://github.com/timdeschryver/zod-fixture/edit/main/docs/index.md',
 		},
 		socialLinks: [
 			{ icon: 'github', link: 'https://github.com/timdeschryver/zod-fixture' },
