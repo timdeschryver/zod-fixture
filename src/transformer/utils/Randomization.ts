@@ -61,13 +61,16 @@ export class Randomization {
 	}
 
 	string(config: { min?: number; max?: number }) {
-		const min = config.min ?? this.defaults.string.min;
-		const max = config.max ?? this.defaults.string.max;
+		let min = config.min ?? this.defaults.string.min;
+		let max = config.max ?? this.defaults.string.max;
 
 		if (min < 0)
 			throw new Error(
 				`Minimum length of a string can't be less than 0: ${min}`
 			);
+
+		if (config.min && !config.max) max = config.min;
+		if (config.max && !config.min) min = config.max;
 
 		const length = this.int({ min, max });
 
