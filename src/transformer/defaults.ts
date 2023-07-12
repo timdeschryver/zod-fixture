@@ -1,7 +1,6 @@
 // #region defaults
 interface Defaults {
 	seed: number;
-	constrained: boolean;
 	array: {
 		min: number;
 		max: number;
@@ -47,7 +46,6 @@ const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER;
 
 export const constrained = {
 	seed: RANDOM_SEED,
-	constrained: true,
 	array: {
 		min: MAX_LIST_SIZE,
 		max: MAX_LIST_SIZE,
@@ -85,7 +83,6 @@ export const constrained = {
 
 export const unconstrained = {
 	seed: RANDOM_SEED,
-	constrained: false,
 	array: {
 		min: MIN_LIST_SIZE,
 		max: MAX_LIST_SIZE,
