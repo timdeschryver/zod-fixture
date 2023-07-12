@@ -1,10 +1,10 @@
-import { Transformer } from '@/transformer/transformer';
+import { ConstrainedTransformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { NullGenerator } from '.';
 
 describe('create empty types', () => {
-	const transform = new Transformer().extend([NullGenerator]);
+	const transform = new ConstrainedTransformer().extend([NullGenerator]);
 
 	test('produces a valid null', () => {
 		expect(transform).toReasonablySatisfy(z.null());

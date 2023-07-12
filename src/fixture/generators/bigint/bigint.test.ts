@@ -1,10 +1,10 @@
-import { Transformer } from '@/transformer/transformer';
+import { ConstrainedTransformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { BigIntGenerator, BigIntMultipleOfGenerator } from '.';
 
 describe('create bigint', () => {
-	const transform = new Transformer().extend([
+	const transform = new ConstrainedTransformer().extend([
 		BigIntGenerator,
 		BigIntMultipleOfGenerator,
 	]);

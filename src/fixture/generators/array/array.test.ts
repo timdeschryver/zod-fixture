@@ -1,4 +1,4 @@
-import { Transformer } from '@/transformer/transformer';
+import { ConstrainedTransformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { ArrayGenerator } from '.';
@@ -6,7 +6,7 @@ import { NumberGenerator } from '../number';
 import { StringGenerator } from '../string';
 
 describe('create Arrays', () => {
-	const transform = new Transformer().extend([
+	const transform = new ConstrainedTransformer().extend([
 		ArrayGenerator,
 		StringGenerator,
 		NumberGenerator,

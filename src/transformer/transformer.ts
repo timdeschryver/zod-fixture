@@ -1,15 +1,21 @@
 import type { ZodTypeAny } from 'zod';
 import type { Defaults } from './defaults';
-import { constrained } from './defaults';
+import { constrained, unconstrained } from './defaults';
 import type { Definition } from './generator';
 import { Runner } from './runner';
 
-export class Transformer {
+export abstract class Transformer {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	readonly generators: Definition<any>[] = [];
-	readonly defaults: Defaults = constrained;
+	abstract readonly generators: Definition<any>[];
+	abstract readonly defaults: Defaults;
 
 	constructor(userDefaults?: Partial<Defaults>) {
+		this.mergeDefaults(userDefaults);
+	}
+
+	mergeDefaults(userDefaults?: Partial<Defaults>) {
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore     We're allowed to update this internally
 		// @TODO: Change to deep extend
 		this.defaults = { ...this.defaults, ...userDefaults };
 	}
@@ -33,4 +39,16 @@ export class Transformer {
 	missingGeneratorError(schema: ZodTypeAny) {
 		return new Error(`No generator found for ${schema.constructor.name}.`);
 	}
+}
+
+export class ConstrainedTransformer extends Transformer {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	readonly generators: Definition<any>[] = [];
+	readonly defaults: Defaults = constrained;
+}
+
+export class UnconstrainedTransformer extends Transformer {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	readonly generators: Definition<any>[] = [];
+	readonly defaults: Defaults = unconstrained;
 }

@@ -1,11 +1,14 @@
-import { Transformer } from '@/transformer/transformer';
+import { ConstrainedTransformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { SetGenerator } from '.';
 import { NumberGenerator } from '../number';
 
 describe('create Sets', () => {
-	const transform = new Transformer().extend([SetGenerator, NumberGenerator]);
+	const transform = new ConstrainedTransformer().extend([
+		SetGenerator,
+		NumberGenerator,
+	]);
 
 	test('produces a valid set', () => {
 		expect(transform).toReasonablySatisfy(z.set(z.number()));

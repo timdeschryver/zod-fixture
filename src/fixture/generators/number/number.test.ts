@@ -1,10 +1,10 @@
-import { Transformer } from '@/transformer/transformer';
+import { ConstrainedTransformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { NumberGenerator } from '.';
 
 describe('create numbers', () => {
-	const transform = new Transformer().extend([NumberGenerator]);
+	const transform = new ConstrainedTransformer().extend([NumberGenerator]);
 
 	test('produces a valid number', () => {
 		expect(transform).toReasonablySatisfy(z.number());

@@ -1,10 +1,10 @@
 import type { z } from 'zod';
 import type { Defaults } from '../transformer/defaults';
-import { unconstrained } from '../transformer/defaults';
+import { constrained, unconstrained } from '../transformer/defaults';
 import { Transformer } from '../transformer/transformer';
 import { fixtureGenerators } from './generators';
 
-export interface Fixture extends Transformer {
+export interface ConstrainedFixture extends Transformer {
 	// explicitly define the return type
 	fromSchema<TSchema extends z.ZodTypeAny>(
 		schema: TSchema,
@@ -12,8 +12,9 @@ export interface Fixture extends Transformer {
 	): z.infer<TSchema>;
 }
 
-export class Fixture extends Transformer {
+export class ConstrainedFixture extends Transformer {
 	generators = fixtureGenerators;
+	defaults = constrained;
 
 	missingGeneratorError(schema: z.ZodTypeAny) {
 		const message = [
@@ -28,6 +29,8 @@ export class Fixture extends Transformer {
 	}
 }
 
-export class UnconstrainedFixture extends Fixture {
+export class UnconstrainedFixture extends ConstrainedFixture {
 	defaults = unconstrained;
 }
+
+export { ConstrainedFixture as Fixture };

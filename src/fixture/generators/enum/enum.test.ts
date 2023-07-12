@@ -1,10 +1,10 @@
-import { Transformer } from '@/transformer/transformer';
+import { ConstrainedTransformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { EnumGenerator, NativeEnumGenerator } from '.';
 
 describe('create enums', () => {
-	const transform = new Transformer().extend([
+	const transform = new ConstrainedTransformer().extend([
 		EnumGenerator,
 		NativeEnumGenerator,
 	]);
