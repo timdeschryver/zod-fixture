@@ -32,7 +32,7 @@ const PersonSchema = z.object({
 	totalVisits: z.number(),
 });
 
-const fixture = new Fixture({ seed: 38 }).extend([
+const fixture = new Fixture({ constrained: true, seed: 38 }).extend([
 	addressGenerator,
 	totalVisitsGenerator,
 ]);
@@ -47,23 +47,23 @@ const output = Object.assign(
 			state: 'My State',
 			street: 'My Street',
 		},
-		birthday: new Date('1926-02-23T02:07:24.494Z'),
-		name: '@',
+		birthday: new Date('2091-09-17T10:54:58.574Z'),
+		name: 'sdnlwozmxaigobr',
 		pets: [
 			{
-				breed: 'g`JL^+U^Dhp_N?AZyrguvIB^;',
-				name: '-U~M[bzuUd/~',
+				breed: 'fbgglityarecl-q',
+				name: '-lmtvotjcevmyiq',
 			},
 			{
-				breed: 'hL"Y:',
-				name: ',',
+				breed: 'mylchvprjdgelkq',
+				name: 'devqfcctdx-link',
 			},
 			{
-				breed: 'h$k',
-				name: 'm=Zs',
+				breed: 'rcrrkytqrdmzajo',
+				name: 'ivrplyhts-yypas',
 			},
 		],
-		totalVisits: 22,
+		totalVisits: 4,
 	}
 	// #endregion output
 );
