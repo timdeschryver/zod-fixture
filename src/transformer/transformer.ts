@@ -1,26 +1,24 @@
 import type { ZodTypeAny } from 'zod';
 import type { Defaults } from './defaults';
-import { constrained, unconstrained } from './defaults';
+import { constrained } from './defaults';
 import type { Definition } from './generator';
 import { Runner } from './runner';
 
 export class Transformer {
-	// @TODO We want this to be private
-	// but also extensible. 😕
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	generators: Definition<any>[] = [];
-
-	readonly defaults: Defaults;
+	readonly generators: Definition<any>[] = [];
+	readonly defaults: Defaults = constrained;
 
 	constructor(userDefaults?: Partial<Defaults>) {
-		const defaults = userDefaults?.constrained ? constrained : unconstrained;
 		// @TODO: Change to deep extend
-		this.defaults = { ...defaults, ...userDefaults };
+		this.defaults = { ...this.defaults, ...userDefaults };
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	extend(generators: Definition<any> | Definition<any>[]) {
 		const input = Array.isArray(generators) ? generators : [generators];
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore     We're allowed to update this internally
 		this.generators = input.concat(this.generators);
 		return this;
 	}
