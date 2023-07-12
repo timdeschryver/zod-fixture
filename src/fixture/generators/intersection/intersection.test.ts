@@ -7,7 +7,7 @@ import { BooleanGenerator } from '../boolean';
 import { ObjectGenerator } from '../object';
 
 describe('create intersections', () => {
-	const transform = new Transformer().extend([
+	const transform = new Transformer({ constrained: true }).extend([
 		IntersectionGenerator,
 		ObjectGenerator,
 		BooleanGenerator,
