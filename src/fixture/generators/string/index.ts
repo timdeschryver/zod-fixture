@@ -1,13 +1,9 @@
 import { ZodString } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
-import type { Transformer } from '@/transformer/transformer';
+import type { Runner } from '@/transformer/runner';
 import type { ZodStringDef } from 'zod';
 
-function formatString(
-	transform: Transformer,
-	def: ZodStringDef,
-	value: string
-) {
+function formatString(transform: Runner, def: ZodStringDef, value: string) {
 	const checks = transform.utils.checks(def.checks);
 
 	let max = checks.find('max')?.value;

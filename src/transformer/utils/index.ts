@@ -1,19 +1,18 @@
 import type { ZodTypeAny } from 'zod';
-import type { Transformer } from '../transformer';
+import type { Runner } from '../runner';
 import { Checks } from './Checks';
 import { Randomization } from './Randomization';
 
 export class Utils {
 	random: Randomization;
 
-	constructor(private transform: Transformer) {
-		this.random = new Randomization(transform.defaults, transform.seed);
+	constructor(private runner: Runner) {
+		this.random = new Randomization(runner.defaults);
 	}
 
 	n<T>(
 		factory: (index: number) => T,
-		config: number | { min: number; max: number } = this.transform.defaults
-			.array
+		config: number | { min: number; max: number } = this.runner.defaults.array
 	): Array<T> {
 		const length =
 			typeof config === 'number' ? config : this.random.int(config);
