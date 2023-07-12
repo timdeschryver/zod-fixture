@@ -73,7 +73,7 @@ const PersonSchema = z.object({
 	totalVisits: z.number(),
 });
 
-const fixture = new Fixture({ seed: 11 });
+const fixture = new Fixture({ constrained: true, seed: 11 });
 const person = fixture.fromSchema(PersonSchema);
 ```
 
@@ -82,27 +82,27 @@ const person = fixture.fromSchema(PersonSchema);
 ```ts
 {
 	address: {
-		city: 'fdEqfOAdfay',
-		state: '_!;"_NV-ZeE&owK\'^\\f"bA(_z',
-		street: "}L%:YfUQ>N'@COuJ_",
+		city: 'bonzm-sjnglvkbb',
+		state: 'fbmiabahyvsy-vm',
+		street: 'etuqnbvmbkqwlty',
 	},
-	birthday: new Date('1980-09-26T06:36:51.341Z'),
-	name: 'j"A)nc*?=ICpArj[hn$)YOe)Od',
+	birthday: new Date('2073-08-30T03:26:04.735Z'),
+	name: 'd-iveauywljfifd',
 	pets: [
 		{
-			breed: 'MCx&^>xCiZ`EhMygjbl*ZMG.J',
-			name: '>^C<QH%EF+n(e//=d,t',
+			breed: 'ifsztjznktjkveu',
+			name: 'qbjuehl-trb-aiu',
 		},
 		{
-			breed: '(RCdKX',
-			name: 'UJHEIo?_&-A^c][/v#Rq',
+			breed: 'q-jcmhccaduqmkq',
+			name: 'rrvbrgzmjhttzhj',
 		},
 		{
-			breed: '%{;z]K',
-			name: 'jVr\\[W$Av',
+			breed: 'rgsnffunjalqicp',
+			name: 'tolkjleyvtwitax',
 		},
 	],
-	totalVisits: 5544703130861567,
+	totalVisits: -5236967897825280,
 }
 
 ```
@@ -152,7 +152,7 @@ const PersonSchema = z.object({
 	totalVisits: z.number(),
 });
 
-const fixture = new Fixture({ seed: 38 }).extend([
+const fixture = new Fixture({ constrained: true, seed: 38 }).extend([
 	addressGenerator,
 	totalVisitsGenerator,
 ]);
@@ -168,23 +168,23 @@ const person = fixture.fromSchema(PersonSchema);
 		state: 'My State',
 		street: 'My Street',
 	},
-	birthday: new Date('1926-02-23T02:07:24.494Z'),
-	name: '@',
+	birthday: new Date('2091-09-17T10:54:58.574Z'),
+	name: 'sdnlwozmxaigobr',
 	pets: [
 		{
-			breed: 'g`JL^+U^Dhp_N?AZyrguvIB^;',
-			name: '-U~M[bzuUd/~',
+			breed: 'fbgglityarecl-q',
+			name: '-lmtvotjcevmyiq',
 		},
 		{
-			breed: 'hL"Y:',
-			name: ',',
+			breed: 'mylchvprjdgelkq',
+			name: 'devqfcctdx-link',
 		},
 		{
-			breed: 'h$k',
-			name: 'm=Zs',
+			breed: 'rcrrkytqrdmzajo',
+			name: 'ivrplyhts-yypas',
 		},
 	],
-	totalVisits: 22,
+	totalVisits: 4,
 }
 
 ```
