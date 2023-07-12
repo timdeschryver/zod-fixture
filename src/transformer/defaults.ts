@@ -115,8 +115,8 @@ export const unconstrained = {
 		max: Date.UTC(2100, 11, 31),
 	},
 	string: {
-		min: MIN_SAFE_INTEGER,
-		max: MAX_SAFE_INTEGER,
+		min: 0,
+		max: 100,
 		characterSet:
 			'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.,/\\!@#$%^&*()_+=-{}[]|:;?<>~`\'"',
 	},
