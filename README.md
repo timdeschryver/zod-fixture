@@ -82,24 +82,24 @@ const person = fixture.fromSchema(PersonSchema);
 ```ts
 {
 	address: {
-		city: '43K>5SG250E',
-		state: 'kbszkSZm^3Kg<CPyfa4z1HikF',
-		street: 'oQes]5YUwRzbITAPk',
+		city: 'fdEqfOAdfay',
+		state: '_!;"_NV-ZeE&owK\'^\\f"bA(_z',
+		street: "}L%:YfUQ>N'@COuJ_",
 	},
 	birthday: new Date('1980-09-26T06:36:51.341Z'),
-	name: '8zGj;1humNI>G?8p6;ej\\T4jS3',
+	name: 'j"A)nc*?=ICpArj[hn$)YOe)Od',
 	pets: [
 		{
-			breed: 'RIEgfwDI7]yK6RE581:h]QM^P',
-			name: 'wgIuUNfJKl;i4``l3`A',
+			breed: 'MCx&^>xCiZ`EhMygjbl*ZMG.J',
+			name: '>^C<QH%EF+n(e//=d,t',
 		},
 		{
-			breed: 'iVI2P\\',
-			name: 'YOMKN<ukgnGg1qp`CdV>',
+			breed: '(RCdKX',
+			name: 'UJHEIo?_&-A^c][/v#Rq',
 		},
 		{
-			breed: 'fotFqP',
-			name: '8Z?ap[eGC',
+			breed: '%{;z]K',
+			name: 'jVr\\[W$Av',
 		},
 	],
 	totalVisits: 5544703130861567,
@@ -169,19 +169,19 @@ const person = fixture.fromSchema(PersonSchema);
 		street: 'My Street',
 	},
 	birthday: new Date('1926-02-23T02:07:24.494Z'),
-	name: 'c',
+	name: '@',
 	pets: [
 		{
-			breed: '5yOQfkYfI6=kRuH^F?5BCNHft',
-			name: 'mYxRp1GBY2aw',
+			breed: 'g`JL^+U^Dhp_N?AZyrguvIB^;',
+			name: '-U~M[bzuUd/~',
 		},
 		{
-			breed: '6Qz\\s',
-			name: '_',
+			breed: 'hL"Y:',
+			name: ',',
 		},
 		{
-			breed: '6e9',
-			name: ';l]@',
+			breed: 'h$k',
+			name: 'm=Zs',
 		},
 	],
 	totalVisits: 22,
@@ -203,7 +203,7 @@ const transform = new Transformer().extend([
 	/* insert your generators here */
 ]);
 
-transform.from(z.any());
+transform.fromSchema(z.any());
 ```
 
 ## API
