@@ -50,19 +50,14 @@ export const StringGenerator = Generator({
 	output: ({ def, transform }) => {
 		const checks = transform.utils.checks(def.checks);
 
-		let min = checks.find('min')?.value ?? 1;
-		let max = checks.find('max')?.value ?? min + 25;
-		const length = checks.find('length');
+		let min = checks.find('min')?.value;
+		let max = checks.find('max')?.value;
 
+		const length = checks.find('length');
 		if (length) {
 			min = length.value;
 			max = length.value;
 		}
-
-		if (min < 0)
-			throw new Error(
-				`Minimum length of a string can't be less than 0: ${min}`
-			);
 
 		return formatString(
 			transform,
