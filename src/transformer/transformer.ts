@@ -1,6 +1,6 @@
 import type { ZodTypeAny } from 'zod';
 import type { Defaults } from './defaults';
-import defaults from './defaults';
+import { constrained, unconstrained } from './defaults';
 import type { Definition } from './generator';
 import { Runner } from './runner';
 
@@ -13,12 +13,9 @@ export class Transformer {
 	readonly defaults: Defaults;
 
 	constructor(userDefaults?: Partial<Defaults>) {
-		const prettify = userDefaults?.constrained && {
-			string: { min: 15, max: 15, characterSet: 'abcdefghijklmnopqrstuvwxyz-' },
-		};
-
+		const defaults = userDefaults?.constrained ? constrained : unconstrained;
 		// @TODO: Change to deep extend
-		this.defaults = Object.assign({}, defaults, prettify, userDefaults);
+		this.defaults = { ...defaults, ...userDefaults };
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
