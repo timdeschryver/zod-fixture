@@ -31,8 +31,8 @@ interface Defaults {
 		max: number;
 	};
 	string: {
-		min?: number;
-		max?: number;
+		min: number;
+		max: number;
 		characterSet: string;
 	};
 }
@@ -75,6 +75,8 @@ export default {
 		max: Date.UTC(2100, 11, 31),
 	},
 	string: {
+		min: MIN_SAFE_INTEGER,
+		max: MAX_SAFE_INTEGER,
 		characterSet:
 			'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.,/\\!@#$%^&*()_+=-{}[]|:;?<>~`\'"',
 	},
