@@ -6,7 +6,7 @@ import { NumberGenerator } from '../number';
 import { StringGenerator } from '../string';
 
 describe('create Maps', () => {
-	const transform = new Transformer({ constrained: true }).extend([
+	const transform = new Transformer().extend([
 		MapGenerator,
 		StringGenerator,
 		NumberGenerator,

@@ -18,7 +18,7 @@ import { SymbolGenerator } from '../symbol';
 import { UndefinedGenerator } from '../undefined';
 
 describe('create objects', () => {
-	const transform = new Transformer({ constrained: true }).extend([
+	const transform = new Transformer().extend([
 		ObjectGenerator,
 		StringGenerator,
 		NumberGenerator,
@@ -132,7 +132,7 @@ describe('create objects', () => {
 });
 
 describe('create Records', () => {
-	const transform = new Transformer({ constrained: true }).extend([
+	const transform = new Transformer().extend([
 		RecordGenerator,
 		StringGenerator,
 		NumberGenerator,

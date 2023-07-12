@@ -15,7 +15,7 @@ const PersonSchema = z.object({
 	totalVisits: z.number(),
 });
 
-const fixture = new Fixture({ constrained: true, seed: 11 });
+const fixture = new Fixture({ seed: 11 });
 const person = fixture.fromSchema(PersonSchema);
 // #endregion example
 
