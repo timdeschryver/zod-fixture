@@ -7,12 +7,9 @@ import { Runner } from './runner';
 export abstract class Transformer {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	abstract readonly generators: Definition<any>[];
-	readonly defaults?: Defaults;
+	abstract readonly transformerConfig: Defaults;
 
-	constructor(userDefaults?: Partial<Defaults>) {
-		if (!this.defaults) throw new Error('Must provide defaults in subclass.');
-		this.defaults = { ...this.defaults, ...userDefaults };
-	}
+	constructor(readonly userConfig?: Partial<Defaults>) {}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	extend(generators: Definition<any> | Definition<any>[]) {
@@ -37,12 +34,12 @@ export abstract class Transformer {
 
 export class ConstrainedTransformer extends Transformer {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	readonly generators: Definition<any>[] = [];
-	readonly defaults: Defaults = constrained;
+	generators: Definition<any>[] = [];
+	transformerConfig: Defaults = constrained;
 }
 
 export class UnconstrainedTransformer extends Transformer {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	readonly generators: Definition<any>[] = [];
-	readonly defaults: Defaults = unconstrained;
+	generators: Definition<any>[] = [];
+	transformerConfig: Defaults = unconstrained;
 }

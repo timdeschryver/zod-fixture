@@ -14,7 +14,7 @@ export interface ConstrainedFixture extends Transformer {
 
 export class ConstrainedFixture extends Transformer {
 	generators = fixtureGenerators;
-	defaults = constrained;
+	transformerConfig = constrained;
 
 	missingGeneratorError(schema: z.ZodTypeAny) {
 		const message = [
@@ -30,7 +30,7 @@ export class ConstrainedFixture extends Transformer {
 }
 
 export class UnconstrainedFixture extends ConstrainedFixture {
-	defaults = unconstrained;
+	transformerConfig = unconstrained;
 }
 
 export { ConstrainedFixture as Fixture };
