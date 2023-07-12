@@ -50,14 +50,14 @@ export interface Definition<TSchema extends ZodTypeAny> {
 	output: Generator<TSchema>;
 }
 
-let vuid = 0;
 export function Generator<TSchema extends ZodTypeAny>(
 	definition: Definition<TSchema>
 ): Definition<TSchema> {
 	if (!isZodConstructor(definition.schema)) {
 		if (definition.schema[ZOD_INSTANCE_IDENTIFIER] === undefined)
-			definition.schema[ZOD_INSTANCE_IDENTIFIER] = vuid++;
+			definition.schema[ZOD_INSTANCE_IDENTIFIER] = Generator.uuid++;
 	}
 
 	return definition;
 }
+Generator.uuid = 0;
