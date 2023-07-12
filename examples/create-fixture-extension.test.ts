@@ -29,7 +29,7 @@ const PersonSchema = z.object({
 		state: z.string(),
 	}),
 	pets: z.array(z.object({ name: z.string(), breed: z.string() })),
-	totalVisits: z.number(),
+	totalVisits: z.number().int(),
 });
 
 const fixture = new Fixture({ seed: 38 }).extend([

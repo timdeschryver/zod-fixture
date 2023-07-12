@@ -12,7 +12,7 @@ const PersonSchema = z.object({
 		state: z.string(),
 	}),
 	pets: z.array(z.object({ name: z.string(), breed: z.string() })),
-	totalVisits: z.number(),
+	totalVisits: z.number().int(),
 });
 
 const fixture = new Fixture({ seed: 11 });
@@ -43,7 +43,7 @@ const output = Object.assign(
 				name: 'tolkjleyvtwitax',
 			},
 		],
-		totalVisits: -58.1420233938843,
+		totalVisits: -58,
 	}
 	// #endregion output
 );
@@ -72,7 +72,7 @@ test('generates a person', () => {
 		      "name": "tolkjleyvtwitax",
 		    },
 		  ],
-		  "totalVisits": -58.1420233938843,
+		  "totalVisits": -58,
 		}
 	`);
 	expect(person).toEqual(output);
