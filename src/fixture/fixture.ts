@@ -1,7 +1,7 @@
 import type { z } from 'zod';
 import type { Context } from '../transformer/generator';
 import { Transformer } from '../transformer/transformer';
-import { fixtureGenerators } from './generators';
+import { DEFAULT_FIXTURE_GENERATORS } from './generators';
 
 export interface Fixture extends Transformer {
 	// explicitly define the return type
@@ -12,7 +12,7 @@ export interface Fixture extends Transformer {
 }
 
 export class Fixture extends Transformer {
-	generators = fixtureGenerators;
+	generators = DEFAULT_FIXTURE_GENERATORS;
 
 	missingGeneratorError(schema: z.ZodTypeAny) {
 		const message = [
