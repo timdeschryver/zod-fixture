@@ -5,4 +5,4 @@ const transform = new Transformer().extend([
 	/* insert your generators here */
 ]);
 
-transform.from(z.any());
+transform.fromSchema(z.any());
