@@ -69,5 +69,31 @@ const output = Object.assign(
 );
 
 test('generates a person', () => {
+	expect(person).toMatchInlineSnapshot(`
+		{
+		  "address": {
+		    "city": "My City",
+		    "state": "My State",
+		    "street": "My Street",
+		  },
+		  "birthday": 2091-09-17T10:54:58.574Z,
+		  "name": "sdnlwozmxaigobr",
+		  "pets": [
+		    {
+		      "breed": "fbgglityarecl-q",
+		      "name": "-lmtvotjcevmyiq",
+		    },
+		    {
+		      "breed": "mylchvprjdgelkq",
+		      "name": "devqfcctdx-link",
+		    },
+		    {
+		      "breed": "rcrrkytqrdmzajo",
+		      "name": "ivrplyhts-yypas",
+		    },
+		  ],
+		  "totalVisits": 4,
+		}
+	`);
 	expect(person).toEqual(output);
 });

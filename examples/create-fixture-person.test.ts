@@ -43,11 +43,37 @@ const output = Object.assign(
 				name: 'tolkjleyvtwitax',
 			},
 		],
-		totalVisits: -5236967897825280,
+		totalVisits: -58.1420233938843,
 	}
 	// #endregion output
 );
 
 test('generates a person', () => {
+	expect(person).toMatchInlineSnapshot(`
+		{
+		  "address": {
+		    "city": "bonzm-sjnglvkbb",
+		    "state": "fbmiabahyvsy-vm",
+		    "street": "etuqnbvmbkqwlty",
+		  },
+		  "birthday": 2073-08-30T03:26:04.735Z,
+		  "name": "d-iveauywljfifd",
+		  "pets": [
+		    {
+		      "breed": "ifsztjznktjkveu",
+		      "name": "qbjuehl-trb-aiu",
+		    },
+		    {
+		      "breed": "q-jcmhccaduqmkq",
+		      "name": "rrvbrgzmjhttzhj",
+		    },
+		    {
+		      "breed": "rgsnffunjalqicp",
+		      "name": "tolkjleyvtwitax",
+		    },
+		  ],
+		  "totalVisits": -58.1420233938843,
+		}
+	`);
 	expect(person).toEqual(output);
 });
