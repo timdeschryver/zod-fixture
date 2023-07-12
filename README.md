@@ -23,6 +23,9 @@ Creating test fixtures should be easy.<br>
 - [Customizing](#customizing)
   - [Extending](#extending)
   - [Generators](#generators)
+- [FAQ](#faq)
+  - [I have a custom type that I need to support. How do I do that?](#i-have-a-custom-type-that-i-need-to-support.-how-do-i-do-that?)
+  - [Do you support faker/chance/falso?](#do-you-support-faker/chance/falso?)
 - [API](#api)
   - [Fixture / Transformer](#fixture-/-transformer)
     - [Config](#config)
@@ -250,6 +253,53 @@ const totalVisitsGenerator = Generator({
 	output: ({ transform }) => transform.utils.random.int({ min: 0, max: 25 }),
 });
 ```
+
+## FAQ
+
+### I have a custom type that I need to support. How do I do that?
+
+`zod-fixture` was built with this in mind. Simply define your custom type using zod's `z.custom` and pass the resulting schema to your custom generator.
+
+<sub>[Example](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/create-custom-type.test.ts)</sub>
+
+```ts
+import { z } from 'zod';
+import { Fixture, Generator } from 'zod-fixture';
+
+// Your custom type
+const pxSchema = z.custom<`${number}px`>((val) => {
+	return /^\d+px$/.test(val as string);
+});
+
+// Your custom generator
+const PixelGenerator = Generator({
+	schema: pxSchema,
+	output: () => '100px',
+});
+
+// Example
+const resolutionSchema = z.object({
+	width: pxSchema,
+	height: pxSchema,
+});
+
+const fixture = new Fixture().extend([PixelGenerator]);
+const resolution = fixture.fromSchema(resolutionSchema);
+```
+
+<sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/create-custom-type.test.ts)</sub>
+
+```ts
+{
+	width: '100px',
+	height: '100px',
+}
+
+```
+
+### Do you support faker/chance/falso?
+
+The short answer, not yet. We plan to build out pre-defined generators for popular mocking libraries but are currently prioritizing reliability and ease of use. If you'd like to help us build out this functionality, feel free to open a pull request 😀
 
 ## API
 
