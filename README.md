@@ -70,7 +70,7 @@ const PersonSchema = z.object({
 		state: z.string(),
 	}),
 	pets: z.array(z.object({ name: z.string(), breed: z.string() })),
-	totalVisits: z.number().int(),
+	totalVisits: z.number().int().min(0),
 });
 
 const fixture = new Fixture({ seed: 11 });
@@ -102,7 +102,7 @@ const person = fixture.fromSchema(PersonSchema);
 			name: 'tolkjleyvtwitax',
 		},
 	],
-	totalVisits: -58,
+	totalVisits: 21,
 }
 
 ```
