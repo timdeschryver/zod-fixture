@@ -62,8 +62,8 @@ export const constrained = {
 		max: 100,
 	},
 	float: {
-		min: -100.0,
-		max: 100.0,
+		min: -100,
+		max: 100,
 	},
 	bigint: {
 		min: -100n,
