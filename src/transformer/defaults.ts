@@ -1,6 +1,6 @@
 // #region defaults
 interface Defaults {
-	seed: number;
+	seed?: number;
 	array: {
 		min: number;
 		max: number;
@@ -38,14 +38,13 @@ interface Defaults {
 // #endregion defaults
 
 // Copied from defaults in MersenneTwister.
-const RANDOM_SEED = Math.floor(Math.random() * Math.pow(10, 13));
+export const randomSeed = () => Math.floor(Math.random() * Math.pow(10, 13));
 const MIN_LIST_SIZE = 1;
 const MAX_LIST_SIZE = 3;
 const MIN_SAFE_INTEGER = Number.MIN_SAFE_INTEGER;
 const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER;
 
 export const constrained = {
-	seed: RANDOM_SEED,
 	array: {
 		min: MAX_LIST_SIZE,
 		max: MAX_LIST_SIZE,
@@ -82,7 +81,6 @@ export const constrained = {
 } satisfies Defaults;
 
 export const unconstrained = {
-	seed: RANDOM_SEED,
 	array: {
 		min: MIN_LIST_SIZE,
 		max: MAX_LIST_SIZE,

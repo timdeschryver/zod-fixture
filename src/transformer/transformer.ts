@@ -1,6 +1,6 @@
 import type { ZodTypeAny } from 'zod';
 import type { Defaults } from './defaults';
-import { constrained, unconstrained } from './defaults';
+import { constrained, randomSeed, unconstrained } from './defaults';
 import type { Definition } from './generator';
 import { Runner } from './runner';
 
@@ -9,7 +9,9 @@ export abstract class Transformer {
 	abstract readonly generators: Definition<any>[];
 	abstract readonly transformerConfig: Defaults;
 
-	constructor(readonly userConfig?: Partial<Defaults>) {}
+	constructor(readonly userConfig?: Partial<Defaults>) {
+		this.userConfig = { seed: randomSeed(), ...userConfig };
+	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	extend(generators: Definition<any> | Definition<any>[]) {
