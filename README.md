@@ -102,7 +102,7 @@ const person = fixture.fromSchema(PersonSchema);
 			name: 'tolkjleyvtwitax',
 		},
 	],
-	totalVisits: -5236967897825280,
+	totalVisits: -58.1420233938843,
 }
 
 ```
