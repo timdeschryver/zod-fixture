@@ -13,7 +13,7 @@ export class Transformer {
 	readonly defaults: Defaults;
 
 	constructor(userDefaults?: Partial<Defaults>) {
-		const prettify = userDefaults?.prettify && {
+		const prettify = userDefaults?.constrained && {
 			string: { min: 15, max: 15, characterSet: 'abcdefghijklmnopqrstuvwxyz-' },
 		};
 
