@@ -1,4 +1,5 @@
 import { init as Cuid2 } from '@paralleldrive/cuid2';
+import type { Defaults } from '../defaults';
 import MersenneTwister from './MersenneTwister';
 
 const LOREM =
@@ -11,7 +12,7 @@ export class Randomization {
 	mt: MersenneTwister;
 	cuid2: () => string;
 
-	constructor(private defaults: ZodFixture.Defaults) {
+	constructor(private defaults: Defaults) {
 		this.mt = new MersenneTwister(defaults.seed);
 		this.cuid2 = Cuid2({ random: this.unitInterval.bind(this) });
 	}

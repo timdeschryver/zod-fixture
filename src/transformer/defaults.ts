@@ -1,3 +1,43 @@
+// #region defaults
+interface Defaults {
+	seed: number;
+	prettify: boolean;
+	array: {
+		min: number;
+		max: number;
+	};
+	map: {
+		min: number;
+		max: number;
+	};
+	set: {
+		min: number;
+		max: number;
+	};
+	int: {
+		min: number;
+		max: number;
+	};
+	float: {
+		min: number;
+		max: number;
+	};
+	bigint: {
+		min: bigint;
+		max: bigint;
+	};
+	date: {
+		min: number;
+		max: number;
+	};
+	string: {
+		min?: number;
+		max?: number;
+		characterSet: string;
+	};
+}
+// #endregion defaults
+
 const DEFAULT_LIST_SIZE = 3;
 const MIN_SAFE_INTEGER = Number.MIN_SAFE_INTEGER;
 const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER;
@@ -38,4 +78,6 @@ export default {
 		characterSet:
 			'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.,/\\!@#$%^&*()_+=-{}[]|:;?<>~`\'"',
 	},
-} satisfies ZodFixture.Defaults;
+} satisfies Defaults;
+
+export type { Defaults };

@@ -1,16 +1,17 @@
 import type { ZodTypeAny } from 'zod';
+import type { Defaults } from './defaults';
 import type { Context } from './generator';
 import { ZOD_INSTANCE_IDENTIFIER, isZodConstructor } from './generator';
 import type { Transformer } from './transformer';
 import { Utils } from './utils';
 
 export class Runner {
-	readonly defaults: ZodFixture.Defaults;
+	readonly defaults: Defaults;
 	readonly utils: Utils;
 
 	constructor(
 		public readonly transformer: Transformer,
-		config?: Partial<ZodFixture.Defaults>
+		config?: Partial<Defaults>
 	) {
 		this.defaults = { ...transformer.defaults, ...config };
 		this.utils = new Utils(this);

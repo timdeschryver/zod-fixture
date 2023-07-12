@@ -1,4 +1,5 @@
 import type { ZodTypeAny } from 'zod';
+import type { Defaults } from './defaults';
 import defaults from './defaults';
 import type { Definition } from './generator';
 import { Runner } from './runner';
@@ -9,9 +10,9 @@ export class Transformer {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	generators: Definition<any>[] = [];
 
-	readonly defaults: ZodFixture.Defaults;
+	readonly defaults: Defaults;
 
-	constructor(userDefaults?: Partial<ZodFixture.Defaults>) {
+	constructor(userDefaults?: Partial<Defaults>) {
 		const prettify = userDefaults?.prettify && {
 			string: { min: 15, max: 15, characterSet: 'abcdefghijklmnopqrstuvwxyz-' },
 		};
@@ -29,7 +30,7 @@ export class Transformer {
 
 	fromSchema<TSchema extends ZodTypeAny>(
 		schema: TSchema,
-		userDefaults?: Partial<ZodFixture.Defaults>
+		userDefaults?: Partial<Defaults>
 	): unknown {
 		return new Runner(this, userDefaults).fromSchema(schema);
 	}

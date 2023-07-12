@@ -1,4 +1,5 @@
 import type { z } from 'zod';
+import type { Defaults } from '../transformer/defaults';
 import { Transformer } from '../transformer/transformer';
 import { fixtureGenerators } from './generators';
 
@@ -6,7 +7,7 @@ export interface Fixture extends Transformer {
 	// explicitly define the return type
 	fromSchema<TSchema extends z.ZodTypeAny>(
 		schema: TSchema,
-		userDefaults?: Partial<ZodFixture.Defaults>
+		userDefaults?: Partial<Defaults>
 	): z.infer<TSchema>;
 }
 
