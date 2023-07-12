@@ -39,7 +39,7 @@ interface Defaults {
 // #endregion defaults
 
 const DEFAULT_MIN_LIST_SIZE = 1;
-const DEFAULT_MAX_LIST_SIZE = 1;
+const DEFAULT_MAX_LIST_SIZE = 3;
 const MIN_SAFE_INTEGER = Number.MIN_SAFE_INTEGER;
 const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER;
 
