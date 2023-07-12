@@ -97,9 +97,13 @@ For example, in the example below we create our own `totalVisitsGenerator` to re
 `zod-fixture` was built with this in mind. Simply define your custom type using zod's `z.custom` and pass the resulting schema to your custom generator.
 
 ::: code-group
-<<< @/../examples/create-custom-type.ts#example [Example]
-<<< @/../examples/create-custom-type.ts#output [Output]
+<<< @/../examples/create-custom-type.test.ts#example [Example]
+<<< @/../examples/create-custom-type.test.ts#output [Output]
 :::
+
+### Do you support faker/chance/falso?
+
+The short answer, not yet. We plan to build out pre-defined generators for popular mocking libraries but are currently prioritizing reliability and ease of use. If you'd like to help us build out this functionality, feel free to open a pull request 😀
 
 ## API
 
