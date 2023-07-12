@@ -1,5 +1,6 @@
 import type { z } from 'zod';
 import type { Defaults } from '../transformer/defaults';
+import { unconstrained } from '../transformer/defaults';
 import { Transformer } from '../transformer/transformer';
 import { fixtureGenerators } from './generators';
 
@@ -25,4 +26,8 @@ export class Fixture extends Transformer {
 
 		return new Error(message);
 	}
+}
+
+export class UnconstrainedFixture extends Fixture {
+	defaults = unconstrained;
 }
