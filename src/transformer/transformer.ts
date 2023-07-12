@@ -7,16 +7,10 @@ import { Runner } from './runner';
 export abstract class Transformer {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	abstract readonly generators: Definition<any>[];
-	abstract readonly defaults: Defaults;
+	readonly defaults?: Defaults;
 
 	constructor(userDefaults?: Partial<Defaults>) {
-		this.mergeDefaults(userDefaults);
-	}
-
-	mergeDefaults(userDefaults?: Partial<Defaults>) {
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		// @ts-ignore     We're allowed to update this internally
-		// @TODO: Change to deep extend
+		if (!this.defaults) throw new Error('Must provide defaults in subclass.');
 		this.defaults = { ...this.defaults, ...userDefaults };
 	}
 

@@ -5,17 +5,17 @@ import { NumberGenerator } from '../fixture/generators/number';
 import { ObjectGenerator } from '../fixture/generators/object';
 import { StringGenerator } from '../fixture/generators/string';
 import { Generator } from './generator';
-import { Transformer } from './transformer';
+import { ConstrainedTransformer } from './transformer';
 
 describe('transform', () => {
 	test('throws on invalid schema type', () => {
-		const transform = new Transformer();
+		const transform = new ConstrainedTransformer();
 		const input = z.string();
 		expect(() => transform.fromSchema(input)).toThrowError(input._def.typeName);
 	});
 
 	test('creates a fixture', () => {
-		const transform = new Transformer().extend(fixtureGenerators);
+		const transform = new ConstrainedTransformer().extend(fixtureGenerators);
 		const PersonSchema = z.object({
 			name: z.string(),
 			birthday: z.date(),
@@ -35,7 +35,7 @@ describe('transform', () => {
 		const generators = [...fixtureGenerators].filter(
 			(g) => g !== StringGenerator
 		);
-		const transform = new Transformer().extend(generators);
+		const transform = new ConstrainedTransformer().extend(generators);
 		const PersonSchema = z.object({
 			name: z.string(),
 			birthday: z.date(),
@@ -54,7 +54,7 @@ describe('transform', () => {
 	});
 
 	test('to reliably reproduces fixtures when using the same seed', () => {
-		const transform = new Transformer().extend([NumberGenerator]);
+		const transform = new ConstrainedTransformer().extend([NumberGenerator]);
 
 		const results: unknown[] = [];
 
@@ -74,7 +74,7 @@ describe('transform', () => {
 				output: () => 4,
 			});
 
-			const transform = new Transformer().extend([
+			const transform = new ConstrainedTransformer().extend([
 				ObjectGenerator,
 				FooNumberGenerator,
 				NumberGenerator,
@@ -98,7 +98,7 @@ describe('transform', () => {
 				output: () => 4,
 			});
 
-			const transform = new Transformer().extend([ObjectGenerator]);
+			const transform = new ConstrainedTransformer().extend([ObjectGenerator]);
 			transform.extend(NumberGenerator);
 			transform.extend(FooNumberGenerator);
 
