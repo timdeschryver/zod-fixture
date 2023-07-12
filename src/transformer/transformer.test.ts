@@ -53,6 +53,19 @@ describe('transform', () => {
 		);
 	});
 
+	test('to reliably reproduces fixtures when using the same seed', () => {
+		const transform = new Transformer().extend([NumberGenerator]);
+
+		const results: unknown[] = [];
+
+		results.push(transform.fromSchema(z.number(), { seed: 1 }));
+		results.push(transform.fromSchema(z.number(), { seed: 1 }));
+		results.push(transform.fromSchema(z.number(), { seed: 1 }));
+		results.push(transform.fromSchema(z.number(), { seed: 1 }));
+
+		expect(results.every((result) => result === results[0])).toEqual(true);
+	});
+
 	describe('order of generators', () => {
 		test(`picks up the first matching generator`, () => {
 			const FooNumberGenerator = Generator({
