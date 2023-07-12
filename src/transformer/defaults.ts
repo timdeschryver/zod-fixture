@@ -5,6 +5,7 @@ const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER;
 export default {
 	// Copied from defaults in MersenneTwister.
 	seed: Math.floor(Math.random() * Math.pow(10, 13)),
+	prettify: false,
 	array: {
 		min: DEFAULT_LIST_SIZE,
 		max: DEFAULT_LIST_SIZE,

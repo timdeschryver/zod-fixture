@@ -1,7 +1,7 @@
 declare namespace ZodFixture {
 	interface Defaults {
 		seed: number;
-		prettify?: true;
+		prettify: boolean;
 		array: {
 			min: number;
 			max: number;
