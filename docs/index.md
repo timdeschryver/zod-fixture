@@ -43,56 +43,86 @@ bun add -d zod-fixture
 
 ## Getting Started
 
-The easiest way to start using zod-fixture is to import the preconfigured (more details on this later) `Fixture` class.
-
-::: info
-The examples make use of a seed to generate the same fixture every time. This is useful for our docs, or to reproduce issues, but it's not needed in your test code.
-:::
+The easiest way to start using `zod-fixture` is to import the pre-configured `Fixture` class.
 
 ::: code-group
 <<< @/../examples/create-fixture-person.test.ts#example [Example]
 <<< @/../examples/create-fixture-person.test.ts#output [Output]
 :::
 
+Take a look at the [examples](https://github.com/timdeschryver/zod-fixture/tree/beta/examples) to see how you can use `zod-fixture` in your tests.
+
+::: info
+The examples make use of the optional [seed](#seed-optional) parameter to generate the same fixture every time. This is useful for our docs, or to reproduce issues, but is not necessary in your code. Simply calling `new Fixture()` is acceptable.
+:::
+
 ## Customizing
 
-This library provides utility methods to provide fine-grained support to create your fixtures.
-Take a look at the [examples](https://github.com/timdeschryver/zod-fixture/tree/beta/examples) to see how you can use `zod-fixture` in your tests.
+`zod-fixture` is highly customizable. We provide you with the same utility methods we use internally to give you fine-grained support for creating your own fixtures.
 
 ### Extending
 
-The `Fixture` class provides a predefined set of generators that supports each type that's included in zod.
+The easiset way to start customizing `zod-fixture` is to extend the `Fixture` class with your own [generator](#generators).
 
-For most cases this is fine, and offers a fast and easy way to create fixtures.
-But, for those times where you need a custom implementation, you can write your own [Generator](#generators) to change it's behavior using the `extend` method.
-
-In the example below we create a custom implemantion `addressGenerator` to return a custom address object, and a `totalVisitsGenerator` to return a more realistic number of visits.
+The example below uses 2 custom generators and a typical pattern for filtering based on the keys of an object.
 
 ::: code-group
 <<< @/../examples/create-fixture-extension.test.ts#example [Example]
 <<< @/../examples/create-fixture-extension.test.ts#output [Output]
 :::
 
-### Create Your Own Transformer
-
-Instead of using the opinionated `Fixture` class, you can extend the unopinionated `Transformer` and register the desired generators.
-
-<<< @/../examples/transformer.ts
-
-## API
+::: tip
+The order the registered generators matters. The first generator that matches the conditions (`schema` and `filter`) is used to create the value.
+:::
 
 ### Generators
 
 To generate a value based on a zod type we're using what we call a `Generator`.
 
+A `Generator` has 3 fundamental parts:
+
+- `schema` -- the zod type to match
+- `filter` -- [optional] a function to further refine our match (ie filtering by keys or zod checks)
+- `output` -- a function that's called to produce the fixture
+
 To help you to create your own generators this library also includes some useful utility methods to generate data.
 For example, in the example below we create our own `totalVisitsGenerator` to return more realastic numbers using the `random` utilities.
 
-::: tip
-The order the registered generators matters. The first generator that matches the conditions (`schema` and `filter`) is used to create the value.
+<<< @/../examples/create-fixture-extension.test.ts#generator
+
+## API
+
+### Fixture / Transformer
+
+::: info
+`Fixture` is a `Transformer` that comes prepackaged with generators for each of the first party types that Zod provides. For most cases, this is all you wil need, and offers a fast and easy way to create fixtures. For building a custom `Transformer` refer to the [Advanced](#advanced-topics) documentation.
 :::
 
-<<< @/../examples/create-fixture-extension.test.ts#generator
+#### Config
+
+<<< @/../src/types/zod-fixture.d.ts#config
+
+##### Seed (optional)
+
+A seed can be provided to produce the same results every time.
+
+```ts
+new Fixture({ seed: number });
+```
+
+##### Defaults (optional)
+
+We provide sane defaults for the random utilities used by our generators, but these can easily be customized.
+
+<<< @/../src/types/zod-fixture.d.ts#defaults
+
+## Advanced Topics
+
+### Create Your Own Transformer
+
+Instead of using the opinionated `Fixture` class, you can extend the unopinionated `Transformer` and register the desired generators.
+
+<<< @/../examples/transformer.ts
 
 ## Contributing
 
