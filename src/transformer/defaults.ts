@@ -38,25 +38,27 @@ interface Defaults {
 }
 // #endregion defaults
 
-const DEFAULT_MIN_LIST_SIZE = 1;
-const DEFAULT_MAX_LIST_SIZE = 3;
+// Copied from defaults in MersenneTwister.
+const RANDOM_SEED = Math.floor(Math.random() * Math.pow(10, 13));
+const MIN_LIST_SIZE = 1;
+const MAX_LIST_SIZE = 3;
 const MIN_SAFE_INTEGER = Number.MIN_SAFE_INTEGER;
 const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER;
 
 export const constrained = {
-	seed: Math.floor(Math.random() * Math.pow(10, 13)),
+	seed: RANDOM_SEED,
 	constrained: true,
 	array: {
-		min: DEFAULT_MAX_LIST_SIZE,
-		max: DEFAULT_MAX_LIST_SIZE,
+		min: MAX_LIST_SIZE,
+		max: MAX_LIST_SIZE,
 	},
 	map: {
-		min: DEFAULT_MAX_LIST_SIZE,
-		max: DEFAULT_MAX_LIST_SIZE,
+		min: MAX_LIST_SIZE,
+		max: MAX_LIST_SIZE,
 	},
 	set: {
-		min: DEFAULT_MAX_LIST_SIZE,
-		max: DEFAULT_MAX_LIST_SIZE,
+		min: MAX_LIST_SIZE,
+		max: MAX_LIST_SIZE,
 	},
 	int: {
 		min: MIN_SAFE_INTEGER,
@@ -82,20 +84,19 @@ export const constrained = {
 } satisfies Defaults;
 
 export const unconstrained = {
-	// Copied from defaults in MersenneTwister.
-	seed: Math.floor(Math.random() * Math.pow(10, 13)),
+	seed: RANDOM_SEED,
 	constrained: false,
 	array: {
-		min: DEFAULT_MIN_LIST_SIZE,
-		max: DEFAULT_MAX_LIST_SIZE,
+		min: MIN_LIST_SIZE,
+		max: MAX_LIST_SIZE,
 	},
 	map: {
-		min: DEFAULT_MIN_LIST_SIZE,
-		max: DEFAULT_MAX_LIST_SIZE,
+		min: MIN_LIST_SIZE,
+		max: MAX_LIST_SIZE,
 	},
 	set: {
-		min: DEFAULT_MIN_LIST_SIZE,
-		max: DEFAULT_MAX_LIST_SIZE,
+		min: MIN_LIST_SIZE,
+		max: MAX_LIST_SIZE,
 	},
 	int: {
 		min: MIN_SAFE_INTEGER,
