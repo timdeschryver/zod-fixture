@@ -90,6 +90,17 @@ For example, in the example below we create our own `totalVisitsGenerator` to re
 
 <<< @/../examples/create-fixture-extension.test.ts#generator
 
+## FAQ
+
+### I have a custom type that I need to support. How do I do that?
+
+`zod-fixture` was built with this in mind. Simply define your custom type using zod's `z.custom` and pass the resulting schema to your custom generator.
+
+::: code-group
+<<< @/../examples/create-custom-type.ts#example [Example]
+<<< @/../examples/create-custom-type.ts#output [Output]
+:::
+
 ## API
 
 ### Fixture / Transformer
