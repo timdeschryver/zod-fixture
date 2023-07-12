@@ -60,8 +60,16 @@ export class Randomization {
 		return copy as T[];
 	}
 
-	string(config?: { min: number; max: number }) {
-		const length = this.int(Object.assign({}, this.defaults.string, config));
+	string(config: { min?: number; max?: number }) {
+		const min = config.min ?? this.defaults.string.min;
+		const max = config.max ?? this.defaults.string.max;
+
+		if (min < 0)
+			throw new Error(
+				`Minimum length of a string can't be less than 0: ${min}`
+			);
+
+		const length = this.int({ min, max });
 
 		let result = '';
 		for (let i = 0; i < length; i++) {
@@ -94,8 +102,8 @@ export class Randomization {
 	}
 
 	bigInt(config?: { min?: bigint; max?: bigint }): bigint {
-		const min = config?.min ?? BigInt(this.defaults.bigint.min);
-		const max = config?.max ?? BigInt(this.defaults.bigint.max);
+		const min = config?.min ?? this.defaults.bigint.min;
+		const max = config?.max ?? this.defaults.bigint.max;
 
 		if (min >= max) {
 			throw new Error(`min ${min} can't be greater than max ${max}`);
