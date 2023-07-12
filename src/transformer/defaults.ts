@@ -59,16 +59,16 @@ export const constrained = {
 		max: MAX_LIST_SIZE,
 	},
 	int: {
-		min: MIN_SAFE_INTEGER,
-		max: MAX_SAFE_INTEGER,
+		min: -100,
+		max: 100,
 	},
 	float: {
-		min: MIN_SAFE_INTEGER,
-		max: MAX_SAFE_INTEGER,
+		min: -100.0,
+		max: 100.0,
 	},
 	bigint: {
-		min: BigInt(MIN_SAFE_INTEGER),
-		max: BigInt(MAX_SAFE_INTEGER),
+		min: -100n,
+		max: 100n,
 	},
 	date: {
 		min: Date.UTC(1900, 0, 1),
