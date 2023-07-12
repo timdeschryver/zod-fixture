@@ -14,7 +14,7 @@ const args = argv(process.argv.slice(2), {
 if (args.watch) {
 	// eslint-disable-next-line no-undef
 	console.log(`Watching ${SOURCE} for changes...`);
-	fs.watch(SOURCE, async (_event, _filename) => {
+	fs.watch(SOURCE, async () => {
 		const updated = await updateIfDifferent();
 		if (updated) {
 			// eslint-disable-next-line no-undef
