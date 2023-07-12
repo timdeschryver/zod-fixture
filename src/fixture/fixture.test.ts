@@ -59,6 +59,7 @@ test(`priotizes generators via extend`, () => {
 	expect(result.birthday).toBeInstanceOf(Date);
 	expect(result.address).toBeTypeOf('object');
 	expect(result.address.street).toBeTypeOf('string');
+	expect(result.address.street).not.toBe('Fixed Name');
 	expect(result.address.city).toBeTypeOf('string');
 	expect(result.address.state).toBeTypeOf('string');
 	expect(result.pets).toBeInstanceOf(Array);
