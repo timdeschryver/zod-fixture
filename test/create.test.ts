@@ -117,6 +117,13 @@ describe('create strings', () => {
 		const isoDateTimeString = createFixture(schema);
 		schema.parse(isoDateTimeString);
 	});
+
+	test('creates a string that is an url', () => {
+		const schema = z.string().url();
+
+		const url = createFixture(schema);
+		schema.parse(url)
+	});
 });
 
 describe('create numbers', () => {
