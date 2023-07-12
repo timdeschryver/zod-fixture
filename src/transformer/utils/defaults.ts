@@ -29,4 +29,4 @@ export default {
 		min: Date.UTC(1900, 0, 1),
 		max: Date.UTC(2100, 11, 31),
 	},
-};
+} satisfies ZodFixture.Defaults;

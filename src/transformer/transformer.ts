@@ -4,7 +4,7 @@ import { ZOD_INSTANCE_IDENTIFIER, isZodConstructor } from './generator';
 import { Utils } from './utils';
 import defaults from './utils/defaults';
 
-export interface Config {
+export interface Config extends ZodFixture.TransformerConfig {
 	seed?: number;
 	defaults?: Partial<typeof defaults>;
 }
