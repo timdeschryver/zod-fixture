@@ -49,7 +49,7 @@ test('creates a fixture using createFixture', () => {
 test(`priotizes generators via extend`, () => {
 	const nameGenerator = Generator({
 		schema: ZodString,
-		filter: ({ context }) => context?.path?.includes('name'),
+		filter: ({ context }) => context.path.includes('name'),
 		output: () => 'Fixed Name',
 	});
 
