@@ -41,9 +41,9 @@ jobs:
       - name: 🔎 Install dependencies
         run: npm ci
       - name: Generate README
-        run: readme:generate
+        run: npm run readme:generate
       - name: Check README up to date
-        run: readme:check
+        run: npm run readme:check
       - name: 📔 Docs
         run: npm run docs:build
 
