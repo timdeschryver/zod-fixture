@@ -34,7 +34,7 @@ import { TupleGenerator } from './tuple';
 import { UndefinedGenerator, VoidGenerator } from './undefined';
 import { UnionGenerator } from './union';
 
-export const fixtureGenerators = [
+export const DEFAULT_FIXTURE_GENERATORS = [
 	ArrayGenerator,
 	BigIntGenerator,
 	BigIntMultipleOfGenerator,
@@ -70,3 +70,40 @@ export const fixtureGenerators = [
 	VoidGenerator,
 	NeverGenerator,
 ];
+
+export {
+	ArrayGenerator,
+	BigIntGenerator,
+	BigIntMultipleOfGenerator,
+	BooleanGenerator,
+	BrandedGenerator,
+	Cuid2Generator,
+	CuidGenerator,
+	DateGenerator,
+	DateTimeGenerator,
+	EmailGenerator,
+	EnumGenerator,
+	FunctionGenerator,
+	LazyGenerator,
+	LiteralGenerator,
+	MapGenerator,
+	NanGenerator,
+	NeverGenerator,
+	NullGenerator,
+	NumberGenerator,
+	ObjectGenerator,
+	PreprocessGenerator,
+	PromiseGenerator,
+	RecordGenerator,
+	RefinementGenerator,
+	SetGenerator,
+	StringGenerator,
+	SymbolGenerator,
+	TransformGenerator,
+	TupleGenerator,
+	UndefinedGenerator,
+	UnionGenerator,
+	UrlGenerator,
+	UuidGenerator,
+	VoidGenerator,
+};
