@@ -12,7 +12,7 @@ const PersonSchema = z.object({
 		state: z.string(),
 	}),
 	pets: z.array(z.object({ name: z.string(), breed: z.string() })),
-	totalVisits: z.number().int().min(0),
+	totalVisits: z.number().int().positive(),
 });
 
 const person = createFixture(PersonSchema, { seed: 11 });
