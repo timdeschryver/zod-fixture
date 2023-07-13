@@ -11,12 +11,12 @@ export class Runner {
 
 	constructor(
 		public readonly transformer: Transformer,
-		schemaConfig?: Partial<Defaults>
+		schemaDefaults?: Partial<Defaults>
 	) {
 		this.defaults = {
-			...transformer.transformerConfig,
-			...transformer.instanceConfig,
-			...schemaConfig,
+			...transformer.transformerDefaults,
+			...transformer.instanceDefaults,
+			...schemaDefaults,
 		};
 		this.utils = new Utils(this);
 	}

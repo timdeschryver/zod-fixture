@@ -7,10 +7,10 @@ import { Runner } from './runner';
 export abstract class Transformer {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	abstract readonly generators: Definition<any>[];
-	abstract readonly transformerConfig: Defaults;
+	abstract readonly transformerDefaults: Defaults;
 
-	constructor(readonly instanceConfig?: Partial<Defaults>) {
-		this.instanceConfig = { seed: randomSeed(), ...instanceConfig };
+	constructor(readonly instanceDefaults?: Partial<Defaults>) {
+		this.instanceDefaults = { seed: randomSeed(), ...instanceDefaults };
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -37,11 +37,11 @@ export abstract class Transformer {
 export class ConstrainedTransformer extends Transformer {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	generators: Definition<any>[] = [];
-	transformerConfig: Defaults = constrained;
+	transformerDefaults: Defaults = constrained;
 }
 
 export class UnconstrainedTransformer extends Transformer {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	generators: Definition<any>[] = [];
-	transformerConfig: Defaults = unconstrained;
+	transformerDefaults: Defaults = unconstrained;
 }
