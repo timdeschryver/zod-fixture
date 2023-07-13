@@ -70,7 +70,7 @@ const PersonSchema = z.object({
 		state: z.string(),
 	}),
 	pets: z.array(z.object({ name: z.string(), breed: z.string() })),
-	totalVisits: z.number(),
+	totalVisits: z.number().int().positive(),
 });
 
 const fixture = new Fixture({ seed: 11 });
@@ -82,27 +82,27 @@ const person = fixture.fromSchema(PersonSchema);
 ```ts
 {
 	address: {
-		city: '43K>5SG250E',
-		state: 'kbszkSZm^3Kg<CPyfa4z1HikF',
-		street: 'oQes]5YUwRzbITAPk',
+		city: 'bonzm-sjnglvkbb',
+		state: 'fbmiabahyvsy-vm',
+		street: 'etuqnbvmbkqwlty',
 	},
-	birthday: new Date('1980-09-26T06:36:51.341Z'),
-	name: '8zGj;1humNI>G?8p6;ej\\T4jS3',
+	birthday: new Date('2073-08-30T03:26:04.735Z'),
+	name: 'd-iveauywljfifd',
 	pets: [
 		{
-			breed: 'RIEgfwDI7]yK6RE581:h]QM^P',
-			name: 'wgIuUNfJKl;i4``l3`A',
+			breed: 'ifsztjznktjkveu',
+			name: 'qbjuehl-trb-aiu',
 		},
 		{
-			breed: 'iVI2P\\',
-			name: 'YOMKN<ukgnGg1qp`CdV>',
+			breed: 'q-jcmhccaduqmkq',
+			name: 'rrvbrgzmjhttzhj',
 		},
 		{
-			breed: 'fotFqP',
-			name: '8Z?ap[eGC',
+			breed: 'rgsnffunjalqicp',
+			name: 'tolkjleyvtwitax',
 		},
 	],
-	totalVisits: 5544703130861567,
+	totalVisits: 21,
 }
 
 ```
@@ -149,7 +149,7 @@ const PersonSchema = z.object({
 		state: z.string(),
 	}),
 	pets: z.array(z.object({ name: z.string(), breed: z.string() })),
-	totalVisits: z.number().int().min(0),
+	totalVisits: z.number().int().positive(),
 });
 
 const fixture = new Fixture({ seed: 38 }).extend([
