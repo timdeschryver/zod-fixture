@@ -3,9 +3,9 @@ export class Checks<TChecks extends { kind: string }[]> {
 
 	find<TKind extends string>(
 		kind: TKind
-	): Utils.FilterChecks<TChecks[number], TKind> | undefined {
+	): FilterChecks<TChecks[number], TKind> | undefined {
 		return this.checks.find((check) => check.kind === kind) as
-			| Utils.FilterChecks<TChecks[number], TKind>
+			| FilterChecks<TChecks[number], TKind>
 			| undefined;
 	}
 
@@ -13,3 +13,8 @@ export class Checks<TChecks extends { kind: string }[]> {
 		return this.find(kind) !== undefined;
 	}
 }
+
+type FilterChecks<
+	T extends { kind: string },
+	TKind extends string
+> = T extends { kind: TKind } ? T : never;

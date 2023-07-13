@@ -4,7 +4,7 @@ import {
 	ConstrainedTransformer,
 	UnconstrainedTransformer,
 } from '../transformer/transformer';
-import { fixtureGenerators } from './generators';
+import { DEFAULT_FIXTURE_GENERATORS } from './generators';
 
 function missingGeneratorError(schema: z.ZodTypeAny) {
 	const message = [
@@ -27,7 +27,7 @@ export interface ConstrainedFixture extends ConstrainedTransformer {
 }
 
 export class ConstrainedFixture extends ConstrainedTransformer {
-	generators = fixtureGenerators;
+	generators = DEFAULT_FIXTURE_GENERATORS;
 	missingGeneratorError = missingGeneratorError;
 }
 
@@ -40,8 +40,15 @@ export interface UnconstrainedFixture extends UnconstrainedTransformer {
 }
 
 export class UnconstrainedFixture extends UnconstrainedTransformer {
-	generators = fixtureGenerators;
+	generators = DEFAULT_FIXTURE_GENERATORS;
 	missingGeneratorError = missingGeneratorError;
 }
 
 export { ConstrainedFixture as Fixture };
+
+export function createFixture<TSchema extends z.ZodTypeAny>(
+	schema: TSchema,
+	userDefaults?: Partial<Defaults>
+): z.infer<TSchema> {
+	return new ConstrainedFixture(userDefaults).fromSchema(schema);
+}

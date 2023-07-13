@@ -55,7 +55,7 @@ The easiest way to start using zod-fixture is to import the preconfigured (more 
 
 > INFO: The examples make use of a seed to generate the same fixture every time. This is useful for our docs, or to reproduce issues, but it's not needed in your test code.
 
-<sub>[Example](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/create-fixture-person.test.ts)</sub>
+<sub>[Example](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/fixture-person.test.ts)</sub>
 
 ```ts
 import { z } from 'zod';
@@ -77,7 +77,7 @@ const fixture = new Fixture({ seed: 11 });
 const person = fixture.fromSchema(PersonSchema);
 ```
 
-<sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/create-fixture-person.test.ts)</sub>
+<sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/fixture-person.test.ts)</sub>
 
 ```ts
 {
@@ -121,7 +121,7 @@ But, for those times where you need a custom implementation, you can write your 
 
 In the example below we create a custom implemantion `addressGenerator` to return a custom address object, and a `totalVisitsGenerator` to return a more realistic number of visits.
 
-<sub>[Example](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/create-fixture-extension.test.ts)</sub>
+<sub>[Example](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/fixture-extension.test.ts)</sub>
 
 ```ts
 import { ZodNumber, ZodObject, z } from 'zod';
@@ -159,7 +159,7 @@ const fixture = new Fixture({ seed: 38 }).extend([
 const person = fixture.fromSchema(PersonSchema);
 ```
 
-<sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/create-fixture-extension.test.ts)</sub>
+<sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/fixture-extension.test.ts)</sub>
 
 ```ts
 {
@@ -217,7 +217,7 @@ For example, in the example below we create our own `totalVisitsGenerator` to re
 
 > TIP: The order the registered generators matters. The first generator that matches the conditions (`schema` and `filter`) is used to create the value.
 
-<sub>[Source](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/create-fixture-extension.test.ts)</sub>
+<sub>[Source](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/fixture-extension.test.ts)</sub>
 
 ```ts
 const totalVisitsGenerator = Generator({

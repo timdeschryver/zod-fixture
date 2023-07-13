@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { ZodNumber, z } from 'zod';
-import { fixtureGenerators } from '../fixture/generators';
+import { DEFAULT_FIXTURE_GENERATORS } from '../fixture/generators';
 import { NumberGenerator } from '../fixture/generators/number';
 import { ObjectGenerator } from '../fixture/generators/object';
 import { StringGenerator } from '../fixture/generators/string';
@@ -15,7 +15,9 @@ describe('transform', () => {
 	});
 
 	test('creates a fixture', () => {
-		const transform = new ConstrainedTransformer().extend(fixtureGenerators);
+		const transform = new ConstrainedTransformer().extend(
+			DEFAULT_FIXTURE_GENERATORS
+		);
 		const PersonSchema = z.object({
 			name: z.string(),
 			birthday: z.date(),
@@ -32,7 +34,7 @@ describe('transform', () => {
 	});
 
 	test('throws when schema missing', () => {
-		const generators = [...fixtureGenerators].filter(
+		const generators = [...DEFAULT_FIXTURE_GENERATORS].filter(
 			(g) => g !== StringGenerator
 		);
 		const transform = new ConstrainedTransformer().extend(generators);

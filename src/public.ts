@@ -1,9 +1,4 @@
-export {
-	ConstrainedFixture,
-	Fixture,
-	UnconstrainedFixture,
-	fixtureGenerators,
-} from '@/fixture';
+export * from '@/fixture';
 export { Generator } from '@/transformer/generator';
 export {
 	ConstrainedTransformer,
