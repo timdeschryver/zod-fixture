@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 // #region example
 import { z } from 'zod';
-import { createFixture } from 'zod-fixture';
+import { Fixture } from 'zod-fixture';
 
 const PersonSchema = z.object({
 	name: z.string(),
@@ -15,7 +15,8 @@ const PersonSchema = z.object({
 	totalVisits: z.number(),
 });
 
-const person = createFixture(PersonSchema, { seed: 11 });
+const fixture = new Fixture({ seed: 11 });
+const person = fixture.fromSchema(PersonSchema);
 // #endregion example
 
 const output = Object.assign(
