@@ -9,8 +9,8 @@ export abstract class Transformer {
 	abstract readonly generators: Definition<any>[];
 	abstract readonly transformerConfig: Defaults;
 
-	constructor(readonly userConfig?: Partial<Defaults>) {
-		this.userConfig = { seed: randomSeed(), ...userConfig };
+	constructor(readonly instanceConfig?: Partial<Defaults>) {
+		this.instanceConfig = { seed: randomSeed(), ...instanceConfig };
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -24,9 +24,9 @@ export abstract class Transformer {
 
 	fromSchema<TSchema extends ZodTypeAny>(
 		schema: TSchema,
-		userDefaults?: Partial<Defaults>
+		instanceDefaults?: Partial<Defaults>
 	): unknown {
-		return new Runner(this, userDefaults).fromSchema(schema);
+		return new Runner(this, instanceDefaults).fromSchema(schema);
 	}
 
 	missingGeneratorError(schema: ZodTypeAny) {

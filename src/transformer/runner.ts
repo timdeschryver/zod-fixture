@@ -15,7 +15,7 @@ export class Runner {
 	) {
 		this.defaults = {
 			...transformer.transformerConfig,
-			...transformer.userConfig,
+			...transformer.instanceConfig,
 			...schemaConfig,
 		};
 		this.utils = new Utils(this);

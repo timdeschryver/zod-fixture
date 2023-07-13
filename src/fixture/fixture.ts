@@ -22,7 +22,7 @@ export interface ConstrainedFixture extends ConstrainedTransformer {
 	// explicitly define the return type
 	fromSchema<TSchema extends z.ZodTypeAny>(
 		schema: TSchema,
-		userDefaults?: Partial<Defaults>
+		instanceDefaults?: Partial<Defaults>
 	): z.infer<TSchema>;
 }
 
@@ -35,7 +35,7 @@ export interface UnconstrainedFixture extends UnconstrainedTransformer {
 	// explicitly define the return type
 	fromSchema<TSchema extends z.ZodTypeAny>(
 		schema: TSchema,
-		userDefaults?: Partial<Defaults>
+		instanceDefaults?: Partial<Defaults>
 	): z.infer<TSchema>;
 }
 
@@ -48,7 +48,7 @@ export { ConstrainedFixture as Fixture };
 
 export function createFixture<TSchema extends z.ZodTypeAny>(
 	schema: TSchema,
-	userDefaults?: Partial<Defaults>
+	instanceDefaults?: Partial<Defaults>
 ): z.infer<TSchema> {
-	return new ConstrainedFixture(userDefaults).fromSchema(schema);
+	return new ConstrainedFixture(instanceDefaults).fromSchema(schema);
 }
