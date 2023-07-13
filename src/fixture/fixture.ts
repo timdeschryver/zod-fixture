@@ -1,5 +1,6 @@
 import type { z } from 'zod';
 import type { Context } from '../transformer/generator';
+import type { Config } from '../transformer/transformer';
 import { Transformer } from '../transformer/transformer';
 import { DEFAULT_FIXTURE_GENERATORS } from './generators';
 
@@ -25,4 +26,12 @@ export class Fixture extends Transformer {
 
 		return new Error(message);
 	}
+}
+
+export function createFixture<TSchema extends z.ZodTypeAny>(
+	schema: TSchema,
+	fixtureConfig?: Config
+): z.infer<TSchema> {
+	const fixture = new Fixture(fixtureConfig);
+	return fixture.fromSchema(schema);
 }

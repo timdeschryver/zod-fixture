@@ -50,8 +50,8 @@ The examples make use of a seed to generate the same fixture every time. This is
 :::
 
 ::: code-group
-<<< @/../examples/create-fixture-person.test.ts#example [Example]
-<<< @/../examples/create-fixture-person.test.ts#output [Output]
+<<< @/../examples/fixture-person.test.ts#example [Example]
+<<< @/../examples/fixture-person.test.ts#output [Output]
 :::
 
 ## Customizing
@@ -69,8 +69,8 @@ But, for those times where you need a custom implementation, you can write your 
 In the example below we create a custom implemantion `addressGenerator` to return a custom address object, and a `totalVisitsGenerator` to return a more realistic number of visits.
 
 ::: code-group
-<<< @/../examples/create-fixture-extension.test.ts#example [Example]
-<<< @/../examples/create-fixture-extension.test.ts#output [Output]
+<<< @/../examples/fixture-extension.test.ts#example [Example]
+<<< @/../examples/fixture-extension.test.ts#output [Output]
 :::
 
 ### Create Your Own Transformer
@@ -92,7 +92,7 @@ For example, in the example below we create our own `totalVisitsGenerator` to re
 The order the registered generators matters. The first generator that matches the conditions (`schema` and `filter`) is used to create the value.
 :::
 
-<<< @/../examples/create-fixture-extension.test.ts#generator
+<<< @/../examples/fixture-extension.test.ts#generator
 
 ## Contributing
 
