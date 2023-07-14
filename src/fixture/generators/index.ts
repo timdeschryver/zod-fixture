@@ -26,6 +26,7 @@ import {
 	DateTimeGenerator,
 	EmailGenerator,
 	IpGenerator,
+	RegexGenerator,
 	StringGenerator,
 	UlidGenerator,
 	UrlGenerator,
@@ -60,6 +61,7 @@ export const DEFAULT_FIXTURE_GENERATORS = [
 	EmailGenerator,
 	UrlGenerator,
 	DateTimeGenerator,
+	RegexGenerator,
 	StringGenerator,
 	TupleGenerator,
 	UndefinedGenerator,
@@ -101,6 +103,7 @@ export {
 	PromiseGenerator,
 	RecordGenerator,
 	RefinementGenerator,
+	RegexGenerator,
 	SetGenerator,
 	StringGenerator,
 	SymbolGenerator,
@@ -110,5 +113,6 @@ export {
 	UnionGenerator,
 	UrlGenerator,
 	UuidGenerator,
-	VoidGenerator,
+	VoidGenerator
 };
+

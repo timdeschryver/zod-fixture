@@ -1,6 +1,7 @@
 import { ZodString } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
 import type { Runner } from '@/transformer/runner';
+import RandExp from 'randexp';
 import { monotonicFactory } from 'ulid';
 import type { ZodStringDef } from 'zod';
 
@@ -170,4 +171,15 @@ export const DateTimeGenerator = Generator({
 	filter: ({ def, transform }) =>
 		transform.utils.checks(def.checks).has('datetime'),
 	output: ({ transform }) => transform.utils.random.date().toISOString(),
+});
+
+export const RegexGenerator = Generator({
+	schema: ZodString,
+	filter: ({ def, transform }) =>
+		transform.utils.checks(def.checks).has('regex'),
+	output: ({ def, transform }) => {
+		const pattern = transform.utils.checks(def.checks).find('regex')?.regex;
+		if (!pattern) throw new Error(`RegexGenerator: regex pattern not found`);
+		return formatString(transform, def, new RandExp(pattern).gen());
+	},
 });

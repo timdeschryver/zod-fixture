@@ -8,6 +8,7 @@ import {
 	DateTimeGenerator,
 	EmailGenerator,
 	IpGenerator,
+	RegexGenerator,
 	StringGenerator,
 	UlidGenerator,
 	UrlGenerator,
@@ -27,6 +28,7 @@ describe('create strings', () => {
 		UrlGenerator,
 		EmailGenerator,
 		DateTimeGenerator,
+		RegexGenerator,
 		StringGenerator,
 		NullableGenerator,
 		OptionalGenerator,
@@ -243,5 +245,18 @@ describe('create strings', () => {
 		expect(
 			new Date(transform.fromSchema(z.string().datetime()) as string)
 		).toBeInstanceOf(Date);
+	});
+
+	test('creates a string that follows a regexp', () => {
+		expect(transform.fromSchema(z.string().regex(/aBc/))).toBeTypeOf('string');
+		expect(transform.fromSchema(z.string().regex(/aBc/))).toBe('aBc');
+	});
+
+	test('produces a valid string that is a regexp', () => {
+		expect(transform).toReasonablySatisfy(
+			z
+				.string()
+				.regex(/^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$/gm)
+		);
 	});
 });
