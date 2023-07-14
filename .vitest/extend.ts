@@ -1,5 +1,5 @@
 import { expect } from 'vitest';
-import { ZodTypeAny } from 'zod';
+import type { ZodTypeAny } from 'zod';
 
 expect.extend({
 	toReasonablySatisfy(

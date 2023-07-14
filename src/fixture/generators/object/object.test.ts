@@ -1,4 +1,4 @@
-import { Transformer } from '@/transformer/transformer';
+import { ConstrainedTransformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { ObjectGenerator, RecordGenerator } from '.';
@@ -18,7 +18,7 @@ import { SymbolGenerator } from '../symbol';
 import { UndefinedGenerator } from '../undefined';
 
 describe('create objects', () => {
-	const transform = new Transformer().extend([
+	const transform = new ConstrainedTransformer().extend([
 		ObjectGenerator,
 		StringGenerator,
 		NumberGenerator,
@@ -132,7 +132,7 @@ describe('create objects', () => {
 });
 
 describe('create Records', () => {
-	const transform = new Transformer().extend([
+	const transform = new ConstrainedTransformer().extend([
 		RecordGenerator,
 		StringGenerator,
 		NumberGenerator,

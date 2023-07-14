@@ -1,4 +1,4 @@
-import { Transformer } from '@/transformer/transformer';
+import { ConstrainedTransformer } from '@/transformer/transformer';
 import { describe, expect, test, vi } from 'vitest';
 import { z } from 'zod';
 import {
@@ -9,7 +9,7 @@ import {
 import { StringGenerator } from '../string';
 
 describe('usage with effects', () => {
-	const transform = new Transformer().extend([
+	const transform = new ConstrainedTransformer().extend([
 		PreprocessGenerator,
 		RefinementGenerator,
 		TransformGenerator,

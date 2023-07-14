@@ -1,13 +1,9 @@
 import { ZodString } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
-import type { Transformer } from '@/transformer/transformer';
+import type { Runner } from '@/transformer/runner';
 import type { ZodStringDef } from 'zod';
 
-function formatString(
-	transform: Transformer,
-	def: ZodStringDef,
-	value: string
-) {
+function formatString(transform: Runner, def: ZodStringDef, value: string) {
 	const checks = transform.utils.checks(def.checks);
 
 	let max = checks.find('max')?.value;
@@ -54,19 +50,14 @@ export const StringGenerator = Generator({
 	output: ({ def, transform }) => {
 		const checks = transform.utils.checks(def.checks);
 
-		let min = checks.find('min')?.value ?? 1;
-		let max = checks.find('max')?.value ?? min + 25;
-		const length = checks.find('length');
+		let min = checks.find('min')?.value;
+		let max = checks.find('max')?.value;
 
+		const length = checks.find('length');
 		if (length) {
 			min = length.value;
 			max = length.value;
 		}
-
-		if (min < 0)
-			throw new Error(
-				`Minimum length of a string can't be less than 0: ${min}`
-			);
 
 		return formatString(
 			transform,

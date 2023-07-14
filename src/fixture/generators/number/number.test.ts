@@ -1,10 +1,10 @@
-import { Transformer } from '@/transformer/transformer';
+import { ConstrainedTransformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { NumberGenerator } from '.';
 
 describe('create numbers', () => {
-	const transform = new Transformer().extend([NumberGenerator]);
+	const transform = new ConstrainedTransformer().extend([NumberGenerator]);
 
 	test('produces a valid number', () => {
 		expect(transform).toReasonablySatisfy(z.number());
@@ -28,12 +28,12 @@ describe('create numbers', () => {
 		});
 
 		test('creates a number with a min value', () => {
-			expect(
-				transform.fromSchema(z.number().min(10_000))
-			).toBeGreaterThanOrEqual(10_000);
-			expect(
-				transform.fromSchema(z.number().gte(10_000))
-			).toBeGreaterThanOrEqual(10_000);
+			expect(transform.fromSchema(z.number().min(100))).toBeGreaterThanOrEqual(
+				100
+			);
+			expect(transform.fromSchema(z.number().gte(100))).toBeGreaterThanOrEqual(
+				100
+			);
 		});
 
 		test('creates a number with a negative min value', () => {

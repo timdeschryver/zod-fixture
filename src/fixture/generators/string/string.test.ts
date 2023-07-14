@@ -1,4 +1,4 @@
-import { Transformer } from '@/transformer/transformer';
+import { ConstrainedTransformer } from '@/transformer/transformer';
 import { isCuid as isCuid2 } from '@paralleldrive/cuid2';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
@@ -16,7 +16,7 @@ import { ObjectGenerator } from '../object';
 import { OptionalGenerator } from '../optional';
 
 describe('create strings', () => {
-	const transform = new Transformer().extend([
+	const transform = new ConstrainedTransformer().extend([
 		UuidGenerator,
 		CuidGenerator,
 		Cuid2Generator,

@@ -1,4 +1,4 @@
-import { Transformer } from '@/transformer/transformer';
+import { ConstrainedTransformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { TupleGenerator } from '.';
@@ -7,7 +7,7 @@ import { ObjectGenerator } from '../object';
 import { StringGenerator } from '../string';
 
 describe('create Tuples', () => {
-	const transform = new Transformer().extend([
+	const transform = new ConstrainedTransformer().extend([
 		TupleGenerator,
 		ObjectGenerator,
 		StringGenerator,

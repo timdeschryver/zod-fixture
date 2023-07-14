@@ -1,3 +1,7 @@
 export * from '@/fixture';
 export { Generator } from '@/transformer/generator';
-export { Transformer } from '@/transformer/transformer';
+export {
+	ConstrainedTransformer,
+	Transformer,
+	UnconstrainedTransformer,
+} from '@/transformer/transformer';

@@ -1,5 +1,5 @@
+import { ZodNever } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
-import { ZodNever } from 'zod';
 
 export const NeverGenerator = Generator({
 	schema: ZodNever,
