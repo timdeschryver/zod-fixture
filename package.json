@@ -14,7 +14,9 @@
 		"prepare": "git config core.hookspath .githooks",
 		"docs:dev": "vitepress dev docs",
 		"docs:build": "vitepress build docs",
-		"docs:preview": "vitepress preview docs"
+		"docs:preview": "vitepress preview docs",
+		"readme:generate": "node ./scripts/readme",
+		"readme:check": "git diff --name-only --exit-code README.md"
 	},
 	"files": [
 		"dist"
