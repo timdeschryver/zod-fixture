@@ -38,7 +38,8 @@ async function updateIfDifferent() {
 				return `${indent}- [${label}](#${label
 					.toLowerCase()
 					.replace(/[^A-Za-z0-1]/g, '-')
-					.replace(/-+/g, '-')})`;
+					.replace(/-+/g, '-')
+					.replace(/^-|-$/g, '')})`;
 			})
 		)
 		.join('\n');
