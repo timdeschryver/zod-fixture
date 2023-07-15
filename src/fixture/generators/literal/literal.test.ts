@@ -1,10 +1,10 @@
-import { Transformer } from '@/transformer/transformer';
+import { ConstrainedTransformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { LiteralGenerator } from '.';
 
 describe('create literals', () => {
-	const transform = new Transformer().extend([LiteralGenerator]);
+	const transform = new ConstrainedTransformer().extend([LiteralGenerator]);
 
 	test('produces a valid literal', () => {
 		expect(transform).toReasonablySatisfy(z.literal('tuna'));

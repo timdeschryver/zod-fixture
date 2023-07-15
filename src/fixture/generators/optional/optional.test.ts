@@ -1,4 +1,4 @@
-import { Transformer } from '@/transformer/transformer';
+import { ConstrainedTransformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { OptionalGenerator } from '.';
@@ -10,7 +10,7 @@ import { ObjectGenerator } from '../object';
 import { StringGenerator } from '../string';
 
 describe('create empty types', () => {
-	const transform = new Transformer().extend([
+	const transform = new ConstrainedTransformer().extend([
 		OptionalGenerator,
 		StringGenerator,
 		NullableGenerator,

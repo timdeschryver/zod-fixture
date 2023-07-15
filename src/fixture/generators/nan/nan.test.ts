@@ -1,10 +1,10 @@
-import { Transformer } from '@/transformer/transformer';
+import { ConstrainedTransformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { NanGenerator } from '.';
 
 describe('create NaNs', () => {
-	const transform = new Transformer().extend([NanGenerator]);
+	const transform = new ConstrainedTransformer().extend([NanGenerator]);
 
 	test('produces a valid NaN', () => {
 		expect(transform).toReasonablySatisfy(z.nan());

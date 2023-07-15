@@ -53,7 +53,7 @@ export default class MersenneTwister {
 	mt = new Array(this.N); // the array for the state vector
 	mti = this.N + 1; // mti==N + 1 means mt[N] is not initialized
 
-	constructor(seed: number) {
+	constructor(seed?: number) {
 		if (seed === undefined) {
 			// kept random number same size as time used previously to ensure no unexpected results downstream
 			seed = Math.floor(Math.random() * Math.pow(10, 13));

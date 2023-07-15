@@ -1,10 +1,10 @@
-import { Transformer } from '@/transformer/transformer';
+import { ConstrainedTransformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { DateGenerator } from '.';
 
 describe('create dates', () => {
-	const transform = new Transformer().extend([DateGenerator]);
+	const transform = new ConstrainedTransformer().extend([DateGenerator]);
 
 	test('produces a valid date', () => {
 		expect(transform).toReasonablySatisfy(z.date());

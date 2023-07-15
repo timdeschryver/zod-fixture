@@ -1,5 +1,5 @@
 import type { ZodTypeAny } from 'zod';
-import type { Transformer } from './transformer';
+import type { Runner } from './runner';
 
 export const ZOD_INSTANCE_IDENTIFIER = Symbol('ZOD_INSTANCE_IDENTIFIER');
 
@@ -33,14 +33,14 @@ export function isZodConstructor(
 export type Filter<TSchema extends ZodTypeAny> = (obj: {
 	def: TSchema['_def'];
 	schema: TSchema;
-	transform: Transformer;
+	transform: Runner;
 	context: Context;
 }) => boolean;
 
 export type Generator<TSchema extends ZodTypeAny> = (obj: {
 	def: TSchema['_def'];
 	schema: TSchema;
-	transform: Transformer;
+	transform: Runner;
 	context: Context;
 }) => unknown;
 

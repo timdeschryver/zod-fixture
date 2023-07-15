@@ -46,8 +46,8 @@ bun add -d zod-fixture
 The easiest way to start using `zod-fixture` is to import the pre-configured `Fixture` class.
 
 ::: code-group
-<<< @/../examples/create-fixture-person.test.ts#example [Example]
-<<< @/../examples/create-fixture-person.test.ts#output [Output]
+<<< @/../examples/fixture-person.test.ts#example [Example]
+<<< @/../examples/fixture-person.test.ts#output [Output]
 :::
 
 Take a look at the [examples](https://github.com/timdeschryver/zod-fixture/tree/beta/examples) to see how you can use `zod-fixture` in your tests.
@@ -67,8 +67,8 @@ The easiset way to start customizing `zod-fixture` is to extend the `Fixture` cl
 The example below uses 2 custom generators and a typical pattern for filtering based on the keys of an object.
 
 ::: code-group
-<<< @/../examples/create-fixture-extension.test.ts#example [Example]
-<<< @/../examples/create-fixture-extension.test.ts#output [Output]
+<<< @/../examples/fixture-extension.test.ts#example [Example]
+<<< @/../examples/fixture-extension.test.ts#output [Output]
 :::
 
 ::: tip
@@ -88,7 +88,7 @@ A `Generator` has 3 fundamental parts:
 To help you to create your own generators this library also includes some useful utility methods to generate data.
 For example, in the example below we create our own `totalVisitsGenerator` to return more realastic numbers using the `random` utilities.
 
-<<< @/../examples/create-fixture-extension.test.ts#generator
+<<< @/../examples/fixture-extension.test.ts#generator
 
 ## FAQ
 
@@ -97,8 +97,8 @@ For example, in the example below we create our own `totalVisitsGenerator` to re
 `zod-fixture` was built with this in mind. Simply define your custom type using zod's `z.custom` and pass the resulting schema to your custom generator.
 
 ::: code-group
-<<< @/../examples/create-custom-type.test.ts#example [Example]
-<<< @/../examples/create-custom-type.test.ts#output [Output]
+<<< @/../examples/custom-type.test.ts#example [Example]
+<<< @/../examples/custom-type.test.ts#output [Output]
 :::
 
 ### Do you support faker/chance/falso?

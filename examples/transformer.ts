@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import { Transformer } from 'zod-fixture';
+import { UnconstrainedFixture } from 'zod-fixture';
 
-const transform = new Transformer().extend([
+const transform = new UnconstrainedFixture().extend([
 	/* insert your generators here */
 ]);
 

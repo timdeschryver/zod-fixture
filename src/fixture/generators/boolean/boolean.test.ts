@@ -1,10 +1,10 @@
-import { Transformer } from '@/transformer/transformer';
+import { ConstrainedTransformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { BooleanGenerator } from '.';
 
 describe('create booleans', () => {
-	const transform = new Transformer().extend([BooleanGenerator]);
+	const transform = new ConstrainedTransformer().extend([BooleanGenerator]);
 
 	test('produces a valid boolean', () => {
 		expect(transform).toReasonablySatisfy(z.boolean());

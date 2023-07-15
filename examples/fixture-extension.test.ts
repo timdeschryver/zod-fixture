@@ -47,7 +47,7 @@ const PersonSchema = z.object({
 		state: z.string(),
 	}),
 	pets: z.array(z.object({ name: z.string(), breed: z.string() })),
-	totalVisits: z.number(),
+	totalVisits: z.number().int().positive(),
 });
 
 const fixture = new Fixture({ seed: 38 }).extend([
@@ -65,27 +65,53 @@ const output = Object.assign(
 			state: 'My State',
 			street: 'My Street',
 		},
-		birthday: new Date('1926-02-23T02:07:24.494Z'),
-		name: 'c',
+		birthday: new Date('2091-09-17T10:54:58.574Z'),
+		name: 'sdnlwozmxaigobr',
 		pets: [
 			{
-				breed: '5yOQfkYfI6=kRuH^F?5BCNHft',
-				name: 'mYxRp1GBY2aw',
+				breed: 'fbgglityarecl-q',
+				name: '-lmtvotjcevmyiq',
 			},
 			{
-				breed: '6Qz\\s',
-				name: '_',
+				breed: 'mylchvprjdgelkq',
+				name: 'devqfcctdx-link',
 			},
 			{
-				breed: '6e9',
-				name: ';l]@',
+				breed: 'rcrrkytqrdmzajo',
+				name: 'ivrplyhts-yypas',
 			},
 		],
-		totalVisits: 22,
+		totalVisits: 4,
 	}
 	// #endregion output
 );
 
 test('generates a person', () => {
+	expect(person).toMatchInlineSnapshot(`
+		{
+		  "address": {
+		    "city": "My City",
+		    "state": "My State",
+		    "street": "My Street",
+		  },
+		  "birthday": 2091-09-17T10:54:58.574Z,
+		  "name": "sdnlwozmxaigobr",
+		  "pets": [
+		    {
+		      "breed": "fbgglityarecl-q",
+		      "name": "-lmtvotjcevmyiq",
+		    },
+		    {
+		      "breed": "mylchvprjdgelkq",
+		      "name": "devqfcctdx-link",
+		    },
+		    {
+		      "breed": "rcrrkytqrdmzajo",
+		      "name": "ivrplyhts-yypas",
+		    },
+		  ],
+		  "totalVisits": 4,
+		}
+	`);
 	expect(person).toEqual(output);
 });

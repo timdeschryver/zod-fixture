@@ -1,6 +1,6 @@
 import { init as Cuid2 } from '@paralleldrive/cuid2';
+import type { Defaults } from '../defaults';
 import MersenneTwister from './MersenneTwister';
-import type Defaults from './defaults';
 
 const LOREM =
 	'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
@@ -8,15 +8,12 @@ const PARAGRAPHS = [LOREM];
 const SENTENCES = LOREM.replace(/\. /g, '.\n').split('\n');
 const WORDS = LOREM.toLowerCase().replace(/[,.]/, '').split(' ');
 
-const CHAR_CODE_0 = 48;
-const CHAR_CODE_LOWERCASE_Z = 122;
-
 export class Randomization {
 	mt: MersenneTwister;
 	cuid2: () => string;
 
-	constructor(private defaults: typeof Defaults, private seed: number) {
-		this.mt = new MersenneTwister(this.seed);
+	constructor(private defaults: Defaults) {
+		this.mt = new MersenneTwister(defaults.seed);
 		this.cuid2 = Cuid2({ random: this.unitInterval.bind(this) });
 	}
 
@@ -40,13 +37,14 @@ export class Randomization {
 		return this.mt.random();
 	}
 
-	from<T>(list: T[] | readonly T[] | Set<T>): T {
-		const options = Array.from(list);
+	from<T>(list: T[] | readonly T[] | Set<T> | string): T {
+		const options = list instanceof Set ? [...list] : list;
 
 		const min = 0;
 		const max = Math.max(min, options.length - 1);
+		const target = this.int({ min, max });
 
-		return options[this.int({ min, max })] as T;
+		return options[target] as T;
 	}
 
 	shuffle<T>(values: T[]): T[] {
@@ -62,14 +60,28 @@ export class Randomization {
 		return copy as T[];
 	}
 
-	string({ min, max }: { min: number; max: number }) {
+	emoji() {
+		const codePoint = this.int({ min: 0x1f601, max: 0x1f64f });
+		return String.fromCodePoint(codePoint);
+	}
+
+	string(config: { min?: number; max?: number }) {
+		let min = config.min ?? this.defaults.string.min;
+		let max = config.max ?? this.defaults.string.max;
+
+		if (min < 0)
+			throw new Error(
+				`Minimum length of a string can't be less than 0: ${min}`
+			);
+
+		if (config.min && !config.max) max = config.min;
+		if (config.max && !config.min) min = config.max;
+
 		const length = this.int({ min, max });
 
 		let result = '';
 		for (let i = 0; i < length; i++) {
-			result += String.fromCharCode(
-				this.int({ min: CHAR_CODE_0, max: CHAR_CODE_LOWERCASE_Z })
-			);
+			result += this.from(this.defaults.string.characterSet);
 		}
 
 		return result;
@@ -98,8 +110,8 @@ export class Randomization {
 	}
 
 	bigInt(config?: { min?: bigint; max?: bigint }): bigint {
-		const min = config?.min ?? BigInt(this.defaults.bigint.min);
-		const max = config?.max ?? BigInt(this.defaults.bigint.max);
+		const min = config?.min ?? this.defaults.bigint.min;
+		const max = config?.max ?? this.defaults.bigint.max;
 
 		if (min >= max) {
 			throw new Error(`min ${min} can't be greater than max ${max}`);

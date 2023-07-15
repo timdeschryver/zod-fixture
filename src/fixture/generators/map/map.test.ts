@@ -1,4 +1,4 @@
-import { Transformer } from '@/transformer/transformer';
+import { ConstrainedTransformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { MapGenerator } from '.';
@@ -6,7 +6,7 @@ import { NumberGenerator } from '../number';
 import { StringGenerator } from '../string';
 
 describe('create Maps', () => {
-	const transform = new Transformer().extend([
+	const transform = new ConstrainedTransformer().extend([
 		MapGenerator,
 		StringGenerator,
 		NumberGenerator,
