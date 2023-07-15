@@ -50,7 +50,7 @@ The easiest way to start using `zod-fixture` is to import the pre-configured `cr
 <<< @/../examples/fixture-person.test.ts#output [Output]
 :::
 
-Take a look at the [examples](https://github.com/timdeschryver/zod-fixture/examples) to see how you can use `zod-fixture` in your tests.
+Take a look at the [examples](https://github.com/timdeschryver/zod-fixture/tree/main/examples) to see how you can use `zod-fixture` in your tests.
 
 ::: info
 The examples make use of the optional [seed](#seed-optional) parameter to generate the same fixture every time. This is useful for our docs, or to reproduce issues, but is not necessary in your code. Simply calling `new Fixture()` is acceptable.
