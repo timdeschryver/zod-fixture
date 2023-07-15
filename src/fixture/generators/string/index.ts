@@ -1,8 +1,10 @@
 import { ZodString } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
 import type { Runner } from '@/transformer/runner';
+import { monotonicFactory } from 'ulid';
 import type { ZodStringDef } from 'zod';
 
+const ulid = monotonicFactory();
 const prefixPattern = (str: string) => `^.{${str.length}}`;
 const suffixPattern = (str: string) => `.{${str.length}}$`;
 
@@ -87,6 +89,13 @@ export const StringGenerator = Generator({
 			transform.utils.random.string({ min, max })
 		);
 	},
+});
+
+export const UlidGenerator = Generator({
+	schema: ZodString,
+	filter: ({ def, transform }) =>
+		transform.utils.checks(def.checks).has('ulid'),
+	output: () => ulid(),
 });
 
 export const UrlGenerator = Generator({

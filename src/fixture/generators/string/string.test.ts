@@ -9,6 +9,7 @@ import {
 	EmailGenerator,
 	IpGenerator,
 	StringGenerator,
+	UlidGenerator,
 	UrlGenerator,
 	UuidGenerator,
 } from '.';
@@ -19,6 +20,7 @@ import { OptionalGenerator } from '../optional';
 describe('create strings', () => {
 	const transform = new ConstrainedTransformer().extend([
 		IpGenerator,
+		UlidGenerator,
 		UuidGenerator,
 		CuidGenerator,
 		Cuid2Generator,
@@ -131,6 +133,10 @@ describe('create strings', () => {
 	test('creates a string is uppercase', () => {
 		const uppercase = transform.fromSchema(z.string().toUpperCase());
 		expect(uppercase).toMatch(/^[^a-z]*$/);
+	});
+
+	test('creates a valid ulid', () => {
+		expect(transform).toReasonablySatisfy(z.string().ulid());
 	});
 
 	test('produces a valid string with a start and end', () => {
