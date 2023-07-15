@@ -115,21 +115,17 @@ The short answer, not yet. We plan to build out pre-defined generators for popul
 
 #### Config
 
-<<< @/../src/types/zod-fixture.d.ts#config
+We provide sane defaults for the random utilities used by our generators, but these can easily be customized.
+
+<<< @/../src/transformer/defaults.ts#defaults
 
 ##### Seed (optional)
 
 A seed can be provided to produce the same results every time.
 
 ```ts
-new Fixture({ seed: number });
+const fixture = new Fixture({ seed: number });
 ```
-
-##### Defaults (optional)
-
-We provide sane defaults for the random utilities used by our generators, but these can easily be customized.
-
-<<< @/../src/types/zod-fixture.d.ts#defaults
 
 ## Advanced Topics
 
@@ -137,7 +133,7 @@ We provide sane defaults for the random utilities used by our generators, but th
 
 Instead of using the opinionated `Fixture` class, you can extend the unopinionated `Transformer` and register the desired generators.
 
-<<< @/../examples/transformer.ts
+<<< @/../examples/transformer.test.ts
 
 ## Contributing
 
