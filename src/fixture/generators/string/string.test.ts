@@ -178,12 +178,20 @@ describe('create strings', () => {
 		expect(value).toHaveLength(6000);
 	});
 
+	test('creates a string with endsWith', () => {
+		const value = transform.fromSchema(
+			z.string().startsWith('foxy').includes('mama')
+		) as string;
+		expect(value.startsWith('foxy')).toBeTruthy();
+		expect(value.includes('mama')).toBeTruthy();
+	});
+
 	test('correctly trims string', () => {
 		const value = transform.fromSchema(z.string().endsWith('     ').trim());
 		expect(value).toHaveLength(10);
 	});
 
-	test('creates a large string using length with startsWith and EndsWith', () => {
+	test('creates a large string using length with startsWith and endsWith', () => {
 		const value = transform.fromSchema(
 			z.string().length(6000).startsWith('start_').endsWith('_end')
 		) as string;

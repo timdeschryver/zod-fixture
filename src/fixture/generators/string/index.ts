@@ -3,17 +3,21 @@ import { Generator } from '@/transformer/generator';
 import type { Runner } from '@/transformer/runner';
 import type { ZodStringDef } from 'zod';
 
+const prefixPattern = (str: string) => `^.{${str.length}}`;
+const suffixPattern = (str: string) => `.{${str.length}}$`;
+
 function formatString(transform: Runner, def: ZodStringDef, value: string) {
 	const checks = transform.utils.checks(def.checks);
 
 	let max = checks.find('max')?.value;
 	let min = checks.find('min')?.value ?? 0;
 	const length = checks.find('length')?.value;
-	const isUpperCase = checks.has('toUpperCase');
-	const isLowerCase = checks.has('toLowerCase');
+	const includes = checks.find('includes')?.value;
 	const startsWith = checks.find('startsWith')?.value;
 	const endsWith = checks.find('endsWith')?.value;
 	const isTrimmed = checks.has('trim');
+	const isUpperCase = checks.has('toUpperCase');
+	const isLowerCase = checks.has('toLowerCase');
 
 	if (length) {
 		min = length;
@@ -29,12 +33,20 @@ function formatString(transform: Runner, def: ZodStringDef, value: string) {
 		value = value.slice(0, max);
 	}
 
+	if (includes) {
+		const prefix = startsWith ? prefixPattern(startsWith) : '';
+		value = value.replace(
+			new RegExp(`(${prefix}).{${includes.length}}`),
+			(_, prefix) => prefix + includes
+		);
+	}
+
 	if (startsWith) {
-		value = value.replace(new RegExp(`^.{${startsWith.length}}`), startsWith);
+		value = value.replace(new RegExp(prefixPattern(startsWith)), startsWith);
 	}
 
 	if (endsWith) {
-		value = value.replace(new RegExp(`.{${endsWith.length}}$`), endsWith);
+		value = value.replace(new RegExp(suffixPattern(endsWith)), endsWith);
 	}
 
 	if (isUpperCase) {
