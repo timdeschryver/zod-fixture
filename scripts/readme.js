@@ -37,9 +37,8 @@ async function updateIfDifferent() {
 				const indent = '  '.repeat(prefix.length - 2);
 				return `${indent}- [${label}](#${label
 					.toLowerCase()
-					.replace(/[^A-Za-z0-1]/g, '-')
-					.replace(/-+/g, '-')
-					.replace(/^-|-$/g, '')})`;
+					.replace(/\s+/g, '-')
+					.replace(/[^A-Za-z0-1]/g, '')})`;
 			})
 		)
 		.join('\n');
