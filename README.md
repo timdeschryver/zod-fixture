@@ -30,7 +30,6 @@ Creating test fixtures should be easy.<br>
   - [Fixture / Transformer](#fixture--transformer)
     - [Config](#config)
       - [Seed (optional)](#seed-optional)
-      - [Defaults (optional)](#defaults-optional)
 - [Advanced Topics](#advanced-topics)
   - [Create Your Own Transformer](#create-your-own-transformer)
 - [Contributing](#contributing)
@@ -308,12 +307,46 @@ The short answer, not yet. We plan to build out pre-defined generators for popul
 
 #### Config
 
-<sub>[Source](https://github.com/timdeschryver/zod-fixture/tree/beta/src/types/zod-fixture.d.ts)</sub>
+We provide sane defaults for the random utilities used by our generators, but these can easily be customized.
+
+<sub>[Source](https://github.com/timdeschryver/zod-fixture/tree/beta/src/transformer/defaults.ts)</sub>
 
 ```ts
-interface TransformerConfig {
+interface Defaults {
 	seed?: number;
-	defaults?: Partial<Defaults>;
+	array: {
+		min: number;
+		max: number;
+	};
+	map: {
+		min: number;
+		max: number;
+	};
+	set: {
+		min: number;
+		max: number;
+	};
+	int: {
+		min: number;
+		max: number;
+	};
+	float: {
+		min: number;
+		max: number;
+	};
+	bigint: {
+		min: bigint;
+		max: bigint;
+	};
+	date: {
+		min: number;
+		max: number;
+	};
+	string: {
+		min: number;
+		max: number;
+		characterSet: string;
+	};
 }
 ```
 
@@ -322,46 +355,7 @@ interface TransformerConfig {
 A seed can be provided to produce the same results every time.
 
 ```ts
-new Fixture({ seed: number });
-```
-
-##### Defaults (optional)
-
-We provide sane defaults for the random utilities used by our generators, but these can easily be customized.
-
-<sub>[Source](https://github.com/timdeschryver/zod-fixture/tree/beta/src/types/zod-fixture.d.ts)</sub>
-
-```ts
-interface Defaults {
-	array: {
-		min: number; // 3
-		max: number; // 3
-	};
-	map: {
-		min: number; // 3
-		max: number; // 3
-	};
-	set: {
-		min: number; // 3
-		max: number; // 3
-	};
-	int: {
-		min: number; // Number.MIN_SAFE_INTEGER
-		max: number; // Number.MAX_SAFE_INTEGER
-	};
-	float: {
-		min: number; // Number.MIN_SAFE_INTEGER
-		max: number; // Number.MAX_SAFE_INTEGER
-	};
-	bigint: {
-		min: bigint; // BigInt(Number.MIN_SAFE_INTEGER)
-		max: bigint; // BigInt(Number.MAX_SAFE_INTEGER)
-	};
-	date: {
-		min: number; // Date.UTC(1900, 0, 1)
-		max: number; // Date.UTC(2100, 11, 31)
-	};
-}
+const fixture = new Fixture({ seed: number });
 ```
 
 ## Advanced Topics
@@ -370,17 +364,37 @@ interface Defaults {
 
 Instead of using the opinionated `Fixture` class, you can extend the unopinionated `Transformer` and register the desired generators.
 
-<sub>[Source](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/transformer.ts)</sub>
+<sub>[Source](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/transformer.test.ts)</sub>
 
 ```ts
-import { z } from 'zod';
-import { UnconstrainedFixture } from 'zod-fixture';
+import { ConstrainedTransformer, UnconstrainedTransformer } from 'zod-fixture';
 
-const transform = new UnconstrainedFixture().extend([
+/**
+ * Constrained defaults
+ *
+ * {
+ *   array: {
+ *     min: 3,
+ *     max: 3,
+ *   },
+ *   // ...
+ *   string: {
+ *     min: 15,
+ *     max: 15,
+ *     characterSet: 'abcdefghijklmnopqrstuvwxyz-',
+ *   }
+ * }
+ */
+new ConstrainedTransformer().extend([
 	/* insert your generators here */
 ]);
 
-transform.fromSchema(z.any());
+/**
+ * Less constrained. Better for mocking APIs.
+ */
+new UnconstrainedTransformer().extend([
+	/* insert your generators here */
+]);
 ```
 
 ## Contributing
