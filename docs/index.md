@@ -12,7 +12,7 @@
 <br>
 <p align="center">
 Creating test fixtures should be easy.<br>
-<a href="https://github.com/timdeschryver/zod-fixture">zod-fixture</a> helps with the arrange phase of your tests by creating test fixtures based on a <a href="https://github.com/colinhacks/zod">zod</a> schema.
+<a href="https://github.com/timdeschryver/zod-fixture">zod-fixture</a> helps with the arrange phase of your tests by creating test fixtures based on a <a href="https://zod.dev/">zod</a> schema.
 </p>
 
 ## Table of Contents
