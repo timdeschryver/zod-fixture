@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest';
 // #region example
 import { ConstrainedTransformer, UnconstrainedTransformer } from 'zod-fixture';
 
@@ -28,3 +29,7 @@ new UnconstrainedTransformer().extend([
 	/* insert your generators here */
 ]);
 // #endregion example
+
+test('exists', () => {
+	expect(true).toBe(true);
+});

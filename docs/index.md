@@ -133,7 +133,7 @@ const fixture = new Fixture({ seed: number });
 
 Instead of using the opinionated `Fixture` class, you can extend the unopinionated `Transformer` and register the desired generators.
 
-<<< @/../examples/transformer.test.ts
+<<< @/../examples/transformer.test.ts#example
 
 ## Contributing
 
