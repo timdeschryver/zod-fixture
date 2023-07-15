@@ -39,7 +39,7 @@ interface Defaults {
 
 // Copied from defaults in MersenneTwister.
 export const randomSeed = () => Math.floor(Math.random() * Math.pow(10, 13));
-const MIN_LIST_SIZE = 1;
+const MIN_LIST_SIZE = 0;
 const MAX_LIST_SIZE = 3;
 const MIN_SAFE_INTEGER = Number.MIN_SAFE_INTEGER;
 const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER;
