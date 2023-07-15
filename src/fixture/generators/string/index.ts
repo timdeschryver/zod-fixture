@@ -15,6 +15,7 @@ function formatString(transform: Runner, def: ZodStringDef, value: string) {
 	const includes = checks.find('includes')?.value;
 	const startsWith = checks.find('startsWith')?.value;
 	const endsWith = checks.find('endsWith')?.value;
+	const emoji = checks.has('emoji');
 	const isTrimmed = checks.has('trim');
 	const isUpperCase = checks.has('toUpperCase');
 	const isLowerCase = checks.has('toLowerCase');
@@ -57,6 +58,10 @@ function formatString(transform: Runner, def: ZodStringDef, value: string) {
 
 	if (isTrimmed) {
 		value = value.trim();
+	}
+
+	if (emoji) {
+		value = value.replace(/./g, () => transform.utils.random.emoji());
 	}
 
 	return max ? value.slice(0, max) : value;

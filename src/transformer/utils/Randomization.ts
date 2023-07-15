@@ -60,6 +60,11 @@ export class Randomization {
 		return copy as T[];
 	}
 
+	emoji() {
+		const codePoint = this.int({ min: 0x1f601, max: 0x1f64f });
+		return String.fromCodePoint(codePoint);
+	}
+
 	string(config: { min?: number; max?: number }) {
 		let min = config.min ?? this.defaults.string.min;
 		let max = config.max ?? this.defaults.string.max;

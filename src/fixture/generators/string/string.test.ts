@@ -191,6 +191,10 @@ describe('create strings', () => {
 		expect(value).toHaveLength(10);
 	});
 
+	test('correctly creates an emoji string', () => {
+		expect(transform).toReasonablySatisfy(z.string().emoji());
+	});
+
 	test('creates a large string using length with startsWith and endsWith', () => {
 		const value = transform.fromSchema(
 			z.string().length(6000).startsWith('start_').endsWith('_end')
