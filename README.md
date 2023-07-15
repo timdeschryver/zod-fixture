@@ -12,7 +12,7 @@
 <br>
 <p align="center">
 Creating test fixtures should be easy.<br>
-<a href="https://github.com/timdeschryver/zod-fixture">zod-fixture</a> helps with the arrange phase of your tests by creating test fixtures based on a <a href="https://github.com/colinhacks/zod">zod</a> schema.
+<a href="https://github.com/timdeschryver/zod-fixture">zod-fixture</a> helps with the arrange phase of your tests by creating test fixtures based on a <a href="https://zod.dev/">zod</a> schema.
 </p>
 
 ## Table of Contents
@@ -59,13 +59,13 @@ bun add -d zod-fixture
 
 ## Getting Started
 
-The easiest way to start using `zod-fixture` is to import the pre-configured `Fixture` class.
+The easiest way to start using `zod-fixture` is to import the pre-configured `createFixture` function.
 
 <sub>[Example](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/fixture-person.test.ts)</sub>
 
 ```ts
 import { z } from 'zod';
-import { Fixture } from 'zod-fixture';
+import { createFixture } from 'zod-fixture';
 
 const PersonSchema = z.object({
 	name: z.string(),
@@ -79,8 +79,7 @@ const PersonSchema = z.object({
 	totalVisits: z.number().int().positive(),
 });
 
-const fixture = new Fixture({ seed: 11 });
-const person = fixture.fromSchema(PersonSchema);
+const person = createFixture(PersonSchema, { seed: 11 });
 ```
 
 <sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/fixture-person.test.ts)</sub>
@@ -113,7 +112,7 @@ const person = fixture.fromSchema(PersonSchema);
 
 ```
 
-Take a look at the [examples](https://github.com/timdeschryver/zod-fixture/tree/beta/examples) to see how you can use `zod-fixture` in your tests.
+Take a look at the [examples](https://github.com/timdeschryver/zod-fixture/examples) to see how you can use `zod-fixture` in your tests.
 
 > INFO: The examples make use of the optional [seed](#seed-optional) parameter to generate the same fixture every time. This is useful for our docs, or to reproduce issues, but is not necessary in your code. Simply calling `new Fixture()` is acceptable.
 
