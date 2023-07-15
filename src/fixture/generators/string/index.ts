@@ -1,45 +1,69 @@
 import { ZodString } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
 import type { Runner } from '@/transformer/runner';
+import { monotonicFactory } from 'ulid';
 import type { ZodStringDef } from 'zod';
+
+const ulid = monotonicFactory();
+const prefixPattern = (str: string) => `^.{${str.length}}`;
+const suffixPattern = (str: string) => `.{${str.length}}$`;
 
 function formatString(transform: Runner, def: ZodStringDef, value: string) {
 	const checks = transform.utils.checks(def.checks);
 
 	let max = checks.find('max')?.value;
+	let min = checks.find('min')?.value ?? 0;
 	const length = checks.find('length')?.value;
-	const isUpperCase = checks.has('toUpperCase');
-	const isLowerCase = checks.has('toLowerCase');
+	const includes = checks.find('includes')?.value;
 	const startsWith = checks.find('startsWith')?.value;
 	const endsWith = checks.find('endsWith')?.value;
+	const emoji = checks.has('emoji');
+	const isTrimmed = checks.has('trim');
+	const isUpperCase = checks.has('toUpperCase');
+	const isLowerCase = checks.has('toLowerCase');
 
 	if (length) {
+		min = length;
 		max = length;
 	}
 
-	if (max && (startsWith || endsWith)) {
-		if (
-			max &&
-			value.length < max + (startsWith?.length ?? 0) + (endsWith?.length ?? 0)
-		) {
-			value = value.slice(
-				0,
-				max - (startsWith?.length ?? 0) - (endsWith?.length ?? 0)
-			);
-		}
+	if (min != null && value.length < min) {
+		const diff = min - value.length;
+		value += transform.utils.random.string({ min: diff, max: diff });
+	}
+
+	if (max != null) {
+		value = value.slice(0, max);
+	}
+
+	if (includes) {
+		const prefix = startsWith ? prefixPattern(startsWith) : '';
+		value = value.replace(
+			new RegExp(`(${prefix}).{${includes.length}}`),
+			(_, prefix) => prefix + includes
+		);
 	}
 
 	if (startsWith) {
-		value = startsWith + value;
+		value = value.replace(new RegExp(prefixPattern(startsWith)), startsWith);
 	}
+
 	if (endsWith) {
-		value = value + endsWith;
+		value = value.replace(new RegExp(suffixPattern(endsWith)), endsWith);
 	}
 
 	if (isUpperCase) {
 		value = value.toUpperCase();
 	} else if (isLowerCase) {
 		value = value.toLowerCase();
+	}
+
+	if (isTrimmed) {
+		value = value.trim();
+	}
+
+	if (emoji) {
+		value = value.replace(/./g, () => transform.utils.random.emoji());
 	}
 
 	return max ? value.slice(0, max) : value;
@@ -65,6 +89,13 @@ export const StringGenerator = Generator({
 			transform.utils.random.string({ min, max })
 		);
 	},
+});
+
+export const UlidGenerator = Generator({
+	schema: ZodString,
+	filter: ({ def, transform }) =>
+		transform.utils.checks(def.checks).has('ulid'),
+	output: () => ulid(),
 });
 
 export const UrlGenerator = Generator({
@@ -100,6 +131,29 @@ export const CuidGenerator = Generator({
 		transform.utils.checks(def.checks).has('cuid'),
 	output: () => {
 		throw new Error(`cuid has been deprecated in favor of cuid2`);
+	},
+});
+
+export const IpGenerator = Generator({
+	schema: ZodString,
+	filter: ({ def, transform }) => transform.utils.checks(def.checks).has('ip'),
+	output: ({ def, transform }) => {
+		const version =
+			transform.utils.checks(def.checks).find('ip')?.version ??
+			transform.utils.random.from(['v4', 'v6']);
+
+		if (version === 'v4') {
+			return transform.utils
+				.n(() => transform.utils.random.int({ min: 1, max: 255 }), 4)
+				.join('.');
+		}
+
+		return transform.utils
+			.n(
+				() => transform.utils.random.int({ min: 0, max: 65535 }).toString(16),
+				8
+			)
+			.join(':');
 	},
 });
 
