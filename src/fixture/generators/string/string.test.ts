@@ -178,6 +178,11 @@ describe('create strings', () => {
 		expect(value).toHaveLength(6000);
 	});
 
+	test('correctly trims string', () => {
+		const value = transform.fromSchema(z.string().endsWith('     ').trim());
+		expect(value).toHaveLength(10);
+	});
+
 	test('creates a large string using length with startsWith and EndsWith', () => {
 		const value = transform.fromSchema(
 			z.string().length(6000).startsWith('start_').endsWith('_end')

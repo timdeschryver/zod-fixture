@@ -7,39 +7,44 @@ function formatString(transform: Runner, def: ZodStringDef, value: string) {
 	const checks = transform.utils.checks(def.checks);
 
 	let max = checks.find('max')?.value;
+	let min = checks.find('min')?.value ?? 0;
 	const length = checks.find('length')?.value;
 	const isUpperCase = checks.has('toUpperCase');
 	const isLowerCase = checks.has('toLowerCase');
 	const startsWith = checks.find('startsWith')?.value;
 	const endsWith = checks.find('endsWith')?.value;
+	const isTrimmed = checks.has('trim');
 
 	if (length) {
+		min = length;
 		max = length;
 	}
 
-	if (max && (startsWith || endsWith)) {
-		if (
-			max &&
-			value.length < max + (startsWith?.length ?? 0) + (endsWith?.length ?? 0)
-		) {
-			value = value.slice(
-				0,
-				max - (startsWith?.length ?? 0) - (endsWith?.length ?? 0)
-			);
-		}
+	if (min != null && value.length < min) {
+		const diff = min - value.length;
+		value += transform.utils.random.string({ min: diff, max: diff });
+	}
+
+	if (max != null) {
+		value = value.slice(0, max);
 	}
 
 	if (startsWith) {
-		value = startsWith + value;
+		value = value.replace(new RegExp(`^.{${startsWith.length}}`), startsWith);
 	}
+
 	if (endsWith) {
-		value = value + endsWith;
+		value = value.replace(new RegExp(`.{${endsWith.length}}$`), endsWith);
 	}
 
 	if (isUpperCase) {
 		value = value.toUpperCase();
 	} else if (isLowerCase) {
 		value = value.toLowerCase();
+	}
+
+	if (isTrimmed) {
+		value = value.trim();
 	}
 
 	return max ? value.slice(0, max) : value;
