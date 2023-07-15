@@ -7,6 +7,7 @@ import {
 	CuidGenerator,
 	DateTimeGenerator,
 	EmailGenerator,
+	IpGenerator,
 	StringGenerator,
 	UrlGenerator,
 	UuidGenerator,
@@ -17,6 +18,7 @@ import { OptionalGenerator } from '../optional';
 
 describe('create strings', () => {
 	const transform = new ConstrainedTransformer().extend([
+		IpGenerator,
 		UuidGenerator,
 		CuidGenerator,
 		Cuid2Generator,
@@ -202,6 +204,12 @@ describe('create strings', () => {
 		expect(value).toHaveLength(6000);
 		expect(value.startsWith('start_')).toBeTruthy();
 		expect(value.endsWith('_end')).toBeTruthy();
+	});
+
+	test('creates a proper IP address', () => {
+		expect(transform).toReasonablySatisfy(z.string().ip());
+		expect(transform).toReasonablySatisfy(z.string().ip({ version: 'v4' }));
+		expect(transform).toReasonablySatisfy(z.string().ip({ version: 'v6' }));
 	});
 
 	test('creates a large string using min and max', () => {

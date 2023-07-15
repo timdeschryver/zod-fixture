@@ -25,6 +25,7 @@ import {
 	CuidGenerator,
 	DateTimeGenerator,
 	EmailGenerator,
+	IpGenerator,
 	StringGenerator,
 	UrlGenerator,
 	UuidGenerator,
@@ -35,6 +36,7 @@ import { UndefinedGenerator, VoidGenerator } from './undefined';
 import { UnionGenerator } from './union';
 
 export const DEFAULT_FIXTURE_GENERATORS = [
+	IpGenerator,
 	ArrayGenerator,
 	BigIntGenerator,
 	BigIntMultipleOfGenerator,
@@ -84,6 +86,7 @@ export {
 	EmailGenerator,
 	EnumGenerator,
 	FunctionGenerator,
+	IpGenerator,
 	LazyGenerator,
 	LiteralGenerator,
 	MapGenerator,

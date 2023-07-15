@@ -125,6 +125,29 @@ export const CuidGenerator = Generator({
 	},
 });
 
+export const IpGenerator = Generator({
+	schema: ZodString,
+	filter: ({ def, transform }) => transform.utils.checks(def.checks).has('ip'),
+	output: ({ def, transform }) => {
+		const version =
+			transform.utils.checks(def.checks).find('ip')?.version ??
+			transform.utils.random.from(['v4', 'v6']);
+
+		if (version === 'v4') {
+			return transform.utils
+				.n(() => transform.utils.random.int({ min: 1, max: 255 }), 4)
+				.join('.');
+		}
+
+		return transform.utils
+			.n(
+				() => transform.utils.random.int({ min: 0, max: 65535 }).toString(16),
+				8
+			)
+			.join(':');
+	},
+});
+
 export const Cuid2Generator = Generator({
 	schema: ZodString,
 	filter: ({ def, transform }) =>
