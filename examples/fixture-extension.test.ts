@@ -38,7 +38,7 @@ const addressGenerator = Generator({
 	}),
 });
 
-const PersonSchema = z.object({
+const personSchema = z.object({
 	name: z.string(),
 	birthday: z.date(),
 	address: z.object({
@@ -54,7 +54,7 @@ const fixture = new Fixture({ seed: 38 }).extend([
 	addressGenerator,
 	totalVisitsGenerator,
 ]);
-const person = fixture.fromSchema(PersonSchema);
+const person = fixture.fromSchema(personSchema);
 // #endregion example
 
 const output = Object.assign(

@@ -3,7 +3,7 @@ import { expect, test } from 'vitest';
 import { z } from 'zod';
 import { createFixture } from 'zod-fixture';
 
-const PersonSchema = z.object({
+const personSchema = z.object({
 	name: z.string(),
 	birthday: z.date(),
 	address: z.object({
@@ -15,7 +15,7 @@ const PersonSchema = z.object({
 	totalVisits: z.number().int().positive(),
 });
 
-const person = createFixture(PersonSchema, { seed: 11 });
+const person = createFixture(personSchema, { seed: 11 });
 // #endregion example
 
 const output = Object.assign(

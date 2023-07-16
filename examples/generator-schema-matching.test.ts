@@ -18,7 +18,7 @@ const PixelGenerator = Generator({
 	output: () => '100px',
 });
 
-const DeveloperSchema = z.object({
+const developerSchema = z.object({
 	name: z.string().max(10),
 	resolution: z.object({
 		height: pxSchema,
@@ -30,7 +30,7 @@ const fixture = new Fixture({ seed: 7 }).extend([
 	PixelGenerator,
 	StringGenerator,
 ]);
-const developer = fixture.fromSchema(DeveloperSchema);
+const developer = fixture.fromSchema(developerSchema);
 // #endregion example
 
 const output = Object.assign(

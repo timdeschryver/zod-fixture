@@ -9,7 +9,7 @@ const NameGenerator = Generator({
 	output: () => 'John Doe',
 });
 
-const PersonSchema = z.object({
+const personSchema = z.object({
 	name: z.string(), // this matches ['name']
 	email: z.string().email(),
 	relatives: z
@@ -21,7 +21,7 @@ const PersonSchema = z.object({
 });
 
 const fixture = new Fixture({ seed: 7 }).extend(NameGenerator);
-const person = fixture.fromSchema(PersonSchema);
+const person = fixture.fromSchema(personSchema);
 // #endregion example
 
 const output = Object.assign(
