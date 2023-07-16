@@ -14,6 +14,7 @@ import {
 	UrlGenerator,
 	UuidGenerator,
 } from '.';
+import { ITERATIONS } from '../../../../.vitest/utils';
 import { NullableGenerator } from '../nullable';
 import { ObjectGenerator } from '../object';
 import { OptionalGenerator } from '../optional';
@@ -250,6 +251,18 @@ describe('create strings', () => {
 	test('creates a string that follows a regexp', () => {
 		expect(transform.fromSchema(z.string().regex(/aBc/))).toBeTypeOf('string');
 		expect(transform.fromSchema(z.string().regex(/aBc/))).toBe('aBc');
+	});
+
+	test('regexp uses our seed', () => {
+		const values = Array.from({
+			length: ITERATIONS,
+		}).map(() =>
+			transform.fromSchema(z.string().regex(/(0|1|2)(aBc|123).?xyz/i), {
+				seed: 3,
+			})
+		);
+		const uniques = new Set(values);
+		expect(uniques.size).toBe(1);
 	});
 
 	test('produces a valid string that is a regexp', () => {

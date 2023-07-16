@@ -180,6 +180,9 @@ export const RegexGenerator = Generator({
 	output: ({ def, transform }) => {
 		const pattern = transform.utils.checks(def.checks).find('regex')?.regex;
 		if (!pattern) throw new Error(`RegexGenerator: regex pattern not found`);
-		return formatString(transform, def, new RandExp(pattern).gen());
+		const randexp = new RandExp(pattern);
+		randexp.randInt = (from, to) =>
+			transform.utils.random.int({ min: from, max: to });
+		return formatString(transform, def, randexp.gen());
 	},
 });
