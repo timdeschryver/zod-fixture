@@ -71,7 +71,7 @@ The easiest way to start using `zod-fixture` is to import the pre-configured `cr
 import { z } from 'zod';
 import { createFixture } from 'zod-fixture';
 
-const PersonSchema = z.object({
+const personSchema = z.object({
 	name: z.string(),
 	birthday: z.date(),
 	address: z.object({
@@ -83,7 +83,7 @@ const PersonSchema = z.object({
 	totalVisits: z.number().int().positive(),
 });
 
-const person = createFixture(PersonSchema, { seed: 11 });
+const person = createFixture(personSchema, { seed: 11 });
 ```
 
 <sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/fixture-person.test.ts)</sub>
@@ -169,7 +169,7 @@ const addressGenerator = Generator({
 	}),
 });
 
-const PersonSchema = z.object({
+const personSchema = z.object({
 	name: z.string(),
 	birthday: z.date(),
 	address: z.object({
@@ -185,7 +185,7 @@ const fixture = new Fixture({ seed: 38 }).extend([
 	addressGenerator,
 	totalVisitsGenerator,
 ]);
-const person = fixture.fromSchema(PersonSchema);
+const person = fixture.fromSchema(personSchema);
 ```
 
 <sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/fixture-extension.test.ts)</sub>
@@ -258,7 +258,7 @@ const PixelGenerator = Generator({
 	output: () => '100px',
 });
 
-const DeveloperSchema = z.object({
+const developerSchema = z.object({
 	name: z.string().max(10),
 	resolution: z.object({
 		height: pxSchema,
@@ -270,7 +270,7 @@ const fixture = new Fixture({ seed: 7 }).extend([
 	PixelGenerator,
 	StringGenerator,
 ]);
-const developer = fixture.fromSchema(DeveloperSchema);
+const developer = fixture.fromSchema(developerSchema);
 ```
 
 <sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/generator-schema-matching.test.ts)</sub>
@@ -345,7 +345,7 @@ const StringGenerator = Generator({
 	},
 });
 
-const PersonSchema = z.object({
+const personSchema = z.object({
 	name: z.string().max(10),
 	email: z.string().email(),
 });
@@ -354,7 +354,7 @@ const fixture = new Fixture({ seed: 38 }).extend([
 	EmailGenerator,
 	StringGenerator,
 ]);
-const person = fixture.fromSchema(PersonSchema);
+const person = fixture.fromSchema(personSchema);
 ```
 
 <sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/generator-filtering-zod-checks.test.ts)</sub>
@@ -383,7 +383,7 @@ const NameGenerator = Generator({
 	output: () => 'John Doe',
 });
 
-const PersonSchema = z.object({
+const personSchema = z.object({
 	name: z.string(), // this matches ['name']
 	email: z.string().email(),
 	relatives: z
@@ -395,7 +395,7 @@ const PersonSchema = z.object({
 });
 
 const fixture = new Fixture({ seed: 7 }).extend(NameGenerator);
-const person = fixture.fromSchema(PersonSchema);
+const person = fixture.fromSchema(personSchema);
 ```
 
 <sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/generator-filtering-key-match.test.ts)</sub>
