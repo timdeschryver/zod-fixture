@@ -5,9 +5,11 @@ import prettier from 'prettier';
 
 const WRONG_SEPARATOR =
 	path.sep === path.win32.sep ? path.posix.sep : path.win32.sep;
+const WRONG_SEPARATOR_RGX = new RegExp('\\' + WRONG_SEPARATOR, 'g');
 
-const stringToPath = (str) =>
-	str.replace(new RegExp('\\' + WRONG_SEPARATOR, 'g'), path.sep);
+export function stringToPath(str) {
+	return str.replace(WRONG_SEPARATOR_RGX, path.sep);
+}
 
 const SOURCE = stringToPath('docs/index.md');
 
