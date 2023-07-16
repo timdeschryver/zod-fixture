@@ -49,7 +49,7 @@ async function updateIfDifferent() {
 			/<<< @((\/[^/ #\s]+)+)(#(\S+))?( \[(\S+)\])?/g,
 			(_m, filepath, _base, _r, region, _l, tab) => {
 				const ext = path.extname(filepath);
-				const resolved = path.join('docs', `.${filepath}`);
+				const resolved = path.join('docs', `.${filepath}`).replace(/\\/g, '/');
 				let result = fs.readFileSync(resolved);
 
 				if (region) {
