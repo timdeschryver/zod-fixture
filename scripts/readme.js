@@ -3,7 +3,13 @@ import argv from 'minimist';
 import path from 'path';
 import prettier from 'prettier';
 
-const SOURCE = 'docs/index.md';
+const WRONG_SEPARATOR =
+	path.sep === path.win32.sep ? path.posix.sep : path.win32.sep;
+
+const stringToPath = (str) =>
+	str.replace(new RegExp('\\' + WRONG_SEPARATOR, 'g'), path.sep);
+
+const SOURCE = stringToPath('docs/index.md');
 
 // eslint-disable-next-line no-undef
 const args = argv(process.argv.slice(2), {
@@ -47,9 +53,10 @@ async function updateIfDifferent() {
 		.replace(/\[\[toc\]\]/, () => table_of_contents)
 		.replace(
 			/<<< @((\/[^/ #\s]+)+)(#(\S+))?( \[(\S+)\])?/g,
-			(_m, filepath, _base, _r, region, _l, tab) => {
+			(_m, filepathraw, _base, _r, region, _l, tab) => {
+				const filepath = stringToPath(filepathraw);
 				const ext = path.extname(filepath);
-				const resolved = path.join('docs', `.${filepath}`).replace(/\\/g, '/');
+				const resolved = path.join('docs', `.${filepath}`);
 				let result = fs.readFileSync(resolved);
 
 				if (region) {
