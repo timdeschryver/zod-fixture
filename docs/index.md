@@ -3,7 +3,7 @@
 <h1 align="center">Zod Fixture</h1>
 <p align="center">Fixture Generation with 1:1 Zod Parity</p>
 <br>
-<p align="center" style="display: flex; gap: .5em; justify-content:center">
+<p align="center" style="display: flex; gap: .5em; justify-content: center">
 	<a href="https://badge.fury.io/js/zod-fixture"><img src="https://badge.fury.io/js/zod-fixture.svg" alt="npm version" height="18"></a>
 	<a href="https://github.com/timdeschryver/zod-fixture/actions/workflows/ci.yaml"><img src="https://github.com/timdeschryver/zod-fixture/actions/workflows/ci.yaml/badge.svg?branch=beta"></a>
 	<a href="https://opensource.org/licenses/MIT" rel="nofollow"><img src="https://img.shields.io/github/license/timdeschryver/zod-fixture" alt="License"></a>
@@ -50,11 +50,11 @@ The easiest way to start using `zod-fixture` is to import the pre-configured `cr
 <<< @/../examples/fixture-person.test.ts#output [Output]
 :::
 
-Take a look at the [examples](https://github.com/timdeschryver/zod-fixture/tree/main/examples) to see how you can use `zod-fixture` in your tests.
-
 ::: info
-The examples make use of the optional [seed](#seed-optional) parameter to generate the same fixture every time. This is useful for our docs, or to reproduce issues, but is not necessary in your code. Simply calling `new Fixture()` is acceptable.
+The examples make use of the optional [seed](#seed-optional) parameter to generate the same fixture every time. This is useful for our docs, deterministic testing, and to reproduce issues, but is not necessary in your code. Simply calling `createFixture` with no configuration is acceptable.
 :::
+
+Take a look at the [examples](https://github.com/timdeschryver/zod-fixture/tree/main/examples) to see how you can use `zod-fixture` in your tests.
 
 ## Customizing
 
@@ -62,7 +62,11 @@ The examples make use of the optional [seed](#seed-optional) parameter to genera
 
 ### Extending
 
-The easiset way to start customizing `zod-fixture` is to extend the `Fixture` class with your own [generator](#generators).
+The easiset way to start customizing `zod-fixture` is to use the `Fixture` class directly and extend it with your own [generator](#generators).
+
+::: info
+`createFixture(...)` is just syntactic sugar for `new Fixture().fromSchema(...)`
+:::
 
 The example below uses 2 custom generators and a typical pattern for filtering based on the keys of an object.
 
@@ -81,11 +85,53 @@ To generate a value based on a zod type we're using what we call a `Generator`.
 
 A `Generator` has 3 fundamental parts:
 
-- `schema` -- the zod type to match
-- `filter` -- [optional] a function to further refine our match (ie filtering by keys or zod checks)
-- `output` -- a function that's called to produce the fixture
+- [schema](#matching) -- the zod type to match
+- [filter](#filtering) -- [optional] a function to further refine our match (ie filtering by keys or zod checks)
+- [output](#output) -- a function that's called to produce the fixture
 
-To help you to create your own generators this library also includes some useful utility methods to generate data.
+#### Matching
+
+All generators require a `zod` schema to match against. A schema can be provided in the following ways:
+
+- A zod type constructor (ie `ZodString`)
+- An instance of a type (typically `z.custom`)
+
+::: code-group
+<<< @/../examples/generator-schema-matching.test.ts#example [Example]
+<<< @/../examples/generator-schema-matching.test.ts#output [Output]
+:::
+
+#### Filtering
+
+In addition to matching schemas, `zod-fixture` provides robust tools for filtering, allowing you to further narrow the matches for your generator. There are two common patterns for filtering.
+
+##### Filter by Check
+
+In the case where you use a `zod` method like `z.string().email()`, `zod` adds what they call a "check" to the defintion. These are additional constraints that are checked during parsing that don't conform to a Typescript type. (ie TS does not have the concept of an email, just a string). `zod-fixture` provides a type safe utility called `checks` for interacting with these additional constraints.
+
+There are two methods provided by the `checks` utility:
+
+- `has` -- returns a boolean letting you know if a particular check exists on the schema.
+- `find` -- returns the full definition of a check, which can be useful for generating output.
+
+::: code-group
+<<< @/../examples/generator-filtering-zod-checks.test.ts#example [Example]
+<<< @/../examples/generator-filtering-zod-checks.test.ts#output [Output]
+:::
+
+##### Filter by Key
+
+Matching keys of an object is another common pattern and a bit tricky if you don't give it enough thought. Every generator is called with a `context` and that context includes a `path`. The path is an array of keys that got us to this value. Generally speaking, you will only want the last key in the path for matching things like "name", "email", "age", etc in a deeply nested object.
+
+::: code-group
+<<< @/../examples/generator-filtering-key-match.test.ts#example [Example]
+<<< @/../examples/generator-filtering-key-match.test.ts#output [Output]
+:::
+
+#### Output
+
+Output is a function that generates the fixture for any matches. `zod-fixture` provides a randomization utility for creating data, in addition to all of the defaults (including the seed).
+
 For example, in the example below we create our own `totalVisitsGenerator` to return more realastic numbers using the `random` utilities.
 
 <<< @/../examples/fixture-extension.test.ts#generator
