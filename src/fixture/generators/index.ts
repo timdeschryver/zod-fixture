@@ -1,3 +1,4 @@
+import { AnyGenerator } from './any';
 import { ArrayGenerator } from './array';
 import { BigIntGenerator, BigIntMultipleOfGenerator } from './bigint';
 import { BooleanGenerator } from './boolean';
@@ -8,16 +9,19 @@ import {
 	RefinementGenerator,
 	TransformGenerator,
 } from './effects';
-import { EnumGenerator } from './enum';
+import { EnumGenerator, NativeEnumGenerator } from './enum';
 import { FunctionGenerator } from './function';
+import { IntersectionGenerator } from './intersection';
 import { LazyGenerator } from './lazy';
 import { LiteralGenerator } from './literal';
 import { MapGenerator } from './map';
 import { NanGenerator } from './nan';
 import { NeverGenerator } from './never';
 import { NullGenerator } from './null';
+import { NullableGenerator } from './nullable';
 import { NumberGenerator } from './number';
 import { ObjectGenerator, RecordGenerator } from './object';
+import { OptionalGenerator } from './optional';
 import { PromiseGenerator } from './promise';
 import { SetGenerator } from './set';
 import {
@@ -35,9 +39,11 @@ import {
 import { SymbolGenerator } from './symbol';
 import { TupleGenerator } from './tuple';
 import { UndefinedGenerator, VoidGenerator } from './undefined';
-import { UnionGenerator } from './union';
+import { DiscriminatedUnionGenerator, UnionGenerator } from './union';
 
 export const DEFAULT_FIXTURE_GENERATORS = [
+	AnyGenerator,
+	OptionalGenerator,
 	IpGenerator,
 	UlidGenerator,
 	ArrayGenerator,
@@ -46,7 +52,9 @@ export const DEFAULT_FIXTURE_GENERATORS = [
 	BooleanGenerator,
 	DateGenerator,
 	EnumGenerator,
+	NativeEnumGenerator,
 	FunctionGenerator,
+	IntersectionGenerator,
 	LiteralGenerator,
 	MapGenerator,
 	NanGenerator,
@@ -62,10 +70,11 @@ export const DEFAULT_FIXTURE_GENERATORS = [
 	UrlGenerator,
 	DateTimeGenerator,
 	RegexGenerator,
-	StringGenerator,
+	NullableGenerator,
 	TupleGenerator,
 	UndefinedGenerator,
 	UnionGenerator,
+	DiscriminatedUnionGenerator,
 	TransformGenerator,
 	PreprocessGenerator,
 	RefinementGenerator,
@@ -75,9 +84,11 @@ export const DEFAULT_FIXTURE_GENERATORS = [
 	BrandedGenerator,
 	VoidGenerator,
 	NeverGenerator,
+	StringGenerator,
 ];
 
 export {
+	AnyGenerator,
 	ArrayGenerator,
 	BigIntGenerator,
 	BigIntMultipleOfGenerator,
@@ -87,18 +98,23 @@ export {
 	CuidGenerator,
 	DateGenerator,
 	DateTimeGenerator,
+	DiscriminatedUnionGenerator,
 	EmailGenerator,
 	EnumGenerator,
 	FunctionGenerator,
+	IntersectionGenerator,
 	IpGenerator,
 	LazyGenerator,
 	LiteralGenerator,
 	MapGenerator,
 	NanGenerator,
+	NativeEnumGenerator,
 	NeverGenerator,
 	NullGenerator,
+	NullableGenerator,
 	NumberGenerator,
 	ObjectGenerator,
+	OptionalGenerator,
 	PreprocessGenerator,
 	PromiseGenerator,
 	RecordGenerator,
@@ -109,10 +125,10 @@ export {
 	SymbolGenerator,
 	TransformGenerator,
 	TupleGenerator,
+	UlidGenerator,
 	UndefinedGenerator,
 	UnionGenerator,
 	UrlGenerator,
 	UuidGenerator,
-	VoidGenerator
+	VoidGenerator,
 };
-
