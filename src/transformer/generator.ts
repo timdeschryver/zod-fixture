@@ -10,7 +10,7 @@ declare module 'zod' {
 }
 
 // #region context
-interface Context {
+export interface Context {
 	path: (string | number)[];
 }
 // #endregion context
