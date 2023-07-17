@@ -151,7 +151,7 @@ The short answer, not yet. We plan to build out pre-defined generators for popul
 
 ## API
 
-### Fixture / Transformer
+### Fixture
 
 ::: info
 `Fixture` is a `Transformer` that comes prepackaged with generators for each of the first party types that Zod provides. For most cases, this is all you wil need, and offers a fast and easy way to create fixtures. For building a custom `Transformer` refer to the [Advanced](#advanced-topics) documentation.
@@ -175,7 +175,7 @@ const fixture = new Fixture({ seed: number });
 
 ### Create Your Own Transformer
 
-Instead of using the opinionated `Fixture` class, you can extend the unopinionated `Transformer` and register the desired generators.
+Instead of using one of the opinionated `Fixture`s, you can extend the unopinionated `Transformer` and register the desired generators.
 
 <<< @/../examples/transformer.test.ts#example
 
