@@ -9,9 +9,11 @@ declare module 'zod' {
 	}
 }
 
-export interface Context {
+// #region context
+interface Context {
 	path: (string | number)[];
 }
+// #endregion context
 
 export interface ZodConstructor<TSchema extends ZodTypeAny> {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -30,12 +32,14 @@ export function isZodConstructor(
 	return typeof schema === 'function';
 }
 
-export type Filter<TSchema extends ZodTypeAny> = (obj: {
+// #region filter
+type Filter<TSchema extends ZodTypeAny> = (obj: {
 	def: TSchema['_def'];
 	schema: TSchema;
 	transform: Runner;
 	context: Context;
 }) => boolean;
+// #endregion filter
 
 export type Generator<TSchema extends ZodTypeAny> = (obj: {
 	def: TSchema['_def'];
@@ -61,3 +65,5 @@ export function Generator<TSchema extends ZodTypeAny>(
 	return definition;
 }
 Generator.uuid = 0;
+
+export type { Filter };

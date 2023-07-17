@@ -3,7 +3,7 @@
 <h1 align="center">Zod Fixture</h1>
 <p align="center">Fixture Generation with 1:1 Zod Parity</p>
 <br>
-<p align="center" style="display: flex; gap: .5em; justify-content:center">
+<p align="center" style="display: flex; gap: .5em; justify-content: center">
 	<a href="https://badge.fury.io/js/zod-fixture"><img src="https://badge.fury.io/js/zod-fixture.svg" alt="npm version" height="18"></a>
 	<a href="https://github.com/timdeschryver/zod-fixture/actions/workflows/ci.yaml"><img src="https://github.com/timdeschryver/zod-fixture/actions/workflows/ci.yaml/badge.svg?branch=beta"></a>
 	<a href="https://opensource.org/licenses/MIT" rel="nofollow"><img src="https://img.shields.io/github/license/timdeschryver/zod-fixture" alt="License"></a>
@@ -12,7 +12,7 @@
 <br>
 <p align="center">
 Creating test fixtures should be easy.<br>
-<a href="https://github.com/timdeschryver/zod-fixture">zod-fixture</a> helps with the arrange phase of your tests by creating test fixtures based on a <a href="https://github.com/colinhacks/zod">zod</a> schema.
+<a href="https://github.com/timdeschryver/zod-fixture">zod-fixture</a> helps with the arrange phase of your tests by creating test fixtures based on a <a href="https://zod.dev/">zod</a> schema.
 </p>
 
 ## Table of Contents
@@ -22,9 +22,21 @@ Creating test fixtures should be easy.<br>
 - [Getting Started](#getting-started)
 - [Customizing](#customizing)
   - [Extending](#extending)
-  - [Create Your Own Transformer](#create-your-own-transformer)
-- [API](#api)
   - [Generators](#generators)
+    - [Matching](#matching)
+    - [Filtering](#filtering)
+      - [Filter by Check](#filter-by-check)
+      - [Filter by Key](#filter-by-key)
+    - [Output](#output)
+- [FAQ](#faq)
+  - [I have a custom type that I need to support. How do I do that?](#i-have-a-custom-type-that-i-need-to-support-how-do-i-do-that)
+  - [Do you support faker/chance/falso?](#do-you-support-fakerchancefalso)
+- [API](#api)
+  - [Fixture](#fixture)
+    - [Config](#config)
+      - [Seed (optional)](#seed-optional)
+- [Advanced Topics](#advanced-topics)
+  - [Create Your Own Transformer](#create-your-own-transformer)
 - [Contributing](#contributing)
   - [Getting started with GitHub Codespaces](#getting-started-with-github-codespaces)
   - [StackBlitz](#stackblitz)
@@ -51,17 +63,15 @@ bun add -d zod-fixture
 
 ## Getting Started
 
-The easiest way to start using zod-fixture is to import the preconfigured (more details on this later) `Fixture` class.
-
-> INFO: The examples make use of a seed to generate the same fixture every time. This is useful for our docs, or to reproduce issues, but it's not needed in your test code.
+The easiest way to start using `zod-fixture` is to import the pre-configured `createFixture` function.
 
 <sub>[Example](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/fixture-person.test.ts)</sub>
 
 ```ts
 import { z } from 'zod';
-import { Fixture } from 'zod-fixture';
+import { createFixture } from 'zod-fixture';
 
-const PersonSchema = z.object({
+const personSchema = z.object({
 	name: z.string(),
 	birthday: z.date(),
 	address: z.object({
@@ -73,8 +83,7 @@ const PersonSchema = z.object({
 	totalVisits: z.number().int().positive(),
 });
 
-const fixture = new Fixture({ seed: 11 });
-const person = fixture.fromSchema(PersonSchema);
+const person = createFixture(personSchema, { seed: 11 });
 ```
 
 <sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/fixture-person.test.ts)</sub>
@@ -107,40 +116,60 @@ const person = fixture.fromSchema(PersonSchema);
 
 ```
 
+> INFO: The examples make use of the optional [seed](#seed-optional) parameter to generate the same fixture every time. This is useful for our docs, deterministic testing, and to reproduce issues, but is not necessary in your code. Simply calling `createFixture` with no configuration is acceptable.
+
+Take a look at the [examples](https://github.com/timdeschryver/zod-fixture/tree/main/examples) to see how you can use `zod-fixture` in your tests.
+
 ## Customizing
 
-This library provides utility methods to provide fine-grained support to create your fixtures.
-Take a look at the [examples](https://github.com/timdeschryver/zod-fixture/tree/beta/examples) to see how you can use `zod-fixture` in your tests.
+`zod-fixture` is highly customizable. We provide you with the same utility methods we use internally to give you fine-grained support for creating your own fixtures.
 
 ### Extending
 
-The `Fixture` class provides a predefined set of generators that supports each type that's included in zod.
+The easiset way to start customizing `zod-fixture` is to use the `Fixture` class directly and extend it with your own [generator](#generators).
 
-For most cases this is fine, and offers a fast and easy way to create fixtures.
-But, for those times where you need a custom implementation, you can write your own [Generator](#generators) to change it's behavior using the `extend` method.
+> INFO: `createFixture(...)` is just syntactic sugar for `new Fixture().fromSchema(...)`
 
-In the example below we create a custom implemantion `addressGenerator` to return a custom address object, and a `totalVisitsGenerator` to return a more realistic number of visits.
+The example below uses 2 custom generators and a typical pattern for filtering based on the keys of an object.
 
 <sub>[Example](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/fixture-extension.test.ts)</sub>
 
 ```ts
 import { ZodNumber, ZodObject, z } from 'zod';
 import { Fixture, Generator } from 'zod-fixture';
+const totalVisitsGenerator = Generator({
+	schema: ZodNumber,
+	filter: ({ context }) => context.path.at(-1) === 'totalVisits',
+	/**
+	 * The `context` provides a path to the current field
+	 *
+	 * {
+	 *   totalVisits: ...,
+	 *   nested: {
+	 *     totalVisits: ...,
+	 *   }
+	 * }
+	 *
+	 * Would match twice with the following paths:
+	 *   ['totalVisits']
+	 *   ['nested', 'totalVisits']
+	 */
 
+	// returns a more realistic number of visits.
+	output: ({ transform }) => transform.utils.random.int({ min: 0, max: 25 }),
+});
 const addressGenerator = Generator({
 	schema: ZodObject,
 	filter: ({ context }) => context.path.at(-1) === 'address',
+	// returns a custom address object
 	output: () => ({
 		street: 'My Street',
 		city: 'My City',
 		state: 'My State',
 	}),
 });
-const totalVisitsGenerator = Generator({
-	schema: ZodNumber,
-	output: ({ transform }) => transform.utils.random.int({ min: 0, max: 25 }),
-});
-const PersonSchema = z.object({
+
+const personSchema = z.object({
 	name: z.string(),
 	birthday: z.date(),
 	address: z.object({
@@ -156,7 +185,7 @@ const fixture = new Fixture({ seed: 38 }).extend([
 	addressGenerator,
 	totalVisitsGenerator,
 ]);
-const person = fixture.fromSchema(PersonSchema);
+const person = fixture.fromSchema(personSchema);
 ```
 
 <sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/fixture-extension.test.ts)</sub>
@@ -189,41 +218,385 @@ const person = fixture.fromSchema(PersonSchema);
 
 ```
 
-### Create Your Own Transformer
-
-Instead of using the opinionated `Fixture` class, you can extend the unopinionated `Transformer` and register the desired generators.
-
-<sub>[Source](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/transformer.ts)</sub>
-
-```ts
-import { z } from 'zod';
-import { UnconstrainedFixture } from 'zod-fixture';
-
-const transform = new UnconstrainedFixture().extend([
-	/* insert your generators here */
-]);
-
-transform.fromSchema(z.any());
-```
-
-## API
+> TIP: The order the registered generators matters. The first generator that matches the conditions (`schema` and `filter`) is used to create the value.
 
 ### Generators
 
 To generate a value based on a zod type we're using what we call a `Generator`.
 
-To help you to create your own generators this library also includes some useful utility methods to generate data.
-For example, in the example below we create our own `totalVisitsGenerator` to return more realastic numbers using the `random` utilities.
+A `Generator` has 3 fundamental parts:
 
-> TIP: The order the registered generators matters. The first generator that matches the conditions (`schema` and `filter`) is used to create the value.
+- [schema](#matching) -- the zod type to match
+- [filter](#filtering) -- [optional] a function to further refine our match (ie filtering by keys or zod checks)
+- [output](#output) -- a function that's called to produce the fixture
+
+#### Matching
+
+All generators require a `zod` schema to match against. A schema can be provided in the following ways:
+
+- A zod type constructor (ie `ZodString`)
+- An instance of a type (typically `z.custom`)
+
+<sub>[Example](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/generator-schema-matching.test.ts)</sub>
+
+```ts
+import { z, ZodString } from 'zod';
+import { Fixture, Generator } from 'zod-fixture';
+
+// this is a custom zod type
+const pxSchema = z.custom<`${number}px`>((val) => {
+	return /^\d+px$/.test(val as string);
+});
+
+const StringGenerator = Generator({
+	schema: ZodString,
+	output: () => 'John Doe',
+});
+
+const PixelGenerator = Generator({
+	schema: pxSchema,
+	output: () => '100px',
+});
+
+const developerSchema = z.object({
+	name: z.string().max(10),
+	resolution: z.object({
+		height: pxSchema,
+		width: pxSchema,
+	}),
+});
+
+const fixture = new Fixture({ seed: 7 }).extend([
+	PixelGenerator,
+	StringGenerator,
+]);
+const developer = fixture.fromSchema(developerSchema);
+```
+
+<sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/generator-schema-matching.test.ts)</sub>
+
+```ts
+{
+	name: 'John Doe',
+	resolution: {
+		height: '100px',
+		width: '100px',
+	},
+}
+
+```
+
+#### Filtering
+
+In addition to matching schemas, `zod-fixture` provides robust tools for filtering, allowing you to further narrow the matches for your generator. There are two common patterns for filtering.
+
+##### Filter by Check
+
+In the case where you use a `zod` method like `z.string().email()`, `zod` adds what they call a "check" to the defintion. These are additional constraints that are checked during parsing that don't conform to a Typescript type. (ie TS does not have the concept of an email, just a string). `zod-fixture` provides a type safe utility called `checks` for interacting with these additional constraints.
+
+There are two methods provided by the `checks` utility:
+
+- `has` -- returns a boolean letting you know if a particular check exists on the schema.
+- `find` -- returns the full definition of a check, which can be useful for generating output.
+
+<sub>[Example](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/generator-filtering-zod-checks.test.ts)</sub>
+
+```ts
+import { z, ZodString } from 'zod';
+import { Fixture, Generator } from 'zod-fixture';
+
+const EmailGenerator = Generator({
+	schema: ZodString,
+	filter: ({ transform, def }) =>
+		transform.utils.checks(def.checks).has('email'),
+	output: () => 'john.malkovich@gmail.com',
+});
+
+const StringGenerator = Generator({
+	schema: ZodString,
+	output: ({ transform, def }) => {
+		let min = transform.utils.checks(def.checks).find('min')?.value;
+		/**
+		 *     kind: "min";
+		 *     value: number;
+		 *     message?: string | undefined; // a custom error message
+		 */
+
+		let max = transform.utils.checks(def.checks).find('max')?.value;
+		/**
+		 *     kind: "max";
+		 *     value: number;
+		 *     message?: string | undefined; // a custom error message
+		 */
+
+		const length = transform.utils.checks(def.checks).find('length');
+		/**
+		 *     kind: "length";
+		 *     value: number;
+		 *     message?: string | undefined; // a custom error message
+		 */
+
+		if (length) {
+			min = length.value;
+			max = length.value;
+		}
+
+		return transform.utils.random.string({ min, max });
+	},
+});
+
+const personSchema = z.object({
+	name: z.string().max(10),
+	email: z.string().email(),
+});
+
+const fixture = new Fixture({ seed: 38 }).extend([
+	EmailGenerator,
+	StringGenerator,
+]);
+const person = fixture.fromSchema(personSchema);
+```
+
+<sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/generator-filtering-zod-checks.test.ts)</sub>
+
+```ts
+{
+	email: 'john.malkovich@gmail.com',
+	name: 'sdnlwozmxa',
+}
+
+```
+
+##### Filter by Key
+
+Matching keys of an object is another common pattern and a bit tricky if you don't give it enough thought. Every generator is called with a `context` and that context includes a `path`. The path is an array of keys that got us to this value. Generally speaking, you will only want the last key in the path for matching things like "name", "email", "age", etc in a deeply nested object.
+
+<sub>[Example](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/generator-filtering-key-match.test.ts)</sub>
+
+```ts
+import { z, ZodString } from 'zod';
+import { Fixture, Generator } from 'zod-fixture';
+
+const NameGenerator = Generator({
+	schema: ZodString,
+	filter: ({ context }) => context.path.at(-1) === 'name',
+	output: () => 'John Doe',
+});
+
+const personSchema = z.object({
+	name: z.string(), // this matches ['name']
+	email: z.string().email(),
+	relatives: z
+		.object({
+			name: z.string(), // this will match as well ['relatives', 'name']
+			email: z.string().email(),
+		})
+		.array(),
+});
+
+const fixture = new Fixture({ seed: 7 }).extend(NameGenerator);
+const person = fixture.fromSchema(personSchema);
+```
+
+<sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/generator-filtering-key-match.test.ts)</sub>
+
+```ts
+{
+	email: 'rando@email.com',
+	name: 'John Doe',
+	relatives: [
+		{
+			email: 'rando@email.com',
+			name: 'John Doe',
+		},
+		{
+			email: 'rando@email.com',
+			name: 'John Doe',
+		},
+		{
+			email: 'rando@email.com',
+			name: 'John Doe',
+		},
+	],
+}
+
+```
+
+#### Output
+
+Output is a function that generates the fixture for any matches. `zod-fixture` provides a randomization utility for creating data, in addition to all of the defaults (including the seed).
+
+For example, in the example below we create our own `totalVisitsGenerator` to return more realastic numbers using the `random` utilities.
 
 <sub>[Source](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/fixture-extension.test.ts)</sub>
 
 ```ts
 const totalVisitsGenerator = Generator({
 	schema: ZodNumber,
+	filter: ({ context }) => context.path.at(-1) === 'totalVisits',
+	/**
+	 * The `context` provides a path to the current field
+	 *
+	 * {
+	 *   totalVisits: ...,
+	 *   nested: {
+	 *     totalVisits: ...,
+	 *   }
+	 * }
+	 *
+	 * Would match twice with the following paths:
+	 *   ['totalVisits']
+	 *   ['nested', 'totalVisits']
+	 */
+
+	// returns a more realistic number of visits.
 	output: ({ transform }) => transform.utils.random.int({ min: 0, max: 25 }),
 });
+```
+
+## FAQ
+
+### I have a custom type that I need to support. How do I do that?
+
+`zod-fixture` was built with this in mind. Simply define your custom type using zod's `z.custom` and pass the resulting schema to your custom generator.
+
+<sub>[Example](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/custom-type.test.ts)</sub>
+
+```ts
+import { z } from 'zod';
+import { Fixture, Generator } from 'zod-fixture';
+
+// Your custom type
+const pxSchema = z.custom<`${number}px`>((val) => {
+	return /^\d+px$/.test(val as string);
+});
+
+// Your custom generator
+const PixelGenerator = Generator({
+	schema: pxSchema,
+	output: () => '100px',
+});
+
+// Example
+const resolutionSchema = z.object({
+	width: pxSchema,
+	height: pxSchema,
+});
+
+const fixture = new Fixture().extend([PixelGenerator]);
+const resolution = fixture.fromSchema(resolutionSchema);
+```
+
+<sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/custom-type.test.ts)</sub>
+
+```ts
+{
+	width: '100px',
+	height: '100px',
+}
+
+```
+
+### Do you support faker/chance/falso?
+
+The short answer, not yet. We plan to build out pre-defined generators for popular mocking libraries but are currently prioritizing reliability and ease of use. If you'd like to help us build out this functionality, feel free to open a pull request 😀
+
+## API
+
+### Fixture
+
+> INFO: `Fixture` is a `Transformer` that comes prepackaged with generators for each of the first party types that Zod provides. For most cases, this is all you wil need, and offers a fast and easy way to create fixtures. For building a custom `Transformer` refer to the [Advanced](#advanced-topics) documentation.
+
+#### Config
+
+We provide sane defaults for the random utilities used by our generators, but these can easily be customized.
+
+<sub>[Source](https://github.com/timdeschryver/zod-fixture/tree/beta/src/transformer/defaults.ts)</sub>
+
+```ts
+interface Defaults {
+	seed?: number;
+	array: {
+		min: number;
+		max: number;
+	};
+	map: {
+		min: number;
+		max: number;
+	};
+	set: {
+		min: number;
+		max: number;
+	};
+	int: {
+		min: number;
+		max: number;
+	};
+	float: {
+		min: number;
+		max: number;
+	};
+	bigint: {
+		min: bigint;
+		max: bigint;
+	};
+	date: {
+		min: number;
+		max: number;
+	};
+	string: {
+		min: number;
+		max: number;
+		characterSet: string;
+	};
+}
+```
+
+##### Seed (optional)
+
+A seed can be provided to produce the same results every time.
+
+```ts
+const fixture = new Fixture({ seed: number });
+```
+
+## Advanced Topics
+
+### Create Your Own Transformer
+
+Instead of using one of the opinionated `Fixture`s, you can extend the unopinionated `Transformer` and register the desired generators.
+
+<sub>[Source](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/transformer.test.ts)</sub>
+
+```ts
+import { ConstrainedTransformer, UnconstrainedTransformer } from 'zod-fixture';
+
+/**
+ * Constrained defaults
+ *
+ * {
+ *   array: {
+ *     min: 3,
+ *     max: 3,
+ *   },
+ *   // ...
+ *   string: {
+ *     min: 15,
+ *     max: 15,
+ *     characterSet: 'abcdefghijklmnopqrstuvwxyz-',
+ *   }
+ * }
+ */
+new ConstrainedTransformer().extend([
+	/* insert your generators here */
+]);
+
+/**
+ * Less constrained. Better for mocking APIs.
+ */
+new UnconstrainedTransformer().extend([
+	/* insert your generators here */
+]);
 ```
 
 ## Contributing
