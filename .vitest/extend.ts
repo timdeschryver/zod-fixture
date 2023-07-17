@@ -1,12 +1,9 @@
 import { expect } from 'vitest';
 import type { ZodTypeAny } from 'zod';
+import { ITERATIONS } from './utils';
 
 expect.extend({
-	toReasonablySatisfy(
-		transform,
-		schema: ZodTypeAny,
-		iterations = process.env.SATISFY_ITERATIONS || 100
-	) {
+	toReasonablySatisfy(transform, schema: ZodTypeAny, iterations = ITERATIONS) {
 		for (let i = 0; i < iterations; i++) {
 			const fixture = transform.fromSchema(schema);
 			const result = schema.safeParse(fixture);

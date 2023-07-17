@@ -8,11 +8,13 @@ import {
 	DateTimeGenerator,
 	EmailGenerator,
 	IpGenerator,
+	RegexGenerator,
 	StringGenerator,
 	UlidGenerator,
 	UrlGenerator,
 	UuidGenerator,
 } from '.';
+import { ITERATIONS } from '../../../../.vitest/utils';
 import { NullableGenerator } from '../nullable';
 import { ObjectGenerator } from '../object';
 import { OptionalGenerator } from '../optional';
@@ -27,6 +29,7 @@ describe('create strings', () => {
 		UrlGenerator,
 		EmailGenerator,
 		DateTimeGenerator,
+		RegexGenerator,
 		StringGenerator,
 		NullableGenerator,
 		OptionalGenerator,
@@ -243,5 +246,30 @@ describe('create strings', () => {
 		expect(
 			new Date(transform.fromSchema(z.string().datetime()) as string)
 		).toBeInstanceOf(Date);
+	});
+
+	test('creates a string that follows a regexp', () => {
+		expect(transform.fromSchema(z.string().regex(/aBc/))).toBeTypeOf('string');
+		expect(transform.fromSchema(z.string().regex(/aBc/))).toBe('aBc');
+	});
+
+	test('regexp uses our seed', () => {
+		const values = Array.from({
+			length: ITERATIONS,
+		}).map(() =>
+			transform.fromSchema(z.string().regex(/(0|1|2)(aBc|123).?xyz/i), {
+				seed: 3,
+			})
+		);
+		const uniques = new Set(values);
+		expect(uniques.size).toBe(1);
+	});
+
+	test('produces a valid string that is a regexp', () => {
+		expect(transform).toReasonablySatisfy(
+			z
+				.string()
+				.regex(/^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$/gm)
+		);
 	});
 });
