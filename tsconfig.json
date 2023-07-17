@@ -1,15 +1,28 @@
 {
-  "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "lib": ["esnext", "dom"],
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "strict": true,
-    "strictNullChecks": true,
-    "resolveJsonModule": true,
-    "outDir": "./dist",
-    "declaration": true,
-    "inlineSourceMap": true,
-  },
+	"compilerOptions": {
+		"target": "esnext",
+		"module": "esnext",
+		"lib": ["esnext", "dom"],
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"noUncheckedIndexedAccess": true,
+		"strictNullChecks": true,
+		"resolveJsonModule": true,
+		"outDir": "./dist",
+		"declaration": true,
+		"importHelpers": true,
+		"inlineSourceMap": true,
+		"typeRoots": ["./src/types", "./node_modules", "./node_modules/@types/"],
+		"noEmit": true,
+		"isolatedModules": true, // https://vitejs.dev/guide/features.html#isolatedmodules
+		"useDefineForClassFields": true, // https://vitejs.dev/guide/features.html#usedefineforclassfields
+		"types": ["vite/client"], // https://vitejs.dev/guide/features.html#client-types
+		"baseUrl": "./src",
+		"paths": {
+			"@/*": ["*"],
+			"zod-fixture": ["./public"]
+		}
+	}
 }

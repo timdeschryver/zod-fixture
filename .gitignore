@@ -6,9 +6,12 @@ yarn-error.log*
 lib-cov
 coverage
 node_modules
+.yarn
 .env
 .cache
 dist
 .idea
 .DS_Store
 *.tgz
+**/.vitepress/dist
+**/.vitepress/cache
