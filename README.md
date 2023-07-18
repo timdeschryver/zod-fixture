@@ -44,6 +44,7 @@ Creating test fixtures should be easy.<br>
     - [Breaking changes](#breaking-changes)
       - [createFixture](#createfixture)
       - [Customization](#customization)
+      - [Configuring the fixture](#configuring-the-fixture)
 - [Contributing](#contributing)
   - [Getting started with GitHub Codespaces](#getting-started-with-github-codespaces)
   - [StackBlitz](#stackblitz)
@@ -699,6 +700,9 @@ AFTER:
 fbmiabahyvsy-vm
 ```
 
+`createFixture` uses a pre-configured `Fixture` instance, which cannot be customized anymore.
+To create a custom fixture in v2, you need to create your own `Fixture` instance, for more info see the [docs](#customizing).
+
 ##### Customization
 
 `Customization` is renamed to `Generator`.
@@ -731,6 +735,25 @@ const addressGenerator = Generator({
 		state: 'My State',
 	}),
 });
+```
+
+##### Configuring the fixture
+
+To add custom generators to the fixture, you need to create your own fixture instance and [extend](#extending) it with your own generators.
+
+BEFORE:
+
+```ts
+const person = createFixture(PersonSchema, {
+	customizations: [addressCustomization],
+});
+```
+
+AFTER:
+
+```ts
+const fixture = new Fixture().extend([addressGenerator]);
+const person = fixture.fromSchema(personSchema);
 ```
 
 ## Contributing
