@@ -74,7 +74,7 @@ async function updateIfDifferent() {
 					);
 				}
 
-				const href = `https://github.com/timdeschryver/zod-fixture/tree/beta/${resolved}`;
+				const href = `https://github.com/timdeschryver/zod-fixture/tree/main/${resolved}`;
 				const label = tab
 					? `<sub>[${tab}](${href})</sub>`
 					: `<sub>[Source](${href})</sub>`;
