@@ -145,6 +145,15 @@ For example, in the example below we create our own `totalVisitsGenerator` to re
 <<< @/../examples/custom-type.test.ts#output [Output]
 :::
 
+### `z.instanceof` isn't returning what I expected. What gives?
+
+`z.instanceof` is one of the few schemas that doesn't have first party support in `zod`. It's technically a `z.custom` under the hood, which means the only way to match is for you to create a custom generator and pass an instance of it as your schema.
+
+::: code-group
+<<< @/../examples/instanceof-type.test.ts#example [Example]
+<<< @/../examples/instanceof-type.test.ts#output [Output]
+:::
+
 ### Do you support faker/chance/falso?
 
 The short answer, not yet. We plan to build out pre-defined generators for popular mocking libraries but are currently prioritizing reliability and ease of use. If you'd like to help us build out this functionality, feel free to open a pull request 😀
