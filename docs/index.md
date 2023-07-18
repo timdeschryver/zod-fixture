@@ -22,15 +22,15 @@ Creating test fixtures should be easy.<br>
 ::: code-group
 
 ```sh [npm]
-npm install -D vitepress
+npm install -D zod-fixture
 ```
 
 ```sh [pnpm]
-pnpm add -D vitepress
+pnpm add -D zod-fixture
 ```
 
 ```sh [yarn]
-yarn add -D vitepress
+yarn add -D zod-fixture
 ```
 
 ```sh [bun]
@@ -143,6 +143,15 @@ For example, in the example below we create our own `totalVisitsGenerator` to re
 ::: code-group
 <<< @/../examples/custom-type.test.ts#example [Example]
 <<< @/../examples/custom-type.test.ts#output [Output]
+:::
+
+### `z.instanceof` isn't returning what I expected. What gives?
+
+`z.instanceof` is one of the few schemas that doesn't have first party support in `zod`. It's technically a `z.custom` under the hood, which means the only way to match is for you to create a custom generator and pass an instance of it as your schema.
+
+::: code-group
+<<< @/../examples/instanceof-type.test.ts#example [Example]
+<<< @/../examples/instanceof-type.test.ts#output [Output]
 :::
 
 ### Do you support faker/chance/falso?

@@ -33,6 +33,12 @@ const output = Object.assign(
 	// #endregion output
 );
 
-test('generates a person', () => {
+test('generates a resolution', () => {
+	expect(resolution).toMatchInlineSnapshot(`
+		{
+		  "height": "100px",
+		  "width": "100px",
+		}
+	`);
 	expect(resolution).toEqual(output);
 });

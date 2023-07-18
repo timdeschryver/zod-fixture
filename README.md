@@ -30,6 +30,7 @@ Creating test fixtures should be easy.<br>
     - [Output](#output)
 - [FAQ](#faq)
   - [I have a custom type that I need to support. How do I do that?](#i-have-a-custom-type-that-i-need-to-support-how-do-i-do-that)
+  - [`z.instanceof` isn't returning what I expected. What gives?](#zinstanceof-isnt-returning-what-i-expected-what-gives)
   - [Do you support faker/chance/falso?](#do-you-support-fakerchancefalso)
 - [API](#api)
   - [Fixture](#fixture)
@@ -46,15 +47,15 @@ Creating test fixtures should be easy.<br>
 ## Installation
 
 ```sh [npm]
-npm install -D vitepress
+npm install -D zod-fixture
 ```
 
 ```sh [pnpm]
-pnpm add -D vitepress
+pnpm add -D zod-fixture
 ```
 
 ```sh [yarn]
-yarn add -D vitepress
+yarn add -D zod-fixture
 ```
 
 ```sh [bun]
@@ -493,6 +494,61 @@ const resolution = fixture.fromSchema(resolutionSchema);
 {
 	width: '100px',
 	height: '100px',
+}
+
+```
+
+### `z.instanceof` isn't returning what I expected. What gives?
+
+`z.instanceof` is one of the few schemas that doesn't have first party support in `zod`. It's technically a `z.custom` under the hood, which means the only way to match is for you to create a custom generator and pass an instance of it as your schema.
+
+<sub>[Example](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/instanceof-type.test.ts)</sub>
+
+```ts
+import { z } from 'zod';
+import { Fixture, Generator } from 'zod-fixture';
+
+class ExampleClass {
+	id: number;
+	constructor() {
+		this.id = ExampleClass.uuid++;
+	}
+	static uuid = 1;
+}
+
+// Schema from instanceof (remember, this is just a z.custom)
+const exampleSchema = z.instanceof(ExampleClass);
+
+// Your custom generator
+const ExampleGenerator = Generator({
+	schema: exampleSchema,
+	output: () => new ExampleClass(),
+});
+
+// Example
+const listSchema = z.object({
+	examples: exampleSchema.array(),
+});
+
+const fixture = new Fixture().extend(ExampleGenerator);
+const result = fixture.fromSchema(listSchema);
+```
+
+<sub>[Output](https://github.com/timdeschryver/zod-fixture/tree/beta/examples/instanceof-type.test.ts)</sub>
+
+```ts
+{
+	examples: [
+		{
+			id: 1,
+		},
+		{
+			id: 2,
+		},
+		{
+			id: 3,
+		},
+	],
 }
 
 ```
