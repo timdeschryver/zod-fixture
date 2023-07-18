@@ -22,15 +22,15 @@ Creating test fixtures should be easy.<br>
 ::: code-group
 
 ```sh [npm]
-npm install -D vitepress
+npm install -D zod-fixture
 ```
 
 ```sh [pnpm]
-pnpm add -D vitepress
+pnpm add -D zod-fixture
 ```
 
 ```sh [yarn]
-yarn add -D vitepress
+yarn add -D zod-fixture
 ```
 
 ```sh [bun]
