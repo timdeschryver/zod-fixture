@@ -169,8 +169,7 @@ test(`fixture has all the zod types`, () => {
 		object: z.object({ name: z.string() }),
 		array: z.array(z.string()),
 		array_nonempty: z.string().array().nonempty(),
-		// TODO: fix this
-		// array_min: z.string().array().min(5),
+		array_min: z.string().array().min(5),
 		array_max: z.string().array().max(5),
 		array_length: z.string().array().length(5),
 		tuples: z.tuple([
@@ -191,8 +190,7 @@ test(`fixture has all the zod types`, () => {
 		map: z.map(z.string(), z.number()),
 		set: z.set(z.number()),
 		set_nonempty: z.set(z.number()).nonempty(),
-		// TODO: fix this
-		// set_min: z.set(z.number()).min(5),
+		set_min: z.set(z.number()).min(5),
 		set_max: z.set(z.number()).max(5),
 		set_size: z.set(z.number()).size(5),
 		intersection: z.intersection(Person, Employee),
