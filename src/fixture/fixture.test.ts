@@ -210,6 +210,7 @@ test(`fixture has all the zod types`, () => {
 		})
 	);
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const result = fixture.fromSchema(schemaWithEverything, { seed: 1 });
 	// TODO: this should parse
 	// schemaWithEverything.parse(result);
