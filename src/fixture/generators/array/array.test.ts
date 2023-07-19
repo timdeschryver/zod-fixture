@@ -26,4 +26,10 @@ describe('create Arrays', () => {
 			transform.fromSchema(z.array(z.string()).min(10).max(5))
 		).toThrowError();
 	});
+
+	test('should honor the constraints of the schema', () => {
+		const schema = z.string().array().min(5);
+		const fixture = transform.fromSchema(schema);
+		expect(() => schema.parse(fixture)).not.toThrowError();
+	});
 });

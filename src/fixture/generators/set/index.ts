@@ -5,8 +5,22 @@ import type { z } from 'zod';
 export const SetGenerator = Generator({
 	schema: ZodSet,
 	output: ({ def, transform, context }) => {
-		const min = def.minSize?.value ?? transform.defaults.set.min;
-		const max = def.maxSize?.value ?? transform.defaults.set.max;
+		const userDefinedMin = def.minSize?.value;
+		const userDefinedMax = def.maxSize?.value;
+
+		const min = transform.utils.resolveValue({
+			initial: userDefinedMin,
+			fallback: transform.defaults.set.min,
+			conflict: userDefinedMax,
+			resolve: (options) => Math.min(options.fallback, options.conflict),
+		});
+
+		const max = transform.utils.resolveValue({
+			initial: userDefinedMax,
+			fallback: transform.defaults.set.max,
+			conflict: userDefinedMin,
+			resolve: (options) => Math.max(options.fallback, options.conflict),
+		});
 
 		const result = new Set<z.infer<typeof def.valueType>>();
 

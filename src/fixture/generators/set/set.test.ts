@@ -24,4 +24,10 @@ describe('create Sets', () => {
 		expect([...(result as I).keys()][0]).toBeTypeOf('number');
 		expect([...(result as I).values()][0]).toBeTypeOf('number');
 	});
+
+	test('should honor the constraints of the schema', () => {
+		const schema = z.set(z.number()).min(5);
+		const fixture = transform.fromSchema(schema);
+		expect(() => schema.parse(fixture)).not.toThrowError();
+	});
 });
