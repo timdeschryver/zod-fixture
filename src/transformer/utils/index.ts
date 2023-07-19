@@ -10,6 +10,39 @@ export class Utils {
 		this.random = new Randomization(runner.defaults);
 	}
 
+	resolveValue<
+		TInitial,
+		TFallback extends NonNullable<TInitial>,
+		TConflict extends NonNullable<TInitial>
+	>(
+		config:
+			| {
+					initial: TInitial;
+					fallback: TFallback;
+			  }
+			| {
+					initial: TInitial;
+					fallback: TFallback;
+					conflict: TConflict;
+					resolve: (config: {
+						fallback: TFallback;
+						conflict: TConflict;
+					}) => NonNullable<TInitial>;
+			  }
+	): NonNullable<TInitial> {
+		const { initial, fallback } = config;
+
+		if (initial != null) return initial;
+
+		if ('conflict' in config) {
+			const { conflict, resolve } = config;
+
+			return conflict != null ? resolve({ fallback, conflict }) : fallback;
+		} else {
+			return fallback;
+		}
+	}
+
 	n<T>(
 		factory: (index: number) => T,
 		config: number | { min: number; max: number } = this.runner.defaults.array
