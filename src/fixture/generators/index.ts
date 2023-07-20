@@ -40,9 +40,11 @@ import { SymbolGenerator } from './symbol';
 import { TupleGenerator } from './tuple';
 import { UndefinedGenerator, VoidGenerator } from './undefined';
 import { DiscriminatedUnionGenerator, UnionGenerator } from './union';
+import { UnknownGenerator } from './unknown';
 
 export const DEFAULT_FIXTURE_GENERATORS = [
 	AnyGenerator,
+	UnknownGenerator,
 	OptionalGenerator,
 	IpGenerator,
 	UlidGenerator,
@@ -128,6 +130,7 @@ export {
 	UlidGenerator,
 	UndefinedGenerator,
 	UnionGenerator,
+	UnknownGenerator,
 	UrlGenerator,
 	UuidGenerator,
 	VoidGenerator,
