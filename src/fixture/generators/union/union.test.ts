@@ -33,6 +33,14 @@ describe('create unions', () => {
 		);
 	});
 
+	test('produces a valid discriminated union', () => {
+		const input = z.discriminatedUnion('type', [
+			z.object({ type: z.literal('a'), a: z.string() }),
+			z.object({ type: z.literal('b'), b: z.string() }),
+		]);
+		expect(transform).toReasonablySatisfy(input);
+	});
+
 	test('creates a discriminated union', () => {
 		const input = z.discriminatedUnion('type', [
 			z.object({ type: z.literal('a'), a: z.string() }),

@@ -87,14 +87,30 @@ test(`fixture has all the zod types`, () => {
 	const Person = z.object({
 		name: z.string(),
 	});
-
 	const Employee = z.object({
 		role: z.string(),
 	});
 
-	class InstanceOfClass {}
+	const pxSchema = z.custom<`${number}px`>((val) => {
+		return /^\d+px$/.test(val as string);
+	});
+	const CustomSchemaGenerator = Generator({
+		schema: pxSchema,
+		output: () => '100px',
+	});
 
+	class InstanceOfClass {}
 	const instanceOfSchema = z.instanceof(InstanceOfClass);
+	const InstanceOfSchemaGenerator = Generator({
+		schema: instanceOfSchema,
+		output: () => new InstanceOfClass(),
+	});
+
+	const errorSchema = z.instanceof(Error);
+	const ErrorGenerator = Generator({
+		schema: errorSchema,
+		output: () => new Error(),
+	});
 
 	const schemaWithEverything = z.object({
 		string: z.string(),
@@ -108,7 +124,8 @@ test(`fixture has all the zod types`, () => {
 		void: z.void(),
 		any: z.any(),
 		unknown: z.unknown(),
-		never: z.never(),
+		// this is by design, see the never generator for more info
+		// never: z.never(),
 		literal: z.literal('literal'),
 		string_max: z.string().max(5),
 		string_min: z.string().min(5),
@@ -178,7 +195,7 @@ test(`fixture has all the zod types`, () => {
 		unions_or: z.string().or(z.number()),
 		union_discriminated: z.discriminatedUnion('status', [
 			z.object({ status: z.literal('success'), data: z.string() }),
-			z.object({ status: z.literal('failed'), error: z.instanceof(Error) }),
+			z.object({ status: z.literal('failed'), error: errorSchema }),
 		]),
 		record: z.record(z.number()),
 		record_keytype: z.record(z.string().min(1), z.number()),
@@ -192,19 +209,16 @@ test(`fixture has all the zod types`, () => {
 		intersection_and: Person.and(Employee),
 		promise: z.promise(z.number()),
 		function: z.function(),
-		custom: z.custom<`${number}px`>((val) => /^\d+px$/.test(val as string)),
+		custom: pxSchema,
 		instanceof: instanceOfSchema,
 	});
 
-	const fixture = new Fixture().extend(
-		Generator({
-			schema: instanceOfSchema,
-			output: () => new InstanceOfClass(),
-		})
-	);
+	const fixture = new Fixture().extend([
+		CustomSchemaGenerator,
+		InstanceOfSchemaGenerator,
+		ErrorGenerator,
+	]);
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const result = fixture.fromSchema(schemaWithEverything, { seed: 1 });
-	// TODO: this should parse
-	// schemaWithEverything.parse(result);
+	schemaWithEverything.parse(result);
 });
