@@ -107,8 +107,7 @@ test(`fixture has all the zod types`, () => {
 		null: z.null(),
 		void: z.void(),
 		any: z.any(),
-		// TODO: add this?
-		// unknown: z.unknown(),
+		unknown: z.unknown(),
 		never: z.never(),
 		literal: z.literal('literal'),
 		string_max: z.string().max(5),
