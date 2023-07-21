@@ -87,14 +87,30 @@ test(`fixture has all the zod types`, () => {
 	const Person = z.object({
 		name: z.string(),
 	});
-
 	const Employee = z.object({
 		role: z.string(),
 	});
 
-	class InstanceOfClass {}
+	const pxSchema = z.custom<`${number}px`>((val) => {
+		return /^\d+px$/.test(val as string);
+	});
+	const CustomSchemaGenerator = Generator({
+		schema: pxSchema,
+		output: () => '100px',
+	});
 
+	class InstanceOfClass {}
 	const instanceOfSchema = z.instanceof(InstanceOfClass);
+	const InstanceOfSchemaGenerator = Generator({
+		schema: instanceOfSchema,
+		output: () => new InstanceOfClass(),
+	});
+
+	const errorSchema = z.instanceof(Error);
+	const ErrorGenerator = Generator({
+		schema: errorSchema,
+		output: () => new Error(),
+	});
 
 	const schemaWithEverything = z.object({
 		string: z.string(),
@@ -108,7 +124,8 @@ test(`fixture has all the zod types`, () => {
 		void: z.void(),
 		any: z.any(),
 		unknown: z.unknown(),
-		never: z.never(),
+		// this is by design, see the never generator for more info
+		// never: z.never(),
 		literal: z.literal('literal'),
 		string_max: z.string().max(5),
 		string_min: z.string().min(5),
@@ -178,7 +195,7 @@ test(`fixture has all the zod types`, () => {
 		unions_or: z.string().or(z.number()),
 		union_discriminated: z.discriminatedUnion('status', [
 			z.object({ status: z.literal('success'), data: z.string() }),
-			z.object({ status: z.literal('failed'), error: z.instanceof(Error) }),
+			z.object({ status: z.literal('failed'), error: errorSchema }),
 		]),
 		record: z.record(z.number()),
 		record_keytype: z.record(z.string().min(1), z.number()),
@@ -192,19 +209,186 @@ test(`fixture has all the zod types`, () => {
 		intersection_and: Person.and(Employee),
 		promise: z.promise(z.number()),
 		function: z.function(),
-		custom: z.custom<`${number}px`>((val) => /^\d+px$/.test(val as string)),
+		custom: pxSchema,
 		instanceof: instanceOfSchema,
 	});
 
-	const fixture = new Fixture().extend(
-		Generator({
-			schema: instanceOfSchema,
-			output: () => new InstanceOfClass(),
-		})
-	);
+	const fixture = new Fixture().extend([
+		CustomSchemaGenerator,
+		InstanceOfSchemaGenerator,
+		ErrorGenerator,
+	]);
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const result = fixture.fromSchema(schemaWithEverything, { seed: 1 });
-	// TODO: this should parse
-	// schemaWithEverything.parse(result);
+	expect(fixture).toReasonablySatisfy(schemaWithEverything);
+	expect(fixture.fromSchema(schemaWithEverything, { seed: 1 }))
+		.toMatchInlineSnapshot(`
+		{
+		  "any": "ZodAny",
+		  "array": [
+		    "io-cpdknofuysmh",
+		    "bujfrcfcuebjhcv",
+		    "fzrpowyqhibttou",
+		  ],
+		  "array_length": [
+		    "vxxbsrpfeomyjmg",
+		    "pwidyoymgfclfmn",
+		    "tafngswbleqqgic",
+		    "nvmfefqsoernd-u",
+		    "fboyvtaiikxcwjo",
+		  ],
+		  "array_max": [
+		    "sucxauvsyxaihsm",
+		    "jkglakoidqple-l",
+		    "sfhlajfvaxzyvrn",
+		    "agixooxvepctbol",
+		    "apbmvjrbuktcg-b",
+		  ],
+		  "array_min": [
+		    "amecindxvojhzjp",
+		    "xgway-mlojvphdn",
+		    "qiazqflgvxigywp",
+		    "efvpqbbalbskypa",
+		    "-vkg-cqewfplqjh",
+		  ],
+		  "array_nonempty": [
+		    "ezsalgtquzkzypf",
+		    "arzkhneqaomzvyj",
+		    "q-aejdcdsnaamzz",
+		  ],
+		  "bigint": 87n,
+		  "bigint_gt": 76n,
+		  "bigint_gte": 75n,
+		  "bigint_lt": -56n,
+		  "bigint_lte": -42n,
+		  "bigint_multipleOf": -70n,
+		  "bigint_negative": -64n,
+		  "bigint_nonnegative": 13n,
+		  "bigint_nonpositive": -95n,
+		  "bigint_positive": 42n,
+		  "boolean": true,
+		  "const_enum": 3,
+		  "custom": "100px",
+		  "date": 2008-04-20T03:39:56.576Z,
+		  "enum": "Salmon",
+		  "function": [Function],
+		  "instanceof": InstanceOfClass {},
+		  "intersection": {
+		    "name": "tcqasbpmpdjazu-",
+		    "role": "kuwm-mpmsmcv-kv",
+		  },
+		  "intersection_and": {
+		    "name": "-brubdtqsaqocah",
+		    "role": "uyyvnytdceqfwqs",
+		  },
+		  "literal": "literal",
+		  "map": Map {
+		    "fhgghruymfbxnmf" => 44.99602420255542,
+		    "iinafqcweknuvny" => 8.190361689776182,
+		    "ztvgaptdmkzcfnh" => 38.88137047179043,
+		  },
+		  "nan": NaN,
+		  "native_enum": 1,
+		  "null": null,
+		  "nullable": "bgeuefzpk-bwugi",
+		  "number": -20.646506268531084,
+		  "number_finite": -14.618035266175866,
+		  "number_gt": 40.57726460695267,
+		  "number_gte": 6.771492556435987,
+		  "number_int": -42,
+		  "number_lt": -15.448522949591279,
+		  "number_lte": -15.933569326298311,
+		  "number_multipleOf": -20,
+		  "number_negative": -20.096586062805727,
+		  "number_nonnegative": 71.73916019964963,
+		  "number_nonpositive": -38.705190969631076,
+		  "number_positive": 24.064453065162525,
+		  "number_safe": 6548987809103871,
+		  "object": {
+		    "name": "fq-wyeuarbbnvqu",
+		  },
+		  "optional": "vgqtapradbh-jph",
+		  "promise": Promise {},
+		  "record": {
+		    "-djyool--rf--or": 5.285186041146517,
+		    "dmjxaoepuyaijtx": 61.04716784320772,
+		    "higgrsjvvnmqvb-": -10.780098894611001,
+		  },
+		  "record_keytype": {
+		    "p": -46.023741737008095,
+		    "s": -2.4851254653185606,
+		    "w": -11.619144352152944,
+		  },
+		  "set": Set {
+		    -8.604418532922864,
+		    -14.276233920827508,
+		    -27.745057549327612,
+		  },
+		  "set_max": Set {
+		    47.146423533558846,
+		    -31.509176827967167,
+		    81.92738965153694,
+		    69.17029698379338,
+		    -44.51890685595572,
+		  },
+		  "set_min": Set {
+		    -90.83769624121487,
+		    60.59264736250043,
+		    -22.434442210942507,
+		    39.3600991461426,
+		    -8.295364351943135,
+		  },
+		  "set_nonempty": Set {
+		    63.20150108076632,
+		  },
+		  "set_size": Set {
+		    63.55367777869105,
+		    64.80197310447693,
+		    31.2631718814373,
+		    25.299231754615903,
+		    -97.743936534971,
+		  },
+		  "string": "-tzadi-dgckfkjs",
+		  "string_cuid": "cb1w9x0kk0000ufcbq6dk6kee",
+		  "string_cuid2": "ndy7h6jkrvbuuwf8vjzidto8",
+		  "string_datetime": "2055-04-27T02:22:10.297Z",
+		  "string_datetimeOffset": "1930-09-28T00:53:21.588Z",
+		  "string_datetimePrecision": "2024-01-17T11:02:02.449Z",
+		  "string_email": "rando@email.com",
+		  "string_emoji": "😖😎😅🙆😵😈😯😢😶🙌😡😫😐😷😗",
+		  "string_endsWith": "zbmjpzlkguyuabc",
+		  "string_enum": "apple",
+		  "string_includes": "abcjjpurtdxsqru",
+		  "string_ip": "148.135.3.226",
+		  "string_ipv4": "181.92.121.232",
+		  "string_ipv6": "c3bc:9f94:77a7:40c:44dd:edef:d4e9:b0de",
+		  "string_length": "mpldz",
+		  "string_max": "isofl",
+		  "string_min": "gaosy",
+		  "string_regex": "abc",
+		  "string_startsWith": "abcjyulx-arnqbd",
+		  "string_trim": "-bemduzfsmbgunu",
+		  "string_ulid": "01FDH1RH1N4GSY0JWWH4E4WSCC",
+		  "string_url": "https://ut.com",
+		  "string_uuid": "0f1a5c05-2cf1-42b4-8ebf-91c4788c3370",
+		  "symbol": Symbol(sunt),
+		  "toLowerCase": "ybtodeakacangcx",
+		  "toUpperCase": "OGO-WHDGHCPP-LP",
+		  "tuples": [
+		    "xqzfwqxicbrtsuq",
+		    -18.73913980089128,
+		    {
+		      "pointsScored": 59.92305250838399,
+		    },
+		  ],
+		  "undefined": undefined,
+		  "union_discriminated": {
+		    "error": [Error],
+		    "status": "failed",
+		  },
+		  "unions": -93.08575564064085,
+		  "unions_or": 54.04774583876133,
+		  "unknown": "ZodUnknown",
+		  "void": undefined,
+		}
+	`);
 });
