@@ -10,8 +10,8 @@ const WORDS = LOREM.toLowerCase().replace(/[,.]/, '').split(' ');
 
 export class Randomization {
 	mt: MersenneTwister;
-	regExCache = new RegExCache();
-	regExRandInt: (min: number, max: number) => number;
+	private regExCache = new RegExCache();
+	private regExRandInt: (min: number, max: number) => number;
 
 	constructor(private defaults: Defaults) {
 		this.mt = new MersenneTwister(defaults.seed);
