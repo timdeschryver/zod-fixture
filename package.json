@@ -43,7 +43,6 @@
 		"zod": ">=3.0.0"
 	},
 	"dependencies": {
-		"@paralleldrive/cuid2": "^2.2.1",
 		"randexp": "^0.5.3",
 		"ulid": "^2.3.0"
 	},

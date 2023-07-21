@@ -1,5 +1,4 @@
 import { ConstrainedTransformer } from '@/transformer/transformer';
-import { isCuid as isCuid2 } from '@paralleldrive/cuid2';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import {
@@ -105,9 +104,10 @@ describe('create strings', () => {
 	});
 
 	test('creates a string that is a cuid2', () => {
-		expect(
-			isCuid2(transform.fromSchema(z.string().cuid2()) as string)
-		).toBeTruthy();
+		// https://github.com/colinhacks/zod/blob/cfbc7b3f6714ced250dd4053822faf472bf1828e/src/types.ts#L542C1-L542C39
+		const cuid2Regex = /^[a-z][a-z0-9]*$/;
+		const value = transform.fromSchema(z.string().cuid2()) as string;
+		expect(cuid2Regex.test(value)).toBeTruthy();
 	});
 
 	test('produces a valid string that is a email', () => {

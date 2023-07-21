@@ -1,4 +1,3 @@
-import { init as Cuid2 } from '@paralleldrive/cuid2';
 import type { Defaults } from '../defaults';
 import MersenneTwister from './MersenneTwister';
 
@@ -7,14 +6,10 @@ const LOREM =
 const PARAGRAPHS = [LOREM];
 const SENTENCES = LOREM.replace(/\. /g, '.\n').split('\n');
 const WORDS = LOREM.toLowerCase().replace(/[,.]/, '').split(' ');
-
 export class Randomization {
 	mt: MersenneTwister;
-	cuid2: () => string;
-
 	constructor(private defaults: Defaults) {
 		this.mt = new MersenneTwister(defaults.seed);
-		this.cuid2 = Cuid2({ random: this.unitInterval.bind(this) });
 	}
 
 	uuid() {
@@ -65,9 +60,10 @@ export class Randomization {
 		return String.fromCodePoint(codePoint);
 	}
 
-	string(config: { min?: number; max?: number }) {
+	string(config: { min?: number; max?: number; characterSet?: string }) {
 		let min = config.min ?? this.defaults.string.min;
 		let max = config.max ?? this.defaults.string.max;
+		const charSet = config.characterSet ?? this.defaults.string.characterSet;
 
 		if (min < 0)
 			throw new Error(
@@ -81,10 +77,25 @@ export class Randomization {
 
 		let result = '';
 		for (let i = 0; i < length; i++) {
-			result += this.from(this.defaults.string.characterSet);
+			result += this.from(charSet);
 		}
 
 		return result;
+	}
+
+	cuid2() {
+		const prefix = String.fromCharCode(this.int({ min: 97, max: 122 }));
+		// https://github.com/paralleldrive/cuid2/blob/afc73f464355df68c58f9908cb26eb0315d67918/src/index.js#L5
+		const MAX_CUID_LENGTH = 32;
+
+		return (
+			prefix +
+			this.string({
+				min: 1,
+				max: MAX_CUID_LENGTH - 1,
+				characterSet: 'abcdefghijklmnopqrstuvwxyz0123456789',
+			})
+		);
 	}
 
 	float(config?: { min?: number; max?: number }): number {

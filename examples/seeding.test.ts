@@ -13,11 +13,11 @@ const v3 = fixture.fromSchema(z.string());
 const output =
 	'' +
 	// #region output
-	'sdnlwozmxaigobr';
+	'yxyzyskryqofekd';
 // #endregion output
 
 test('generates a person', () => {
-	expect(v1).toMatchInlineSnapshot('"sdnlwozmxaigobr"');
+	expect(v1).toMatchInlineSnapshot('"yxyzyskryqofekd"');
 	expect(v1).toEqual(output);
 	expect(v1).toEqual(v2);
 	expect(v2).toEqual(v3);
