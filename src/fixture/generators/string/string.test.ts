@@ -1,5 +1,4 @@
 import { ConstrainedTransformer } from '@/transformer/transformer';
-import { isCuid as isCuid2 } from '@paralleldrive/cuid2';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import {
@@ -96,18 +95,12 @@ describe('create strings', () => {
 		expect(fixture.lastFour).toHaveLength(4);
 	});
 
-	test('cuid throws an error', () => {
-		expect(() => transform.fromSchema(z.string().cuid())).toThrowError();
+	test('produces a valid string that is a cuid', () => {
+		expect(transform).toReasonablySatisfy(z.string().cuid());
 	});
 
 	test('produces a valid string that is a cuid2', () => {
 		expect(transform).toReasonablySatisfy(z.string().cuid2());
-	});
-
-	test('creates a string that is a cuid2', () => {
-		expect(
-			isCuid2(transform.fromSchema(z.string().cuid2()) as string)
-		).toBeTruthy();
 	});
 
 	test('produces a valid string that is a email', () => {
