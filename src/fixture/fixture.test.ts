@@ -117,12 +117,8 @@ test(`fixture has all the zod types`, () => {
 		string_url: z.string().url(),
 		string_emoji: z.string().emoji(),
 		string_uuid: z.string().uuid(),
-		// this is by design
-		// we don't support cuid in favor of cuid2
-		// string_cuid: z.string().cuid()
-		// TODO: the seeding doesn't work for this?
+		string_cuid: z.string().cuid(),
 		string_cuid2: z.string().cuid2(),
-		// TODO: can we bind this to our seed?
 		string_ulid: z.string().ulid(),
 		string_regex: z.string().regex(/abc/),
 		string_includes: z.string().includes('abc'),

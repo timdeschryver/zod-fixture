@@ -1,11 +1,8 @@
 import { ZodString } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
 import type { Runner } from '@/transformer/runner';
-import RandExp from 'randexp';
-import { monotonicFactory } from 'ulid';
 import type { ZodStringDef } from 'zod';
 
-const ulid = monotonicFactory();
 const prefixPattern = (str: string) => `^.{${str.length}}`;
 const suffixPattern = (str: string) => `.{${str.length}}$`;
 
@@ -96,7 +93,8 @@ export const UlidGenerator = Generator({
 	schema: ZodString,
 	filter: ({ def, transform }) =>
 		transform.utils.checks(def.checks).has('ulid'),
-	output: () => ulid(),
+	output: ({ def, transform }) =>
+		formatString(transform, def, transform.utils.random.ulid()),
 });
 
 export const UrlGenerator = Generator({
@@ -130,9 +128,8 @@ export const CuidGenerator = Generator({
 	schema: ZodString,
 	filter: ({ def, transform }) =>
 		transform.utils.checks(def.checks).has('cuid'),
-	output: () => {
-		throw new Error(`cuid has been deprecated in favor of cuid2`);
-	},
+	output: ({ def, transform }) =>
+		formatString(transform, def, transform.utils.random.cuid()),
 });
 
 export const IpGenerator = Generator({
@@ -179,10 +176,9 @@ export const RegexGenerator = Generator({
 		transform.utils.checks(def.checks).has('regex'),
 	output: ({ def, transform }) => {
 		const pattern = transform.utils.checks(def.checks).find('regex')?.regex;
-		if (!pattern) throw new Error(`RegexGenerator: regex pattern not found`);
-		const randexp = new RandExp(pattern);
-		randexp.randInt = (from, to) =>
-			transform.utils.random.int({ min: from, max: to });
-		return formatString(transform, def, randexp.gen());
+		if (!pattern) {
+			throw new Error(`RegexGenerator: regex pattern not found`);
+		}
+		return formatString(transform, def, transform.utils.random.regexp(pattern));
 	},
 });

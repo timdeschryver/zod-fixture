@@ -1,4 +1,4 @@
-import { init as Cuid2 } from '@paralleldrive/cuid2';
+import RandExp from 'randexp';
 import type { Defaults } from '../defaults';
 import MersenneTwister from './MersenneTwister';
 
@@ -10,11 +10,9 @@ const WORDS = LOREM.toLowerCase().replace(/[,.]/, '').split(' ');
 
 export class Randomization {
 	mt: MersenneTwister;
-	cuid2: () => string;
 
 	constructor(private defaults: Defaults) {
 		this.mt = new MersenneTwister(defaults.seed);
-		this.cuid2 = Cuid2({ random: this.unitInterval.bind(this) });
 	}
 
 	uuid() {
@@ -148,5 +146,23 @@ export class Randomization {
 		}
 
 		return new Date(this.int({ min, max }));
+	}
+
+	cuid() {
+		return this.regexp(/^[c][a-z0-9]{8}0000[a-z]{4}[a-z0-9]{8}$/);
+	}
+
+	cuid2() {
+		return this.regexp(/^[a-z][a-z0-9]{23}$/);
+	}
+
+	ulid() {
+		return this.regexp(/01[0-9A-HJKMNP-TV-Z]{24}/);
+	}
+
+	regexp(pattern: string | RegExp): string {
+		const randexp = new RandExp(pattern);
+		randexp.randInt = (from, to) => this.int({ min: from, max: to });
+		return randexp.gen();
 	}
 }
