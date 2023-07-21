@@ -38,6 +38,13 @@ Creating test fixtures should be easy.<br>
       - [Seed (optional)](#seed-optional)
 - [Advanced Topics](#advanced-topics)
   - [Create Your Own Transformer](#create-your-own-transformer)
+- [Migration Guide](#migration-guide)
+  - [v1 to v2](#v1-to-v2)
+    - [Why a rewrite?](#why-a-rewrite)
+    - [Breaking changes](#breaking-changes)
+      - [createFixture](#createfixture)
+      - [Customization](#customization)
+      - [Configuring the fixture](#configuring-the-fixture)
 - [Contributing](#contributing)
   - [Getting started with GitHub Codespaces](#getting-started-with-github-codespaces)
   - [StackBlitz](#stackblitz)
@@ -653,6 +660,100 @@ new ConstrainedTransformer().extend([
 new UnconstrainedTransformer().extend([
 	/* insert your generators here */
 ]);
+```
+
+## Migration Guide
+
+### v1 to v2
+
+The v2 version is a total rewrite of v1.
+Thanks for all the help [@THEtheChad](https://twitter.com/thethechad) 🤝
+
+#### Why a rewrite?
+
+v1 was flexible and allowed that multiple validation libraries could be supported in the future.
+But, this made things more complex and I don't think we intended to add more libraries than `zod`.
+
+v2 is a full-on `zod` version.
+This benefits you because we make more use of zod's schema while creating fixtures.
+For example, when you want to create a custom generator (previously a customization) you can also access zod's schema definition.
+
+> Fixture Generation with 1:1 Zod Parity
+
+#### Breaking changes
+
+##### createFixture
+
+`createFixture` still exists, but it could be that it generated its output with a slightly different output.
+It still is compatible (even more compatible) with zod's schema.
+For example, the changes to a string output:
+
+BEFORE:
+
+```
+street-a088e991-896e-458c-bbbd-7045cd880879
+```
+
+AFTER:
+
+```
+fbmiabahyvsy-vm
+```
+
+`createFixture` uses a pre-configured `Fixture` instance, which cannot be customized anymore.
+To create a custom fixture in v2, you need to create your own `Fixture` instance, for more info see the [docs](#customizing).
+
+##### Customization
+
+`Customization` is renamed to `Generator`.
+
+BEFORE:
+
+```ts
+const addressCustomization: Customization = {
+	condition: ({ type, propertName }) =>
+		type === 'object' && propertName === 'address',
+	generator: () => {
+		return {
+			street: 'My Street',
+			city: 'My City',
+			state: 'My State',
+		};
+	},
+};
+```
+
+AFTER:
+
+```ts
+const addressGenerator = Generator({
+	schema: ZodObject,
+	filter: ({ context }) => context.path.at(-1) === 'address',
+	output: () => ({
+		street: 'My Street',
+		city: 'My City',
+		state: 'My State',
+	}),
+});
+```
+
+##### Configuring the fixture
+
+To add custom generators to the fixture, you need to create your own fixture instance and [extend](#extending) it with your own generators.
+
+BEFORE:
+
+```ts
+const person = createFixture(PersonSchema, {
+	customizations: [addressCustomization],
+});
+```
+
+AFTER:
+
+```ts
+const fixture = new Fixture().extend([addressGenerator]);
+const person = fixture.fromSchema(personSchema);
 ```
 
 ## Contributing
