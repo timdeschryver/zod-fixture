@@ -157,7 +157,6 @@ export class Randomization {
 	}
 
 	ulid() {
-		// return this.regexp(/^01[A-Z0-9]{24}$/);
 		return this.regexp(/01[0-9A-HJKMNP-TV-Z]{24}/);
 	}
 
