@@ -33,7 +33,7 @@ export function isZodConstructor(
 }
 
 // #region filter
-type Filter<TSchema extends ZodTypeAny> = (obj: {
+type Filter<TSchema extends ZodTypeAny = ZodTypeAny> = (obj: {
 	def: TSchema['_def'];
 	schema: TSchema;
 	transform: Runner;
@@ -41,25 +41,27 @@ type Filter<TSchema extends ZodTypeAny> = (obj: {
 }) => boolean;
 // #endregion filter
 
-export type Generator<TSchema extends ZodTypeAny> = (obj: {
+export type Generator<TSchema extends ZodTypeAny = ZodTypeAny> = (obj: {
 	def: TSchema['_def'];
 	schema: TSchema;
 	transform: Runner;
 	context: Context;
 }) => unknown;
 
-export interface Definition<TSchema extends ZodTypeAny> {
-	schema: ZodConstructorOrSchema<TSchema>;
+export interface Definition<TSchema extends ZodTypeAny = ZodTypeAny> {
+	schema?: ZodConstructorOrSchema<TSchema>;
 	filter?: Filter<TSchema>;
 	output: Generator<TSchema>;
 }
 
-export function Generator<TSchema extends ZodTypeAny>(
+export function Generator<TSchema extends ZodTypeAny = ZodTypeAny>(
 	definition: Definition<TSchema>
 ): Definition<TSchema> {
-	if (!isZodConstructor(definition.schema)) {
-		if (definition.schema[ZOD_INSTANCE_IDENTIFIER] === undefined)
-			definition.schema[ZOD_INSTANCE_IDENTIFIER] = Generator.uuid++;
+	if (definition.schema !== undefined) {
+		if (!isZodConstructor(definition.schema)) {
+			if (definition.schema[ZOD_INSTANCE_IDENTIFIER] === undefined)
+				definition.schema[ZOD_INSTANCE_IDENTIFIER] = Generator.uuid++;
+		}
 	}
 
 	return definition;
