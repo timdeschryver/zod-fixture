@@ -6,7 +6,7 @@ import { Runner } from './runner';
 
 export abstract class Transformer {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	abstract readonly generators: Definition<any>[];
+	abstract readonly generators: Definition[];
 	abstract readonly transformerDefaults: Defaults;
 
 	constructor(readonly instanceDefaults?: Partial<Defaults>) {
@@ -14,7 +14,7 @@ export abstract class Transformer {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	extend(generators: Definition<any> | Definition<any>[]) {
+	extend(generators: Definition | Definition[]) {
 		const input = Array.isArray(generators) ? generators : [generators];
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore     We're allowed to update this internally
@@ -36,12 +36,12 @@ export abstract class Transformer {
 
 export class ConstrainedTransformer extends Transformer {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	generators: Definition<any>[] = [];
+	generators: Definition[] = [];
 	transformerDefaults: Defaults = constrained;
 }
 
 export class UnconstrainedTransformer extends Transformer {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	generators: Definition<any>[] = [];
+	generators: Definition[] = [];
 	transformerDefaults: Defaults = unconstrained;
 }
