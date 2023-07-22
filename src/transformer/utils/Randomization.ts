@@ -1,6 +1,6 @@
-import RandExp from 'randexp';
 import type { Defaults } from '../defaults';
 import MersenneTwister from './MersenneTwister';
+import { RegExCache } from './RegExCache';
 
 const LOREM =
 	'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
@@ -10,9 +10,18 @@ const WORDS = LOREM.toLowerCase().replace(/[,.]/, '').split(' ');
 
 export class Randomization {
 	mt: MersenneTwister;
+	regExCache = new RegExCache();
+	regExRandInt: (min: number, max: number) => number;
 
 	constructor(private defaults: Defaults) {
 		this.mt = new MersenneTwister(defaults.seed);
+		this.regExRandInt = function (
+			this: Randomization,
+			min: number,
+			max: number
+		) {
+			return this.int({ min, max });
+		}.bind(this);
 	}
 
 	uuid() {
@@ -161,8 +170,11 @@ export class Randomization {
 	}
 
 	regexp(pattern: string | RegExp): string {
-		const randexp = new RandExp(pattern);
-		randexp.randInt = (from, to) => this.int({ min: from, max: to });
-		return randexp.gen();
+		return this.regExCache
+			.get(pattern, (randexp) => {
+				randexp.randInt = this.regExRandInt;
+				return randexp;
+			})
+			.gen();
 	}
 }
