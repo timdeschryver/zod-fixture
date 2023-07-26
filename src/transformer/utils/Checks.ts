@@ -1,3 +1,5 @@
+type IfAny<T, Y, N> = 0 extends 1 & T ? Y : N;
+
 export class Checks<TChecks extends { kind: string }[]> {
 	constructor(private checks: TChecks) {}
 
@@ -14,7 +16,8 @@ export class Checks<TChecks extends { kind: string }[]> {
 	}
 }
 
-type FilterChecks<
-	T extends { kind: string },
-	TKind extends string
-> = T extends { kind: TKind } ? T : never;
+type FilterChecks<T extends { kind: string }, TKind extends string> = IfAny<
+	T,
+	unknown,
+	T extends { kind: TKind } ? T : never
+>;
