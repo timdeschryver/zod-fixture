@@ -28,7 +28,10 @@ export class Runner {
 		const transform = this;
 		const def = schema._def;
 		const generator = this.transformer.generators.find((generator) => {
-			if (!transform.utils.isType(generator.schema, schema)) {
+			if (
+				generator.schema &&
+				!transform.utils.isType(generator.schema, schema)
+			) {
 				return false;
 			}
 
