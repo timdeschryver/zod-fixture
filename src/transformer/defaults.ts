@@ -83,8 +83,8 @@ export const constrained = {
 		characterSet: 'abcdefghijklmnopqrstuvwxyz-',
 	},
 	recursion: {
-		min: 1,
-		max: 1,
+		min: 2,
+		max: 2,
 	},
 } satisfies Defaults;
 
