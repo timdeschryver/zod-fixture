@@ -3,6 +3,7 @@ import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { LazyGenerator } from '.';
 import { ArrayGenerator } from '../array';
+import { NullableGenerator } from '../nullable';
 import { ObjectGenerator } from '../object';
 import { StringGenerator } from '../string';
 
@@ -12,6 +13,7 @@ describe('create a lazy type', () => {
 		StringGenerator,
 		ObjectGenerator,
 		ArrayGenerator,
+		NullableGenerator,
 	]);
 
 	test('should handle recursive schemas', () => {
@@ -20,11 +22,11 @@ describe('create a lazy type', () => {
 		});
 
 		type Category = z.infer<typeof baseCategorySchema> & {
-			subcategories: Category[];
+			subcategories?: Category[] | null;
 		};
 
 		const categorySchema: z.ZodType<Category> = baseCategorySchema.extend({
-			subcategories: z.lazy(() => categorySchema.array()),
+			subcategories: z.lazy(() => categorySchema.array()).nullable(),
 		});
 
 		expect(() => transform.fromSchema(categorySchema)).not.toThrowError();
@@ -37,20 +39,25 @@ describe('create a lazy type', () => {
 			      "subcategories": [
 			        {
 			          "name": "zfvvt-vicsnxxyw",
+			          "subcategories": null,
 			        },
 			        {
 			          "name": "bhebxscqlszlofs",
+			          "subcategories": null,
 			        },
 			        {
 			          "name": "dsvwlaauq-ruihm",
+			          "subcategories": null,
 			        },
 			      ],
 			    },
 			    {
 			      "name": "cbmmychyhddoacs",
+			      "subcategories": null,
 			    },
 			    {
 			      "name": "yhinpbppqdzphsg",
+			      "subcategories": null,
 			    },
 			  ],
 			}
