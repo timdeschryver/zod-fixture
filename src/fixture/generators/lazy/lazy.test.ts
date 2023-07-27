@@ -7,7 +7,7 @@ import { ObjectGenerator } from '../object';
 import { StringGenerator } from '../string';
 
 describe('create a lazy type', () => {
-	const transform = new ConstrainedTransformer().extend([
+	const transform = new ConstrainedTransformer({ seed: 1 }).extend([
 		LazyGenerator,
 		StringGenerator,
 		ObjectGenerator,
@@ -30,27 +30,27 @@ describe('create a lazy type', () => {
 		expect(() => transform.fromSchema(categorySchema)).not.toThrowError();
 		expect(transform.fromSchema(categorySchema)).toMatchInlineSnapshot(`
 			{
-			  "name": "nqypkamrvcwbasg",
+			  "name": "-tzadi-dgckfkjs",
 			  "subcategories": [
 			    {
-			      "name": "pieit-nuhlrghez",
+			      "name": "wlisoflxgaosylm",
 			      "subcategories": [
 			        {
-			          "name": "lrcthqxrfsogtdx",
+			          "name": "zfvvt-vicsnxxyw",
 			        },
 			        {
-			          "name": "agkbtrdoeqmftdy",
+			          "name": "bhebxscqlszlofs",
 			        },
 			        {
-			          "name": "vliwuslzsvnuzjc",
+			          "name": "dsvwlaauq-ruihm",
 			        },
 			      ],
 			    },
 			    {
-			      "name": "ycofjjjoqqnugmh",
+			      "name": "cbmmychyhddoacs",
 			    },
 			    {
-			      "name": "nxgqrmammw-nvbz",
+			      "name": "yhinpbppqdzphsg",
 			    },
 			  ],
 			}
