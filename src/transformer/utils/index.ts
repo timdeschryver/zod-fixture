@@ -72,7 +72,7 @@ export class Utils {
 		if (this.isType(ZodLazy, schema)) {
 			const count = this.recursion.get(schema._def.getter) ?? 0;
 			const cap = this.random.int(this.runner.defaults.recursion);
-			if (count > cap) return;
+			if (count >= cap) return;
 		}
 		action(schema);
 	}
