@@ -612,6 +612,10 @@ interface Defaults {
 		max: number;
 		characterSet: string;
 	};
+	recursion: {
+		min: number;
+		max: number;
+	};
 }
 ```
 
