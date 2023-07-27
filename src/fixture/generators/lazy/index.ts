@@ -3,6 +3,10 @@ import { Generator } from '@/transformer/generator';
 
 export const LazyGenerator = Generator({
 	schema: ZodLazy,
-	output: ({ def, transform, context }) =>
-		transform.fromSchema(def.getter(), context),
+	output: ({ def, transform, context }) => {
+		const count = transform.utils.recursion.get(def.getter) ?? 0;
+		transform.utils.recursion.set(def.getter, count + 1);
+
+		return transform.fromSchema(def.getter(), context);
+	},
 });

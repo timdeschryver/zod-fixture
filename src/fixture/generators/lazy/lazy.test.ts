@@ -2,19 +2,58 @@ import { ConstrainedTransformer } from '@/transformer/transformer';
 import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { LazyGenerator } from '.';
-import { NumberGenerator } from '../number';
+import { ArrayGenerator } from '../array';
+import { ObjectGenerator } from '../object';
+import { StringGenerator } from '../string';
 
 describe('create a lazy type', () => {
-	const transform = new ConstrainedTransformer().extend([
+	const transform = new ConstrainedTransformer({ seed: 1 }).extend([
 		LazyGenerator,
-		NumberGenerator,
+		StringGenerator,
+		ObjectGenerator,
+		ArrayGenerator,
 	]);
 
-	test('produces a valid lazy', () => {
-		expect(transform).toReasonablySatisfy(z.lazy(() => z.number()));
-	});
+	test('should handle recursive schemas', () => {
+		const baseCategorySchema = z.object({
+			name: z.string(),
+		});
 
-	test('creates a promise with the correct type', () => {
-		expect(transform.fromSchema(z.lazy(() => z.number()))).toBeTypeOf('number');
+		type Category = z.infer<typeof baseCategorySchema> & {
+			subcategories: Category[];
+		};
+
+		const categorySchema: z.ZodType<Category> = baseCategorySchema.extend({
+			subcategories: z.lazy(() => categorySchema.array()),
+		});
+
+		expect(() => transform.fromSchema(categorySchema)).not.toThrowError();
+		expect(transform.fromSchema(categorySchema)).toMatchInlineSnapshot(`
+			{
+			  "name": "-tzadi-dgckfkjs",
+			  "subcategories": [
+			    {
+			      "name": "wlisoflxgaosylm",
+			      "subcategories": [
+			        {
+			          "name": "zfvvt-vicsnxxyw",
+			        },
+			        {
+			          "name": "bhebxscqlszlofs",
+			        },
+			        {
+			          "name": "dsvwlaauq-ruihm",
+			        },
+			      ],
+			    },
+			    {
+			      "name": "cbmmychyhddoacs",
+			    },
+			    {
+			      "name": "yhinpbppqdzphsg",
+			    },
+			  ],
+			}
+		`);
 	});
 });

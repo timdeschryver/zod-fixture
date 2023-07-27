@@ -25,16 +25,19 @@ export const SetGenerator = Generator({
 		const result = new Set<z.infer<typeof def.valueType>>();
 
 		transform.utils.ifNotNever(def.valueType, (valueType) => {
-			transform.utils.n(
-				() => {
-					result.add(
-						transform.fromSchema(valueType, {
-							path: [...context.path, result.size],
-						})
-					);
-				},
-				{ min, max }
-			);
+			transform.utils.recursionCheck(valueType, () => {
+				transform.utils.n(
+					() => {
+						result.add(
+							transform.fromSchema(valueType, {
+								...context,
+								path: [...context.path, result.size],
+							})
+						);
+					},
+					{ min, max }
+				);
+			});
 		});
 
 		return result;

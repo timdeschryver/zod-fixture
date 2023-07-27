@@ -1,11 +1,13 @@
+import { ZodLazy } from '@/internal/zod';
 import type { ZodTypeAny } from 'zod';
 import type { ZodConstructorOrSchema } from '../generator';
-import { isZodConstructor, ZOD_INSTANCE_IDENTIFIER } from '../generator';
+import { isZodConstructor } from '../generator';
 import type { Runner } from '../runner';
 import { Checks } from './Checks';
 import { Randomization } from './Randomization';
 
 export class Utils {
+	recursion = new WeakMap<() => ZodTypeAny, number>();
 	random: Randomization;
 
 	constructor(private runner: Runner) {
@@ -57,36 +59,34 @@ export class Utils {
 
 	ifNotNever<TSchema extends ZodTypeAny>(
 		schema: TSchema | null | undefined,
-		assignment: (schema: TSchema) => unknown
+		action: (schema: TSchema) => unknown
 	) {
 		if (!schema || schema._def.typeName === 'ZodNever') return;
-		assignment(schema);
+		action(schema);
+	}
+
+	recursionCheck<TSchema extends ZodTypeAny>(
+		schema: TSchema,
+		action: (schema: TSchema) => unknown
+	) {
+		if (this.isType(ZodLazy, schema)) {
+			const count = this.recursion.get(schema._def.getter) ?? 0;
+			const cap = this.random.int(this.runner.defaults.recursion);
+			if (count >= cap) return;
+		}
+		action(schema);
 	}
 
 	isType<TSchema extends ZodTypeAny>(
-		target: ZodConstructorOrSchema<TSchema> | undefined,
+		target: ZodConstructorOrSchema<TSchema>,
 		schema: ZodTypeAny
 	): schema is TSchema {
-		if (!target) return false;
-
-		if (isZodConstructor(target)) {
-			if (schema._def.typeName !== target.name) {
-				return false;
-			}
-		} else {
-			if (schema._def.typeName !== target._def.typeName) {
-				return false;
-			}
-
-			// If our generator was created with an instance, make sure it matches
-			// the schema we're trying to generate.
-			// This is particularly important for z.custom schemas.
-			if (schema[ZOD_INSTANCE_IDENTIFIER] !== undefined) {
-				if (schema[ZOD_INSTANCE_IDENTIFIER] !== target[ZOD_INSTANCE_IDENTIFIER])
-					return false;
-			}
-		}
-		return true;
+		return isZodConstructor(target)
+			? schema._def.typeName === target.name
+			: // If our generator was created with an instance, make sure it matches
+			  // the schema we're trying to generate.
+			  // This is particularly important for z.custom schemas.
+			  schema === target;
 	}
 
 	checks<TChecks extends { kind: string }[]>(checks: TChecks) {

@@ -1,12 +1,11 @@
-import { Fixture, Generator, Transformer } from '@/public';
-import { ZOD_INSTANCE_IDENTIFIER } from '@/transformer/generator';
+import { createFixture, Fixture, Generator, Transformer } from '@/public';
 import MersenneTwister from '@/transformer/utils/MersenneTwister';
 import { z } from 'zod';
 
 Object.assign(window, {
+	createFixture,
 	Generator,
 	Transformer,
-	ZOD_INSTANCE_IDENTIFIER,
 	MersenneTwister,
 	Fixture,
 	z,

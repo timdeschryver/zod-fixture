@@ -34,6 +34,10 @@ interface Defaults {
 		max: number;
 		characterSet: string;
 	};
+	recursion: {
+		min: number;
+		max: number;
+	};
 }
 // #endregion defaults
 
@@ -78,6 +82,10 @@ export const constrained = {
 		max: 15,
 		characterSet: 'abcdefghijklmnopqrstuvwxyz-',
 	},
+	recursion: {
+		min: 2,
+		max: 2,
+	},
 } satisfies Defaults;
 
 export const unconstrained = {
@@ -114,6 +122,10 @@ export const unconstrained = {
 		max: 100,
 		characterSet:
 			'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.,/\\!@#$%^&*()_+=-{}[]|:;?<>~`\'"',
+	},
+	recursion: {
+		min: MIN_LIST_SIZE,
+		max: MAX_LIST_SIZE,
 	},
 } satisfies Defaults;
 

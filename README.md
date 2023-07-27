@@ -23,7 +23,7 @@ Creating test fixtures should be easy.<br>
 - [Customizing](#customizing)
   - [Extending](#extending)
   - [Generators](#generators)
-    - [Matching](#matching)
+    - [Schema](#schema)
     - [Filtering](#filtering)
       - [Filter by Check](#filter-by-check)
       - [Filter by Key](#filter-by-key)
@@ -234,16 +234,16 @@ To generate a value based on a zod type we're using what we call a `Generator`.
 
 A `Generator` has 3 fundamental parts:
 
-- [schema](#matching) -- the zod type to match
+- [schema](#schema) -- [optional] the zod type to match
 - [filter](#filtering) -- [optional] a function to further refine our match (ie filtering by keys or zod checks)
 - [output](#output) -- a function that's called to produce the fixture
 
-#### Matching
+#### Schema
 
-All generators require a `zod` schema to match against. A schema can be provided in the following ways:
+A schema can be provided in the following ways:
 
 - A zod type constructor (ie `ZodString`)
-- An instance of a type (typically `z.custom`)
+- An instance of a type (ie `z.custom()`)
 
 <sub>[Example](https://github.com/timdeschryver/zod-fixture/tree/main/examples/generator-schema-matching.test.ts)</sub>
 
@@ -300,7 +300,7 @@ In addition to matching schemas, `zod-fixture` provides robust tools for filteri
 
 ##### Filter by Check
 
-In the case where you use a `zod` method like `z.string().email()`, `zod` adds what they call a "check" to the defintion. These are additional constraints that are checked during parsing that don't conform to a Typescript type. (ie TS does not have the concept of an email, just a string). `zod-fixture` provides a type safe utility called `checks` for interacting with these additional constraints.
+In the case where you use a `zod` method like `z.string().email()`, `zod` adds what they call a "check" to the definition. These are additional constraints that are checked during parsing that don't conform to a Typescript type. (ie TS does not have the concept of an email, just a string). `zod-fixture` provides a type safe utility called `checks` for interacting with these additional constraints.
 
 There are two methods provided by the `checks` utility:
 
@@ -611,6 +611,10 @@ interface Defaults {
 		min: number;
 		max: number;
 		characterSet: string;
+	};
+	recursion: {
+		min: number;
+		max: number;
 	};
 }
 ```

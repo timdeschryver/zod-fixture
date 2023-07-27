@@ -1,14 +1,6 @@
 import type { ZodTypeAny } from 'zod';
 import type { Runner } from './runner';
 
-export const ZOD_INSTANCE_IDENTIFIER = Symbol('ZOD_INSTANCE_IDENTIFIER');
-
-declare module 'zod' {
-	interface ZodType {
-		[ZOD_INSTANCE_IDENTIFIER]?: number;
-	}
-}
-
 // #region context
 export interface Context {
 	path: (string | number)[];
@@ -33,7 +25,8 @@ export function isZodConstructor(
 }
 
 // #region filter
-type Filter<TSchema extends ZodTypeAny = ZodTypeAny> = (obj: {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Filter<TSchema extends ZodTypeAny = any> = (obj: {
 	def: TSchema['_def'];
 	schema: TSchema;
 	transform: Runner;
@@ -41,31 +34,26 @@ type Filter<TSchema extends ZodTypeAny = ZodTypeAny> = (obj: {
 }) => boolean;
 // #endregion filter
 
-export type Generator<TSchema extends ZodTypeAny = ZodTypeAny> = (obj: {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Generator<TSchema extends ZodTypeAny = any> = (obj: {
 	def: TSchema['_def'];
 	schema: TSchema;
 	transform: Runner;
 	context: Context;
 }) => unknown;
 
-export interface Definition<TSchema extends ZodTypeAny = ZodTypeAny> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface Definition<TSchema extends ZodTypeAny = any> {
 	schema?: ZodConstructorOrSchema<TSchema>;
 	filter?: Filter<TSchema>;
 	output: Generator<TSchema>;
 }
 
-export function Generator<TSchema extends ZodTypeAny = ZodTypeAny>(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function Generator<TSchema extends ZodTypeAny = any>(
 	definition: Definition<TSchema>
 ): Definition<TSchema> {
-	if (definition.schema !== undefined) {
-		if (!isZodConstructor(definition.schema)) {
-			if (definition.schema[ZOD_INSTANCE_IDENTIFIER] === undefined)
-				definition.schema[ZOD_INSTANCE_IDENTIFIER] = Generator.uuid++;
-		}
-	}
-
 	return definition;
 }
-Generator.uuid = 0;
 
 export type { Filter };
