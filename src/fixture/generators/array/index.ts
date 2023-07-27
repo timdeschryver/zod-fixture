@@ -24,13 +24,18 @@ export const ArrayGenerator = Generator({
 		const result: unknown[] = [];
 
 		transform.utils.ifNotNever(def.type, (schema) => {
-			transform.utils.n(
-				(key) =>
-					result.push(
-						transform.fromSchema(schema, { path: [...context.path, key] })
-					),
-				{ min, max }
-			);
+			transform.utils.recursionCheck(schema, () => {
+				transform.utils.n(
+					(key) =>
+						result.push(
+							transform.fromSchema(schema, {
+								...context,
+								path: [...context.path, key],
+							})
+						),
+					{ min, max }
+				);
+			});
 		});
 
 		return result;

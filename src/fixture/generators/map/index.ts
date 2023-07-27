@@ -12,14 +12,19 @@ export const MapGenerator = Generator({
 
 		transform.utils.ifNotNever(key, (keySchema) => {
 			transform.utils.ifNotNever(value, (valueSchema) => {
-				transform.utils.n(() => {
-					const k = transform.fromSchema(keySchema, context) as string | number;
-					const v = transform.fromSchema(valueSchema, {
-						path: [...context.path, k],
-					});
+				transform.utils.recursionCheck(valueSchema, () => {
+					transform.utils.n(() => {
+						const k = transform.fromSchema(keySchema, context) as
+							| string
+							| number;
+						const v = transform.fromSchema(valueSchema, {
+							...context,
+							path: [...context.path, k],
+						});
 
-					map.set(k, v);
-				}, transform.defaults.map);
+						map.set(k, v);
+					}, transform.defaults.map);
+				});
 			});
 		});
 

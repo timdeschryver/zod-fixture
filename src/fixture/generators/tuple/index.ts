@@ -8,24 +8,32 @@ export const TupleGenerator = Generator({
 
 		def.items.forEach((type, idx) => {
 			transform.utils.ifNotNever(type, (schema) => {
-				known.push(
-					transform.fromSchema(schema, { path: [...context.path, idx] })
-				);
+				transform.utils.recursionCheck(schema, () => {
+					known.push(
+						transform.fromSchema(schema, {
+							...context,
+							path: [...context.path, idx],
+						})
+					);
+				});
 			});
 		});
 
 		const rest: unknown[] = [];
 
 		transform.utils.ifNotNever(def.rest, (schema) => {
-			transform.utils.n(
-				(idx) =>
-					rest.push(
-						transform.fromSchema(schema, {
-							path: [...context.path, known.length + idx],
-						})
-					),
-				1
-			);
+			transform.utils.recursionCheck(schema, () => {
+				transform.utils.n(
+					(idx) =>
+						rest.push(
+							transform.fromSchema(schema, {
+								...context,
+								path: [...context.path, known.length + idx],
+							})
+						),
+					1
+				);
+			});
 		});
 
 		return [...known, ...rest];
