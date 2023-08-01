@@ -4,6 +4,7 @@ import { BigIntGenerator, BigIntMultipleOfGenerator } from './bigint';
 import { BooleanGenerator } from './boolean';
 import { BrandedGenerator } from './branded';
 import { DateGenerator } from './date';
+import { DefaultGenerator } from './default';
 import {
 	PreprocessGenerator,
 	RefinementGenerator,
@@ -87,6 +88,7 @@ export const DEFAULT_FIXTURE_GENERATORS = [
 	VoidGenerator,
 	NeverGenerator,
 	StringGenerator,
+	DefaultGenerator,
 ];
 
 export {
@@ -100,6 +102,7 @@ export {
 	CuidGenerator,
 	DateGenerator,
 	DateTimeGenerator,
+	DefaultGenerator,
 	DiscriminatedUnionGenerator,
 	EmailGenerator,
 	EnumGenerator,

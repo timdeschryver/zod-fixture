@@ -12,6 +12,7 @@ export class Randomization {
 	mt: MersenneTwister;
 	regExCache = new RegExCache();
 	regExRandInt: (min: number, max: number) => number;
+	bool: boolean;
 
 	constructor(private defaults: Defaults) {
 		this.mt = new MersenneTwister(defaults.seed);
@@ -22,6 +23,7 @@ export class Randomization {
 		) {
 			return this.int({ min, max });
 		}.bind(this);
+		this.bool = this.unitInterval() < 0.5;
 	}
 
 	uuid() {
@@ -144,6 +146,10 @@ export class Randomization {
 			type === 'word' ? WORDS : type === 'sentence' ? SENTENCES : PARAGRAPHS;
 
 		return Array.from({ length }, () => this.from(target)).join(' ');
+	}
+
+	boolean() {
+		return (this.bool = !this.bool);
 	}
 
 	date(config?: { min?: number; max?: number }): Date {
