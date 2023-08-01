@@ -65,23 +65,23 @@ const output = Object.assign(
 			state: 'My State',
 			street: 'My Street',
 		},
-		birthday: new Date('1952-01-21T17:32:42.094Z'),
-		name: 'yxyzyskryqofekd',
+		birthday: new Date('2066-08-15T02:38:13.057Z'),
+		name: 'xyzyskryqofekdg',
 		pets: [
 			{
-				breed: 'dnlwozmxaigobrz',
-				name: 'vhvlrnsxroqpuma',
+				breed: 'nlwozmxaigobrzz',
+				name: 'hvlrnsxroqpumas',
 			},
 			{
-				breed: 'ifbgglityarecl-',
-				name: 'c-lmtvotjcevmyi',
+				breed: 'fbgglityarecl-q',
+				name: '-lmtvotjcevmyiq',
 			},
 			{
-				breed: 'fmylchvprjdgelk',
-				name: 'ydevqfcctdx-lin',
+				breed: 'mylchvprjdgelkq',
+				name: 'devqfcctdx-link',
 			},
 		],
-		totalVisits: 15,
+		totalVisits: 10,
 	}
 	// #endregion output
 );
@@ -94,23 +94,23 @@ test('generates a person', () => {
 		    "state": "My State",
 		    "street": "My Street",
 		  },
-		  "birthday": 1952-01-21T17:32:42.094Z,
-		  "name": "yxyzyskryqofekd",
+		  "birthday": 2066-08-15T02:38:13.057Z,
+		  "name": "xyzyskryqofekdg",
 		  "pets": [
 		    {
-		      "breed": "dnlwozmxaigobrz",
-		      "name": "vhvlrnsxroqpuma",
+		      "breed": "nlwozmxaigobrzz",
+		      "name": "hvlrnsxroqpumas",
 		    },
 		    {
-		      "breed": "ifbgglityarecl-",
-		      "name": "c-lmtvotjcevmyi",
+		      "breed": "fbgglityarecl-q",
+		      "name": "-lmtvotjcevmyiq",
 		    },
 		    {
-		      "breed": "fmylchvprjdgelk",
-		      "name": "ydevqfcctdx-lin",
+		      "breed": "mylchvprjdgelkq",
+		      "name": "devqfcctdx-link",
 		    },
 		  ],
-		  "totalVisits": 15,
+		  "totalVisits": 10,
 		}
 	`);
 	expect(person).toEqual(output);

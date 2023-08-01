@@ -59,7 +59,7 @@ const output = Object.assign(
 	// #region output
 	{
 		email: 'john.malkovich@gmail.com',
-		name: 'yxyzyskryq',
+		name: 'xyzyskryqo',
 	}
 	// #endregion output
 );
@@ -68,7 +68,7 @@ test('generates a person', () => {
 	expect(person).toMatchInlineSnapshot(`
 		{
 		  "email": "john.malkovich@gmail.com",
-		  "name": "yxyzyskryq",
+		  "name": "xyzyskryqo",
 		}
 	`);
 	expect(person).toEqual(output);
