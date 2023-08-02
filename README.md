@@ -124,7 +124,9 @@ const person = createFixture(personSchema, { seed: 11 });
 
 ```
 
-> INFO: The examples make use of the optional [seed](#seed-optional) parameter to generate the same fixture every time. This is useful for our docs, deterministic testing, and to reproduce issues, but is not necessary in your code. Simply calling `createFixture` with no configuration is acceptable.
+> [!NOTE]
+>
+> The examples make use of the optional [seed](#seed-optional) parameter to generate the same fixture every time. This is useful for our docs, deterministic testing, and to reproduce issues, but is not necessary in your code. Simply calling `createFixture` with no configuration is acceptable.
 
 Take a look at the [examples](https://github.com/timdeschryver/zod-fixture/tree/main/examples) to see how you can use `zod-fixture` in your tests.
 
@@ -136,7 +138,9 @@ Take a look at the [examples](https://github.com/timdeschryver/zod-fixture/tree/
 
 The easiset way to start customizing `zod-fixture` is to use the `Fixture` class directly and extend it with your own [generator](#generators).
 
-> INFO: `createFixture(...)` is just syntactic sugar for `new Fixture().fromSchema(...)`
+> [!NOTE]
+>
+> `createFixture(...)` is just syntactic sugar for `new Fixture().fromSchema(...)`
 
 The example below uses 2 custom generators and a typical pattern for filtering based on the keys of an object.
 
@@ -226,7 +230,9 @@ const person = fixture.fromSchema(personSchema);
 
 ```
 
-> TIP: The order the registered generators matters. The first generator that matches the conditions (`schema` and `filter`) is used to create the value.
+> [!IMPORTANT]
+>
+> The order the registered generators matters. The first generator that matches the conditions (`schema` and `filter`) is used to create the value.
 
 ### Generators
 
@@ -568,7 +574,9 @@ The short answer, not yet. We plan to build out pre-defined generators for popul
 
 ### Fixture
 
-> INFO: `Fixture` is a `Transformer` that comes prepackaged with generators for each of the first party types that Zod provides. For most cases, this is all you wil need, and offers a fast and easy way to create fixtures. For building a custom `Transformer` refer to the [Advanced](#advanced-topics) documentation.
+> [!NOTE]
+>
+> `Fixture` is a `Transformer` that comes prepackaged with generators for each of the first party types that Zod provides. For most cases, this is all you wil need, and offers a fast and easy way to create fixtures. For building a custom `Transformer` refer to the [Advanced](#advanced-topics) documentation.
 
 #### Config
 
