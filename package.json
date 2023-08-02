@@ -55,7 +55,7 @@
 		"eslint-config-prettier": "^8.8.0",
 		"lint-staged": "^13.2.3",
 		"minimist": "^1.2.8",
-		"prettier": "latest",
+		"prettier": "^3.0.0",
 		"typescript": "^5.1.6",
 		"vite": "^4.4.4",
 		"vite-plugin-dts": "^1.7.3",
