@@ -86,9 +86,9 @@ async function updateIfDifferent() {
 		.replace(/:::\s+(\S+)\n?([\s\S]*?)\n?:::/g, (m, type, content) => {
 			switch (type) {
 				case 'info':
-					return `> [!NOTE] \n> ${content}`;
+					return `> [!NOTE]\n>\n> ${content}`;
 				case 'tip':
-					return `> [!IMPORTANT] \n> ${content}`;
+					return `> [!IMPORTANT]\n>\n> ${content}`;
 				default:
 					return content;
 			}
