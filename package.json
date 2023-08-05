@@ -35,7 +35,17 @@
 	"type": "module",
 	"keywords": [
 		"zod",
-		"fixtures"
+		"test",
+		"data",
+		"generator",
+		"random",
+		"fake",
+		"fixtures",
+		"contextual",
+		"stub",
+		"mock",
+		"schema",
+		"dummy"
 	],
 	"author": "Tim Deschryver",
 	"license": "MIT",
