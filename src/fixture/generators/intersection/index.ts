@@ -1,7 +1,10 @@
-import { ZodIntersection } from '@/internal/zod';
+import {
+	ZodIntersection,
+	ZodParsedType,
+	getParsedType,
+	util,
+} from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
-// @TODO: refactor so we don't have to bundle zod
-import { ZodParsedType, getParsedType, util } from 'zod';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const IntersectionGenerator = Generator({
@@ -21,7 +24,7 @@ export const IntersectionGenerator = Generator({
  */
 function mergeValues(
 	a: any,
-	b: any
+	b: any,
 ): { valid: true; data: any } | { valid: false } {
 	const aType = getParsedType(a);
 	const bType = getParsedType(b);

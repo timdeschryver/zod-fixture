@@ -1,5 +1,5 @@
+import type { ZodTypeAny } from '@/internal/zod';
 import { ZodLazy } from '@/internal/zod';
-import type { ZodTypeAny } from 'zod';
 import type { ZodConstructorOrSchema } from '../generator';
 import { isZodConstructor } from '../generator';
 import type { Runner } from '../runner';
@@ -17,7 +17,7 @@ export class Utils {
 	resolveValue<
 		TInitial,
 		TFallback extends NonNullable<TInitial>,
-		TConflict extends NonNullable<TInitial>
+		TConflict extends NonNullable<TInitial>,
 	>(
 		config:
 			| {
@@ -32,7 +32,7 @@ export class Utils {
 						fallback: TFallback;
 						conflict: TConflict;
 					}) => NonNullable<TInitial>;
-			  }
+			  },
 	): NonNullable<TInitial> {
 		const { initial, fallback } = config;
 
@@ -49,7 +49,7 @@ export class Utils {
 
 	n<T>(
 		factory: (index: number) => T,
-		config: number | { min: number; max: number } = this.runner.defaults.array
+		config: number | { min: number; max: number } = this.runner.defaults.array,
 	): Array<T> {
 		const length =
 			typeof config === 'number' ? config : this.random.int(config);
@@ -59,7 +59,7 @@ export class Utils {
 
 	ifNotNever<TSchema extends ZodTypeAny>(
 		schema: TSchema | null | undefined,
-		action: (schema: TSchema) => unknown
+		action: (schema: TSchema) => unknown,
 	) {
 		if (!schema || schema._def.typeName === 'ZodNever') return;
 		action(schema);
@@ -67,7 +67,7 @@ export class Utils {
 
 	recursionCheck<TSchema extends ZodTypeAny>(
 		schema: TSchema,
-		action: (schema: TSchema) => unknown
+		action: (schema: TSchema) => unknown,
 	) {
 		if (this.isType(ZodLazy, schema)) {
 			const count = this.recursion.get(schema._def.getter) ?? 0;
@@ -79,7 +79,7 @@ export class Utils {
 
 	isType<TSchema extends ZodTypeAny>(
 		target: ZodConstructorOrSchema<TSchema>,
-		schema: ZodTypeAny
+		schema: ZodTypeAny,
 	): schema is TSchema {
 		return isZodConstructor(target)
 			? schema._def.typeName === target.name

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // No need to bundle the full zod library since we only use the typeNames
 // to identify the schemas.
 
@@ -40,6 +41,7 @@ import type {
 	ZodVoid as TrueZodVoid,
 	ZodDiscriminatedUnionOption,
 	ZodRawShape,
+	ZodStringDef,
 	ZodTypeAny,
 } from 'zod';
 
@@ -86,7 +88,7 @@ export const ZodMap = castAs<TrueZodMap>('ZodMap');
 export const ZodSet = castAs<TrueZodSet>('ZodSet');
 export const ZodFunction =
 	castAs<TrueZodFunction<TrueZodTuple<[], ZodTypeAny>, ZodTypeAny>>(
-		'ZodFunction'
+		'ZodFunction',
 	);
 export const ZodLazy = castAs<TrueZodLazy<ZodTypeAny>>('ZodLazy');
 export const ZodLiteral = castAs<TrueZodLiteral<unknown>>('ZodLiteral');
@@ -103,3 +105,91 @@ export const ZodBranded =
 	castAs<TrueZodBranded<ZodTypeAny, PropertyKey>>('ZodBranded');
 export const ZodPipeline =
 	castAs<TrueZodPipeline<ZodTypeAny, ZodTypeAny>>('ZodPipeline');
+
+export enum ZodParsedType {
+	function = 'function',
+	number = 'number',
+	string = 'string',
+	nan = 'nan',
+	integer = 'integer',
+	float = 'float',
+	boolean = 'boolean',
+	date = 'date',
+	bigint = 'bigint',
+	symbol = 'symbol',
+	undefined = 'undefined',
+	null = 'null',
+	array = 'array',
+	object = 'object',
+	unknown = 'unknown',
+	promise = 'promise',
+	void = 'void',
+	never = 'never',
+	map = 'map',
+	set = 'set',
+}
+
+export const getParsedType = (data: any): ZodParsedType => {
+	const type = typeof data as ZodParsedType;
+
+	switch (type) {
+		case ZodParsedType.undefined:
+		case ZodParsedType.string:
+		case ZodParsedType.boolean:
+		case ZodParsedType.function:
+		case ZodParsedType.bigint:
+		case ZodParsedType.symbol:
+			return type;
+
+		case ZodParsedType.number:
+			return isNaN(data) ? ZodParsedType.nan : ZodParsedType.number;
+
+		case ZodParsedType.object:
+			if (Array.isArray(data)) {
+				return ZodParsedType.array;
+			}
+			if (data === null) {
+				return ZodParsedType.null;
+			}
+			if (
+				data.then &&
+				typeof data.then === 'function' &&
+				data.catch &&
+				typeof data.catch === 'function'
+			) {
+				return ZodParsedType.promise;
+			}
+			if (typeof Map !== 'undefined' && data instanceof Map) {
+				return ZodParsedType.map;
+			}
+			if (typeof Set !== 'undefined' && data instanceof Set) {
+				return ZodParsedType.set;
+			}
+			if (typeof Date !== 'undefined' && data instanceof Date) {
+				return ZodParsedType.date;
+			}
+			return ZodParsedType.object;
+
+		default:
+			return ZodParsedType.unknown;
+	}
+};
+
+export const util = {
+	objectKeys:
+		typeof Object.keys === 'function'
+			? (obj: any) => Object.keys(obj)
+			: (object: any) => {
+					const keys = [];
+					for (const key in object) {
+						if (Object.prototype.hasOwnProperty.call(object, key)) {
+							keys.push(key);
+						}
+					}
+					return keys;
+			  },
+};
+
+export type TypeOf<T extends { _output: unknown }> = T['_output'];
+export type { ZodStringDef, ZodTypeAny };
+/* eslint-enable @typescript-eslint/no-explicit-any */

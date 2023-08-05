@@ -1,4 +1,4 @@
-import type { ZodTypeAny } from 'zod';
+import type { ZodTypeAny } from '@/internal/zod';
 import type { Defaults } from './defaults';
 import { constrained, randomSeed, unconstrained } from './defaults';
 import type { Definition } from './generator';
@@ -24,7 +24,7 @@ export abstract class Transformer {
 
 	fromSchema<TSchema extends ZodTypeAny>(
 		schema: TSchema,
-		instanceDefaults?: Partial<Defaults>
+		instanceDefaults?: Partial<Defaults>,
 	): unknown {
 		return new Runner(this, instanceDefaults).fromSchema(schema);
 	}
