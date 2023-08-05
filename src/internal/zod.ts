@@ -190,6 +190,6 @@ export const util = {
 			  },
 };
 
-export type TypeOf<T extends { _output: unknown }> = T['_output'];
+export type InferZodType<T extends { _output: unknown }> = T['_output'];
 export type { ZodStringDef, ZodTypeAny };
 /* eslint-enable @typescript-eslint/no-explicit-any */
