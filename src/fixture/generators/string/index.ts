@@ -1,7 +1,7 @@
+import type { ZodStringDef } from '@/internal/zod';
 import { ZodString } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
 import type { Runner } from '@/transformer/runner';
-import type { ZodStringDef } from 'zod';
 
 const prefixPattern = (str: string) => `^.{${str.length}}`;
 const suffixPattern = (str: string) => `.{${str.length}}$`;
@@ -38,7 +38,7 @@ function formatString(transform: Runner, def: ZodStringDef, value: string) {
 		const prefix = startsWith ? prefixPattern(startsWith) : '';
 		value = value.replace(
 			new RegExp(`(${prefix}).{${includes.length}}`),
-			(_, prefix) => prefix + includes
+			(_, prefix) => prefix + includes,
 		);
 	}
 
@@ -84,7 +84,7 @@ export const StringGenerator = Generator({
 		return formatString(
 			transform,
 			def,
-			transform.utils.random.string({ min, max })
+			transform.utils.random.string({ min, max }),
 		);
 	},
 });
@@ -104,7 +104,7 @@ export const UrlGenerator = Generator({
 		return formatString(
 			transform,
 			def,
-			`https://${transform.utils.random.lorem(1)}.com`
+			`https://${transform.utils.random.lorem(1)}.com`,
 		);
 	},
 });
@@ -149,7 +149,7 @@ export const IpGenerator = Generator({
 		return transform.utils
 			.n(
 				() => transform.utils.random.int({ min: 0, max: 65535 }).toString(16),
-				8
+				8,
 			)
 			.join(':');
 	},

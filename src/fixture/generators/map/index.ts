@@ -1,6 +1,6 @@
+import type { InferZodType } from '@/internal/zod';
 import { ZodMap } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
-import type { z } from 'zod';
 
 export const MapGenerator = Generator({
 	schema: ZodMap,
@@ -8,7 +8,7 @@ export const MapGenerator = Generator({
 		const key = def.keyType;
 		const value = def.valueType;
 
-		const map = new Map<z.infer<typeof key>, z.infer<typeof value>>();
+		const map = new Map<InferZodType<typeof key>, InferZodType<typeof value>>();
 
 		transform.utils.ifNotNever(key, (keySchema) => {
 			transform.utils.ifNotNever(value, (valueSchema) => {

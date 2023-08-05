@@ -1,6 +1,6 @@
+import type { InferZodType } from '@/internal/zod';
 import { ZodAny, ZodObject, ZodRecord } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
-import type { z } from 'zod';
 
 export const ObjectGenerator = Generator({
 	schema: ZodObject,
@@ -42,8 +42,8 @@ export const RecordGenerator = Generator({
 	schema: ZodRecord,
 	output: ({ def, transform, context }) => {
 		const result: Record<
-			z.infer<typeof def.keyType>,
-			z.infer<typeof def.valueType>
+			InferZodType<typeof def.keyType>,
+			InferZodType<typeof def.valueType>
 		> = {};
 
 		transform.utils.ifNotNever(def.keyType, (keyType) => {

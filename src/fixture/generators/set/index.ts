@@ -1,6 +1,7 @@
 import { ZodSet } from '@/internal/zod';
 import { Generator } from '@/transformer/generator';
-import type { z } from 'zod';
+
+import type { InferZodType } from '@/internal/zod';
 
 export const SetGenerator = Generator({
 	schema: ZodSet,
@@ -22,7 +23,7 @@ export const SetGenerator = Generator({
 			resolve: (options) => Math.max(options.fallback, options.conflict),
 		});
 
-		const result = new Set<z.infer<typeof def.valueType>>();
+		const result = new Set<InferZodType<typeof def.valueType>>();
 
 		transform.utils.ifNotNever(def.valueType, (valueType) => {
 			transform.utils.recursionCheck(valueType, () => {
@@ -32,10 +33,10 @@ export const SetGenerator = Generator({
 							transform.fromSchema(valueType, {
 								...context,
 								path: [...context.path, result.size],
-							})
+							}),
 						);
 					},
-					{ min, max }
+					{ min, max },
 				);
 			});
 		});
