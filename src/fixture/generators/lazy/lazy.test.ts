@@ -32,31 +32,31 @@ describe('create a lazy type', () => {
 		expect(() => transform.fromSchema(categorySchema)).not.toThrowError();
 		expect(transform.fromSchema(categorySchema)).toMatchInlineSnapshot(`
 			{
-			  "name": "tzadi-dgckfkjsk",
+			  "name": "-tzadi-dgckfkjs",
 			  "subcategories": [
 			    {
 			      "name": "lisoflxgaosylmp",
 			      "subcategories": [
 			        {
-			          "name": "fvvt-vicsnxxywc",
+			          "name": "vvt-vicsnxxywcw",
 			          "subcategories": null,
 			        },
 			        {
-			          "name": "hebxscqlszlofsh",
+			          "name": "bxscqlszlofshid",
 			          "subcategories": null,
 			        },
 			        {
-			          "name": "svwlaauq-ruihmv",
+			          "name": "wlaauq-ruihmvfc",
 			          "subcategories": null,
 			        },
 			      ],
 			    },
 			    {
-			      "name": "bmmychyhddoacsy",
+			      "name": "ychyhddoacsyfyh",
 			      "subcategories": null,
 			    },
 			    {
-			      "name": "hinpbppqdzphsgc",
+			      "name": "bppqdzphsgcolzs",
 			      "subcategories": null,
 			    },
 			  ],
