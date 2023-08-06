@@ -99,28 +99,28 @@ const person = createFixture(personSchema, { seed: 11 });
 ```ts
 {
 	address: {
-		city: '-iveauywljfifdx',
-		state: 'etuqnbvmbkqwlty',
-		street: 'yttcnyvxpetrsa-',
+		city: 'd-iveauywljfifd',
+		state: 'cetuqnbvmbkqwlt',
+		street: 'wyttcnyvxpetrsa',
 	},
-	birthday: new Date('1918-08-28T15:26:17.353Z'),
-	name: 'armftzlcngaynwz',
+	birthday: new Date('2089-04-19T20:26:28.411Z'),
+	name: 'barmftzlcngaynw',
 	pets: [
 		{
-			breed: 'bmiabahyvsy-vmp',
-			name: 'onzm-sjnglvkbbj',
+			breed: 'fbmiabahyvsy-vm',
+			name: 'bonzm-sjnglvkbb',
 		},
 		{
-			breed: 'ifsztjznktjkveu',
-			name: 'qbjuehl-trb-aiu',
+			breed: 'vifsztjznktjkve',
+			name: 'wqbjuehl-trb-ai',
 		},
 		{
-			breed: 'q-jcmhccaduqmkq',
-			name: 'rrvbrgzmjhttzhj',
+			breed: 'cq-jcmhccaduqmk',
+			name: 'brrvbrgzmjhttzh',
 		},
 	],
-	totalVisits: 43,
-}
+	totalVisits: 63,
+},
 
 ```
 
@@ -209,24 +209,24 @@ const person = fixture.fromSchema(personSchema);
 		state: 'My State',
 		street: 'My Street',
 	},
-	birthday: new Date('2066-08-15T02:38:13.057Z'),
-	name: 'xyzyskryqofekdg',
+	birthday: new Date('1952-01-21T17:32:42.094Z'),
+	name: 'yxyzyskryqofekd',
 	pets: [
 		{
-			breed: 'nlwozmxaigobrzz',
-			name: 'hvlrnsxroqpumas',
+			breed: 'dnlwozmxaigobrz',
+			name: 'vhvlrnsxroqpuma',
 		},
 		{
-			breed: 'fbgglityarecl-q',
-			name: '-lmtvotjcevmyiq',
+			breed: 'ifbgglityarecl-',
+			name: 'c-lmtvotjcevmyi',
 		},
 		{
-			breed: 'mylchvprjdgelkq',
-			name: 'devqfcctdx-link',
+			breed: 'fmylchvprjdgelk',
+			name: 'ydevqfcctdx-lin',
 		},
 	],
-	totalVisits: 10,
-}
+	totalVisits: 15,
+},
 
 ```
 
@@ -376,8 +376,8 @@ const person = fixture.fromSchema(personSchema);
 ```ts
 {
 	email: 'john.malkovich@gmail.com',
-	name: 'xyzyskryqo',
-}
+	name: 'yxyzyskryq',
+},
 
 ```
 
