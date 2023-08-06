@@ -14,40 +14,62 @@ describe('create default', () => {
 
 	const schema = z.string().default('test');
 
-	test('alternates between boolean values', () => {
-		const result = transform.fromSchema(schema.array(), {
+	test('produce deterministic results', () => {
+		const result1 = transform.fromSchema(schema.array(), {
 			seed: 1,
 			array: { min: 20, max: 20 },
 		});
 
-		expect(result).toStrictEqual([
+		expect(result1).toStrictEqual([
 			'zadi-dgckfkjskz',
+			'lisoflxgaosylmp',
 			'test',
-			'wlisoflxgaosylm',
 			'test',
-			'ldzfvvt-vicsnxx',
+			'vvt-vicsnxxywcw',
 			'test',
-			'wcwbhebxscqlszl',
 			'test',
-			'fshidsvwlaauq-r',
 			'test',
-			'ihmvfcbmmychyhd',
 			'test',
-			'oacsyfyhinpbppq',
+			'cqlszlofshidsvw',
 			'test',
-			'zphsgcolzsnlobu',
 			'test',
+			'test',
+			'-ruihmvfcbmmych',
+			'ddoacsyfyhinpbp',
+			'dzphsgcolzsnlob',
 			'brdnvzapxyodmdy',
-			'test',
-			'kkoerzjjpurtdxs',
+			'koerzjjpurtdxsq',
+			'jjuhjyulx-arnqb',
 			'test',
 		]);
-	});
 
-	test('produce deterministic results', () => {
-		expect(transform.fromSchema(schema, { seed: 1 })).toBe('tzadi-dgckfkjsk');
-		expect(transform.fromSchema(schema, { seed: 2 })).toBe('azozlnliiefsqdi');
-		expect(transform.fromSchema(schema, { seed: 3 })).toBe('test');
+		const result2 = transform.fromSchema(schema.array(), {
+			seed: 2,
+			array: { min: 20, max: 20 },
+		});
+
+		expect(result2).toStrictEqual([
+			'test',
+			'test',
+			'zlnliiefsqdinhr',
+			'osdnnpetvgxonkw',
+			'test',
+			'test',
+			'ibhldcednqpgfcu',
+			'test',
+			'emjfmrrnvnrkqv-',
+			'eesx-nnfy-jipgl',
+			'jumohzvovczjwwn',
+			'test',
+			'test',
+			'test',
+			'lbx-z-nvsqtumez',
+			'test',
+			'test',
+			'jubz-tlnnxiohpk',
+			'test',
+			'taktajvfhjpxajr',
+		]);
 	});
 
 	test('produces a valid fixture', () => {
