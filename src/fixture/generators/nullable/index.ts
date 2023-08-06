@@ -6,9 +6,11 @@ export const NullableGenerator = Generator({
 	output: ({ def, transform, context }) => {
 		let result = null;
 
-		transform.utils.recursionCheck(def.innerType, () => {
-			result = transform.fromSchema(def.innerType, context);
-		});
+		if (transform.utils.random.boolean()) {
+			transform.utils.recursionCheck(def.innerType, () => {
+				result = transform.fromSchema(def.innerType, context);
+			});
+		}
 
 		return result;
 	},
