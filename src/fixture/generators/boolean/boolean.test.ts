@@ -19,7 +19,7 @@ describe('create booleans', () => {
 		expect(transform.fromSchema(schema)).toBeTypeOf('boolean');
 	});
 
-	test('alternates between boolean values', () => {
+	test('deterministicly generate boolean values', () => {
 		const result1 = transform.fromSchema(schema.array(), {
 			seed: 1,
 			array: { min: 20, max: 20 },
@@ -27,41 +27,53 @@ describe('create booleans', () => {
 
 		expect(result1).toStrictEqual([
 			false,
+			false,
+			false,
+			true,
+			true,
+			true,
+			false,
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
 			true,
 			false,
 			true,
 			false,
-			true,
 			false,
-			true,
-			false,
-			true,
-			false,
-			true,
-			false,
-			true,
-			false,
-			true,
-			false,
-			true,
 			false,
 			true,
 		]);
-	});
 
-	test('deterministicly generate boolean values', () => {
-		const one = transform.fromSchema(schema, {
+		const result2 = transform.fromSchema(schema.array(), {
 			seed: 1,
-		});
-		const two = transform.fromSchema(schema, {
-			seed: 2,
-		});
-		const three = transform.fromSchema(schema, {
-			seed: 3,
+			array: { min: 20, max: 20 },
 		});
 
-		expect(one).toBe(false);
-		expect(two).toBe(false);
-		expect(three).toBe(true);
+		expect(result2).toStrictEqual([
+			false,
+			false,
+			false,
+			true,
+			true,
+			true,
+			false,
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
+			false,
+			true,
+			false,
+			false,
+			false,
+			true,
+		]);
 	});
 });
