@@ -14,9 +14,7 @@ import {
 	UuidGenerator,
 } from '.';
 import { ITERATIONS } from '../../../../.vitest/utils';
-import { NullableGenerator } from '../nullable';
 import { ObjectGenerator } from '../object';
-import { OptionalGenerator } from '../optional';
 
 describe('create strings', () => {
 	const transform = new ConstrainedTransformer().extend([
@@ -30,8 +28,6 @@ describe('create strings', () => {
 		DateTimeGenerator,
 		RegexGenerator,
 		StringGenerator,
-		NullableGenerator,
-		OptionalGenerator,
 		ObjectGenerator,
 	]);
 
@@ -57,19 +53,19 @@ describe('create strings', () => {
 
 	test('creates a string with a min length', () => {
 		expect(
-			(transform.fromSchema(z.string().min(100)) as string).length
+			(transform.fromSchema(z.string().min(100)) as string).length,
 		).toBeGreaterThanOrEqual(100);
 	});
 
 	test('creates a string with a max length', () => {
 		expect(
-			(transform.fromSchema(z.string().max(2)) as string).length
+			(transform.fromSchema(z.string().max(2)) as string).length,
 		).toBeLessThanOrEqual(2);
 	});
 
 	test('throws when min is greater than max', () => {
 		expect(() =>
-			transform.fromSchema(z.string().min(50).max(40))
+			transform.fromSchema(z.string().min(50).max(40)),
 		).toThrowError();
 	});
 
@@ -83,7 +79,7 @@ describe('create strings', () => {
 
 	test('creates a string that is a uuid', () => {
 		expect(transform.fromSchema(z.string().uuid())).toMatch(
-			/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+			/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
 		);
 	});
 
@@ -137,13 +133,13 @@ describe('create strings', () => {
 
 	test('produces a valid string with a start and end', () => {
 		expect(transform).toReasonablySatisfy(
-			z.string().startsWith('begin').endsWith('end')
+			z.string().startsWith('begin').endsWith('end'),
 		);
 	});
 
 	test('creates a string that startsWith', () => {
 		const value = transform.fromSchema(
-			z.string().startsWith('start_')
+			z.string().startsWith('start_'),
 		) as string;
 		expect(value.startsWith('start_')).toBeTruthy();
 	});
@@ -155,7 +151,7 @@ describe('create strings', () => {
 
 	test('creates a string that startsWith and endsWith', () => {
 		const value = transform.fromSchema(
-			z.string().startsWith('start_').endsWith('_end')
+			z.string().startsWith('start_').endsWith('_end'),
 		) as string;
 		expect(value.startsWith('start_')).toBeTruthy();
 		expect(value.endsWith('_end')).toBeTruthy();
@@ -168,7 +164,7 @@ describe('create strings', () => {
 	test('creates a string that is an URL', () => {
 		const url = transform.fromSchema(z.string().url());
 		expect(url).toMatch(
-			/(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-/]))?/
+			/(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-/]))?/,
 		);
 	});
 
@@ -184,7 +180,7 @@ describe('create strings', () => {
 
 	test('creates a string with endsWith', () => {
 		const value = transform.fromSchema(
-			z.string().startsWith('foxy').includes('mama')
+			z.string().startsWith('foxy').includes('mama'),
 		) as string;
 		expect(value.startsWith('foxy')).toBeTruthy();
 		expect(value.includes('mama')).toBeTruthy();
@@ -201,7 +197,7 @@ describe('create strings', () => {
 
 	test('creates a large string using length with startsWith and endsWith', () => {
 		const value = transform.fromSchema(
-			z.string().length(6000).startsWith('start_').endsWith('_end')
+			z.string().length(6000).startsWith('start_').endsWith('_end'),
 		) as string;
 		expect(value).toHaveLength(6000);
 		expect(value.startsWith('start_')).toBeTruthy();
@@ -216,18 +212,12 @@ describe('create strings', () => {
 
 	test('creates a large string using min and max', () => {
 		const value = transform.fromSchema(
-			z.string().min(6000).max(7000).startsWith('start_').endsWith('_end')
+			z.string().min(6000).max(7000).startsWith('start_').endsWith('_end'),
 		) as string;
 		expect(value.length).toBeGreaterThanOrEqual(6000);
 		expect(value.length).toBeLessThanOrEqual(7000);
 		expect(value.startsWith('start_')).toBeTruthy();
 		expect(value.endsWith('_end')).toBeTruthy();
-	});
-
-	test('creates a nullable string', () => {
-		expect(transform.fromSchema(z.string().nullable())).toBeTypeOf('string');
-		expect(transform.fromSchema(z.string().nullish())).toBeTypeOf('string');
-		expect(transform.fromSchema(z.string().optional())).toBeTypeOf('string');
 	});
 
 	test('produces a valid string that is a datetime', () => {
@@ -237,7 +227,7 @@ describe('create strings', () => {
 	test('produces a valid string that is a datetime', () => {
 		expect(transform.fromSchema(z.string().datetime())).toBeTypeOf('string');
 		expect(
-			new Date(transform.fromSchema(z.string().datetime()) as string)
+			new Date(transform.fromSchema(z.string().datetime()) as string),
 		).toBeInstanceOf(Date);
 	});
 
@@ -252,7 +242,7 @@ describe('create strings', () => {
 		}).map(() =>
 			transform.fromSchema(z.string().regex(/(0|1|2)(aBc|123).?xyz/i), {
 				seed: 3,
-			})
+			}),
 		);
 		const uniques = new Set(values);
 		expect(uniques.size).toBe(1);
@@ -262,7 +252,9 @@ describe('create strings', () => {
 		expect(transform).toReasonablySatisfy(
 			z
 				.string()
-				.regex(/^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$/gm)
+				.regex(
+					/^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$/gm,
+				),
 		);
 	});
 });
