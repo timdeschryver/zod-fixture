@@ -14,7 +14,15 @@ expect.extend({
 
 				return {
 					pass,
-					message: () => JSON.stringify({ fixture, seed, error }, null, 2),
+					message: () =>
+						JSON.stringify(
+							{ fixture, seed, error },
+							(_key, value) =>
+								// javascript does not natively support bigints in JSON.stringify
+								// https://github.com/GoogleChromeLabs/jsbi/issues/30
+								typeof value === 'bigint' ? value.toString() : value,
+							2,
+						),
 				};
 			}
 		}
