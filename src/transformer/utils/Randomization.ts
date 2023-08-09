@@ -12,18 +12,16 @@ export class Randomization {
 	mt: MersenneTwister;
 	regExCache = new RegExCache();
 	regExRandInt: (min: number, max: number) => number;
-	bool: boolean;
 
 	constructor(private defaults: Defaults) {
 		this.mt = new MersenneTwister(defaults.seed);
 		this.regExRandInt = function (
 			this: Randomization,
 			min: number,
-			max: number
+			max: number,
 		) {
 			return this.int({ min, max });
 		}.bind(this);
-		this.bool = this.unitInterval() < 0.5;
 	}
 
 	uuid() {
@@ -80,7 +78,7 @@ export class Randomization {
 
 		if (min < 0)
 			throw new Error(
-				`Minimum length of a string can't be less than 0: ${min}`
+				`Minimum length of a string can't be less than 0: ${min}`,
 			);
 
 		if (config.min && !config.max) max = config.min;
@@ -149,7 +147,7 @@ export class Randomization {
 	}
 
 	boolean() {
-		return (this.bool = !this.bool);
+		return this.unitInterval() < 0.5;
 	}
 
 	date(config?: { min?: number; max?: number }): Date {

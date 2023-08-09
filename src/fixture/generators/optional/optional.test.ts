@@ -3,9 +3,7 @@ import { describe, expect, test } from 'vitest';
 import { z } from 'zod';
 import { OptionalGenerator } from '.';
 import { BooleanGenerator } from '../boolean';
-import { DateGenerator } from '../date';
 import { NullableGenerator } from '../nullable';
-import { NumberGenerator } from '../number';
 import { ObjectGenerator } from '../object';
 import { StringGenerator } from '../string';
 
@@ -15,9 +13,7 @@ describe('create empty types', () => {
 		StringGenerator,
 		NullableGenerator,
 		BooleanGenerator,
-		NumberGenerator,
 		ObjectGenerator,
-		DateGenerator,
 	]);
 
 	test('produces a valid nullish', () => {
@@ -25,41 +21,64 @@ describe('create empty types', () => {
 	});
 
 	test('produces a valid optional', () => {
-		expect(transform).toReasonablySatisfy(z.number().optional());
+		expect(transform).toReasonablySatisfy(z.string().optional());
 	});
 
-	test('creates a nullable string', () => {
-		expect(transform.fromSchema(z.string().nullish())).toBeTypeOf('string');
-		expect(transform.fromSchema(z.string().optional())).toBeTypeOf('string');
+	test('creates a nullish string', () => {
+		const schema = z.string().nullish();
+
+		const nullish1 = transform.fromSchema(schema, { seed: 1 });
+		const nullish2 = transform.fromSchema(schema, { seed: 2 });
+		const nullish3 = transform.fromSchema(schema, { seed: 3 });
+
+		expect(nullish1).toBe(null);
+		expect(nullish2).toBeTypeOf('string');
+		expect(nullish3).toBe(undefined);
 	});
 
-	test('creates a nullable boolean', () => {
-		expect(transform.fromSchema(z.boolean().nullish())).toBeTypeOf('boolean');
-		expect(transform.fromSchema(z.boolean().optional())).toBeTypeOf('boolean');
+	test('creates an optional string', () => {
+		const schema = z.string().optional();
+
+		const optional1 = transform.fromSchema(schema, { seed: 1 });
+		const optional3 = transform.fromSchema(schema, { seed: 3 });
+
+		expect(optional1).toBeTypeOf('string');
+		expect(optional3).toBe(undefined);
 	});
 
-	test('creates a nullable number', () => {
-		expect(transform.fromSchema(z.number().nullish())).toBeTypeOf('number');
-		expect(transform.fromSchema(z.number().optional())).toBeTypeOf('number');
+	test('creates a nullish boolean', () => {
+		const schema = z.boolean().nullish();
+
+		const nullish1 = transform.fromSchema(schema, { seed: 1 });
+		const nullish2 = transform.fromSchema(schema, { seed: 2 });
+		const nullish3 = transform.fromSchema(schema, { seed: 3 });
+		const nullish5 = transform.fromSchema(schema, { seed: 5 });
+
+		expect(nullish1).toBe(null);
+		expect(nullish2).toBe(true);
+		expect(nullish3).toBe(undefined);
+		expect(nullish5).toBe(false);
 	});
 
-	test('creates a nullable empty object', () => {
-		expect(transform.fromSchema(z.object({}).optional())).toBeTypeOf('object');
-		expect(transform.fromSchema(z.object({}).nullish())).toBeTypeOf('object');
+	test('creates an optional boolean', () => {
+		const schema = z.boolean().optional();
+
+		const optional1 = transform.fromSchema(schema, { seed: 1 });
+		const optional2 = transform.fromSchema(schema, { seed: 2 });
+		const optional3 = transform.fromSchema(schema, { seed: 3 });
+
+		expect(optional1).toBe(false);
+		expect(optional2).toBe(true);
+		expect(optional3).toBe(undefined);
 	});
 
 	test('creates object with optional value ', () => {
 		const SampleWithOptionalValueSchema = z.object({
 			name: z.string().optional(),
-			modify: z.number().optional(),
+			modify: z.boolean().optional(),
 		});
 		expect(() => {
 			transform.fromSchema(SampleWithOptionalValueSchema);
 		}).not.toThrow();
-	});
-
-	test('creates a nullable date', () => {
-		expect(transform.fromSchema(z.date().nullish())).toBeInstanceOf(Date);
-		expect(transform.fromSchema(z.date().optional())).toBeInstanceOf(Date);
 	});
 });

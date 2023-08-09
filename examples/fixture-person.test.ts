@@ -22,28 +22,28 @@ const output = Object.assign(
 	// #region output
 	{
 		address: {
-			city: '-iveauywljfifdx',
-			state: 'etuqnbvmbkqwlty',
-			street: 'yttcnyvxpetrsa-',
+			city: 'd-iveauywljfifd',
+			state: 'cetuqnbvmbkqwlt',
+			street: 'wyttcnyvxpetrsa',
 		},
-		birthday: new Date('1918-08-28T15:26:17.353Z'),
-		name: 'armftzlcngaynwz',
+		birthday: new Date('2089-04-19T20:26:28.411Z'),
+		name: 'barmftzlcngaynw',
 		pets: [
 			{
-				breed: 'bmiabahyvsy-vmp',
-				name: 'onzm-sjnglvkbbj',
+				breed: 'fbmiabahyvsy-vm',
+				name: 'bonzm-sjnglvkbb',
 			},
 			{
-				breed: 'ifsztjznktjkveu',
-				name: 'qbjuehl-trb-aiu',
+				breed: 'vifsztjznktjkve',
+				name: 'wqbjuehl-trb-ai',
 			},
 			{
-				breed: 'q-jcmhccaduqmkq',
-				name: 'rrvbrgzmjhttzhj',
+				breed: 'cq-jcmhccaduqmk',
+				name: 'brrvbrgzmjhttzh',
 			},
 		],
-		totalVisits: 43,
-	}
+		totalVisits: 63,
+	},
 	// #endregion output
 );
 
@@ -51,27 +51,27 @@ test('generates a person', () => {
 	expect(person).toMatchInlineSnapshot(`
 		{
 		  "address": {
-		    "city": "-iveauywljfifdx",
-		    "state": "etuqnbvmbkqwlty",
-		    "street": "yttcnyvxpetrsa-",
+		    "city": "d-iveauywljfifd",
+		    "state": "cetuqnbvmbkqwlt",
+		    "street": "wyttcnyvxpetrsa",
 		  },
-		  "birthday": 1918-08-28T15:26:17.353Z,
-		  "name": "armftzlcngaynwz",
+		  "birthday": 2089-04-19T20:26:28.411Z,
+		  "name": "barmftzlcngaynw",
 		  "pets": [
 		    {
-		      "breed": "bmiabahyvsy-vmp",
-		      "name": "onzm-sjnglvkbbj",
+		      "breed": "fbmiabahyvsy-vm",
+		      "name": "bonzm-sjnglvkbb",
 		    },
 		    {
-		      "breed": "ifsztjznktjkveu",
-		      "name": "qbjuehl-trb-aiu",
+		      "breed": "vifsztjznktjkve",
+		      "name": "wqbjuehl-trb-ai",
 		    },
 		    {
-		      "breed": "q-jcmhccaduqmkq",
-		      "name": "rrvbrgzmjhttzhj",
+		      "breed": "cq-jcmhccaduqmk",
+		      "name": "brrvbrgzmjhttzh",
 		    },
 		  ],
-		  "totalVisits": 43,
+		  "totalVisits": 63,
 		}
 	`);
 	expect(person).toEqual(output);
