@@ -30,6 +30,7 @@ import type {
 	ZodOptional as TrueZodOptional,
 	ZodPipeline as TrueZodPipeline,
 	ZodPromise as TrueZodPromise,
+	ZodReadonly as TrueZodReadonly,
 	ZodRecord as TrueZodRecord,
 	ZodSet as TrueZodSet,
 	ZodString as TrueZodString,
@@ -105,6 +106,7 @@ export const ZodBranded =
 	castAs<TrueZodBranded<ZodTypeAny, PropertyKey>>('ZodBranded');
 export const ZodPipeline =
 	castAs<TrueZodPipeline<ZodTypeAny, ZodTypeAny>>('ZodPipeline');
+export const ZodReadonly = castAs<TrueZodReadonly<ZodTypeAny>>('ZodReadonly');
 
 export enum ZodParsedType {
 	function = 'function',
