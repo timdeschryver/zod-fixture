@@ -24,6 +24,7 @@ import { NumberGenerator } from './number';
 import { ObjectGenerator, RecordGenerator } from './object';
 import { OptionalGenerator } from './optional';
 import { PromiseGenerator } from './promise';
+import { ReadonlyGenerator } from './readonly';
 import { SetGenerator } from './set';
 import {
 	Cuid2Generator,
@@ -89,6 +90,7 @@ export const DEFAULT_FIXTURE_GENERATORS = [
 	NeverGenerator,
 	StringGenerator,
 	DefaultGenerator,
+	ReadonlyGenerator,
 ];
 
 export {
@@ -122,6 +124,7 @@ export {
 	OptionalGenerator,
 	PreprocessGenerator,
 	PromiseGenerator,
+	ReadonlyGenerator,
 	RecordGenerator,
 	RefinementGenerator,
 	RegexGenerator,
