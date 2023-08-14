@@ -49,9 +49,6 @@
 	],
 	"author": "Tim Deschryver",
 	"license": "MIT",
-	"peerDependencies": {
-		"zod": ">=3.0.0"
-	},
 	"dependencies": {
 		"randexp": "^0.5.3"
 	},
@@ -71,7 +68,7 @@
 		"vite-plugin-dts": "^1.7.3",
 		"vitepress": "^1.0.0-beta.3",
 		"vitest": "^0.31.4",
-		"zod": "^3.21.4"
+		"zod": "^3.22.0"
 	},
 	"imports": {
 		"@/*": "./src/*",
