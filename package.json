@@ -49,6 +49,9 @@
 	],
 	"author": "Tim Deschryver",
 	"license": "MIT",
+	"peerDependencies": {
+		"zod": ">=3.0.0"
+	},
 	"dependencies": {
 		"randexp": "^0.5.3"
 	},
