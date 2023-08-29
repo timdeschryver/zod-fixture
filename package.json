@@ -69,7 +69,7 @@
 		"typescript": "^5.1.6",
 		"vite": "^4.4.4",
 		"vite-plugin-dts": "^1.7.3",
-		"vitepress": "^1.0.0-beta.3",
+		"vitepress": "^1.0.0-rc.10",
 		"vitest": "^0.31.4",
 		"zod": "^3.22.0"
 	},
