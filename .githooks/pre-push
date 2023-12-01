@@ -2,4 +2,4 @@
 
 trap "echo \"\nREADME.md has been auto-updated. Please commit and repush.\n\"" ERR
 
-node scripts/readme.js
+node scripts/readme.mjs
