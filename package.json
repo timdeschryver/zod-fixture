@@ -16,11 +16,14 @@
 		"docs:dev": "vitepress dev docs",
 		"docs:build": "vitepress build docs",
 		"docs:preview": "vitepress preview docs",
-		"readme:generate": "node ./scripts/readme",
+		"readme:generate": "node ./scripts/readme.mjs",
 		"readme:check": "git diff --name-only --exit-code README.md"
 	},
 	"files": [
-		"dist"
+		"dist",
+		"!dist/examples",
+		"!dist/test",
+		"!dist/src/**/*.test.d.ts"
 	],
 	"main": "./dist/zod-fixture.umd.cjs",
 	"module": "./dist/zod-fixture.es.js",
@@ -32,7 +35,6 @@
 		}
 	},
 	"types": "./dist/public.d.ts",
-	"type": "module",
 	"keywords": [
 		"zod",
 		"test",
