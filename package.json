@@ -51,6 +51,16 @@
 	],
 	"author": "Tim Deschryver",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/timdeschryver/zod-fixture.git"
+	},
+	"bugs": {
+		"url": "https://github.com/timdeschryver/zod-fixture/issues"
+	},
+	"homepage": "https://zod-fixture.timdeschryver.dev/",
+	"private": false,
+	"sideEffects": false,
 	"peerDependencies": {
 		"zod": ">=3.0.0"
 	},
