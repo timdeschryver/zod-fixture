@@ -3,7 +3,7 @@
 	"name": "zod-fixture",
 	"version": "0.0.0",
 	"description": "Creating fixtures based on zod schemas",
-	"packageManager": "npm@10.2.5",
+	"packageManager": "npm@10.8.1",
 	"scripts": {
 		"start": "vite -c vite.lib.config.mts",
 		"test": "vitest run -c vite.lib.config.mts",
@@ -70,19 +70,19 @@
 	"devDependencies": {
 		"@typescript-eslint/eslint-plugin": "^6.17.0",
 		"@typescript-eslint/parser": "^6.17.0",
-		"@vitest/coverage-v8": "^1.1.1",
-		"@vitest/ui": "^1.1.1",
+		"@vitest/coverage-v8": "^1.6.0",
+		"@vitest/ui": "^1.6.0",
 		"eslint": "^8.56.0",
 		"eslint-config-prettier": "^9.1.0",
-		"lint-staged": "^15.2.0",
+		"lint-staged": "^15.2.7",
 		"minimist": "^1.2.8",
-		"prettier": "^3.1.1",
-		"typescript": "^5.3.3",
-		"vite": "^5.0.10",
-		"vite-plugin-dts": "^3.7.0",
-		"vitepress": "^1.0.0-rc.34",
-		"vitest": "^1.1.1",
-		"zod": "^3.22.4"
+		"prettier": "^3.3.2",
+		"typescript": "^5.4.5",
+		"vite": "^5.3.1",
+		"vite-plugin-dts": "^3.9.1",
+		"vitepress": "^1.2.3",
+		"vitest": "^1.6.0",
+		"zod": "^3.23.8"
 	},
 	"imports": {
 		"@/*": "./src/*",
