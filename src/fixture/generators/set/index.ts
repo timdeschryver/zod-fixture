@@ -1,10 +1,10 @@
-import { ZodSet } from '@/internal/zod';
+import { z } from 'zod';
 import { Generator } from '@/transformer/generator';
 
-import type { InferZodType } from '@/internal/zod';
+import type { TypeOf } from 'zod';
 
 export const SetGenerator = Generator({
-	schema: ZodSet,
+	schema: z.set(z.any()),
 	output: ({ def, transform, context }) => {
 		const userDefinedMin = def.minSize?.value;
 		const userDefinedMax = def.maxSize?.value;
@@ -23,7 +23,7 @@ export const SetGenerator = Generator({
 			resolve: (options) => Math.max(options.fallback, options.conflict),
 		});
 
-		const result = new Set<InferZodType<typeof def.valueType>>();
+		const result = new Set<TypeOf<typeof def.valueType>>();
 
 		transform.utils.ifNotNever(def.valueType, (valueType) => {
 			transform.utils.recursionCheck(valueType, () => {

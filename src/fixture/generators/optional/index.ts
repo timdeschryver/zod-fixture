@@ -1,8 +1,8 @@
-import { ZodOptional } from '@/internal/zod';
+import { z } from 'zod';
 import { Generator } from '@/transformer/generator';
 
 export const OptionalGenerator = Generator({
-	schema: ZodOptional,
+	schema: z.optional(z.any()),
 	output: ({ def, transform, context }) => {
 		let result = undefined;
 

@@ -1,13 +1,13 @@
-import { ZodUndefined, ZodVoid } from '@/internal/zod';
+import { z } from 'zod';
 import { Generator } from '@/transformer/generator';
 
 export const UndefinedGenerator = Generator({
-	schema: ZodUndefined,
+	schema: z.undefined(),
 	output: () => undefined,
 });
 
 export const VoidGenerator = Generator({
-	schema: ZodVoid,
+	schema: z.void(),
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	output: () => {},
 });

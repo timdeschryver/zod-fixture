@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 // #region example
-import { z, ZodString } from 'zod';
+import { z } from 'zod';
 import { Fixture, Generator } from 'zod-fixture';
 
 // this is a custom zod type
@@ -9,7 +9,7 @@ const pxSchema = z.custom<`${number}px`>((val) => {
 });
 
 const StringGenerator = Generator({
-	schema: ZodString,
+	schema: z.string(),
 	output: () => 'John Doe',
 });
 
@@ -41,7 +41,7 @@ const output = Object.assign(
 			height: '100px',
 			width: '100px',
 		},
-	}
+	},
 	// #endregion output
 );
 

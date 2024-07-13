@@ -1,8 +1,8 @@
-import { ZodNullable } from '@/internal/zod';
+import { z } from 'zod';
 import { Generator } from '@/transformer/generator';
 
 export const NullableGenerator = Generator({
-	schema: ZodNullable,
+	schema: z.any().nullable(),
 	output: ({ def, transform, context }) => {
 		let result = null;
 

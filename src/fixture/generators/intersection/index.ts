@@ -1,14 +1,9 @@
-import {
-	ZodIntersection,
-	ZodParsedType,
-	getParsedType,
-	util,
-} from '@/internal/zod';
+import { ZodParsedType, getParsedType, util, z } from 'zod';
 import { Generator } from '@/transformer/generator';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const IntersectionGenerator = Generator({
-	schema: ZodIntersection,
+	schema: z.intersection(z.any(), z.any()),
 	output: ({ def, transform, context }) => {
 		const left = transform.fromSchema(def.left, context);
 		const right = transform.fromSchema(def.right, context);

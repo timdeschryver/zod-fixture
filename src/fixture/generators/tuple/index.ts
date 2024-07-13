@@ -1,8 +1,8 @@
-import { ZodTuple } from '@/internal/zod';
+import { z } from 'zod';
 import { Generator } from '@/transformer/generator';
 
 export const TupleGenerator = Generator({
-	schema: ZodTuple,
+	schema: z.tuple([]),
 	output: ({ def, transform, context }) => {
 		const known: unknown[] = [];
 
@@ -13,7 +13,7 @@ export const TupleGenerator = Generator({
 						transform.fromSchema(schema, {
 							...context,
 							path: [...context.path, idx],
-						})
+						}),
 					);
 				});
 			});
@@ -29,9 +29,9 @@ export const TupleGenerator = Generator({
 							transform.fromSchema(schema, {
 								...context,
 								path: [...context.path, known.length + idx],
-							})
+							}),
 						),
-					1
+					1,
 				);
 			});
 		});

@@ -1,8 +1,8 @@
-import { ZodSymbol } from '@/internal/zod';
+import { z } from 'zod';
 import { Generator } from '@/transformer/generator';
 
 export const SymbolGenerator = Generator({
-	schema: ZodSymbol,
+	schema: z.symbol(),
 	output: ({ transform }) =>
 		Symbol.for(transform.utils.random.lorem(1, 'word')),
 });

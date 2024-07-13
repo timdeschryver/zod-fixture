@@ -1,15 +1,16 @@
-import { ZodEnum, ZodNativeEnum } from '@/internal/zod';
+import type { ZodTypeAny } from 'zod';
+import { z } from 'zod';
 import { Generator } from '@/transformer/generator';
 
 export const EnumGenerator = Generator({
-	schema: ZodEnum,
+	schema: z.enum(['']),
 	output: ({ def, transform }) => transform.utils.random.from(def.values),
 });
 
 export const NativeEnumGenerator = Generator({
-	schema: ZodNativeEnum,
+	schema: z.nativeEnum({}),
 	output: ({ def, transform }) => {
-		const enumerable = def.values ?? {};
+		const enumerable: { [key: string]: ZodTypeAny } = def.values ?? {};
 
 		const values = Object.keys(enumerable)
 			.filter((key) => Number.isNaN(Number(key)))

@@ -1,7 +1,7 @@
-import { ZodLiteral } from '@/internal/zod';
+import { z } from 'zod';
 import { Generator } from '@/transformer/generator';
 
 export const LiteralGenerator = Generator({
-	schema: ZodLiteral,
+	schema: z.literal(''),
 	output: ({ def }) => def.value,
 });

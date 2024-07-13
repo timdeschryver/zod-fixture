@@ -1,5 +1,5 @@
-import type { ZodStringDef } from '@/internal/zod';
-import { ZodString } from '@/internal/zod';
+import type { ZodStringDef } from 'zod';
+import { z } from 'zod';
 import { Generator } from '@/transformer/generator';
 import type { Runner } from '@/transformer/runner';
 
@@ -68,7 +68,7 @@ function formatString(transform: Runner, def: ZodStringDef, value: string) {
 }
 
 export const StringGenerator = Generator({
-	schema: ZodString,
+	schema: z.string(),
 	output: ({ def, transform }) => {
 		const checks = transform.utils.checks(def.checks);
 
@@ -90,7 +90,7 @@ export const StringGenerator = Generator({
 });
 
 export const UlidGenerator = Generator({
-	schema: ZodString,
+	schema: z.string(),
 	filter: ({ def, transform }) =>
 		transform.utils.checks(def.checks).has('ulid'),
 	output: ({ def, transform }) =>
@@ -98,7 +98,7 @@ export const UlidGenerator = Generator({
 });
 
 export const UrlGenerator = Generator({
-	schema: ZodString,
+	schema: z.string(),
 	filter: ({ def, transform }) => transform.utils.checks(def.checks).has('url'),
 	output: ({ def, transform }) => {
 		return formatString(
@@ -110,14 +110,14 @@ export const UrlGenerator = Generator({
 });
 
 export const UuidGenerator = Generator({
-	schema: ZodString,
+	schema: z.string(),
 	filter: ({ def, transform }) =>
 		transform.utils.checks(def.checks).has('uuid'),
 	output: ({ transform }) => transform.utils.random.uuid(),
 });
 
 export const EmailGenerator = Generator({
-	schema: ZodString,
+	schema: z.string(),
 	filter: ({ def, transform }) =>
 		transform.utils.checks(def.checks).has('email'),
 	output: ({ def, transform }) =>
@@ -125,7 +125,7 @@ export const EmailGenerator = Generator({
 });
 
 export const CuidGenerator = Generator({
-	schema: ZodString,
+	schema: z.string(),
 	filter: ({ def, transform }) =>
 		transform.utils.checks(def.checks).has('cuid'),
 	output: ({ def, transform }) =>
@@ -133,7 +133,7 @@ export const CuidGenerator = Generator({
 });
 
 export const IpGenerator = Generator({
-	schema: ZodString,
+	schema: z.string(),
 	filter: ({ def, transform }) => transform.utils.checks(def.checks).has('ip'),
 	output: ({ def, transform }) => {
 		const version =
@@ -156,7 +156,7 @@ export const IpGenerator = Generator({
 });
 
 export const Cuid2Generator = Generator({
-	schema: ZodString,
+	schema: z.string(),
 	filter: ({ def, transform }) =>
 		transform.utils.checks(def.checks).has('cuid2'),
 	output: ({ def, transform }) =>
@@ -164,14 +164,14 @@ export const Cuid2Generator = Generator({
 });
 
 export const DateTimeGenerator = Generator({
-	schema: ZodString,
+	schema: z.string(),
 	filter: ({ def, transform }) =>
 		transform.utils.checks(def.checks).has('datetime'),
 	output: ({ transform }) => transform.utils.random.date().toISOString(),
 });
 
 export const RegexGenerator = Generator({
-	schema: ZodString,
+	schema: z.string(),
 	filter: ({ def, transform }) =>
 		transform.utils.checks(def.checks).has('regex'),
 	output: ({ def, transform }) => {

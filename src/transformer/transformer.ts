@@ -1,4 +1,4 @@
-import type { ZodTypeAny } from '@/internal/zod';
+import type { ZodTypeAny } from 'zod';
 import type { Defaults } from './defaults';
 import { constrained, randomSeed, unconstrained } from './defaults';
 import type { Definition } from './generator';

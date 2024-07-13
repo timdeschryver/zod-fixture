@@ -1,8 +1,8 @@
-import { ZodBigInt } from '@/internal/zod';
+import { z } from 'zod';
 import { Generator } from '@/transformer/generator';
 
 export const BigIntGenerator = Generator({
-	schema: ZodBigInt,
+	schema: z.bigint(),
 	filter: ({ def, transform }) =>
 		!transform.utils.checks(def.checks).has('multipleOf'),
 	output: ({ def, transform }) => {
@@ -16,7 +16,7 @@ export const BigIntGenerator = Generator({
 });
 
 export const BigIntMultipleOfGenerator = Generator({
-	schema: ZodBigInt,
+	schema: z.bigint(),
 	filter: ({ def, transform }) =>
 		transform.utils.checks(def.checks).has('multipleOf'),
 	output: ({ def, transform }) => {

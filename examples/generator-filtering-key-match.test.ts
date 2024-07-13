@@ -1,10 +1,10 @@
 import { expect, test } from 'vitest';
 // #region example
-import { z, ZodString } from 'zod';
+import { z } from 'zod';
 import { Fixture, Generator } from 'zod-fixture';
 
 const NameGenerator = Generator({
-	schema: ZodString,
+	schema: z.string(),
 	filter: ({ context }) => context.path.at(-1) === 'name',
 	output: () => 'John Doe',
 });
@@ -43,7 +43,7 @@ const output = Object.assign(
 				name: 'John Doe',
 			},
 		],
-	}
+	},
 	// #endregion output
 );
 

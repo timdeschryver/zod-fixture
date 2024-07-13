@@ -1,7 +1,6 @@
-import { ZodString } from '@/internal/zod';
+import { z } from 'zod';
 import { Generator } from '@/transformer/generator';
 import { expect, test } from 'vitest';
-import { z } from 'zod';
 import { Fixture, createFixture } from './fixture';
 
 const PersonSchema = z.object({
@@ -48,7 +47,7 @@ test('creates a fixture using createFixture', () => {
 
 test(`priotizes generators via extend`, () => {
 	const nameGenerator = Generator({
-		schema: ZodString,
+		schema: z.string(),
 		filter: ({ context }) => context.path.includes('name'),
 		output: () => 'Fixed Name',
 	});
@@ -96,13 +95,14 @@ test(`fixture has all the zod types`, () => {
 	});
 	const CustomSchemaGenerator = Generator({
 		schema: pxSchema,
+		filter: ({ context }) => context.path[0] === 'custom',
 		output: () => '100px',
 	});
 
 	class InstanceOfClass {}
 	const instanceOfSchema = z.instanceof(InstanceOfClass);
 	const InstanceOfSchemaGenerator = Generator({
-		schema: instanceOfSchema,
+		schema: z.instanceof(InstanceOfClass),
 		output: () => new InstanceOfClass(),
 	});
 
@@ -196,7 +196,7 @@ test(`fixture has all the zod types`, () => {
 		unions_or: z.string().or(z.number()),
 		union_discriminated: z.discriminatedUnion('status', [
 			z.object({ status: z.literal('success'), data: z.string() }),
-			z.object({ status: z.literal('failed'), error: errorSchema }),
+			z.object({ status: z.literal('failed'), error: z.string() }),
 		]),
 		record: z.record(z.number()),
 		record_keytype: z.record(z.string().min(1), z.number()),

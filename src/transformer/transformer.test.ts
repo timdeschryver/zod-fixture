@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { ZodNumber, z } from 'zod';
+import { z } from 'zod';
 import { DEFAULT_FIXTURE_GENERATORS } from '../fixture/generators';
 import { NumberGenerator } from '../fixture/generators/number';
 import { ObjectGenerator } from '../fixture/generators/object';
@@ -16,7 +16,7 @@ describe('transform', () => {
 
 	test('creates a fixture', () => {
 		const transform = new ConstrainedTransformer().extend(
-			DEFAULT_FIXTURE_GENERATORS
+			DEFAULT_FIXTURE_GENERATORS,
 		);
 		const PersonSchema = z.object({
 			name: z.string(),
@@ -35,7 +35,7 @@ describe('transform', () => {
 
 	test('throws when schema missing', () => {
 		const generators = [...DEFAULT_FIXTURE_GENERATORS].filter(
-			(g) => g !== StringGenerator
+			(g) => g !== StringGenerator,
 		);
 		const transform = new ConstrainedTransformer().extend(generators);
 		const PersonSchema = z.object({
@@ -51,7 +51,7 @@ describe('transform', () => {
 		});
 
 		expect(() => transform.fromSchema(PersonSchema)).toThrow(
-			/No generator found for ZodString/i
+			/No generator found for ZodString/i,
 		);
 	});
 
@@ -71,7 +71,7 @@ describe('transform', () => {
 	describe('order of generators', () => {
 		test(`picks up the first matching generator`, () => {
 			const FooNumberGenerator = Generator({
-				schema: ZodNumber,
+				schema: z.number(),
 				filter: ({ context }) => context?.path?.includes('foo'),
 				output: () => 4,
 			});
@@ -95,7 +95,7 @@ describe('transform', () => {
 
 		test(`picks up the first matching generator using extend`, () => {
 			const FooNumberGenerator = Generator({
-				schema: ZodNumber,
+				schema: z.number(),
 				filter: ({ context }) => context?.path?.includes('foo'),
 				output: () => 4,
 			});
