@@ -147,10 +147,10 @@ The example below uses 2 custom generators and a typical pattern for filtering b
 <sub>[Example](https://github.com/timdeschryver/zod-fixture/tree/main/examples/fixture-extension.test.ts)</sub>
 
 ```ts
-import { ZodNumber, ZodObject, z } from 'zod';
+import { z } from 'zod';
 import { Fixture, Generator } from 'zod-fixture';
 const totalVisitsGenerator = Generator({
-	schema: ZodNumber,
+	schema: z.number(),
 	filter: ({ context }) => context.path.at(-1) === 'totalVisits',
 	/**
 	 * The `context` provides a path to the current field
@@ -171,7 +171,7 @@ const totalVisitsGenerator = Generator({
 	output: ({ transform }) => transform.utils.random.int({ min: 0, max: 25 }),
 });
 const addressGenerator = Generator({
-	schema: ZodObject,
+	schema: z.object({}),
 	filter: ({ context }) => context.path.at(-1) === 'address',
 	// returns a custom address object
 	output: () => ({
@@ -254,7 +254,7 @@ A schema can be provided in the following ways:
 <sub>[Example](https://github.com/timdeschryver/zod-fixture/tree/main/examples/generator-schema-matching.test.ts)</sub>
 
 ```ts
-import { z, ZodString } from 'zod';
+import { z } from 'zod';
 import { Fixture, Generator } from 'zod-fixture';
 
 // this is a custom zod type
@@ -263,7 +263,7 @@ const pxSchema = z.custom<`${number}px`>((val) => {
 });
 
 const StringGenerator = Generator({
-	schema: ZodString,
+	schema: z.string(),
 	output: () => 'John Doe',
 });
 
@@ -296,7 +296,7 @@ const developer = fixture.fromSchema(developerSchema);
 		height: '100px',
 		width: '100px',
 	},
-}
+},
 
 ```
 
@@ -316,18 +316,18 @@ There are two methods provided by the `checks` utility:
 <sub>[Example](https://github.com/timdeschryver/zod-fixture/tree/main/examples/generator-filtering-zod-checks.test.ts)</sub>
 
 ```ts
-import { z, ZodString } from 'zod';
+import { z } from 'zod';
 import { Fixture, Generator } from 'zod-fixture';
 
 const EmailGenerator = Generator({
-	schema: ZodString,
+	schema: z.string(),
 	filter: ({ transform, def }) =>
 		transform.utils.checks(def.checks).has('email'),
 	output: () => 'john.malkovich@gmail.com',
 });
 
 const StringGenerator = Generator({
-	schema: ZodString,
+	schema: z.string(),
 	output: ({ transform, def }) => {
 		let min = transform.utils.checks(def.checks).find('min')?.value;
 		/**
@@ -388,11 +388,11 @@ Matching keys of an object is another common pattern and a bit tricky if you don
 <sub>[Example](https://github.com/timdeschryver/zod-fixture/tree/main/examples/generator-filtering-key-match.test.ts)</sub>
 
 ```ts
-import { z, ZodString } from 'zod';
+import { z } from 'zod';
 import { Fixture, Generator } from 'zod-fixture';
 
 const NameGenerator = Generator({
-	schema: ZodString,
+	schema: z.string(),
 	filter: ({ context }) => context.path.at(-1) === 'name',
 	output: () => 'John Doe',
 });
@@ -432,7 +432,7 @@ const person = fixture.fromSchema(personSchema);
 			name: 'John Doe',
 		},
 	],
-}
+},
 
 ```
 
@@ -446,7 +446,7 @@ For example, in the example below we create our own `totalVisitsGenerator` to re
 
 ```ts
 const totalVisitsGenerator = Generator({
-	schema: ZodNumber,
+	schema: z.number(),
 	filter: ({ context }) => context.path.at(-1) === 'totalVisits',
 	/**
 	 * The `context` provides a path to the current field
