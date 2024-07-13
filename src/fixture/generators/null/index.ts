@@ -1,7 +1,7 @@
-import { ZodNull } from '@/internal/zod';
+import { z } from 'zod';
 import { Generator } from '@/transformer/generator';
 
 export const NullGenerator = Generator({
-	schema: ZodNull,
+	schema: z.null(),
 	output: () => null,
 });

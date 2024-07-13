@@ -1,8 +1,9 @@
-import { ZodEffects } from '@/internal/zod';
+import { z } from 'zod';
 import { Generator } from '@/transformer/generator';
 
 export const TransformGenerator = Generator({
-	schema: ZodEffects,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	schema: z.effect(z.any(), {} as any, {} as any),
 	filter: ({ def }) => def.effect.type === 'transform',
 	output: ({ def, transform, context }) => {
 		if (def.effect.type !== 'transform')
@@ -18,7 +19,8 @@ export const TransformGenerator = Generator({
 });
 
 export const PreprocessGenerator = Generator({
-	schema: ZodEffects,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	schema: z.effect(z.any(), {} as any, {} as any),
 	filter: ({ def }) => def.effect.type === 'preprocess',
 	output: ({ def, transform, context }) => {
 		if (def.effect.type !== 'preprocess')
@@ -32,7 +34,8 @@ export const PreprocessGenerator = Generator({
 });
 
 export const RefinementGenerator = Generator({
-	schema: ZodEffects,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	schema: z.effect(z.any(), {} as any, {} as any),
 	filter: ({ def }) => def.effect.type === 'refinement',
 	output: ({ def, transform, context }) => {
 		if (def.effect.type !== 'refinement')
@@ -41,7 +44,7 @@ export const RefinementGenerator = Generator({
 		const { schema } = def;
 
 		console.warn(
-			`Because refinements use custom validations, we have no way to accurately manufacture acceptable values. Using the parent type (${schema._def.typeName}) to approximate the result.`
+			`Because refinements use custom validations, we have no way to accurately manufacture acceptable values. Using the parent type (${schema._def.typeName}) to approximate the result.`,
 		);
 		return transform.fromSchema(schema, context);
 	},

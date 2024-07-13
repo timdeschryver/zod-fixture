@@ -1,8 +1,8 @@
-import { ZodDate } from '@/internal/zod';
+import { z } from 'zod';
 import { Generator } from '@/transformer/generator';
 
 export const DateGenerator = Generator({
-	schema: ZodDate,
+	schema: z.date(),
 	output: ({ def, transform }) => {
 		const checks = transform.utils.checks(def.checks);
 

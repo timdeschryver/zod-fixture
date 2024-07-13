@@ -1,7 +1,7 @@
-import { ZodNaN } from '@/internal/zod';
+import { z } from 'zod';
 import { Generator } from '@/transformer/generator';
 
 export const NanGenerator = Generator({
-	schema: ZodNaN,
+	schema: z.nan(),
 	output: () => NaN,
 });

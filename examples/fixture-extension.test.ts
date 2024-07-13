@@ -1,11 +1,11 @@
 import { expect, test } from 'vitest';
 // #region example
-import { ZodNumber, ZodObject, z } from 'zod';
+import { z } from 'zod';
 import { Fixture, Generator } from 'zod-fixture';
 
 // #region generator
 const totalVisitsGenerator = Generator({
-	schema: ZodNumber,
+	schema: z.number(),
 	filter: ({ context }) => context.path.at(-1) === 'totalVisits',
 	/**
 	 * The `context` provides a path to the current field
@@ -28,7 +28,7 @@ const totalVisitsGenerator = Generator({
 // #endregion generator
 
 const addressGenerator = Generator({
-	schema: ZodObject,
+	schema: z.object({}),
 	filter: ({ context }) => context.path.at(-1) === 'address',
 	// returns a custom address object
 	output: () => ({

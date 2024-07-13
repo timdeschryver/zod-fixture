@@ -1,13 +1,12 @@
-import type { InferZodType } from '@/internal/zod';
-import { ZodAny, ZodObject, ZodRecord } from '@/internal/zod';
+import type { TypeOf, ZodTypeAny } from 'zod';
+import { z, ZodAny } from 'zod';
 import { Generator } from '@/transformer/generator';
 
 export const ObjectGenerator = Generator({
-	schema: ZodObject,
+	schema: z.object({}),
 	output: ({ def, transform, context }) => {
-		const shape = def.shape();
+		const shape: { [key: string]: ZodTypeAny } = def.shape();
 		const result: Record<string, unknown> = {};
-
 		for (const key in shape) {
 			transform.utils.ifNotNever(shape[key], (schema) => {
 				transform.utils.recursionCheck(schema, () => {
@@ -18,8 +17,9 @@ export const ObjectGenerator = Generator({
 				});
 			});
 		}
+
 		const passthrough =
-			def.unknownKeys === 'passthrough' ||
+			(def.unknownKeys as string) === 'passthrough' ||
 			def.catchall._def.typeName !== 'ZodNever';
 
 		if (passthrough) {
@@ -39,11 +39,11 @@ export const ObjectGenerator = Generator({
 });
 
 export const RecordGenerator = Generator({
-	schema: ZodRecord,
+	schema: z.record(z.any()),
 	output: ({ def, transform, context }) => {
 		const result: Record<
-			InferZodType<typeof def.keyType>,
-			InferZodType<typeof def.valueType>
+			TypeOf<typeof def.keyType>,
+			TypeOf<typeof def.valueType>
 		> = {};
 
 		transform.utils.ifNotNever(def.keyType, (keyType) => {

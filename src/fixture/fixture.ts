@@ -1,4 +1,4 @@
-import type { InferZodType, ZodTypeAny } from '@/internal/zod';
+import type { TypeOf, ZodTypeAny } from 'zod';
 import type { Defaults } from '../transformer/defaults';
 import {
 	ConstrainedTransformer,
@@ -23,7 +23,7 @@ export interface ConstrainedFixture extends ConstrainedTransformer {
 	fromSchema<TSchema extends ZodTypeAny>(
 		schema: TSchema,
 		instanceDefaults?: Partial<Defaults>,
-	): InferZodType<TSchema>;
+	): TypeOf<TSchema>;
 }
 
 export class ConstrainedFixture extends ConstrainedTransformer {
@@ -36,7 +36,7 @@ export interface UnconstrainedFixture extends UnconstrainedTransformer {
 	fromSchema<TSchema extends ZodTypeAny>(
 		schema: TSchema,
 		instanceDefaults?: Partial<Defaults>,
-	): InferZodType<TSchema>;
+	): TypeOf<TSchema>;
 }
 
 export class UnconstrainedFixture extends UnconstrainedTransformer {
@@ -49,6 +49,6 @@ export { ConstrainedFixture as Fixture };
 export function createFixture<TSchema extends ZodTypeAny>(
 	schema: TSchema,
 	instanceDefaults?: Partial<Defaults>,
-): InferZodType<TSchema> {
+): TypeOf<TSchema> {
 	return new ConstrainedFixture(instanceDefaults).fromSchema(schema);
 }

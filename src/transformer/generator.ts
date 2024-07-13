@@ -1,4 +1,4 @@
-import type { ZodTypeAny } from '@/internal/zod';
+import type { ZodTypeAny } from 'zod';
 import type { Runner } from './runner';
 
 // #region context
@@ -6,23 +6,6 @@ export interface Context {
 	path: (string | number)[];
 }
 // #endregion context
-
-export interface ZodConstructor<TSchema extends ZodTypeAny> {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	new (...args: any[]): TSchema;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	create(...args: any[]): TSchema;
-}
-
-export type ZodConstructorOrSchema<TSchema extends ZodTypeAny> =
-	| TSchema
-	| ZodConstructor<TSchema>;
-
-export function isZodConstructor(
-	schema: ZodConstructorOrSchema<ZodTypeAny>,
-): schema is ZodConstructor<ZodTypeAny> {
-	return typeof schema === 'function';
-}
 
 // #region filter
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -44,7 +27,7 @@ export type Generator<TSchema extends ZodTypeAny = any> = (obj: {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface Definition<TSchema extends ZodTypeAny = any> {
-	schema?: ZodConstructorOrSchema<TSchema>;
+	schema?: TSchema;
 	filter?: Filter<TSchema>;
 	output: Generator<TSchema>;
 }

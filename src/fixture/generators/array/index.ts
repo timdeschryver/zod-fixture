@@ -1,8 +1,8 @@
-import { ZodArray } from '@/internal/zod';
+import { z } from 'zod';
 import { Generator } from '@/transformer/generator';
 
 export const ArrayGenerator = Generator({
-	schema: ZodArray,
+	schema: z.array(z.any()),
 	output: ({ def, transform, context }) => {
 		const userDefinedMin = def.minLength?.value ?? def.exactLength?.value;
 		const userDefinedMax = def.maxLength?.value ?? def.exactLength?.value;
@@ -31,9 +31,9 @@ export const ArrayGenerator = Generator({
 							transform.fromSchema(schema, {
 								...context,
 								path: [...context.path, key],
-							})
+							}),
 						),
-					{ min, max }
+					{ min, max },
 				);
 			});
 		});

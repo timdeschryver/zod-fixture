@@ -1,7 +1,7 @@
-import { ZodFunction } from '@/internal/zod';
+import { z } from 'zod';
 import { Generator } from '@/transformer/generator';
 
 export const FunctionGenerator = Generator({
-	schema: ZodFunction,
+	schema: z.function(),
 	output: ({ transform }) => transform.utils.noop,
 });

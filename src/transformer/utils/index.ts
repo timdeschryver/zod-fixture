@@ -1,7 +1,5 @@
-import type { ZodTypeAny } from '@/internal/zod';
-import { ZodLazy } from '@/internal/zod';
-import type { ZodConstructorOrSchema } from '../generator';
-import { isZodConstructor } from '../generator';
+import type { ZodTypeAny } from 'zod';
+import { ZodLazy } from 'zod';
 import type { Runner } from '../runner';
 import { Checks } from './Checks';
 import { Randomization } from './Randomization';
@@ -69,7 +67,7 @@ export class Utils {
 		schema: TSchema,
 		action: (schema: TSchema) => unknown,
 	) {
-		if (this.isType(ZodLazy, schema)) {
+		if (schema instanceof ZodLazy) {
 			const count = this.recursion.get(schema._def.getter) ?? 0;
 			const cap = this.random.int(this.runner.defaults.recursion);
 			if (count >= cap) return;
@@ -78,15 +76,10 @@ export class Utils {
 	}
 
 	isType<TSchema extends ZodTypeAny>(
-		target: ZodConstructorOrSchema<TSchema>,
+		target: TSchema,
 		schema: ZodTypeAny,
 	): schema is TSchema {
-		return isZodConstructor(target)
-			? schema._def.typeName === target.name
-			: // If our generator was created with an instance, make sure it matches
-			  // the schema we're trying to generate.
-			  // This is particularly important for z.custom schemas.
-			  schema === target;
+		return target._def?.typeName === schema?._def?.typeName;
 	}
 
 	checks<TChecks extends { kind: string }[]>(checks: TChecks) {

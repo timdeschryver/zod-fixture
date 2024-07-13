@@ -1,17 +1,17 @@
 import { expect, test } from 'vitest';
 // #region example
-import { z, ZodString } from 'zod';
+import { z } from 'zod';
 import { Fixture, Generator } from 'zod-fixture';
 
 const EmailGenerator = Generator({
-	schema: ZodString,
+	schema: z.string(),
 	filter: ({ transform, def }) =>
 		transform.utils.checks(def.checks).has('email'),
 	output: () => 'john.malkovich@gmail.com',
 });
 
 const StringGenerator = Generator({
-	schema: ZodString,
+	schema: z.string(),
 	output: ({ transform, def }) => {
 		let min = transform.utils.checks(def.checks).find('min')?.value;
 		/**
